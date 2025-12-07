@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NCGCL Strategic Dashboard | GB Apple Sector</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .card { background: white; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); transition: transform 0.2s; }
+        .card:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        .gradient-text { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .metric-value { font-weight: 700; color: #1e293b; }
+        .metric-label { font-size: 0.875rem; color: #64748b; }
+        .tab-btn.active { border-bottom: 2px solid #2563eb; color: #2563eb; font-weight: 600; }
+        .tab-btn { color: #64748b; padding-bottom: 8px; margin-right: 16px; }
+        /* Custom scrollbar for policy section */
+        .policy-scroll::-webkit-scrollbar { width: 6px; }
+        .policy-scroll::-webkit-scrollbar-track { background: #f1f5f9; }
+        .policy-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+    </style>
+</head>
+<body class="text-slate-800">
+
+    <!-- Navbar -->
+    <nav class="bg-slate-900 text-white p-4 sticky top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-blue-500 rounded flex items-center justify-center font-bold">N</div>
+                <div>
+                    <h1 class="font-bold text-lg tracking-wide">NCGCL</h1>
+                    <p class="text-xs text-slate-400 uppercase tracking-widest">Board Briefing: GB Apple Sector</p>
+                </div>
+            </div>
+            <div class="flex gap-4 text-sm font-medium">
+                <span class="bg-blue-900 px-3 py-1 rounded-full text-blue-200 border border-blue-700">Nov 2025 Data</span>
+                <button onclick="window.print()" class="hover:text-blue-300 flex items-center gap-1"><i data-lucide="printer" class="w-4 h-4"></i> Print Brief</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto p-6 space-y-6">
+
+        <!-- Executive Summary Header -->
+        <header class="mb-8">
+            <h2 class="text-3xl font-bold text-slate-900">Apples in Gilgit Baltistan: <span class="text-slate-500 font-light">A Mountain Crop in a Stalled Economy</span></h2>
+            <p class="mt-2 text-slate-600 max-w-3xl">Strategic review of the 24,000 MT apple economy. While agronomy is strong, post-harvest infrastructure is critically weak, resulting in a "stalled" economy despite premium product potential.</p>
+        </header>
+
+        <!-- KPI Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Metric 1 -->
+            <div class="card p-6 border-l-4 border-blue-500">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="metric-label">Annual Production</p>
+                        <h3 class="text-3xl metric-value mt-1">24,000 <span class="text-sm font-normal text-slate-500">MT</span></h3>
+                    </div>
+                    <div class="p-2 bg-blue-50 rounded-lg text-blue-600"><i data-lucide="apple" class="w-6 h-6"></i></div>
+                </div>
+                <p class="text-xs text-slate-500 mt-4">12% of total fruit output in GB</p>
+            </div>
+
+            <!-- Metric 2 -->
+            <div class="card p-6 border-l-4 border-red-500">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="metric-label">Post-Harvest Loss</p>
+                        <h3 class="text-3xl metric-value mt-1 text-red-600">~20%</h3>
+                    </div>
+                    <div class="p-2 bg-red-50 rounded-lg text-red-600"><i data-lucide="arrow-down-right" class="w-6 h-6"></i></div>
+                </div>
+                <p class="text-xs text-slate-500 mt-4">~5,000 MT lost annually (Waste)</p>
+            </div>
+
+            <!-- Metric 3 -->
+            <div class="card p-6 border-l-4 border-emerald-500">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="metric-label">Price Arbitrage</p>
+                        <h3 class="text-3xl metric-value mt-1 text-emerald-600">2.5x</h3>
+                    </div>
+                    <div class="p-2 bg-emerald-50 rounded-lg text-emerald-600"><i data-lucide="trending-up" class="w-6 h-6"></i></div>
+                </div>
+                <p class="text-xs text-slate-500 mt-4">Winter Price (500) vs Harvest (200)</p>
+            </div>
+
+             <!-- Metric 4 -->
+             <div class="card p-6 border-l-4 border-purple-500">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="metric-label">Farm Families</p>
+                        <h3 class="text-3xl metric-value mt-1">162,500</h3>
+                    </div>
+                    <div class="p-2 bg-purple-50 rounded-lg text-purple-600"><i data-lucide="users" class="w-6 h-6"></i></div>
+                </div>
+                <p class="text-xs text-slate-500 mt-4">Avg farm size: 0.8 - 3.6 ha</p>
+            </div>
+        </div>
+
+        <!-- Main Chart Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- Left Col: Production Mix -->
+            <div class="card p-6 lg:col-span-1">
+                <h3 class="font-bold text-lg mb-4 text-slate-800">GB Fruit Production Mix</h3>
+                <div class="relative h-64">
+                    <canvas id="productionChart"></canvas>
+                </div>
+                <div class="mt-6 text-sm text-slate-600 bg-slate-50 p-4 rounded-lg">
+                    <p class="font-semibold mb-2">Insight:</p>
+                    <p>Apples (12%) are a distant second to Apricots (65%), yet command higher potential unit value if storage issues are resolved.</p>
+                </div>
+            </div>
+
+            <!-- Right Col: The Economic Case (Interactive) -->
+            <div class="card p-6 lg:col-span-2 flex flex-col">
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <h3 class="font-bold text-lg text-slate-800">Orchard Economics & The "Cold Chain Gap"</h3>
+                        <p class="text-sm text-slate-500">Comparing Harvest returns vs. Winter potential (PKR)</p>
+                    </div>
+                    <div class="flex gap-2 text-sm bg-slate-100 p-1 rounded-lg">
+                        <button id="btn-per-kg" class="px-3 py-1 bg-white shadow rounded text-slate-800 font-medium transition" onclick="updateEconChart('price')">Per KG Price</button>
+                        <button id="btn-revenue" class="px-3 py-1 text-slate-500 hover:text-slate-800 transition" onclick="updateEconChart('revenue')">Revenue per Ha</button>
+                    </div>
+                </div>
+                
+                <div class="relative flex-grow h-64 w-full">
+                    <canvas id="economicsChart"></canvas>
+                </div>
+                
+                <div class="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-slate-100">
+                    <div class="text-center">
+                        <p class="text-xs text-slate-500 uppercase">Establishment Cost</p>
+                        <p class="font-bold text-slate-700">PKR 450k</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-xs text-slate-500 uppercase">Operating Cost</p>
+                        <p class="font-bold text-slate-700">PKR 110k</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-xs text-slate-500 uppercase">Potential Uplift</p>
+                        <p class="font-bold text-green-600">+30%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Strategy & Policy Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            
+            <!-- Problem Definition -->
+            <div class="card p-6">
+                <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
+                    <i data-lucide="alert-triangle" class="text-orange-500"></i>
+                    The Breakdown: Where Value is Lost
+                </h3>
+                <div class="space-y-4">
+                    <div class="flex items-center gap-4 p-3 bg-red-50 rounded-lg border border-red-100">
+                        <div class="bg-white p-2 rounded-full shadow-sm text-red-500 font-bold">1</div>
+                        <div>
+                            <h4 class="font-semibold text-red-900">Ambient Heat Transport</h4>
+                            <p class="text-sm text-red-700">Orchards to market without pre-cooling. Starch breaks down rapidly.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 p-3 bg-orange-50 rounded-lg border border-orange-100">
+                        <div class="bg-white p-2 rounded-full shadow-sm text-orange-500 font-bold">2</div>
+                        <div>
+                            <h4 class="font-semibold text-orange-900">Packaging (Jute Sacks)</h4>
+                            <p class="text-sm text-orange-700">Causes physical bruising. Transition to crates is slow.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 p-3 bg-yellow-50 rounded-lg border border-yellow-100">
+                        <div class="bg-white p-2 rounded-full shadow-sm text-yellow-500 font-bold">3</div>
+                        <div>
+                            <h4 class="font-semibold text-yellow-900">Financial "Timing" Pressure</h4>
+                            <p class="text-sm text-yellow-700">Lack of working capital forces early sales at low harvest prices.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Board Action Items -->
+            <div class="card p-6 bg-slate-900 text-white relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500 opacity-10 rounded-bl-full"></div>
+                
+                <h3 class="font-bold text-lg mb-2 flex items-center gap-2">
+                    <i data-lucide="briefcase" class="text-blue-400"></i>
+                    Board Action: Credit Guarantee Interventions
+                </h3>
+                <p class="text-slate-400 text-sm mb-6">Proposed areas for NCGCL intervention based on research note conclusions.</p>
+
+                <div class="space-y-4 policy-scroll overflow-y-auto max-h-[300px] pr-2">
+                    <!-- Action 1 -->
+                    <div class="p-4 bg-slate-800 rounded-lg border border-slate-700 hover:border-blue-500 transition cursor-pointer group">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-bold text-blue-200 group-hover:text-blue-400">1. Modular Storage Finance</h4>
+                            <span class="bg-blue-900 text-xs px-2 py-1 rounded text-blue-300">High Impact</span>
+                        </div>
+                        <p class="text-sm text-slate-300">
+                            <strong>Mechanism:</strong> Risk sharing for operators of 25-50 MT pre-coolers and 200-300 MT stores.
+                            <br><span class="text-slate-500 text-xs mt-1 block">Current bankability is low due to energy/location risk.</span>
+                        </p>
+                    </div>
+
+                    <!-- Action 2 -->
+                    <div class="p-4 bg-slate-800 rounded-lg border border-slate-700 hover:border-blue-500 transition cursor-pointer group">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-bold text-blue-200 group-hover:text-blue-400">2. Inventory/Receivable Support</h4>
+                            <span class="bg-blue-900 text-xs px-2 py-1 rounded text-blue-300">Liquidity</span>
+                        </div>
+                        <p class="text-sm text-slate-300">
+                            <strong>Mechanism:</strong> Short-term credit guarantees to allow holding fruit beyond harvest window.
+                            <br><span class="text-slate-500 text-xs mt-1 block">Enables capturing the 350-500 PKR winter price point.</span>
+                        </p>
+                    </div>
+
+                    <!-- Action 3 -->
+                    <div class="p-4 bg-slate-800 rounded-lg border border-slate-700 hover:border-blue-500 transition cursor-pointer group">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-bold text-blue-200 group-hover:text-blue-400">3. Aggregator Financing</h4>
+                            <span class="bg-blue-900 text-xs px-2 py-1 rounded text-blue-300">Scale</span>
+                        </div>
+                        <p class="text-sm text-slate-300">
+                            <strong>Mechanism:</strong> Reduce lender exposure to small processors and aggregators.
+                            <br><span class="text-slate-500 text-xs mt-1 block">Critical for women-led enterprises and small-scale juice/drying units.</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <footer class="mt-12 border-t border-slate-200 pt-6 text-center text-slate-400 text-sm">
+            <p>Generated from "Research Note x Apples Production (GB) - Nov2025" | Internal Document</p>
+        </footer>
+
+    </main>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // --- CHART 1: PRODUCTION MIX ---
+        const ctxProd = document.getElementById('productionChart').getContext('2d');
+        const productionChart = new Chart(ctxProd, {
+            type: 'doughnut',
+            data: {
+                labels: ['Apricot (65%)', 'Apple (12%)', 'Mulberry (6%)', 'Walnut (4%)', 'Cherry (2%)', 'Others (11%)'],
+                datasets: [{
+                    data: [65, 12, 6, 4, 2, 11],
+                    backgroundColor: [
+                        '#e2e8f0', // Apricot (Grayed out to highlight apple)
+                        '#ef4444', // Apple (Red - Focus)
+                        '#f1f5f9', // Mulberry
+                        '#f8fafc', // Walnut
+                        '#f1f5f9', // Cherry
+                        '#cbd5e1'  // Others
+                    ],
+                    borderWidth: 0,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'right', labels: { boxWidth: 12, font: { size: 11 } } }
+                },
+                cutout: '70%'
+            }
+        });
+
+        // --- CHART 2: ECONOMICS (Interactive) ---
+        const ctxEcon = document.getElementById('economicsChart').getContext('2d');
+        
+        // Data configurations
+        const priceData = {
+            labels: ['Harvest Season (Aug-Oct)', 'Winter Season (Dec-Feb)'],
+            datasets: [{
+                label: 'Price per KG (PKR)',
+                data: [180, 425], // Avg of ranges provided (150-250) and (350-500)
+                backgroundColor: ['#fbbf24', '#10b981'],
+                borderRadius: 6,
+                barThickness: 50
+            }]
+        };
+
+        const revenueData = {
+            labels: ['Current (Harvest Sale)', 'Potential (Stored Sale)'],
+            datasets: [{
+                label: 'Gross Revenue per Ha (PKR)',
+                data: [750000, 975000], // 750k base + 30% uplift mentioned in note
+                backgroundColor: ['#94a3b8', '#3b82f6'],
+                borderRadius: 6,
+                barThickness: 50
+            }]
+        };
+
+        let economicsChart = new Chart(ctxEcon, {
+            type: 'bar',
+            data: priceData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { beginAtZero: true, grid: { borderDash: [2, 2] } },
+                    x: { grid: { display: false } }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return 'PKR ' + context.raw.toLocaleString();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // --- INTERACTIVITY LOGIC ---
+        function updateEconChart(mode) {
+            const btnPrice = document.getElementById('btn-per-kg');
+            const btnRev = document.getElementById('btn-revenue');
+            const titleDiv = btnPrice.parentElement.parentElement.querySelector('p');
+
+            if (mode === 'price') {
+                economicsChart.data = priceData;
+                economicsChart.options.scales.y.title = { display: true, text: 'Price (PKR)' };
+                
+                // Styling
+                btnPrice.classList.add('bg-white', 'shadow', 'text-slate-800', 'font-medium');
+                btnPrice.classList.remove('text-slate-500');
+                btnRev.classList.remove('bg-white', 'shadow', 'text-slate-800', 'font-medium');
+                btnRev.classList.add('text-slate-500');
+                
+                titleDiv.innerText = "Comparing Harvest returns vs. Winter potential (PKR per KG)";
+            } else {
+                economicsChart.data = revenueData;
+                economicsChart.options.scales.y.title = { display: true, text: 'Revenue (PKR)' };
+
+                // Styling
+                btnRev.classList.add('bg-white', 'shadow', 'text-slate-800', 'font-medium');
+                btnRev.classList.remove('text-slate-500');
+                btnPrice.classList.remove('bg-white', 'shadow', 'text-slate-800', 'font-medium');
+                btnPrice.classList.add('text-slate-500');
+
+                titleDiv.innerText = "Impact of storage on Gross Revenue per Hectare";
+            }
+            economicsChart.update();
+        }
+
+    </script>
+</body>
+</html>
