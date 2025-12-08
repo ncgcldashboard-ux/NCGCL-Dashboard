@@ -1,0 +1,624 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>NCGCL – November 2025 Investment Income Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --bg: #020617;
+      --bg-card: #020617;
+      --bg-card-soft: #020617;
+      --accent: #34d399;
+      --accent-soft: rgba(52,211,153,0.14);
+      --accent-2: #38bdf8;
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+      --border-subtle: #1f2937;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #111827 0, #020617 50%, #020617 100%);
+      color: var(--text-main);
+    }
+
+    .app-shell {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 24px 16px 40px;
+    }
+
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .title-block h1 {
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin: 0;
+      letter-spacing: 0.02em;
+    }
+
+    .title-block p {
+      margin: 4px 0 0;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .badge-month {
+      background: var(--accent-soft);
+      color: var(--accent);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      border: 1px solid rgba(52,211,153,0.35);
+      align-self: center;
+      white-space: nowrap;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .kpi-card {
+      background: linear-gradient(145deg, var(--bg-card), var(--bg-card-soft));
+      border-radius: 14px;
+      padding: 12px 14px 10px;
+      border: 1px solid var(--border-subtle);
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.9);
+    }
+
+    .kpi-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .kpi-value {
+      font-size: 1.05rem;
+      font-weight: 600;
+    }
+
+    .kpi-sub {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .kpi-highlight { color: var(--accent); }
+
+    .layout-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.7fr) minmax(0, 1.3fr);
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    @media (max-width: 900px) {
+      .layout-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .panel {
+      background: var(--bg-card);
+      border-radius: 16px;
+      padding: 12px 14px 14px;
+      border: 1px solid var(--border-subtle);
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.9);
+      min-height: 320px;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 10px;
+      gap: 8px;
+    }
+
+    .panel-title {
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .panel-subtitle {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    canvas {
+      width: 100% !important;
+      height: 280px !important;
+    }
+
+    .table-panel {
+      margin-top: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+    }
+
+    th, td {
+      padding: 6px 8px;
+      border-bottom: 1px solid rgba(31, 41, 55, 0.7);
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    th:first-child, td:first-child { text-align: left; }
+
+    th {
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    tbody tr:last-child td { border-bottom: none; }
+
+    .pill-asset {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.08);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      font-size: 0.78rem;
+    }
+
+    .toolbar {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 6px;
+    }
+
+    .btn-download {
+      font-size: 0.78rem;
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.6);
+      background: rgba(15,23,42,0.8);
+      color: var(--text-main);
+      cursor: pointer;
+    }
+
+    .btn-download:hover {
+      background: rgba(15,23,42,1);
+    }
+
+    footer {
+      margin-top: 10px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header>
+      <div class="title-block">
+        <h1>NCGCL Investment Income Dashboard</h1>
+        <p>November 2025 view of investment income, yields and asset allocation.</p>
+      </div>
+      <div class="badge-month">
+        November 2025 &nbsp;•&nbsp; Internal Treasury View
+      </div>
+    </header>
+
+    <div class="toolbar">
+      <button class="btn-download" onclick="downloadEmbeddedData()">
+        ⬇ Download raw data (JSON)
+      </button>
+    </div>
+
+    <section class="kpi-grid">
+      <article class="kpi-card">
+        <div class="kpi-label">Total Investment Revenue</div>
+        <div class="kpi-value kpi-highlight" id="kpi-total-revenue"></div>
+        <div class="kpi-sub">Accrued + realized + unrealized (PKR)</div>
+      </article>
+      <article class="kpi-card">
+        <div class="kpi-label">Investment Closing Balance</div>
+        <div class="kpi-value" id="kpi-closing-investments"></div>
+        <div class="kpi-sub">Closing balance of placements and funds</div>
+      </article>
+      <article class="kpi-card">
+        <div class="kpi-label">Total Assets</div>
+        <div class="kpi-value" id="kpi-total-assets"></div>
+        <div class="kpi-sub">Balance sheet total assets – November 2025</div>
+      </article>
+      <article class="kpi-card">
+        <div class="kpi-label">Portfolio Annualised Yield</div>
+        <div class="kpi-value" id="kpi-weighted-yield"></div>
+        <div class="kpi-sub">Based on Nov return over {holding_period_days} days on placements base</div>
+      </article>
+      <article class="kpi-card">
+        <div class="kpi-label">Weighted Average Maturity</div>
+        <div class="kpi-value" id="kpi-weighted-maturity"></div>
+        <div class="kpi-sub">Portfolio duration in days</div>
+      </article>
+    </section>
+
+    <section class="layout-grid">
+      <article class="panel">
+        <div class="panel-header">
+          <div>
+            <div class="panel-title">Revenue by Instrument – Waterfall</div>
+            <div class="panel-subtitle">Contribution of each instrument to total PKR revenue</div>
+          </div>
+        </div>
+        <canvas id="waterfallChart"></canvas>
+      </article>
+
+      <article class="panel">
+        <div class="panel-header">
+          <div>
+            <div class="panel-title">Portfolio Allocation by Instrument</div>
+            <div class="panel-subtitle">Share of placements by instrument</div>
+          </div>
+        </div>
+        <canvas id="allocationChart"></canvas>
+      </article>
+    </section>
+
+    <section class="layout-grid">
+      <article class="panel">
+        <div class="panel-header">
+          <div>
+            <div class="panel-title">Income Composition</div>
+            <div class="panel-subtitle">Accrued mark-up vs realized and unrealized gains</div>
+          </div>
+        </div>
+        <canvas id="compositionChart"></canvas>
+      </article>
+
+      <article class="panel">
+        <div class="panel-header">
+          <div>
+            <div class="panel-title">Total Assets – September to November 2025</div>
+            <div class="panel-subtitle">Change in total assets since September 2025</div>
+          </div>
+        </div>
+        <canvas id="assetsChart"></canvas>
+      </article>
+    </section>
+
+    <section class="panel table-panel">
+      <div class="panel-header">
+        <div>
+          <div class="panel-title">Instrument Level Summary</div>
+          <div class="panel-subtitle">Revenue, yields, balances and maturity profile</div>
+        </div>
+      </div>
+      <div style="overflow-x:auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>Instrument</th>
+              <th>Revenue (PKR)</th>
+              <th>Accrued (PKR)</th>
+              <th>Realised (PKR)</th>
+              <th>Unrealised (PKR)</th>
+              <th>Yield (%)</th>
+              <th>Placement Share (%)</th>
+              <th>Weighted Maturity (days)</th>
+              <th>Closing Balance (PKR)</th>
+            </tr>
+          </thead>
+          <tbody id="summary-rows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer>
+      <span>Data source: “November in Review – Investment Income (Nov-25)” – NCGCL Treasury.</span>
+      <span>Static HTML dashboard • Suitable for internal circulation and GitHub Pages.</span>
+    </footer>
+  </div>
+
+  <script>
+    const embeddedData = {"as_of": "2025-11-30", "currency": "PKR", "kpis": {"total_investment_revenue": 74977152.9, "investment_closing_balance": 8062414782.0, "total_assets_nov": 8124890645.0, "total_assets_sept": 8025643612.0, "weighted_investment_yield": 0.10775715543054824, "weighted_maturity_days": 95, "holding_period_days": 31.5, "placements_base": 8062414782.0}, "instruments": [{"name": "T-Bill 84d", "total_revenue": 12006000.0, "accrued_markup": 0.0, "unrealized_gain": 0.0, "realized_gain": 12006000.0, "annualized_yield": 0.1043696899, "placement_pct": 0.06004283889, "weighted_maturity": 4.921426622, "closing_balance": 0.0}, {"name": "T-Bill 345d", "total_revenue": 17884914.0, "accrued_markup": 17884914.0, "unrealized_gain": 0.0, "realized_gain": 0.0, "annualized_yield": 0.1088000016, "placement_pct": 0.2461569145, "weighted_maturity": 83.19053564, "closing_balance": 2057219450.0}, {"name": "Faysal Bank", "total_revenue": 26912328.03, "accrued_markup": 26912328.03, "unrealized_gain": 0.0, "realized_gain": 0.0, "annualized_yield": 0.1075, "placement_pct": 0.1239805696, "weighted_maturity": 0.0, "closing_balance": 2570009578.0}, {"name": "Samba Bank", "total_revenue": 8900368.87, "accrued_markup": 8900368.87, "unrealized_gain": 0.0, "realized_gain": 0.0, "annualized_yield": 0.1075, "placement_pct": 0.3748839858, "weighted_maturity": 0.0, "closing_balance": 1513964784.0}, {"name": "Alfalah GSF II", "total_revenue": 5633840.0, "accrued_markup": 0.0, "unrealized_gain": 5633840.0, "realized_gain": 0.0, "annualized_yield": 0.08503554979, "placement_pct": 0.09921059867, "weighted_maturity": 2.967213844, "closing_balance": 816606719.0}, {"name": "Alfalah MTS", "total_revenue": 2658635.0, "accrued_markup": 0.0, "unrealized_gain": 2658635.0, "realized_gain": 0.0, "annualized_yield": 0.1078224194, "placement_pct": 0.03692357388, "weighted_maturity": 1.101970348, "closing_balance": 303273184.0}, {"name": "ABL IFTP III", "total_revenue": 981067.0, "accrued_markup": 0.0, "unrealized_gain": 981067.0, "realized_gain": 0.0, "annualized_yield": 0.03441619108, "placement_pct": 0.09850717197, "weighted_maturity": 2.911744727, "closing_balance": 801341067.0}]};
+
+    const fmtPKR = (value) =>
+      "PKR " + Number(value).toLocaleString("en-PK", { maximumFractionDigits: 0 });
+
+    const fmtPct = (value) =>
+      Number(value).toLocaleString("en-PK", { maximumFractionDigits: 1 }) + "%";
+
+    document.getElementById("kpi-total-revenue").textContent =
+      fmtPKR(embeddedData.kpis.total_investment_revenue);
+    document.getElementById("kpi-closing-investments").textContent =
+      fmtPKR(embeddedData.kpis.investment_closing_balance);
+    document.getElementById("kpi-total-assets").textContent =
+      fmtPKR(embeddedData.kpis.total_assets_nov);
+    document.getElementById("kpi-weighted-yield").textContent =
+      fmtPct(embeddedData.kpis.weighted_investment_yield * 100);
+    document.getElementById("kpi-weighted-maturity").textContent =
+      embeddedData.kpis.weighted_maturity_days.toLocaleString("en-PK", { maximumFractionDigits: 0 }) + " days";
+
+    const tbody = document.getElementById("summary-rows");
+    embeddedData.instruments.forEach((inst) => {
+      const tr = document.createElement("tr");
+
+      const tdName = document.createElement("td");
+      const pill = document.createElement("span");
+      pill.className = "pill-asset";
+      pill.textContent = inst.name;
+      tdName.appendChild(pill);
+
+      const tdRev = document.createElement("td");
+      tdRev.textContent = fmtPKR(inst.total_revenue);
+
+      const tdAcc = document.createElement("td");
+      tdAcc.textContent = fmtPKR(inst.accrued_markup);
+
+      const tdReal = document.createElement("td");
+      tdReal.textContent = fmtPKR(inst.realized_gain);
+
+      const tdUnreal = document.createElement("td");
+      tdUnreal.textContent = fmtPKR(inst.unrealized_gain);
+
+      const tdYield = document.createElement("td");
+      tdYield.textContent = fmtPct(inst.annualized_yield * 100);
+
+      const tdPlace = document.createElement("td");
+      tdPlace.textContent = fmtPct(inst.placement_pct * 100);
+
+      const tdMat = document.createElement("td");
+      tdMat.textContent = inst.weighted_maturity.toLocaleString("en-PK", { maximumFractionDigits: 1 });
+
+      const tdClose = document.createElement("td");
+      tdClose.textContent = fmtPKR(inst.closing_balance);
+
+      tr.appendChild(tdName);
+      tr.appendChild(tdRev);
+      tr.appendChild(tdAcc);
+      tr.appendChild(tdReal);
+      tr.appendChild(tdUnreal);
+      tr.appendChild(tdYield);
+      tr.appendChild(tdPlace);
+      tr.appendChild(tdMat);
+      tr.appendChild(tdClose);
+
+      tbody.appendChild(tr);
+    });
+
+    Chart.defaults.color = "#e5e7eb";
+    Chart.defaults.font.family = "'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+    Chart.defaults.font.size = 11;
+
+    const instrumentLabels = embeddedData.instruments.map((d) => d.name);
+    const revenues = embeddedData.instruments.map((d) => d.total_revenue);
+    const accruedArr = embeddedData.instruments.map((d) => d.accrued_markup);
+    const realizedArr = embeddedData.instruments.map((d) => d.realized_gain);
+    const unrealizedArr = embeddedData.instruments.map((d) => d.unrealized_gain);
+    const placementArr = embeddedData.instruments.map((d) => d.placement_pct * 100);
+
+    const waterfallLabels = instrumentLabels.slice();
+    const helper = [];
+    const increment = [];
+    let cumulative = 0;
+    for (let i = 0; i < revenues.length; i++) {
+      helper.push(cumulative);
+      increment.push(revenues[i]);
+      cumulative += revenues[i];
+    }
+    waterfallLabels.push("Total");
+    helper.push(0);
+    increment.push(cumulative);
+
+    const barColors = increment.map((_, idx) =>
+      idx === increment.length - 1 ? "#22c55e" : "#38bdf8"
+    );
+
+    const wfCtx = document.getElementById("waterfallChart").getContext("2d");
+    new Chart(wfCtx, {
+      type: "bar",
+      data: {
+        labels: waterfallLabels,
+        datasets: [
+          {
+            label: "Helper",
+            data: helper,
+            backgroundColor: "rgba(0,0,0,0)",
+            borderWidth: 0,
+            stack: "combined"
+          },
+          {
+            label: "Revenue",
+            data: increment,
+            backgroundColor: barColors,
+            stack: "combined"
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: (ctx) => " " + fmtPKR(ctx.parsed.y)
+            }
+          }
+        },
+        scales: {
+          x: {
+            stacked: true,
+            grid: { display: false }
+          },
+          y: {
+            stacked: true,
+            beginAtZero: true,
+            grid: { color: "rgba(55,65,81,0.5)" },
+            ticks: {
+              callback: (value) =>
+                "PKR " + (value / 1000000).toLocaleString("en-PK", { maximumFractionDigits: 1 }) + "m"
+            }
+          }
+        }
+      }
+    });
+
+    const allocCtx = document.getElementById("allocationChart").getContext("2d");
+    new Chart(allocCtx, {
+      type: "doughnut",
+      data: {
+        labels: instrumentLabels,
+        datasets: [{
+          data: placementArr,
+          backgroundColor: ["#3b82f6","#22c55e","#eab308","#a855f7","#f97316","#06b6d4","#ef4444"],
+          borderWidth: 0
+        }]
+      },
+      options: {
+        cutout: "58%",
+        plugins: {
+          legend: {
+            position: "bottom",
+            labels: { boxWidth: 10, padding: 10 }
+          },
+          tooltip: {
+            callbacks: {
+              label: (ctx) => ctx.label + ": " + ctx.parsed.toFixed(1) + "%"
+            }
+          }
+        }
+      }
+    });
+
+    const compCtx = document.getElementById("compositionChart").getContext("2d");
+    new Chart(compCtx, {
+      type: "bar",
+      data: {
+        labels: instrumentLabels,
+        datasets: [
+          {
+            label: "Accrued Mark-up",
+            data: accruedArr,
+            backgroundColor: "#38bdf8"
+          },
+          {
+            label: "Realised Gain",
+            data: realizedArr,
+            backgroundColor: "#22c55e"
+          },
+          {
+            label: "Unrealised Gain",
+            data: unrealizedArr,
+            backgroundColor: "#f97316"
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: "bottom", labels: { boxWidth: 10, padding: 10 } },
+          tooltip: {
+            callbacks: {
+              label: (ctx) => ctx.dataset.label + ": " + fmtPKR(ctx.parsed.y)
+            }
+          }
+        },
+        scales: {
+          x: { stacked: true, grid: { display: false } },
+          y: {
+            stacked: true,
+            beginAtZero: true,
+            grid: { color: "rgba(55,65,81,0.5)" },
+            ticks: {
+              callback: (value) =>
+                "PKR " + (value / 1000000).toLocaleString("en-PK", { maximumFractionDigits: 1 }) + "m"
+            }
+          }
+        }
+      }
+    });
+
+    const assetsCtx = document.getElementById("assetsChart").getContext("2d");
+    const assetsLabels = ["Sep 2025", "Nov 2025"];
+    const assetsData = [
+      embeddedData.kpis.total_assets_sept,
+      embeddedData.kpis.total_assets_nov
+    ];
+    new Chart(assetsCtx, {
+      type: "line",
+      data: {
+        labels: assetsLabels,
+        datasets: [{
+          label: "Total Assets (PKR bn)",
+          data: assetsData.map(v => v / 1000000000),
+          tension: 0.3,
+          fill: false,
+          borderWidth: 2,
+          pointRadius: 3
+        }]
+      },
+      options: {
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: (ctx) =>
+                "Total Assets: PKR " +
+                (ctx.parsed.y * 1000000000).toLocaleString("en-PK", { maximumFractionDigits: 0 })
+            }
+          }
+        },
+        scales: {
+          x: { grid: { display: false } },
+          y: {
+            beginAtZero: false,
+            grid: { color: "rgba(55,65,81,0.5)" },
+            ticks: {
+              callback: (value) =>
+                value.toLocaleString("en-PK", { maximumFractionDigits: 2 }) + " bn"
+            }
+          }
+        }
+      }
+    });
+
+    function downloadEmbeddedData() {
+      const blob = new Blob([JSON.stringify(embeddedData, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "ncgcl_nov25_investment_data.json";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>
