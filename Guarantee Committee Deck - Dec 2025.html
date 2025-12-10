@@ -93,9 +93,7 @@
 
     .nav-btn span.icon { font-size: 15px; }
 
-    .nav-btn:hover {
-      background-color: #f3f4f6;
-    }
+    .nav-btn:hover { background-color: #f3f4f6; }
 
     .nav-btn.active {
       background-color: rgba(3,80,118,0.14);
@@ -173,11 +171,6 @@
       height: 8px;
       border-radius: 999px;
       background-color: var(--ncgcl-blue);
-    }
-
-    .note {
-      font-size: 11px;
-      color: #9ca3af;
     }
 
     .grid {
@@ -288,6 +281,7 @@
       font-size: 13px;
       color: #4b5563;
       line-height: 1.6;
+      list-style-type: disc; /* ensure visible bullet pointers */
     }
 
     .callout {
@@ -334,7 +328,6 @@
       margin-top: 2px;
     }
 
-    /* Deal pipeline table */
     .deal-table-wrapper {
       margin-top: 10px;
       overflow-x: auto;
@@ -370,17 +363,6 @@
     .deal-table tfoot td {
       border-top: 2px solid var(--ncgcl-blue);
       font-weight: 700;
-    }
-
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      padding: 3px 10px;
-      border-radius: 999px;
-      font-size: 11px;
-      font-weight: 500;
-      background-color: rgba(3,80,118,0.06);
-      color: var(--ncgcl-blue);
     }
 
     /* Process flow styling */
@@ -481,7 +463,7 @@
       </div>
     </div>
 
-    <!-- 1. GUARANTEE ORIGINATION – PROCESS FLOW (FIRST TAB) -->
+    <!-- 1. GUARANTEE ORIGINATION – PROCESS FLOW -->
     <section id="process" class="section active">
       <div class="section-header">
         <div class="section-title">Guarantee Origination – Process Flow</div>
@@ -502,8 +484,7 @@
             <div class="flow-step-number">2</div>
             <div class="flow-step-label">Working Paper</div>
             <div class="flow-step-caption">
-              Concept note prepared by NCGCL’s team in consultation with the bank, defining target segment,
-              structure and expected impact.
+              Concept note prepared by NCGCL in consultation with the bank (segment, structure, expected impact).
             </div>
           </div>
 
@@ -511,8 +492,7 @@
             <div class="flow-step-number">3</div>
             <div class="flow-step-label">NDA / MoU / Indicative Term Sheet</div>
             <div class="flow-step-caption">
-              Non-disclosure agreement and/or MoU executed to enable detailed data sharing and joint product development.
-              Indicative term sheet shared.
+              NDA / MoU executed for data sharing; indicative term sheet shared and iterated.
             </div>
           </div>
 
@@ -520,17 +500,15 @@
             <div class="flow-step-number">4</div>
             <div class="flow-step-label">Shariah &amp; Legal Review</div>
             <div class="flow-step-caption">
-              Internal Shariah and legal departments of the bank, and NCGCL’s legal/Shariah advisors,
-              review and clear the proposed structure and documentation.
+              Bank and NCGCL legal / Shariah clear structure and documents.
             </div>
           </div>
 
           <div class="flow-step">
             <div class="flow-step-number">5</div>
-            <div class="flow-step-label">Approval by NCGCL</div>
+            <div class="flow-step-label">NCGCL Approvals</div>
             <div class="flow-step-caption">
-              Proposal presented to NCGCL’s internal committees and Board, with approvals obtained within
-              approved guarantee policy and RAC framework.
+              Internal committees and Board approvals under Guarantee Policy and RAC.
             </div>
           </div>
 
@@ -538,8 +516,7 @@
             <div class="flow-step-number">6</div>
             <div class="flow-step-label">Term Sheet</div>
             <div class="flow-step-caption">
-              Commercial and risk terms, covenants and reporting requirements documented and agreed
-              between NCGCL and the partner bank.
+              Commercial terms, covenants and reporting requirements agreed with partner bank.
             </div>
           </div>
 
@@ -547,8 +524,7 @@
             <div class="flow-step-number">7</div>
             <div class="flow-step-label">MAGFA</div>
             <div class="flow-step-caption">
-              MAGFA executed and effective, operationalizing the facility and enabling disbursements under
-              the approved guarantee structure.
+              MAGFA executed; facility becomes operational and disbursements commence under approved structure.
             </div>
           </div>
         </div>
@@ -566,7 +542,7 @@
               <li>BIPL Agri Input (PKR 1.0bn).</li>
               <li>BIPL LT Agri &amp; Assets (~PKR 660m).</li>
               <li>PMIC PCG (PKR 2.0bn).</li>
-              <li>HBL MFB Tiered PCG (PKR 8.0bn).</li>
+              <li>HBL MFB Tiered PCG (PKR 8.0bn underlying portfolios).</li>
               <li>UNIDO Sindh Consortium (PKR 200m).</li>
               <li>*Subject to pilot ceilings and phased utilization where applicable.</li>
             </ul>
@@ -574,13 +550,13 @@
         </div>
         <div class="card">
           <div class="card-label">NCGCL Max Contingent Exposure</div>
-          <div class="card-value-xl">PKR ~2.53 bn</div>
+          <div class="card-value-xl">PKR ~8.53 bn</div>
           <div class="card-body">
             <ul class="list">
               <li>BIPL ST <strong>10%</strong> SL (PKR 100m).</li>
               <li>BIPL LT <strong>15%</strong> FL (PKR 100m).</li>
               <li>PMIC <strong>50%</strong> PP (PKR 1.0bn).</li>
-              <li>HBL MFB tiered PCG (PKR 1.25bn across FLG, PPG and MPO).</li>
+              <li>HBL MFB tiered PCG (≤ PKR 7.250bn across FLG, second-loss and MPO tranches).</li>
               <li>UNIDO <strong>40%</strong> (PKR 80m).</li>
             </ul>
           </div>
@@ -617,7 +593,6 @@
         <div class="badge">Action: Approve 10% Second-Loss Pilot</div>
       </div>
 
-      <!-- Highlight strip: product, cover, exposure -->
       <div class="card highlight-row" style="margin-bottom:12px;">
         <div class="grid grid-3">
           <div>
@@ -640,17 +615,19 @@
           <div class="card-label">Facility Size</div>
           <div class="card-value-xl">PKR 1.0bn</div>
           <div class="card-body">
-            Revolving portfolio to finance fertilizer, seed and other inputs for smallholders; self-liquidating at harvest.
+            <ul class="list">
+              <li>Revolving finance for inputs (fertilizer, seed, pesticides etc.).</li>
+              <li>Self-liquidating at harvest; 6-month bullet loans.</li>
+            </ul>
           </div>
         </div>
         <div class="card">
           <div class="card-label">Guarantee Structure</div>
           <div class="card-body">
             <ul class="list">
-              <li>SBP provides a <strong>10%</strong> first-loss layer on the portfolio.</li>
-              <li>NCGCL provides a further <strong>10%</strong> second-loss layer, above SBP’s first-loss.</li>
-              <li>BIPL retains the remaining <strong>80%</strong> ultimate loss on the portfolio.</li>
-              <li>Claims on NCGCL are admissible only after SBP’s layer is fully utilized and losses are validated.</li>
+              <li>SBP: <strong>10%</strong> first-loss on the portfolio.</li>
+              <li>NCGCL: additional <strong>10%</strong> second-loss above SBP’s layer.</li>
+              <li>BIPL: retains remaining <strong>80%</strong> of ultimate loss.</li>
             </ul>
           </div>
         </div>
@@ -658,9 +635,9 @@
           <div class="card-label">Tenor &amp; Pricing</div>
           <div class="card-body">
             <ul class="list">
-              <li>6-month bullet loans aligned with the crop cycle.</li>
-              <li>Guarantee fee of 1.0% flat, charged at maturity.</li>
-              <li>Pricing consistent with approved grid and the Shariah-compliant structure.</li>
+              <li>Tenor: up to 6 months.</li>
+              <li>Guarantee fee: 1.0% flat, charged at maturity.</li>
+              <li>Pricing aligned with approved Shariah-compliant grid.</li>
             </ul>
           </div>
         </div>
@@ -670,34 +647,32 @@
         <div class="card">
           <div class="card-title">Eligibility &amp; Portfolio Criteria</div>
           <ul class="list">
-            <li>Small farmers with landholding up to 12.5 acres, verified CNIC and KYC completed.</li>
-            <li>Internal and ECIB checks; no severe delinquency history.</li>
-            <li>Portfolio diversification across crop types and regions; caps on single-borrower and group exposure.</li>
+            <li>Smallholders up to 12.5 acres; KYC and CNIC verified.</li>
+            <li>Internal and ECIB checks with no severe delinquency history.</li>
+            <li>Diversified by crop and geography; caps on single-borrower and group exposure.</li>
           </ul>
         </div>
         <div class="card">
           <div class="card-title">Controls, Reporting &amp; Claims</div>
           <ul class="list">
-            <li>Mandatory Takaful; standardized loan documentation and digital MIS.</li>
-            <li>Monthly reporting on disbursements, PAR (Portfolio At Risk) and recoveries; joint quarterly portfolio reviews.</li>
-            <li>NCGCL claims admissible only once SBP <strong>10%</strong> first-loss is fully absorbed, PAR thresholds tested,
-                and recovery efforts documented.</li>
+            <li>Mandatory Takaful; standardized documents and digital MIS.</li>
+            <li>Monthly reporting on disbursements, PAR (Portfolio At Risk) and recoveries.</li>
+            <li>Claims admissible only after SBP’s <strong>10%</strong> first-loss layer is fully exhausted and recoveries documented.</li>
           </ul>
         </div>
         <div class="card">
           <div class="card-title">Key Risks &amp; Mitigants</div>
           <ul class="list">
-            <li><strong>Weather and yield risk:</strong> short tenor, geographic diversification, and insurance.</li>
-            <li><strong>Moral hazard:</strong> high residual exposure for BIPL; hard PAR trip-wires and RAC compliance.</li>
-            <li><strong>Operational risk:</strong> standardized processes, audit rights and independent monitoring.</li>
+            <li>Weather / yield risk: short tenor, geographic diversification, insurance.</li>
+            <li>Moral hazard: high residual exposure for BIPL; hard PAR trip-wires and RAC compliance.</li>
+            <li>Operational risk: standardized processes, audit rights, independent monitoring.</li>
           </ul>
         </div>
       </div>
 
       <div class="callout">
-        <strong>Decision Sought:</strong> Approve PKR 1.0bn BIPL smallholder agri input portfolio with NCGCL providing
-        <strong>10%</strong> second-loss cover (PKR 100m maximum exposure), over SBP’s <strong>10%</strong> first-loss, subject to adherence
-        to agreed RAC, PAR (Portfolio At Risk) triggers and reporting standards.
+        <strong>Decision Sought:</strong> Approve PKR 1.0bn smallholder agri input portfolio with NCGCL providing
+        <strong>10%</strong> second-loss cover (PKR 100m cap) over SBP’s <strong>10%</strong> first-loss, subject to RAC and PAR (Portfolio At Risk) triggers.
       </div>
     </section>
 
@@ -708,20 +683,19 @@
         <div class="badge">Action: Approve 15% First-Loss PCG (Pilot at 10%)</div>
       </div>
 
-      <!-- Highlight strip: product, cover, exposure -->
       <div class="card highlight-row" style="margin-bottom:12px;">
         <div class="grid grid-3">
           <div>
             <div class="highlight-label">Product Type</div>
-            <div class="highlight-value">Long-tenor agri &amp; productive asset portfolio (mechanisation, solar, storage, livestock)</div>
+            <div class="highlight-value">Long-tenor agri &amp; productive asset portfolio</div>
           </div>
           <div>
             <div class="highlight-label">Guarantee Cover</div>
-            <div class="highlight-value">Up to <strong>15%</strong> NCGCL first-loss (pilot launch at <strong>10%</strong> FL)</div>
+            <div class="highlight-value">Up to <strong>15%</strong> NCGCL first-loss (pilot at <strong>10%</strong>)</div>
           </div>
           <div>
             <div class="highlight-label">NCGCL Exposure</div>
-            <div class="highlight-value">Capped at PKR 100m across ~PKR 660m portfolio</div>
+            <div class="highlight-value">PKR 100m cap on ~PKR 660m portfolio</div>
           </div>
         </div>
       </div>
@@ -732,8 +706,8 @@
           <div class="card-value-xl">~PKR 660m*</div>
           <div class="card-body">
             <ul class="list">
-              <li>Term loans for farm mechanization, solar irrigation, on-farm storage, dairy/livestock and other cashflow-generating assets.</li>
-              <li>*Ceiling and utilization to be phased, with scale-up subject to pilot performance.</li>
+              <li>Term loans for mechanisation, solar, storage, livestock and other productive assets.</li>
+              <li>*Phased ceiling; scale-up linked to pilot performance.</li>
             </ul>
           </div>
         </div>
@@ -741,9 +715,9 @@
           <div class="card-label">Guarantee Structure</div>
           <div class="card-body">
             <ul class="list">
-              <li>NCGCL provides first-loss protection up to <strong>15%</strong> of outstanding portfolio.</li>
-              <li>Pilot launch at <strong>10%</strong> first-loss, with potential increase to <strong>15%</strong> after performance review.</li>
-              <li>NCGCL exposure capped at PKR 100m across the long-term portfolio.</li>
+              <li>NCGCL first-loss up to <strong>15%</strong> (pilot launch at <strong>10%</strong>).</li>
+              <li>Exposure capped at PKR 100m across portfolio.</li>
+              <li>Residual loss retained by BIPL.</li>
             </ul>
           </div>
         </div>
@@ -751,9 +725,9 @@
           <div class="card-label">Tenor &amp; Pricing</div>
           <div class="card-body">
             <ul class="list">
-              <li>Tenor up to 8 years, with quarterly or semi-annual amortizing instalments.</li>
-              <li>Guarantee fee of 1.0% p.a. on guaranteed outstanding exposure.</li>
-              <li>Pricing aligned with the approved MAGFA-linked pricing grid.</li>
+              <li>Tenor: up to 8 years, amortising.</li>
+              <li>Guarantee fee: 1.0% p.a. on guaranteed outstanding.</li>
+              <li>Aligned with MAGFA-linked pricing grid.</li>
             </ul>
           </div>
         </div>
@@ -763,33 +737,32 @@
         <div class="card">
           <div class="card-title">Eligibility &amp; Risk Criteria</div>
           <ul class="list">
-            <li>Borrowers with demonstrable and verifiable cashflows to service term debt.</li>
-            <li>Compliance with both BIPL’s long-term credit policy and NCGCL RAC, including sector caps.</li>
-            <li>Hard PAR (Portfolio At Risk) threshold (e.g. <strong>10%</strong>) at portfolio level triggering review and potential halt of further utilization.</li>
+            <li>Borrowers with verifiable cashflows to service term debt.</li>
+            <li>Compliance with BIPL policy and NCGCL RAC, including sector caps.</li>
+            <li>Hard PAR (Portfolio At Risk) threshold (e.g. <strong>10%</strong>) at portfolio level triggers review and possible pause.</li>
           </ul>
         </div>
         <div class="card">
           <div class="card-title">Security &amp; Safeguards</div>
           <ul class="list">
-            <li>e-Passbook where applicable, and charge over financed assets and receivables.</li>
-            <li>Mandatory insurance/Takaful on financed assets; standard documentation and valuation norms.</li>
-            <li>NCGCL retains right to pause utilization where covenants or triggers are breached.</li>
-            <li>Monthly reporting on disbursements, PAR (Portfolio At Risk) and recoveries; joint quarterly portfolio reviews.</li>
+            <li>e-Passbook where applicable; charge over financed assets and receivables.</li>
+            <li>Mandatory insurance / Takaful on financed assets; standard valuation norms.</li>
+            <li>Monthly reporting on disbursements, PAR (Portfolio At Risk) and recoveries; right to pause utilisation.</li>
           </ul>
         </div>
         <div class="card">
           <div class="card-title">Key Risks &amp; Mitigants</div>
           <ul class="list">
-            <li>Long-term asset and price risk mitigated via rigorous appraisal, stress testing and phased deployment.</li>
-            <li>NCGCL exposure is capped at PKR 100m and structured as first-loss to crowd-in BIPL capital.</li>
-            <li>Data and learning from pilot phase to inform scale-up and any recalibration of terms.</li>
+            <li>Asset and price risk mitigated by rigorous appraisal and stress testing.</li>
+            <li>NCGCL exposure capped; structured as first-loss to crowd-in BIPL capital.</li>
+            <li>Pilot learnings to inform eventual scale-up or recalibration.</li>
           </ul>
         </div>
       </div>
 
       <div class="callout">
         <strong>Decision Sought:</strong> Approve BIPL long-term agri &amp; asset PCG structure with NCGCL first-loss
-        cover up to <strong>15%</strong> (pilot launch at <strong>10%</strong>), capped at PKR 100m exposure, with phased deployment and strict RAC adherence.
+        cover up to <strong>15%</strong> (pilot at <strong>10%</strong>), capped at PKR 100m, with phased deployment and strict RAC adherence.
       </div>
     </section>
 
@@ -800,7 +773,6 @@
         <div class="badge">Action: Approve 50% Pari Passu PCG</div>
       </div>
 
-      <!-- Highlight strip: product, cover, exposure -->
       <div class="card highlight-row" style="margin-bottom:12px;">
         <div class="grid grid-3">
           <div>
@@ -813,7 +785,7 @@
           </div>
           <div>
             <div class="highlight-label">NCGCL Exposure</div>
-            <div class="highlight-value">Up to PKR 1.0bn on PKR 2.0bn facility</div>
+            <div class="highlight-value">PKR 1.0bn cap on PKR 2.0bn facility</div>
           </div>
         </div>
       </div>
@@ -824,9 +796,8 @@
           <div class="card-value-xl">PKR 2.0bn</div>
           <div class="card-body">
             <ul class="list">
-              <li>Facility extended to PMIC to on-lend to eligible MFIs.</li>
-              <li>Ultimate end-borrowers include women, micro and climate-linked segments.</li>
-              <li>On-lending governed by RAC and agreed onward-lending criteria.</li>
+              <li>Wholesale facility extended to PMIC.</li>
+              <li>On-lent to eligible MFIs for micro and climate-linked portfolios.</li>
             </ul>
           </div>
         </div>
@@ -834,9 +805,9 @@
           <div class="card-label">Guarantee Structure</div>
           <div class="card-body">
             <ul class="list">
-              <li>NCGCL guarantees <strong>50%</strong> of principal losses on a pari passu basis with PMIC.</li>
-              <li>Aggregate NCGCL exposure capped at PKR 1.0bn across the PKR 2.0bn facility.</li>
-              <li>Losses and recoveries are shared proportionately between PMIC and NCGCL.</li>
+              <li>NCGCL guarantees <strong>50%</strong> of principal losses pari passu with PMIC.</li>
+              <li>Aggregate NCGCL exposure capped at PKR 1.0bn.</li>
+              <li>Losses and recoveries shared pro-rata.</li>
             </ul>
           </div>
         </div>
@@ -844,9 +815,9 @@
           <div class="card-label">Tenor &amp; Pricing</div>
           <div class="card-body">
             <ul class="list">
-              <li>Medium-term facility with tenor of up to 5 years.</li>
-              <li>Guarantee fee charged as per the approved pricing grid.</li>
-              <li>Fee linked to underlying risk profile and portfolio performance.</li>
+              <li>Tenor: up to 5 years.</li>
+              <li>Guarantee fee as per approved pricing grid.</li>
+              <li>Fee linked to risk profile and performance.</li>
             </ul>
           </div>
         </div>
@@ -855,8 +826,8 @@
           <div class="card-body">
             <ul class="list">
               <li>On-lending to MFIs for eligible microfinance products.</li>
-              <li>Clear onward lending criteria and exclusion lists to ensure developmental focus.</li>
-              <li>Focus on pro-poor and inclusion-oriented segments.</li>
+              <li>Clear onward lending criteria and exclusion lists.</li>
+              <li>Focus on pro-poor, inclusion-oriented segments.</li>
             </ul>
           </div>
         </div>
@@ -866,28 +837,29 @@
         <div class="card">
           <div class="card-title">Eligibility &amp; Covenants</div>
           <ul class="list">
-            <li>MFIs must meet minimum rating, governance and performance thresholds defined in RAC.</li>
-            <li>Portfolio PAR (Portfolio At Risk) kept within agreed limits (e.g. PAR30 / PAR90 thresholds).</li>
-            <li>Capital adequacy and leverage limits to be observed; breach triggers enhanced monitoring or suspension.</li>
+            <li>MFIs must meet rating, governance and performance thresholds in RAC.</li>
+            <li>Portfolio PAR (Portfolio At Risk) within agreed limits (e.g. PAR30 / PAR90 thresholds).</li>
+            <li>Capital adequacy and leverage limits observed; breach triggers enhanced monitoring or suspension.</li>
           </ul>
         </div>
         <div class="card">
           <div class="card-title">Security, Reporting &amp; Claims</div>
           <ul class="list">
-            <li>Assignment of receivables and pari passu charge/escrow arrangements where applicable.</li>
-            <li>Quarterly reporting pack with detailed portfolio performance, covenant compliance and early warning signals.</li>
-            <li>Standardized claims protocol; recoveries shared pro-rata between PMIC and NCGCL after claim payout.</li>
+            <li>Assignment of receivables and pari passu charge / escrow where applicable.</li>
+            <li>Quarterly reporting pack on performance, covenants and early warning signals.</li>
+            <li>Standard claims protocol; recoveries shared pro-rata after claim payout.</li>
           </ul>
         </div>
         <div class="card">
           <div class="card-title">Key Risks &amp; Mitigants</div>
           <ul class="list">
-            <li>Sectoral stress mitigated by diversified wholesale portfolio and strong apex institution.</li>
-            <li>Robust governance, covenants and NCGCL’s ability to suspend cover upon covenant breach.</li>
-            <li>Data-driven monitoring and regular joint review meetings.</li>
+            <li>Sector stress mitigated by diversified wholesale portfolio and strong apex institution.</li>
+            <li>Robust governance, covenants and right to suspend cover on covenant breach.</li>
+            <li>Data-driven monitoring and regular joint reviews.</li>
           </ul>
         </div>
       </div>
+
       <div class="callout">
         <strong>Planned Cohort:</strong> 
         <ul class="list">
@@ -901,40 +873,38 @@
       </div>
       <div class="callout">
         <strong>Decision Sought:</strong> Approve PKR 2.0bn PMIC facility with <strong>50%</strong> pari passu NCGCL guarantee on principal
-        (maximum exposure PKR 1.0bn), subject to covenant-based monitoring, RAC compliance and right to suspend.
+        (PKR 1.0bn cap), subject to covenants, RAC compliance and suspension rights.
       </div>
     </section>
 
-    <!-- 6. HBL MFB – TIERED PCG FACILITY (UPDATED) -->
+    <!-- 6. HBL MFB – TIERED PCG FACILITY (CONDENSED) -->
     <section id="hbl-mfb" class="section">
       <div class="section-header">
         <div class="section-title">HBL Microfinance Bank – Tiered Portfolio Credit Guarantee</div>
         <div class="badge">Action: Approve Tiered FLG + Second-Loss + MPO Structure</div>
       </div>
 
-      <!-- Highlight strip: product, cover, exposure -->
       <div class="card highlight-row" style="margin-bottom:12px;">
         <div class="grid grid-3">
           <div>
             <div class="highlight-label">Product Type</div>
             <div class="highlight-value">
-              Tiered portfolio credit guarantee for micro borrowers, microenterprises and smallholder farmers
-              (Shariah-ready, digitally enabled).
+              Tiered portfolio credit guarantee for micro borrowers, microenterprises and smallholder farmers.
             </div>
           </div>
           <div>
             <div class="highlight-label">Guarantee Cover</div>
             <div class="highlight-value">
-              <strong>10%</strong> First-Loss Guarantee (FLG) on a PKR 5bn portfolio (portfolio level),<br>
-              <strong>25%</strong> account-level second-loss guarantee on a PKR 2bn portfolio alongside IFC, and<br>
-              <strong>25%</strong> Mezzanine Provisioning Offset (MPO) on the IFC portfolio (up to PKR 250m FSV benefit).
+              <strong>10%</strong> first-loss (FLG) on a PKR 5bn portfolio,<br>
+              up to <strong>25%</strong> account-level second-loss alongside IFC,<br>
+              and <strong>25%</strong> Mezzanine Provisioning Offset (MPO) on the IFC portfolio.
             </div>
           </div>
           <div>
             <div class="highlight-label">NCGCL Exposure</div>
             <div class="highlight-value">
-              Maximum contingent liability of PKR 1.25bn across three tranches:<br>
-              PKR 500m FLG + PKR 500m second-loss + PKR 250m MPO.
+              HBL MFB’s total NCGCL-backed contingent exposure<br>
+              is capped at ≤ PKR 7.250bn across all tranches.
             </div>
           </div>
         </div>
@@ -942,134 +912,74 @@
 
       <div class="grid grid-3">
         <div class="card">
-          <div class="card-label">Portfolio Size &amp; Tenor</div>
-          <div class="card-value-xl">Utilisation up to PKR 8.0bn · Tenor up to 3 Years</div>
+          <div class="card-label">Portfolios &amp; Purpose</div>
           <div class="card-body">
             <ul class="list">
-              <li>Facility structured around:
+              <li>Underlying portfolios up to PKR 8.0bn across:
                 <ul class="list">
-                  <li>PKR 5bn portfolio under <strong>10%</strong> first-loss coverage (FLG),</li>
-                  <li>PKR 2bn portfolio under IFC + NCGCL account-level coverage, and</li>
-                  <li>PKR 1bn portfolio eligible for MPO-linked FSV benefits (up to PKR 250m).</li>
+                  <li>microfinance and microenterprise lending, and</li>
+                  <li>smallholder agri and agri-linked value chains.</li>
                 </ul>
               </li>
-              <li>Aggregate pilot utilisation assumed at ~PKR 8bn over the guarantee period.</li>
-              <li>Overall guarantee tenor of up to 3 years, aligned with underlying retail portfolios.</li>
+              <li>Objective: de-risk expansion into underserved and higher-risk segments while preserving HBL MFB’s “skin in the game”.</li>
+              <li>Repayment source: cashflows from underlying loan portfolios; guarantee supports loss absorption, not cash servicing.</li>
             </ul>
           </div>
         </div>
+
         <div class="card">
-          <div class="card-label">Facility Purpose &amp; Repayment Source</div>
+          <div class="card-label">Key Terms (High-Level)</div>
           <div class="card-body">
             <ul class="list">
-              <li>Purpose: provide partial risk coverage to HBL MFB for lending to:
+              <li>Tenor: up to 3 years, aligned with portfolio amortisation.</li>
+              <li>Guarantee fees (illustrative):
                 <ul class="list">
-                  <li>micro borrowers and microenterprises, and</li>
-                  <li>smallholder farmers in agri and agri-linked value chains.</li>
+                  <li>FLG: 2.00% p.a. on guaranteed portion;</li>
+                  <li>Second-loss: 1.50% p.a. on guaranteed portion;</li>
+                  <li>MPO: 1.00% p.a. on FSV benefit used (up to defined limit).</li>
                 </ul>
               </li>
-              <li>Repayment source: cashflows from HBL MFB’s underlying MSME and agri loan portfolios.</li>
-              <li>Borrower repayments service the guaranteed pool, preserving cashflow integrity.</li>
+              <li>Fee design tiered by risk-sharing layer; detailed grids maintained in credit file.</li>
             </ul>
           </div>
         </div>
+
         <div class="card">
-          <div class="card-label">Pricing</div>
+          <div class="card-label">Risk, Covenants &amp; Monitoring</div>
           <div class="card-body">
             <ul class="list">
-              <li>FLG: Guarantee fee of 2.00% p.a. on the guaranteed portion of average outstanding principal,
-                  payable quarterly in arrears.</li>
-              <li>Second-loss (account level): Guarantee fee of 1.50% p.a. on the guaranteed portion of average
-                  outstanding principal, payable quarterly in arrears.</li>
-              <li>MPO: Guarantee fee of 1.00% p.a. on the average FSV benefit utilized (up to PKR 250m),
-                  payable quarterly in arrears.</li>
+              <li>Portfolio quality:
+                <ul class="list">
+                  <li>Gross infection ratio to be maintained within agreed cap (e.g. ≤ <strong>8%</strong>);</li>
+                  <li>Poor performance and PAR (Portfolio At Risk) deterioration trigger freeze / recalibration.</li>
+                </ul>
+              </li>
+              <li>Capital &amp; liquidity:
+                <ul class="list">
+                  <li>Minimum CAR covenant for HBL MFB (e.g. ≥ prescribed threshold).</li>
+                  <li>NCGCL right to pause utilisation if prudential metrics breached.</li>
+                </ul>
+              </li>
+              <li>Monitoring &amp; claims:
+                <ul class="list">
+                  <li>Monthly portfolio data (utilisation, PAR / NPL, segment mix).</li>
+                  <li>Standardised claim protocol; recoveries shared as per agreed waterfall.</li>
+                </ul>
+              </li>
             </ul>
           </div>
-        </div>
-      </div>
-
-      <div class="grid grid-3" style="margin-top:12px;">
-        <div class="card">
-          <div class="card-title">Guarantee Structure – Layered Risk Sharing</div>
-          <ul class="list">
-            <li><strong>First-Loss Guarantee (FLG):</strong>
-              <ul class="list">
-                <li><strong>10%</strong> first-loss cover at portfolio level on a PKR 5bn pool (maximum NCGCL liability PKR 500m).</li>
-                <li>Linked initially to seasonal livestock / Bakra Eid facility and similar short-term working capital pools.</li>
-              </ul>
-            </li>
-            <li><strong>Account-Level Second Loss (aligned with IFC):</strong>
-              <ul class="list">
-                <li>IFC provides <strong>50%</strong> coverage at account level; NCGCL adds a further <strong>25%</strong> second-loss layer.</li>
-                <li>Aggregate account-level coverage of up to <strong>75%</strong> (50% IFC + 25% NCGCL) on eligible loans.</li>
-                <li>NCGCL’s second-loss is activated only once IFC has honored claims totalling <strong>25%</strong> of the portfolio.</li>
-                <li>Claims then shared pro-rata: IFC 50%, NCGCL 25% on incremental losses thereafter.</li>
-              </ul>
-            </li>
-            <li><strong>Mezzanine Provisioning Offset (MPO):</strong>
-              <ul class="list">
-                <li>No direct credit coverage; instead, NCGCL allows HBL MFB to take FSV benefit on NPLs up to PKR 250m.</li>
-                <li>FSV benefit improves P&amp;L by lowering provisioning charges until accounts reach “Loss” status
-                    and IFC claims are lodged.</li>
-              </ul>
-            </li>
-            <li>Residual risk beyond these layers is retained by HBL MFB to preserve “skin in the game”.</li>
-          </ul>
-        </div>
-
-        <div class="card">
-          <div class="card-title">Eligibility, Covenants &amp; Monitoring</div>
-          <ul class="list">
-            <li>Eligible products:
-              <ul class="list">
-                <li>seasonal livestock / Bakra Eid dealer finance, and</li>
-                <li>IFC-aligned MSME and agri products for micro and small enterprises.</li>
-              </ul>
-            </li>
-            <li>Overall portfolio infection ratio (gross) to be maintained at or below <strong>8%</strong>; breaches trigger a portfolio freeze and joint review.</li>
-            <li>Early-warning triggers: PAR (Portfolio At Risk) &gt; <strong>5%</strong> or NPL ratio &gt; <strong>10%</strong> activates remedial review and potential suspension of further utilization.</li>
-            <li>Minimum capital-adequacy ratio (CAR) covenant: HBL MFB to maintain CAR ≥ <strong>12%</strong>.</li>
-            <li>Monthly portfolio data submissions (utilisation, PAR / NPL, vintage and segment mix) and quarterly joint portfolio
-                review meetings between NCGCL and HBL MFB.</li>
-            <li>Full adherence to NCGCL claim protocols, data submission standards and AML/CFT requirements for downstream obligors.</li>
-          </ul>
-        </div>
-
-        <div class="card">
-          <div class="card-title">Claims, Recoveries &amp; Key Risks</div>
-          <ul class="list">
-            <li><strong>Claims &amp; Recoveries</strong>
-              <ul class="list">
-                <li>Claims triggered only once exposures meet verified-loss conditions and internal recovery procedures are exhausted.</li>
-                <li>Each claim supported by loan files, recovery evidence and portfolio-level schedules.</li>
-                <li>NCGCL settles admissible claims in line with the approved claims protocol; recoveries shared according to the agreed waterfall.</li>
-              </ul>
-            </li>
-            <li><strong>Key Risks &amp; Mitigants</strong>
-              <ul class="list">
-                <li><strong>Portfolio credit risk:</strong> mitigated via layered first-loss, second-loss and MPO structure,
-                    tight eligibility criteria and IFRS-9 provisioning discipline.</li>
-                <li><strong>Operational &amp; data risk:</strong> addressed through monthly performance data, standardized templates,
-                    joint audits and clearly defined claim windows.</li>
-                <li><strong>Liquidity &amp; funding risk:</strong> supported by HBL sponsorship, strong equity base and sizeable
-                    liquid investment book.</li>
-                <li><strong>Regulatory &amp; Shariah risk:</strong> design is Shariah-ready with a defined Islamic conversion plan and
-                    compliance under SBP oversight.</li>
-              </ul>
-            </li>
-          </ul>
         </div>
       </div>
 
       <div class="callout">
-        <strong>Decision Sought:</strong> Approve the tiered Portfolio Credit Guarantee facility for HBL Microfinance Bank comprising:
+        <strong>Decision Sought:</strong> Approve the tiered Portfolio Credit Guarantee facility for HBL Microfinance Bank with:
         <ul class="list">
-          <li><strong>10%</strong> first-loss cover on a PKR 5bn portfolio (maximum NCGCL exposure PKR 500m);</li>
-          <li><strong>25%</strong> account-level second-loss guarantee on a PKR 2bn IFC-aligned portfolio (maximum NCGCL exposure PKR 500m); and</li>
-          <li><strong>25%</strong> Mezzanine Provisioning Offset facility on the IFC portfolio, allowing FSV benefit up to PKR 250m.</li>
+          <li><strong>10%</strong> first-loss cover on a PKR 5bn pool,</li>
+          <li>up to <strong>25%</strong> account-level second-loss cover alongside IFC, and</li>
+          <li><strong>25%</strong> MPO on the IFC portfolio,</li>
         </ul>
-        Aggregate NCGCL contingent liability is capped at PKR 1.25bn, with strong covenants on PAR (Portfolio At Risk), CAR,
-        and reporting, consistent with Guarantee Policy 2025 and NCGCL’s risk-acceptance framework.
+        with HBL MFB’s aggregate NCGCL-backed contingent exposure capped at ≤ PKR 7.250bn, subject to portfolio quality,
+        PAR (Portfolio At Risk), capital and reporting covenants under NCGCL’s risk-acceptance framework.
       </div>
     </section>
 
@@ -1080,7 +990,6 @@
         <div class="badge">Action: Approve Blended PCG Pilot</div>
       </div>
 
-      <!-- Highlight strip: product, cover, exposure -->
       <div class="card highlight-row" style="margin-bottom:12px;">
         <div class="grid grid-3">
           <div>
@@ -1115,7 +1024,7 @@
             <ul class="list">
               <li>NCGCL provides a <strong>40%</strong> portfolio guarantee over eligible loans.</li>
               <li>Total NCGCL exposure capped at PKR 80m.</li>
-              <li>Grant support from UNIDO further de-risks the underlying projects.</li>
+              <li>Grant support from UNIDO further de-risks underlying projects.</li>
               <li>Risk-sharing alongside PBIC and participating MFIs.</li>
             </ul>
           </div>
@@ -1142,15 +1051,15 @@
         <div class="card">
           <div class="card-title">Design &amp; Governance</div>
           <ul class="list">
-            <li>Clear roles for UNIDO, PBIC, SAFCO, TMF and NCGCL under a consortium framework agreement.</li>
-            <li>Eligibility and exclusion lists anchored in RAC and UNIDO’s project guidelines.</li>
-            <li>Quarterly consortium review meetings to track KPIs, impact and risk metrics.</li>
+            <li>Clear roles for UNIDO, PBIC, SAFCO, TMF and NCGCL under a consortium framework.</li>
+            <li>Eligibility and exclusion lists anchored in RAC and UNIDO guidelines.</li>
+            <li>Quarterly consortium reviews to track KPIs, impact and risk metrics.</li>
           </ul>
         </div>
         <div class="card">
           <div class="card-title">Risk Management</div>
           <ul class="list">
-            <li>Group- and community-based lending methodologies and social collateral where appropriate.</li>
+            <li>Group- and community-based lending and social collateral where appropriate.</li>
             <li>Portfolio PAR (Portfolio At Risk) triggers with ability to rebalance, tighten criteria or pause disbursements.</li>
             <li>NCGCL exposure ring-fenced to a defined pilot pool, with explicit exit and scale-up criteria.</li>
           </ul>
@@ -1158,16 +1067,15 @@
         <div class="card">
           <div class="card-title">Claims &amp; Recovery</div>
           <ul class="list">
-            <li>Standardized claim documentation verifying eligibility, procedures and loss realization.</li>
-            <li>Recoveries shared according to an agreed waterfall between PFIs, UNIDO-related funds (where applicable)
-                and NCGCL.</li>
+            <li>Standardised claim documentation evidencing eligibility and loss realisation.</li>
+            <li>Recoveries shared according to agreed waterfall between PFIs, UNIDO-related funds (where applicable) and NCGCL.</li>
           </ul>
         </div>
       </div>
 
       <div class="callout">
         <strong>Decision Sought:</strong> Approve PKR 200m UNIDO Sindh Consortium blended pilot with <strong>40%</strong> NCGCL cover
-        (PKR 80m cap), subject to signed consortium agreement, RAC adherence, KPIs and defined exit/scale-up triggers.
+        (PKR 80m cap), subject to signed consortium agreement, RAC adherence, KPIs and exit/scale-up triggers.
       </div>
     </section>
 
@@ -1183,13 +1091,13 @@
         <ul class="list">
           <li><strong>Institutional diversification</strong>
             <ul class="list">
-              <li>Diversification across an Islamic bank (BIPL), apex microfinance wholesaler (PMIC), direct microfinance bank (HBL MFB) and blended consortium (UNIDO/PBIC/SAFCO/TMF).</li>
+              <li>Diversified across BIPL (Islamic bank), PMIC (apex microfinance wholesaler), HBL MFB (microfinance bank) and a blended consortium (UNIDO/PBIC/SAFCO/TMF).</li>
             </ul>
           </li>
           <li><strong>Contingent exposure &amp; capital limits</strong>
             <ul class="list">
-              <li>NCGCL contingent exposures (c. PKR 2.53bn at caps) remain within internal prudential limits.</li>
-              <li>Aligned with Guarantee Policy 2025 and capital-consumption envelope for the guarantee book.</li>
+              <li>NCGCL contingent exposures at caps of ~PKR 8.53bn remain under internal prudential and capital-consumption limits.</li>
+              <li>HBL MFB exposure dominates the book but is bounded at ≤ PKR 7.250bn by design.</li>
             </ul>
           </li>
           <li><strong>Risk-sharing architecture</strong>
@@ -1201,13 +1109,13 @@
           <li><strong>Self-liquidating guarantees</strong>
             <ul class="list">
               <li>All guarantees are self-liquidating, with tenors matched to underlying assets.</li>
-              <li>Clear, time-bound claim procedures and recovery waterfalls reduce tail-risk.</li>
+              <li>Clear, time-bound claim procedures and recovery waterfalls reduce tail risk.</li>
             </ul>
           </li>
           <li><strong>Harmonised monitoring &amp; early intervention</strong>
             <ul class="list">
-              <li>Harmonized RACs, reporting templates and claim protocols across agri, microfinance and blended portfolios.</li>
-              <li>Enables consolidated monitoring, early warning through PAR (Portfolio At Risk) / NPL metrics and swift intervention.</li>
+              <li>Harmonised RACs, reporting templates and claim protocols across agri, microfinance and blended portfolios.</li>
+              <li>Enables consolidated monitoring, early warning via PAR (Portfolio At Risk) / NPL metrics and swift intervention.</li>
             </ul>
           </li>
         </ul>
@@ -1226,42 +1134,42 @@
           <li>
             <strong>BIPL Agri Input (Short Tenor)</strong>
             <ul class="list">
-              <li>Approve PKR 1.0bn portfolio with NCGCL providing <strong>10%</strong> second-loss cover (PKR 100m maximum exposure), sitting above SBP’s <strong>10%</strong> first-loss.</li>
-              <li>Subject to RAC, PAR (Portfolio At Risk) triggers and agreed reporting and claim protocols.</li>
+              <li>Approve PKR 1.0bn portfolio with NCGCL providing <strong>10%</strong> second-loss cover (PKR 100m cap) above SBP’s <strong>10%</strong> first-loss.</li>
+              <li>Subject to RAC, PAR (Portfolio At Risk) triggers and standard reporting / claim protocols.</li>
             </ul>
           </li>
           <li>
             <strong>BIPL LT Agri &amp; Assets</strong>
             <ul class="list">
-              <li>Approve PCG structure with NCGCL first-loss cover up to <strong>15%</strong> of the portfolio (pilot launch at <strong>10%</strong>), capped at PKR 100m exposure.</li>
-              <li>Phased deployment with sector caps and strict RAC compliance.</li>
+              <li>Approve PCG structure with NCGCL first-loss cover up to <strong>15%</strong> (pilot at <strong>10%</strong>), capped at PKR 100m.</li>
+              <li>Phased deployment, sector caps and strict RAC compliance.</li>
             </ul>
           </li>
           <li>
             <strong>PMIC PCG</strong>
             <ul class="list">
               <li>Approve PKR 2.0bn facility with <strong>50%</strong> pari passu NCGCL coverage on principal (PKR 1.0bn cap).</li>
-              <li>Anchored in financial covenants, performance thresholds and NCGCL’s right to suspend on covenant breach.</li>
+              <li>Anchored in covenants, performance thresholds and NCGCL’s right to suspend on breach.</li>
             </ul>
           </li>
           <li>
             <strong>HBL MFB Tiered PCG Facility</strong>
             <ul class="list">
-              <li>Approve PKR 8.0bn tiered portfolio credit guarantee comprising:
+              <li>Approve tiered PCG with:
                 <ul class="list">
-                  <li><strong>10%</strong> first-loss on PKR 5bn (PKR 500m cap).</li>
-                  <li><strong>25%</strong> account-level second-loss cover on PKR 2bn (PKR 500m cap) alongside IFC.</li>
-                  <li><strong>25%</strong> mezzanine provisioning offset on PKR 1bn of IFC portfolio, allowing FSV benefit up to PKR 250m.</li>
+                  <li><strong>10%</strong> first-loss cover on a PKR 5bn pool,</li>
+                  <li>up to <strong>25%</strong> account-level second-loss alongside IFC, and</li>
+                  <li><strong>25%</strong> MPO on the IFC portfolio,</li>
                 </ul>
               </li>
-              <li>Subject to agreed covenants, reporting standards and claims protocols.</li>
+              <li>HBL MFB’s total NCGCL-backed contingent exposure under the facility capped at ≤ PKR 7.250bn, subject to portfolio quality, PAR (Portfolio At Risk), capital and reporting covenants.</li>
             </ul>
           </li>
           <li>
             <strong>UNIDO Sindh Consortium</strong>
             <ul class="list">
               <li>Approve PKR 200m blended pilot with <strong>40%</strong> NCGCL cover (PKR 80m cap).</li>
-              <li>Subject to signed consortium agreement, RAC adherence, KPIs and exit/scale-up criteria.</li>
+              <li>Subject to consortium agreement, RAC adherence, KPIs and exit/scale-up criteria.</li>
             </ul>
           </li>
         </ol>
@@ -1272,7 +1180,7 @@
       </div>
     </section>
 
-    <!-- 10. SHARIAH ADVISORY – AL HILAL (COLLAPSED TO BULLET LIST) -->
+    <!-- 10. SHARIAH ADVISORY – AL HILAL -->
     <section id="shariah" class="section">
       <div class="section-header">
         <div class="section-title">Shariah Advisory Proposal – Al Hilal Shariah Advisors</div>
@@ -1306,7 +1214,7 @@
       </div>
     </section>
 
-    <!-- 11. DEAL PIPELINE – UPCOMING YEAR (LAST TAB) -->
+    <!-- 11. DEAL PIPELINE – UPCOMING YEAR -->
     <section id="pipeline" class="section">
       <div class="section-header">
         <div class="section-title">NCGCL Deal Pipeline – Upcoming Year</div>
@@ -1395,7 +1303,7 @@
                 <td>9</td>
                 <td>HBL MFB</td>
                 <td class="amount">1,000</td>
-                <td>Template shared for data solicitation; based on responses, guarantee offering to be proposed (first-loss for new product and additional risk coverage under IFC pari passu).</td>
+                <td>Template shared for data solicitation; based on responses, guarantee offering to be proposed (tiered first-loss and additional risk coverage under IFC programme).</td>
               </tr>
               <tr>
                 <td>10</td>
@@ -1407,7 +1315,7 @@
                 <td>11</td>
                 <td>HBL Zarai</td>
                 <td class="amount">300</td>
-                <td>Pilot under discussion whereby supplier credit will be awarded to HBL Zarai from manufacturers of agri inputs (fertilizers, seeds, pesticides etc.); modalities being finalised.</td>
+                <td>Pilot under discussion whereby supplier credit will be awarded to HBL Zarai from manufacturers of agri inputs; modalities being finalised.</td>
               </tr>
               <tr>
                 <td>12</td>
@@ -1419,13 +1327,13 @@
                 <td>13</td>
                 <td>PMN</td>
                 <td class="amount">–</td>
-                <td>MoU content has been agreed; signature pending. Once signed, PMN to provide a platform to introduce NCGCL to MFIs, MFIs and NBFIs. CEO’s availability to be communicated.</td>
+                <td>MoU content agreed; signature pending. Once signed, PMN to provide platform to introduce NCGCL to MFIs and NBFIs.</td>
               </tr>
               <tr>
                 <td>14</td>
                 <td>SEDF</td>
                 <td class="amount">–</td>
-                <td>MoU to be signed; expected in week of 09 Dec 2025 to enable information sharing on prospective deals between the two entities.</td>
+                <td>MoU to be signed; expected in week of 09 Dec 2025 to enable information sharing on prospective deals.</td>
               </tr>
             </tbody>
             <tfoot>
