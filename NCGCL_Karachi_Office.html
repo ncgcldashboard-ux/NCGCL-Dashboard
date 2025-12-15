@@ -1,0 +1,826 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NCGCL Board Dashboard | Karachi Office Establishment (Offline)</title>
+  <style>
+    :root{
+      --bg:#f8fafc; --card:#ffffff; --text:#0f172a; --muted:#64748b; --border:#e2e8f0;
+      --brand:#2563eb; --brand2:#0f172a; --good:#16a34a; --warn:#ca8a04; --bad:#dc2626;
+      --shadow:0 1px 2px rgba(15,23,42,.06), 0 8px 24px rgba(15,23,42,.06);
+      --r:14px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.35}
+    .wrap{max-width:1200px;margin:0 auto;padding:20px}
+    header{
+      background:var(--brand2); color:#fff; padding:18px 20px; box-shadow:var(--shadow);
+      position:sticky; top:0; z-index:50;
+    }
+    .headrow{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;gap:16px;align-items:center}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:34px;height:34px;background:var(--brand);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800}
+    .h1{font-size:18px;font-weight:800;margin:0}
+    .sub{margin:2px 0 0 0;color:#cbd5e1;font-size:12px}
+    .kpis{display:flex;gap:18px;align-items:flex-end}
+    .kpi{display:none;text-align:right}
+    .kpi .lbl{font-size:11px;color:#cbd5e1;text-transform:uppercase;letter-spacing:.08em}
+    .kpi .val{font-size:20px;font-weight:800}
+    @media (min-width:860px){.kpi{display:block}}
+    nav{
+      background:#fff;border-bottom:1px solid var(--border);
+      position:sticky; top:78px; z-index:40;
+    }
+    .tabs{max-width:1200px;margin:0 auto;display:flex;gap:22px;overflow:auto;padding:0 20px}
+    .tabbtn{
+      border:0;background:transparent;padding:14px 2px;font-weight:700;font-size:13px;color:var(--muted);
+      border-bottom:2px solid transparent; cursor:pointer; white-space:nowrap;
+    }
+    .tabbtn.active{color:var(--brand);border-bottom-color:var(--brand)}
+    .grid{display:grid;gap:16px}
+    .grid2{grid-template-columns:1fr}
+    .grid3{grid-template-columns:1fr}
+    @media (min-width:980px){
+      .grid2{grid-template-columns:1fr 1fr}
+      .grid3{grid-template-columns:2fr 1fr}
+    }
+    .card{
+      background:var(--card); border:1px solid var(--border); border-radius:var(--r); box-shadow:var(--shadow);
+      padding:16px;
+    }
+    .ctitle{
+      margin:0 0 10px 0; font-size:12px; color:var(--muted); font-weight:800; text-transform:uppercase; letter-spacing:.09em;
+    }
+    .muted{color:var(--muted)}
+    .pill{display:inline-block;padding:4px 8px;border-radius:999px;font-size:11px;font-weight:800}
+    .pill.good{background:#dcfce7;color:#166534}
+    .pill.warn{background:#fef9c3;color:#854d0e}
+    .pill.info{background:#dbeafe;color:#1e3a8a}
+    .pill.neutral{background:#f1f5f9;color:#334155}
+    .callouts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .box{border:1px solid var(--border);border-radius:12px;padding:12px;background:#fff}
+    .box.gray{background:#f8fafc}
+    .box.green{background:#f0fdf4;border-color:#bbf7d0}
+    .box .b1{font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;font-weight:800;margin-bottom:4px}
+    .box .b2{font-weight:900}
+    .box .b3{font-size:11px;color:var(--muted);margin-top:4px}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:10px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top}
+    th{font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.08em;text-align:left;background:#f8fafc;border-bottom:1px solid var(--border)}
+    tr:hover td{background:#fafafa}
+    .right{text-align:right}
+    .chart{width:100%;height:280px;border:1px solid var(--border);border-radius:12px;background:#fff;overflow:hidden}
+    .chart.small{height:220px}
+    .legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;font-size:12px;color:var(--muted)}
+    .dot{width:10px;height:10px;border-radius:999px;display:inline-block;margin-right:6px;vertical-align:middle}
+    .note{font-size:12px;color:var(--muted);margin-top:10px}
+    footer{max-width:1200px;margin:0 auto;padding:0 20px 22px 20px;color:#94a3b8;font-size:11px;text-align:center}
+    /* Print */
+    @media print{
+      header, nav{position:static;box-shadow:none}
+      body{background:#fff}
+      .card{box-shadow:none}
+      .tabbtn{display:none}
+      section{display:block !important}
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="headrow">
+    <div class="brand">
+      <div class="logo">N</div>
+      <div>
+        <p class="h1">NCGCL Board Dashboard</p>
+        <p class="sub">Karachi Office Establishment | Sumya Sky View</p>
+      </div>
+    </div>
+    <div class="kpis">
+      <div class="kpi">
+        <div class="lbl">Board Envelope Request</div>
+        <div class="val">PKR 63.5 M <span style="font-size:12px;color:#cbd5e1;font-weight:700">+ Tax</span></div>
+      </div>
+      <div class="kpi">
+        <div class="lbl">Timeline</div>
+        <div class="val">60 Days</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="tabs" id="tabs">
+    <button class="tabbtn active" data-tab="exec">1. Exec Summary</button>
+    <button class="tabbtn" data-tab="roadmap">2. Procurement Roadmap</button>
+    <button class="tabbtn" data-tab="breakdown">3. Contractor Breakdown</button>
+    <button class="tabbtn" data-tab="journey">4. Savings Journey</button>
+    <button class="tabbtn" data-tab="budget">5. Final Budget</button>
+    <button class="tabbtn" data-tab="timeline">6. Timeline</button>
+    <button class="tabbtn" data-tab="benchmark">7. Peer Benchmark</button>
+  </div>
+</nav>
+
+<div class="wrap">
+  <!-- EXEC -->
+  <section id="exec" class="tab">
+    <div class="grid grid2">
+      <div class="card">
+        <h3 class="ctitle">Executive Summary: Agenda 5</h3>
+        <p style="margin:0 0 10px 0;font-weight:800">
+          NCGCL has concluded a transparent, multi-stage procurement process for the Karachi Head Office fit-out.
+        </p>
+        <div class="callouts">
+          <div class="box gray">
+            <div class="b1">Process Governance</div>
+            <div class="b2">Joint Committee</div>
+            <div class="b3">Evaluated by Architect (Coalesce), CEO, and Company Secretary.</div>
+          </div>
+          <div class="box green">
+            <div class="b1" style="color:#15803d">Cost Efficiency</div>
+            <div class="b2" style="color:#166534">8% Rebate</div>
+            <div class="b3" style="color:#166534">Contractor bid reduced from 39.3M to 36.0M via negotiation.</div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px;padding-top:12px;border-top:1px solid #f1f5f9">
+          <div style="font-weight:900;margin-bottom:6px">Key decisions requested for Board approval:</div>
+          <ul style="margin:0;padding-left:18px;color:#334155;font-size:13px">
+            <li><b>Total capex envelope:</b> Approval of PKR 63.5M (contractor + OFM), plus applicable taxes.</li>
+            <li><b>OFM strategy:</b> Endorse direct procurement for VRF, AV and furniture to avoid turnkey markups.</li>
+            <li><b>Authorization:</b> Empower CEO to issue LOIs and reallocate within approved ceiling.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="ctitle">Financial Bid Comparison (Initial)</h3>
+        <div class="chart" id="barBids"></div>
+        <div class="note">
+          Highlighted bidder indicates the selected L1 bidder (pre-negotiation). Negotiated value: <b>PKR 36.0M</b>.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROADMAP -->
+  <section id="roadmap" class="tab" style="display:none">
+    <div class="card">
+      <h3 class="ctitle">Detailed Procurement & Selection Roadmap</h3>
+      <div class="muted" style="margin-bottom:10px;font-size:13px">
+        Five-stage process undertaken to ensure governance, technical compliance and value-for-money.
+      </div>
+      <div style="overflow:auto;border:1px solid var(--border);border-radius:12px">
+        <table>
+          <thead>
+            <tr>
+              <th style="min-width:260px">Phase</th>
+              <th style="min-width:90px">Date</th>
+              <th style="min-width:220px">Activity</th>
+              <th>Key outcome / status</th>
+            </tr>
+          </thead>
+          <tbody id="roadmapBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- BREAKDOWN -->
+  <section id="breakdown" class="tab" style="display:none">
+    <div class="grid grid2">
+      <div class="card">
+        <h3 class="ctitle">Cost Composition by Trade</h3>
+        <div class="chart small" id="pieTrades"></div>
+        <div class="legend" id="pieLegend"></div>
+      </div>
+
+      <div class="card">
+        <h3 class="ctitle">BOQ Component View</h3>
+        <div style="overflow:auto;border:1px solid var(--border);border-radius:12px">
+          <table>
+            <thead>
+              <tr>
+                <th>Trade / discipline</th>
+                <th class="right">Amount (PKR M)</th>
+                <th class="right">% of total</th>
+              </tr>
+            </thead>
+            <tbody id="boqBody"></tbody>
+          </table>
+        </div>
+        <div class="note">Percentages are shown relative to the gross base used for trade allocation (PKR 39.17M).</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- JOURNEY -->
+  <section id="journey" class="tab" style="display:none">
+    <div class="grid" style="grid-template-columns:1fr">
+      <div class="card">
+        <h3 class="ctitle">Cost Reduction Journey</h3>
+        <div class="chart" id="waterfall"></div>
+        <div class="note">
+          Journey illustrates unbundling from turnkey estimate to optimized capex envelope. Negative bars are savings.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUDGET -->
+  <section id="budget" class="tab" style="display:none">
+    <div class="grid grid2">
+      <div class="card">
+        <h3 class="ctitle">Final Approved Envelope Split (Pre-Tax)</h3>
+        <div class="chart small" id="pieBudget"></div>
+        <div class="legend" id="budgetLegend"></div>
+        <div style="margin-top:10px;padding-top:10px;border-top:1px solid #f1f5f9;display:flex;justify-content:space-between;align-items:center">
+          <div style="font-weight:900">TOTAL ENVELOPE</div>
+          <div style="font-weight:900;color:var(--brand);font-size:18px">PKR 63.5 M</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="ctitle">Tax Liability & Authority (Indicative)</h3>
+        <div class="grid" style="grid-template-columns:1fr 1fr">
+          <div class="box" style="text-align:center">
+            <div class="b1">Input Tax Reserve</div>
+            <div id="taxImpact" style="font-weight:1000;font-size:22px;color:var(--bad)"></div>
+          </div>
+          <div class="box" style="text-align:center">
+            <div class="b1">Gross Authority</div>
+            <div id="grossAuthority" style="font-weight:1000;font-size:22px"></div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px;padding:12px;border-radius:12px;border:1px solid #bfdbfe;background:#eff6ff">
+          <div style="font-weight:900;color:#1e3a8a">Requested Resolutions</div>
+          <ul style="margin:8px 0 0 0;padding-left:18px;color:#1d4ed8;font-size:12px">
+            <li>Approve total capex envelope of 63.5M (+ tax).</li>
+            <li>Endorse OFM strategy for VRF, AV, furniture.</li>
+            <li>Authorize CEO to issue LOIs and reallocate savings within ceiling.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section id="timeline" class="tab" style="display:none">
+    <div class="card">
+      <h3 class="ctitle">60-Day Execution Programme</h3>
+      <div class="chart" id="gantt"></div>
+      <div class="note">
+        Critical path typically driven by VRF delivery lead time, building NOC, and furniture fabrication selections.
+      </div>
+    </div>
+  </section>
+
+  <!-- BENCHMARK -->
+  <section id="benchmark" class="tab" style="display:none">
+    <div class="grid grid3">
+      <div class="card">
+        <h3 class="ctitle">Market Cost Positioning</h3>
+        <div class="chart" id="scatter"></div>
+        <div class="note">
+          NCGCL target point highlights the final cost position relative to peer office fit-out benchmarks.
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="ctitle">NCGCL Metric</h3>
+        <div style="text-align:center;padding:18px;border-radius:12px;background:var(--brand2);color:#fff">
+          <div style="font-size:42px;font-weight:1000;color:#fde047" id="perSqft"></div>
+          <div style="font-size:12px;color:#cbd5e1;text-transform:uppercase;letter-spacing:.12em;font-weight:800">PKR per sqft</div>
+          <div style="margin-top:12px">
+            <span class="pill info">Corporate Grade B+ Fit-out</span>
+          </div>
+        </div>
+
+        <div style="margin-top:14px" class="muted">
+          At ~PKR 15.5k/sqft (4100 sqft), the project delivers corporate specifications within a basic-to-standard cost band.
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  Confidential – For Board Use Only. Offline edition (no external libraries).
+</footer>
+
+<script>
+/* ----------------------------- DATA ----------------------------- */
+const projectInfo = { areaSqft: 4100 };
+const finalCapex = 63.5;                 // PKR M
+const taxImpact = finalCapex * 0.16;     // indicative
+const capexPerSqft = Math.round((finalCapex * 1000000) / projectInfo.areaSqft);
+
+const bidderData = [
+  { name: "dCON", amount: 45.3, highlight:false },
+  { name: "Bidder B", amount: 43.1, highlight:false },
+  { name: "Bidder C", amount: 42.5, highlight:false },
+  { name: "Yellow Pine", amount: 39.3, highlight:true }
+];
+
+const procurementEvents = [
+  { phase:"Phase 1: Architect Selection", date:"Sep 2025", activity:"Competitive RFP", stakeholders:"NCGCL Mgmt", outcome:"Coalesce appointed via open call based on relevant corporate fit-out portfolio.", status:"completed"},
+  { phase:"Phase 2: Tender Process", date:"Oct 2025", activity:"Standardized BOQ Float", stakeholders:"Procurement", outcome:"RFP floated on website. 4 firm bids received on standardized BOQ.", status:"completed"},
+  { phase:"Phase 3: Evaluation", date:"Oct–Nov 2025", activity:"Joint Committee Review", stakeholders:"Architect, CEO, CS", outcome:"Joint Selection Committee reviewed technical & financial proposals. Yellow Pine selected as L1.", status:"completed"},
+  { phase:"Phase 4: Optimization", date:"Nov 2025", activity:"Value Engineering & OFM", stakeholders:"Mgmt, Contractor", outcome:"Carved out VRF, IT, furniture. Reduced contractor quote from 39.3M to 36.0M (8% rebate).", status:"completed"},
+  { phase:"Phase 5: Board Approval", date:"Dec 2025", activity:"Agenda 5 Submission", stakeholders:"Board of Directors", outcome:"Approval sought for PKR 63.5M envelope. Authorization for CEO to issue LOIs.", status:"current"}
+];
+
+const contractorBreakdown = [
+  { name:"Civil & Architecture", value:18.80, color:"#94a3b8", desc:"Flooring, partitions, paint, ceilings" },
+  { name:"Electrical Works", value:9.83, color:"#eab308", desc:"Wiring, DBs, lighting install" },
+  { name:"HVAC Works", value:4.83, color:"#3b82f6", desc:"Ducting, piping (VRF is OFM)" },
+  { name:"Furniture Works", value:3.63, color:"#8b5cf6", desc:"Fixed joinery, reception, storage" },
+  { name:"Plumbing", value:1.81, color:"#06b6d4", desc:"Piping, fixtures, drainage" },
+  { name:"Fire Fighting", value:0.27, color:"#ef4444", desc:"Sprinklers, extinguishers" }
+];
+const grossBaseForPct = 39.17;
+
+const savingsJourneyData = [
+  { name:"Turnkey Estimate", value:83.0, color:"#64748b" },
+  { name:"Contractor Neg.", value:-3.3, color:"#16a34a" },
+  { name:"VRF Direct", value:-6.0, color:"#16a34a" },
+  { name:"Furniture Opt.", value:-7.0, color:"#16a34a" },
+  { name:"AV / VLT Direct", value:-3.2, color:"#16a34a" },
+  { name:"Final Budget", value:63.5, color:"#1d4ed8" }
+];
+
+const finalBudgetSplit = [
+  { name:"Contractor (Civil/MEP)", value:36.0, color:"#eab308" },
+  { name:"VRF System (OFM)", value:10.0, color:"#3b82f6" },
+  { name:"Furniture (OFM)", value:10.0, color:"#8b5cf6" },
+  { name:"Audio/Video (OFM)", value:5.0, color:"#f43f5e" },
+  { name:"VLT (OFM)", value:2.5, color:"#10b981" }
+];
+
+const scheduleData = [
+  { task:"Mobilisation & Demolition", start:0,  duration:7,  type:"Civil" },
+  { task:"Civil, Partitions, Ceilings", start:7,  duration:25, type:"Civil" },
+  { task:"MEP Rough-ins (Elec/Plumbing)", start:10, duration:15, type:"MEP" },
+  { task:"VRF Install (Piping → Units)", start:20, duration:20, type:"OFM" },
+  { task:"Finishes (Paint/Flooring)", start:35, duration:15, type:"Civil" },
+  { task:"IT/AV & Furniture Install", start:50, duration:10, type:"OFM" },
+  { task:"Snagging & Handover", start:58, duration:2,  type:"Closeout" }
+];
+
+const benchmarkData = [
+  { x:3000, y:15500, name:"Basic Local Office", color:"#94a3b8" },
+  { x:4000, y:16800, name:"Std. Commercial", color:"#94a3b8" },
+  { x:4100, y:20243, name:"NCGCL (Initial Est)", color:"#94a3b8" },
+  { x:4100, y:15488, name:"NCGCL (Final)", color:"#eab308" },
+  { x:5000, y:23500, name:"MNC / Bank HQ", color:"#94a3b8" },
+  { x:2500, y:28000, name:"Premium MNC", color:"#94a3b8" }
+];
+
+/* ----------------------------- UTIL ----------------------------- */
+function el(tag, attrs={}, html=""){
+  const n=document.createElement(tag);
+  for(const [k,v] of Object.entries(attrs)){
+    if(k==="style") Object.assign(n.style,v);
+    else if(k.startsWith("on")) n.addEventListener(k.slice(2), v);
+    else n.setAttribute(k, v);
+  }
+  if(html!==undefined) n.innerHTML=html;
+  return n;
+}
+
+function svg(width, height){
+  const s = document.createElementNS("http://www.w3.org/2000/svg","svg");
+  s.setAttribute("viewBox", `0 0 ${width} ${height}`);
+  s.setAttribute("width","100%");
+  s.setAttribute("height","100%");
+  return s;
+}
+
+function fmtM(v){ return `${v.toFixed(1)} M`; }
+function fmtInt(n){ return n.toLocaleString(); }
+
+/* ----------------------------- TABS ----------------------------- */
+(function tabs(){
+  const buttons=[...document.querySelectorAll(".tabbtn")];
+  const sections=[...document.querySelectorAll("section.tab")];
+  function show(id){
+    sections.forEach(s => s.style.display = (s.id===id) ? "block" : "none");
+    buttons.forEach(b => b.classList.toggle("active", b.dataset.tab===id));
+  }
+  buttons.forEach(b => b.addEventListener("click", () => show(b.dataset.tab)));
+})();
+
+/* ----------------------------- TABLES ----------------------------- */
+(function buildRoadmap(){
+  const body=document.getElementById("roadmapBody");
+  procurementEvents.forEach(e=>{
+    const statusPill = e.status==="current"
+      ? `<span class="pill info">CURRENT</span>`
+      : `<span class="pill neutral">COMPLETED</span>`;
+    const tr = el("tr",{},`
+      <td><div style="font-weight:900;color:#334155">${e.phase}</div><div class="muted" style="font-size:12px;margin-top:2px">Stakeholders: ${e.stakeholders}</div></td>
+      <td class="muted">${e.date}</td>
+      <td><div style="font-weight:800">${e.activity}</div><div style="margin-top:6px">${statusPill}</div></td>
+      <td class="muted" style="font-size:13px">${e.outcome}</td>
+    `);
+    body.appendChild(tr);
+  });
+})();
+
+(function buildBOQ(){
+  const body=document.getElementById("boqBody");
+  contractorBreakdown.forEach(d=>{
+    const pct = (d.value / grossBaseForPct) * 100;
+    const tr = el("tr",{},`
+      <td>
+        <div style="display:flex;gap:8px;align-items:center">
+          <span class="dot" style="background:${d.color}"></span>
+          <div>
+            <div style="font-weight:900;color:#334155">${d.name}</div>
+            <div class="muted" style="font-size:12px">${d.desc}</div>
+          </div>
+        </div>
+      </td>
+      <td class="right" style="font-weight:800">${d.value.toFixed(2)}</td>
+      <td class="right" class="muted">${pct.toFixed(1)}%</td>
+    `);
+    body.appendChild(tr);
+  });
+})();
+
+/* ----------------------------- CHARTS (SVG) ----------------------------- */
+function renderBarChart(containerId, data, opts){
+  const box = document.getElementById(containerId);
+  const W=860, H=280, pad={l:140,r:20,t:18,b:24};
+  const s=svg(W,H);
+  box.innerHTML=""; box.appendChild(s);
+
+  const max = Math.max(...data.map(d=>d.amount));
+  const innerW = W-pad.l-pad.r;
+  const innerH = H-pad.t-pad.b;
+  const rowH = innerH/data.length;
+
+  // gridlines
+  const grid = document.createElementNS(s.namespaceURI,"g");
+  const ticks = 5;
+  for(let i=0;i<=ticks;i++){
+    const x = pad.l + (innerW * i/ticks);
+    const line = document.createElementNS(s.namespaceURI,"line");
+    line.setAttribute("x1",x); line.setAttribute("x2",x);
+    line.setAttribute("y1",pad.t); line.setAttribute("y2",pad.t+innerH);
+    line.setAttribute("stroke","#e2e8f0"); line.setAttribute("stroke-dasharray","4 4");
+    grid.appendChild(line);
+
+    const lbl = document.createElementNS(s.namespaceURI,"text");
+    lbl.setAttribute("x",x); lbl.setAttribute("y",H-6);
+    lbl.setAttribute("text-anchor","middle");
+    lbl.setAttribute("font-size","10"); lbl.setAttribute("fill","#94a3b8");
+    lbl.textContent = (max * i/ticks).toFixed(0) + "M";
+    grid.appendChild(lbl);
+  }
+  s.appendChild(grid);
+
+  data.forEach((d,idx)=>{
+    const y = pad.t + idx*rowH + rowH*0.2;
+    const h = rowH*0.6;
+    const w = (d.amount/max)*innerW;
+
+    const rect = document.createElementNS(s.namespaceURI,"rect");
+    rect.setAttribute("x",pad.l);
+    rect.setAttribute("y",y);
+    rect.setAttribute("width",w);
+    rect.setAttribute("height",h);
+    rect.setAttribute("rx","6");
+    rect.setAttribute("fill", d.highlight ? "#eab308" : "#94a3b8");
+    s.appendChild(rect);
+
+    const name = document.createElementNS(s.namespaceURI,"text");
+    name.setAttribute("x",pad.l-10);
+    name.setAttribute("y",y+h/2+4);
+    name.setAttribute("text-anchor","end");
+    name.setAttribute("font-size","12");
+    name.setAttribute("fill","#334155");
+    name.textContent = d.name;
+    s.appendChild(name);
+
+    const val = document.createElementNS(s.namespaceURI,"text");
+    val.setAttribute("x",pad.l + w + 8);
+    val.setAttribute("y",y+h/2+4);
+    val.setAttribute("font-size","11");
+    val.setAttribute("fill","#334155");
+    val.textContent = d.amount.toFixed(1) + "M";
+    s.appendChild(val);
+  });
+}
+
+function renderPie(containerId, data, legendId){
+  const box=document.getElementById(containerId);
+  const W=520,H=220,cx=170,cy=110,r=80;
+  const s=svg(W,H);
+  box.innerHTML=""; box.appendChild(s);
+
+  const total = data.reduce((a,b)=>a+b.value,0);
+  let a0 = -Math.PI/2;
+
+  data.forEach(d=>{
+    const frac = d.value/total;
+    const a1 = a0 + frac*2*Math.PI;
+    const x0 = cx + r*Math.cos(a0), y0 = cy + r*Math.sin(a0);
+    const x1 = cx + r*Math.cos(a1), y1 = cy + r*Math.sin(a1);
+    const large = (a1-a0) > Math.PI ? 1 : 0;
+    const path = document.createElementNS(s.namespaceURI,"path");
+    const dPath = [
+      `M ${cx} ${cy}`,
+      `L ${x0} ${y0}`,
+      `A ${r} ${r} 0 ${large} 1 ${x1} ${y1}`,
+      "Z"
+    ].join(" ");
+    path.setAttribute("d", dPath);
+    path.setAttribute("fill", d.color);
+    path.setAttribute("stroke", "#ffffff");
+    path.setAttribute("stroke-width", "2");
+    s.appendChild(path);
+    a0 = a1;
+  });
+
+  // donut hole
+  const hole = document.createElementNS(s.namespaceURI,"circle");
+  hole.setAttribute("cx",cx); hole.setAttribute("cy",cy); hole.setAttribute("r",45);
+  hole.setAttribute("fill","#ffffff");
+  s.appendChild(hole);
+
+  const label = document.createElementNS(s.namespaceURI,"text");
+  label.setAttribute("x",cx); label.setAttribute("y",cy-2);
+  label.setAttribute("text-anchor","middle");
+  label.setAttribute("font-size","11");
+  label.setAttribute("fill","#64748b");
+  label.textContent = "TOTAL";
+  s.appendChild(label);
+
+  const val = document.createElementNS(s.namespaceURI,"text");
+  val.setAttribute("x",cx); val.setAttribute("y",cy+18);
+  val.setAttribute("text-anchor","middle");
+  val.setAttribute("font-size","18");
+  val.setAttribute("font-weight","900");
+  val.setAttribute("fill","#0f172a");
+  val.textContent = total.toFixed(1) + " M";
+  s.appendChild(val);
+
+  if(legendId){
+    const leg=document.getElementById(legendId);
+    leg.innerHTML="";
+    data.forEach(d=>{
+      const item = document.createElement("div");
+      item.innerHTML = `<span class="dot" style="background:${d.color}"></span><b style="color:#334155">${d.name}</b> <span class="muted">(${d.value.toFixed(1)}M)</span>`;
+      leg.appendChild(item);
+    });
+  }
+}
+
+function renderWaterfall(containerId, steps){
+  const box=document.getElementById(containerId);
+  const W=980,H=280,pad={l:40,r:20,t:20,b:40};
+  const s=svg(W,H);
+  box.innerHTML=""; box.appendChild(s);
+
+  // compute running totals for intermediate steps, with final explicitly set
+  const vals = steps.map(d=>d.value);
+  const minY = Math.min(0, ...vals, 0);
+  const maxY = Math.max(...vals, 0, 83);
+
+  const innerW=W-pad.l-pad.r, innerH=H-pad.t-pad.b;
+  const n=steps.length;
+  const bw = innerW/(n*1.25);
+  const gap = (innerW - n*bw)/(n-1);
+
+  function yScale(v){
+    // map [minY,maxY] to [pad.t+innerH, pad.t]
+    const t=(v-minY)/(maxY-minY);
+    return pad.t + innerH - t*innerH;
+  }
+
+  // axis
+  const axis = document.createElementNS(s.namespaceURI,"line");
+  axis.setAttribute("x1",pad.l); axis.setAttribute("x2",pad.l+innerW);
+  axis.setAttribute("y1",yScale(0)); axis.setAttribute("y2",yScale(0));
+  axis.setAttribute("stroke","#94a3b8");
+  s.appendChild(axis);
+
+  let x=pad.l;
+  steps.forEach((d,i)=>{
+    const y0=yScale(0);
+    const y1=yScale(d.value);
+    const top = Math.min(y0,y1);
+    const h = Math.abs(y0-y1);
+
+    const rect=document.createElementNS(s.namespaceURI,"rect");
+    rect.setAttribute("x",x);
+    rect.setAttribute("y",top);
+    rect.setAttribute("width",bw);
+    rect.setAttribute("height",h);
+    rect.setAttribute("rx","6");
+    rect.setAttribute("fill",d.color);
+    s.appendChild(rect);
+
+    const t=document.createElementNS(s.namespaceURI,"text");
+    t.setAttribute("x",x+bw/2);
+    t.setAttribute("y",H-18);
+    t.setAttribute("text-anchor","middle");
+    t.setAttribute("font-size","10");
+    t.setAttribute("fill","#475569");
+    t.textContent = d.name;
+    s.appendChild(t);
+
+    const v=document.createElementNS(s.namespaceURI,"text");
+    v.setAttribute("x",x+bw/2);
+    v.setAttribute("y",top-6);
+    v.setAttribute("text-anchor","middle");
+    v.setAttribute("font-size","10");
+    v.setAttribute("fill","#334155");
+    v.textContent = (d.value>=0? "" : "") + d.value.toFixed(1);
+    s.appendChild(v);
+
+    x += bw + gap;
+  });
+}
+
+function renderGantt(containerId, tasks){
+  const box=document.getElementById(containerId);
+  const W=980,H=280,pad={l:240,r:20,t:20,b:28};
+  const s=svg(W,H);
+  box.innerHTML=""; box.appendChild(s);
+
+  const days=60;
+  const innerW=W-pad.l-pad.r, innerH=H-pad.t-pad.b;
+  const rowH=innerH/tasks.length;
+
+  // time grid
+  const ticks=[0,15,30,45,60];
+  ticks.forEach(t=>{
+    const x=pad.l + (t/days)*innerW;
+    const line=document.createElementNS(s.namespaceURI,"line");
+    line.setAttribute("x1",x); line.setAttribute("x2",x);
+    line.setAttribute("y1",pad.t); line.setAttribute("y2",pad.t+innerH);
+    line.setAttribute("stroke","#e2e8f0"); line.setAttribute("stroke-dasharray","4 4");
+    s.appendChild(line);
+
+    const lbl=document.createElementNS(s.namespaceURI,"text");
+    lbl.setAttribute("x",x); lbl.setAttribute("y",H-10);
+    lbl.setAttribute("text-anchor","middle");
+    lbl.setAttribute("font-size","10");
+    lbl.setAttribute("fill","#94a3b8");
+    lbl.textContent = "Day " + t;
+    s.appendChild(lbl);
+  });
+
+  const colorMap = { Civil:"#94a3b8", MEP:"#3b82f6", OFM:"#eab308", Closeout:"#16a34a" };
+
+  tasks.forEach((t,i)=>{
+    const y=pad.t + i*rowH + rowH*0.2;
+    const h=rowH*0.6;
+    const x=pad.l + (t.start/days)*innerW;
+    const w=(t.duration/days)*innerW;
+
+    const name=document.createElementNS(s.namespaceURI,"text");
+    name.setAttribute("x",pad.l-10);
+    name.setAttribute("y",y+h/2+4);
+    name.setAttribute("text-anchor","end");
+    name.setAttribute("font-size","12");
+    name.setAttribute("fill","#334155");
+    name.textContent=t.task;
+    s.appendChild(name);
+
+    const bar=document.createElementNS(s.namespaceURI,"rect");
+    bar.setAttribute("x",x); bar.setAttribute("y",y);
+    bar.setAttribute("width",w); bar.setAttribute("height",h);
+    bar.setAttribute("rx","6");
+    bar.setAttribute("fill",colorMap[t.type] || "#64748b");
+    s.appendChild(bar);
+
+    const dur=document.createElementNS(s.namespaceURI,"text");
+    dur.setAttribute("x",x+w/2);
+    dur.setAttribute("y",y+h/2+4);
+    dur.setAttribute("text-anchor","middle");
+    dur.setAttribute("font-size","10");
+    dur.setAttribute("fill","#ffffff");
+    dur.textContent = t.duration + "d";
+    s.appendChild(dur);
+  });
+}
+
+function renderScatter(containerId, pts){
+  const box=document.getElementById(containerId);
+  const W=980,H=280,pad={l:52,r:18,t:18,b:40};
+  const s=svg(W,H);
+  box.innerHTML=""; box.appendChild(s);
+
+  const xs=pts.map(p=>p.x), ys=pts.map(p=>p.y);
+  const xMin=Math.min(...xs), xMax=Math.max(...xs);
+  const yMin=10000, yMax=30000;
+
+  const innerW=W-pad.l-pad.r, innerH=H-pad.t-pad.b;
+  const xScale = x => pad.l + ((x-xMin)/(xMax-xMin))*innerW;
+  const yScale = y => pad.t + innerH - ((y-yMin)/(yMax-yMin))*innerH;
+
+  // grid + axes labels
+  const xTicks = 5;
+  for(let i=0;i<=xTicks;i++){
+    const xv = xMin + (xMax-xMin)*i/xTicks;
+    const x = xScale(xv);
+    const line=document.createElementNS(s.namespaceURI,"line");
+    line.setAttribute("x1",x); line.setAttribute("x2",x);
+    line.setAttribute("y1",pad.t); line.setAttribute("y2",pad.t+innerH);
+    line.setAttribute("stroke","#e2e8f0"); line.setAttribute("stroke-dasharray","4 4");
+    s.appendChild(line);
+
+    const lbl=document.createElementNS(s.namespaceURI,"text");
+    lbl.setAttribute("x",x); lbl.setAttribute("y",H-12);
+    lbl.setAttribute("text-anchor","middle");
+    lbl.setAttribute("font-size","10");
+    lbl.setAttribute("fill","#94a3b8");
+    lbl.textContent = Math.round(xv) + " sqft";
+    s.appendChild(lbl);
+  }
+
+  const yTicks = 4;
+  for(let i=0;i<=yTicks;i++){
+    const yv = yMin + (yMax-yMin)*i/yTicks;
+    const y = yScale(yv);
+    const line=document.createElementNS(s.namespaceURI,"line");
+    line.setAttribute("x1",pad.l); line.setAttribute("x2",pad.l+innerW);
+    line.setAttribute("y1",y); line.setAttribute("y2",y);
+    line.setAttribute("stroke","#e2e8f0"); line.setAttribute("stroke-dasharray","4 4");
+    s.appendChild(line);
+
+    const lbl=document.createElementNS(s.namespaceURI,"text");
+    lbl.setAttribute("x",pad.l-8); lbl.setAttribute("y",y+3);
+    lbl.setAttribute("text-anchor","end");
+    lbl.setAttribute("font-size","10");
+    lbl.setAttribute("fill","#94a3b8");
+    lbl.textContent = Math.round(yv/1000) + "k";
+    s.appendChild(lbl);
+  }
+
+  // points
+  pts.forEach(p=>{
+    const x=xScale(p.x), y=yScale(p.y);
+    const c=document.createElementNS(s.namespaceURI,"circle");
+    c.setAttribute("cx",x); c.setAttribute("cy",y);
+    c.setAttribute("r", p.name.includes("NCGCL (Final)") ? 7 : 5);
+    c.setAttribute("fill", p.color);
+    c.setAttribute("stroke","#ffffff");
+    c.setAttribute("stroke-width","2");
+    s.appendChild(c);
+
+    if(p.name.includes("NCGCL (Final)")){
+      const tag=document.createElementNS(s.namespaceURI,"text");
+      tag.setAttribute("x",x+10); tag.setAttribute("y",y-10);
+      tag.setAttribute("font-size","11");
+      tag.setAttribute("fill","#334155");
+      tag.setAttribute("font-weight","800");
+      tag.textContent = "NCGCL (Final)";
+      s.appendChild(tag);
+    }
+  });
+}
+
+/* ----------------------------- RENDER ----------------------------- */
+renderBarChart("barBids", bidderData);
+
+renderPie("pieTrades",
+  contractorBreakdown.map(d=>({name:d.name,value:d.value,color:d.color})),
+  "pieLegend"
+);
+
+renderWaterfall("waterfall", savingsJourneyData);
+
+renderPie("pieBudget", finalBudgetSplit, "budgetLegend");
+
+renderGantt("gantt", scheduleData);
+
+renderScatter("scatter", benchmarkData);
+
+// KPI inserts
+document.getElementById("taxImpact").textContent = "PKR " + taxImpact.toFixed(1) + " M";
+document.getElementById("grossAuthority").textContent = "PKR " + (finalCapex + taxImpact).toFixed(1) + " M";
+document.getElementById("perSqft").textContent = fmtInt(capexPerSqft);
+
+// Prevent blank charts if container widths are 0 (very rare). Re-render on resize.
+let resizeTimer=null;
+window.addEventListener("resize", ()=>{
+  clearTimeout(resizeTimer);
+  resizeTimer=setTimeout(()=>{
+    renderBarChart("barBids", bidderData);
+    renderPie("pieTrades", contractorBreakdown.map(d=>({name:d.name,value:d.value,color:d.color})), "pieLegend");
+    renderWaterfall("waterfall", savingsJourneyData);
+    renderPie("pieBudget", finalBudgetSplit, "budgetLegend");
+    renderGantt("gantt", scheduleData);
+    renderScatter("scatter", benchmarkData);
+  }, 150);
+});
+</script>
+</body>
+</html>
