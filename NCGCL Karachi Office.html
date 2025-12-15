@@ -1,0 +1,819 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NCGCL Board Dashboard | Karachi Office Establishment</title>
+
+  <!-- Tailwind (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- React 18 (UMD) -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+  <!-- Babel for in-browser JSX transpile (dev convenience) -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- Recharts (UMD) -->
+  <script src="https://unpkg.com/recharts/umd/Recharts.min.js"></script>
+
+  <style>
+    /* Optional: hide horizontal scrollbar for tab bar */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+
+<body class="bg-slate-50">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    // Recharts components from UMD global
+    const {
+      BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip: RechartsTooltip, Legend, ResponsiveContainer,
+      PieChart, Pie, Cell, ScatterChart, Scatter, ReferenceLine
+    } = Recharts;
+
+    // --- 1. DATA MODELS & CONSTANTS ---
+    const projectInfo = {
+      name: "NCGCL Karachi Office Establishment",
+      location: "Sumya Sky View, Karachi",
+      areaSqft: 4100,
+      contractor: "Yellow Pine",
+      architect: "Coalesce",
+      duration: "60 Days",
+      taxRateSRB: 0.13,
+      taxRateGST: 0.18,
+      wht: 0.075
+    };
+
+    const procurementEvents = [
+      {
+        phase: "Phase 1: Architect Selection",
+        date: "Sep 2025",
+        activity: "Competitive RFP",
+        stakeholders: "NCGCL Mgmt",
+        outcome: "Coalesce appointed via open call based on relevant corporate fit-out portfolio.",
+        status: "completed"
+      },
+      {
+        phase: "Phase 2: Tender Process",
+        date: "Oct 2025",
+        activity: "Standardized BOQ Float",
+        stakeholders: "Procurement",
+        outcome: "RFP floated on website. 4 Firm bids received on standardized BOQ.",
+        status: "completed"
+      },
+      {
+        phase: "Phase 3: Evaluation",
+        date: "Oct-Nov 2025",
+        activity: "Joint Committee Review",
+        stakeholders: "Architect, CEO, CS",
+        outcome: "Joint Selection Committee reviewed technical & financial proposals. Yellow Pine selected as L1.",
+        status: "completed"
+      },
+      {
+        phase: "Phase 4: Optimization",
+        date: "Nov 2025",
+        activity: "Value Engineering & OFM",
+        stakeholders: "Mgmt, Contractor",
+        outcome: "Carved out VRF, IT, Furniture. Reduced Contractor quote from 39.3M to 36.0M (8% Rebate).",
+        status: "completed"
+      },
+      {
+        phase: "Phase 5: Board Approval",
+        date: "Dec 2025",
+        activity: "Agenda 5 Submission",
+        stakeholders: "Board of Directors",
+        outcome: "Approval sought for PKR 63.5M Envelope. Authorization for CEO to issue LOIs.",
+        status: "current"
+      }
+    ];
+
+    const bidderData = [
+      { name: "dCON", amount: 45.3, type: "Initial Quote", fullScope: true, remarks: "High on Civil/MEP" },
+      { name: "Bidder B", amount: 43.1, type: "Initial Quote", fullScope: false, remarks: "Incomplete Fire Scope" },
+      { name: "Bidder C", amount: 42.5, type: "Initial Quote", fullScope: true, remarks: "Limited Corporate Ref" },
+      { name: "Yellow Pine", amount: 39.3, type: "Initial Quote", fullScope: true, remarks: "Selected L1 (Pre-Negotiation)" },
+    ];
+
+    const contractorBreakdown = [
+      { name: "Civil & Architecture", value: 18.80, color: "#94a3b8", desc: "Flooring, Partitions, Paint, Ceilings" },
+      { name: "Electrical Works", value: 9.83, color: "#eab308", desc: "Wiring, DBs, Lighting Install" },
+      { name: "HVAC Works", value: 4.83, color: "#3b82f6", desc: "Ducting, Piping (VRF is OFM)" },
+      { name: "Furniture Works", value: 3.63, color: "#8b5cf6", desc: "Fixed Joinery, Reception, Storage" },
+      { name: "Plumbing", value: 1.81, color: "#06b6d4", desc: "Piping, Fixtures, Drainage" },
+      { name: "Fire Fighting", value: 0.27, color: "#ef4444", desc: "Sprinklers, Extinguishers" },
+    ];
+
+    const savingsJourneyData = [
+      { name: "Turnkey Estimate", value: 83.0, fill: "#64748b" },
+      { name: "Contractor Neg.", value: -3.3, fill: "#22c55e" },
+      { name: "VRF Direct", value: -6.0, fill: "#22c55e" },
+      { name: "Furniture Opt.", value: -7.0, fill: "#22c55e" },
+      { name: "AV / VLT Direct", value: -3.2, fill: "#22c55e" },
+      { name: "Final Budget", value: 63.5, fill: "#1e40af" }
+    ];
+
+    const finalBudgetSplit = [
+      { name: "Contractor (Civil/MEP)", value: 36.0, color: "#eab308" },
+      { name: "VRF System (OFM)", value: 10.0, color: "#3b82f6" },
+      { name: "Furniture (OFM)", value: 10.0, color: "#8b5cf6" },
+      { name: "Audio/Video (OFM)", value: 5.0, color: "#f43f5e" },
+      { name: "VLT (OFM)", value: 2.5, color: "#10b981" }
+    ];
+
+    const ofmPackages = [
+      { id: 1, category: "HVAC", item: "VRF Equipment (Hisense)", contractorEst: 11.8, ownerEst: 8.5, saving: 3.3, status: "Critical" },
+      { id: 2, category: "Furniture", item: "Workstations & Loose Furn.", contractorEst: 16.5, ownerEst: 10.0, saving: 6.5, status: "Critical" },
+      { id: 3, category: "AV", item: "Boardroom VC / VLT", contractorEst: 8.5, ownerEst: 7.5, saving: 1.0, status: "Long Lead" },
+    ];
+
+    const vrfComparison = [
+      { brand: "TCL", cost: 7.0, energyScore: 60, reliability: "Low", desc: "Lowest Capex, High Opex Risk." },
+      { brand: "Samsung", cost: 11.8, energyScore: 85, reliability: "High", desc: "Premium Brand, High Cost." },
+      { brand: "Hisense", cost: 8.5, energyScore: 82, reliability: "High", desc: "Selected: Best Value Balance." },
+    ];
+
+    const benchmarkData = [
+      { x: 3000, y: 15500, name: "Basic Local Office", z: 100, fill: "#94a3b8" },
+      { x: 4000, y: 16800, name: "Std. Commercial", z: 100, fill: "#94a3b8" },
+      { x: 4100, y: 20243, name: "NCGCL (Initial Est)", z: 100, fill: "#94a3b8" },
+      { x: 4100, y: 15488, name: "NCGCL (Final)", z: 200, fill: "#eab308" },
+      { x: 5000, y: 23500, name: "MNC / Bank HQ", z: 100, fill: "#94a3b8" },
+      { x: 2500, y: 28000, name: "Premium MNC", z: 100, fill: "#94a3b8" },
+    ];
+
+    const scheduleData = [
+      { task: "Mobilisation & Demolition", start: 0, duration: 7, type: "Civil" },
+      { task: "Civil, Partitions, Ceilings", start: 7, duration: 25, type: "Civil" },
+      { task: "MEP Rough-ins (Elec/Plumbing)", start: 10, duration: 15, type: "MEP" },
+      { task: "VRF Install (Piping -> Units)", start: 20, duration: 20, type: "OFM" },
+      { task: "Finishes (Paint/Flooring)", start: 35, duration: 15, type: "Civil" },
+      { task: "IT/AV & Furniture Install", start: 50, duration: 10, type: "OFM" },
+      { task: "Snagging & Handover", start: 58, duration: 2, type: "Closeout" },
+    ];
+
+    // --- 2. HELPER COMPONENTS ---
+    const Card = ({ title, children, className = "" }) => (
+      <div className={`bg-white rounded-xl shadow-sm border border-slate-200 p-5 ${className}`}>
+        <h3 className="text-slate-500 text-sm font-semibold uppercase tracking-wider mb-3">{title}</h3>
+        {children}
+      </div>
+    );
+
+    const Badge = ({ children, type = "neutral" }) => {
+      const styles = {
+        neutral: "bg-slate-100 text-slate-600",
+        success: "bg-green-100 text-green-700",
+        warning: "bg-amber-100 text-amber-700",
+        danger: "bg-red-100 text-red-700",
+        blue: "bg-blue-100 text-blue-700",
+      };
+      return (
+        <span className={`px-2 py-1 rounded text-xs font-semibold ${styles[type] || styles.neutral}`}>
+          {children}
+        </span>
+      );
+    };
+
+    // --- 3. SUB-COMPONENTS (TABS) ---
+    const TabProcess = () => (
+      <div className="space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 h-full">
+          <Card title="Executive Summary: Agenda 5" className="h-full">
+            <div className="space-y-5 text-sm text-slate-600 leading-relaxed">
+              <p className="text-base font-medium text-slate-800">
+                NCGCL has concluded a transparent, multi-stage procurement process for the Karachi Head Office fit-out.
+              </p>
+              <div className="grid grid-cols-2 gap-4 mt-2">
+                <div className="bg-slate-50 p-4 rounded-lg border border-slate-100">
+                  <p className="text-xs uppercase text-slate-400 font-semibold mb-1">Process Governance</p>
+                  <p className="font-bold text-slate-800">Joint Committee</p>
+                  <p className="text-xs text-slate-500 mt-1">Evaluated by Architect (Coalesce), CEO, and Company Secretary.</p>
+                </div>
+                <div className="bg-green-50 p-4 rounded-lg border border-green-100">
+                  <p className="text-xs uppercase text-green-700 font-semibold mb-1">Cost Efficiency</p>
+                  <p className="font-bold text-green-800">8% Rebate</p>
+                  <p className="text-xs text-green-700 mt-1">Contractor bid reduced from 39.3M to 36.0M via negotiation.</p>
+                </div>
+              </div>
+              <div className="pt-4 border-t border-slate-100">
+                <p className="font-bold text-slate-800 mb-2">Key Decisions for Board Approval:</p>
+                <ul className="list-disc pl-4 space-y-2 text-xs text-slate-700">
+                  <li><strong className="text-slate-900">Total Capex Envelope:</strong> Approval of PKR 63.5M (Contractor + OFM).</li>
+                  <li><strong className="text-slate-900">OFM Strategy:</strong> Endorsement of direct procurement for VRF, AV, and Furniture to save ~15-20% markups.</li>
+                  <li><strong className="text-slate-900">Authorization:</strong> Empower CEO to issue LOIs and reallocate budget within the approved ceiling.</li>
+                </ul>
+              </div>
+            </div>
+          </Card>
+
+          <Card title="Financial Bid Comparison (Initial vs Negotiated)" className="h-full">
+            <div className="h-64 w-full mb-4">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={bidderData} layout="vertical" margin={{ top: 5, right: 30, left: 40, bottom: 5 }}>
+                  <CartesianGrid strokeDasharray="3 3" horizontal={false} />
+                  <XAxis type="number" unit="M" stroke="#94a3b8" fontSize={12} />
+                  <YAxis dataKey="name" type="category" stroke="#64748b" fontSize={12} width={100} />
+                  <RechartsTooltip
+                    contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+                    cursor={{ fill: 'transparent' }}
+                  />
+                  <Bar dataKey="amount" name="Initial Bid Amount (PKR M)" radius={[0, 4, 4, 0]} barSize={32}>
+                    {bidderData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.name === "Yellow Pine" ? "#eab308" : "#94a3b8"} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="flex items-center justify-center gap-6 text-sm bg-slate-50 p-4 rounded-lg border border-slate-100">
+              <div className="text-center">
+                <p className="text-xs text-slate-500 uppercase">Yellow Pine Initial</p>
+                <p className="font-bold text-slate-700">39.3 M</p>
+              </div>
+              <div className="text-slate-400 font-bold">→</div>
+              <div className="text-center">
+                <p className="text-xs text-green-600 uppercase font-bold">Negotiated Final</p>
+                <p className="font-bold text-green-700 text-lg">36.0 M</p>
+              </div>
+            </div>
+          </Card>
+        </div>
+      </div>
+    );
+
+    const TabRoadmap = () => (
+      <div className="space-y-6">
+        <Card title="Detailed Procurement & Selection Roadmap">
+          <p className="text-sm text-slate-500 mb-6">
+            A comprehensive 5-stage process undertaken to ensure best value and technical compliance.
+          </p>
+          <div className="overflow-hidden rounded-lg border border-slate-200">
+            <table className="w-full text-left border-collapse bg-white">
+              <thead className="bg-slate-50">
+                <tr className="border-b border-slate-200">
+                  <th className="py-4 px-6 text-xs font-bold text-slate-500 uppercase tracking-wider w-40">Date / Phase</th>
+                  <th className="py-4 px-6 text-xs font-bold text-slate-500 uppercase tracking-wider w-1/4">Activity</th>
+                  <th className="py-4 px-6 text-xs font-bold text-slate-500 uppercase tracking-wider">Key Outcome / Status</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100 text-sm">
+                {procurementEvents.map((event, idx) => (
+                  <tr key={idx} className={`group hover:bg-blue-50/30 transition-colors ${event.status === 'current' ? 'bg-blue-50/50' : ''}`}>
+                    <td className="py-4 px-6 align-top">
+                      <div className="font-bold text-slate-700">{event.phase}</div>
+                      <div className="text-xs font-medium text-slate-400 mt-1">{event.date}</div>
+                    </td>
+                    <td className="py-4 px-6 align-top">
+                      <div className="font-semibold text-slate-800 text-base mb-1">{event.activity}</div>
+                      <div className="text-xs text-slate-500 bg-slate-100 w-fit px-2 py-1 rounded-full">
+                        Stakeholders: {event.stakeholders}
+                      </div>
+                    </td>
+                    <td className="py-4 px-6 align-top relative">
+                      <div className="text-slate-600 text-sm leading-relaxed pr-8">{event.outcome}</div>
+                      {event.status === 'current' ? (
+                        <div className="absolute right-4 top-4">
+                          <span className="flex h-3 w-3 relative">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500"></span>
+                          </span>
+                        </div>
+                      ) : null}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </Card>
+      </div>
+    );
+
+    const TabCostBreakdown = () => {
+      const netTotal = 36.04;
+      const grossBaseForPct = 39.17;
+
+      return (
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Card title="Initial Negotiated Baseline" className="border-l-4 border-l-slate-400">
+              <div className="flex items-baseline gap-2">
+                <span className="text-2xl font-bold text-slate-700">39.30</span>
+                <span className="text-sm text-slate-500">PKR M</span>
+              </div>
+              <p className="text-xs text-slate-400 mt-1">Yellow Pine Initial</p>
+            </Card>
+            <Card title="Negotiated Rebate (8%)" className="border-l-4 border-l-green-500 bg-green-50/50">
+              <div className="flex items-baseline gap-2">
+                <span className="text-2xl font-bold text-green-600">-3.26</span>
+                <span className="text-sm text-green-600">PKR M</span>
+              </div>
+              <p className="text-xs text-green-700 mt-1">Secured via Volume Discount</p>
+            </Card>
+            <Card title="Net Contract Value" className="border-l-4 border-l-blue-600 bg-blue-50/50">
+              <div className="flex items-baseline gap-2">
+                <span className="text-2xl font-bold text-blue-700">36.04</span>
+                <span className="text-sm text-blue-700">PKR M</span>
+              </div>
+              <p className="text-xs text-blue-700 mt-1">Excluding Sales Tax (SRB)</p>
+            </Card>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <Card title="Cost Composition by Trade">
+              <div className="h-64 flex flex-col items-center justify-center">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={contractorBreakdown}
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={60}
+                      outerRadius={90}
+                      paddingAngle={2}
+                      dataKey="value"
+                    >
+                      {contractorBreakdown.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Pie>
+                    <RechartsTooltip formatter={(value) => `${Number(value).toFixed(2)} M`} />
+                    <Legend verticalAlign="bottom" height={36} iconSize={10} />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+            </Card>
+
+            <Card title="Detailed BOQ Component View">
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm text-left">
+                  <thead className="bg-slate-50 text-xs text-slate-500 uppercase">
+                    <tr className="border-b border-slate-200">
+                      <th className="px-3 py-3">Trade / Discipline</th>
+                      <th className="px-3 py-3 text-right">Amount (PKR M)</th>
+                      <th className="px-3 py-3 text-right">% of Total</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100">
+                    {contractorBreakdown.map((item, idx) => (
+                      <tr key={idx} className="hover:bg-slate-50">
+                        <td className="px-3 py-2.5">
+                          <div className="font-medium text-slate-700 flex items-center gap-2">
+                            <div className="w-2 h-2 rounded-full" style={{ backgroundColor: item.color }}></div>
+                            {item.name}
+                          </div>
+                          <div className="text-xs text-slate-400 pl-4">{item.desc}</div>
+                        </td>
+                        <td className="px-3 py-2.5 text-right font-medium text-slate-800">{item.value.toFixed(2)}</td>
+                        <td className="px-3 py-2.5 text-right text-slate-500">
+                          {((item.value / grossBaseForPct) * 100).toFixed(1)}%
+                        </td>
+                      </tr>
+                    ))}
+                    <tr className="bg-blue-50 font-bold border-t-2 border-blue-200 text-blue-800">
+                      <td className="px-3 py-3">NET CONTRACT VALUE</td>
+                      <td className="px-3 py-3 text-right">{netTotal.toFixed(2)}</td>
+                      <td className="px-3 py-3 text-right"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </Card>
+          </div>
+        </div>
+      );
+    };
+
+    const TabSavingsJourney = () => (
+      <div className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <Card title="Total Project Savings" className="border-l-4 border-l-green-500 bg-green-50/30">
+            <div className="flex items-center gap-4">
+              <div className="p-3 bg-green-100 text-green-600 rounded-full font-bold">↓</div>
+              <div>
+                <p className="text-3xl font-bold text-green-700">~19.5 M</p>
+                <p className="text-xs text-green-800">Reduction vs Market Turnkey Est.</p>
+              </div>
+            </div>
+          </Card>
+          <Card title="Optimization Strategy (Agenda 5)" className="md:col-span-2">
+            <p className="text-sm text-slate-600 leading-relaxed">
+              By unbundling the Turnkey Contract and moving to <strong>Owner Furnished Materials (OFM)</strong> for high-value items,
+              NCGCL avoided an estimated <strong>15-20% contractor markup</strong>. Additionally, Management secured an 8% flat rebate from Yellow Pine.
+            </p>
+          </Card>
+        </div>
+
+        <Card title="Cost Reduction Journey: From Turnkey to Optimized Budget">
+          <div className="h-80 w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={savingsJourneyData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                <XAxis dataKey="name" fontSize={11} interval={0} tick={{ dy: 5 }} />
+                <YAxis unit="M" />
+                <RechartsTooltip cursor={{ fill: 'transparent' }} />
+                <ReferenceLine y={0} stroke="#000" />
+                <Bar dataKey="value">
+                  {savingsJourneyData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.fill} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </Card>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="p-3 border rounded bg-slate-50">
+            <p className="text-xs font-bold text-slate-400 uppercase mb-1">Contractor Rebate</p>
+            <p className="text-lg font-bold text-slate-700">-3.3 M</p>
+            <p className="text-[10px] text-slate-500">8% Negotiated Discount</p>
+          </div>
+          <div className="p-3 border rounded bg-slate-50">
+            <p className="text-xs font-bold text-slate-400 uppercase mb-1">VRF Selection</p>
+            <p className="text-lg font-bold text-slate-700">-6.0 M</p>
+            <p className="text-[10px] text-slate-500">Hisense OFM vs Samsung Turnkey</p>
+          </div>
+          <div className="p-3 border rounded bg-slate-50">
+            <p className="text-xs font-bold text-slate-400 uppercase mb-1">Furniture</p>
+            <p className="text-lg font-bold text-slate-700">-7.0 M</p>
+            <p className="text-[10px] text-slate-500">Local High-End vs Imported</p>
+          </div>
+          <div className="p-3 border rounded bg-slate-50">
+            <p className="text-xs font-bold text-slate-400 uppercase mb-1">Direct Markup</p>
+            <p className="text-lg font-bold text-slate-700">-3.2 M</p>
+            <p className="text-[10px] text-slate-500">Avoided Turnkey Margin (20%)</p>
+          </div>
+        </div>
+      </div>
+    );
+
+    const TabOptimization = () => (
+      <div className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <Card title="Critical Decision: VRF Selection">
+            <div className="space-y-4">
+              <p className="text-sm text-slate-600 mb-4">
+                Three VRF platforms compared on Capex, Efficiency, and Reliability.
+              </p>
+              <div className="grid grid-cols-3 gap-2">
+                {vrfComparison.map(v => (
+                  <div key={v.brand} className={`p-3 rounded border ${v.brand === 'Hisense' ? 'border-green-500 bg-green-50' : 'border-slate-200'} text-center`}>
+                    <p className="font-bold text-slate-700">{v.brand}</p>
+                    <p className="text-xs text-slate-500 mb-2">PKR {v.cost} M</p>
+                    {v.brand === 'Hisense' && <Badge type="success">SELECTED</Badge>}
+                  </div>
+                ))}
+              </div>
+              <div className="bg-slate-50 p-3 rounded text-xs text-slate-600 border border-slate-200 mt-2">
+                <strong>Selection Logic:</strong> TCL (7.0M) was rejected due to high operational risk. Samsung (11.8M) was deemed too expensive.
+                <strong> Hisense (8.5M)</strong> offers the optimal balance of lifecycle value and technical support.
+              </div>
+            </div>
+          </Card>
+
+          <Card title="Owner Furnished Material (OFM) Matrix">
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm text-left">
+                <thead className="text-xs text-slate-500 uppercase bg-slate-50 border-b">
+                  <tr>
+                    <th className="px-2 py-2">Package</th>
+                    <th className="px-2 py-2">Turnkey Est.</th>
+                    <th className="px-2 py-2">Direct Buy</th>
+                    <th className="px-2 py-2 text-green-600">Saving</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {ofmPackages.map(pkg => (
+                    <tr key={pkg.id}>
+                      <td className="px-2 py-2 font-medium">{pkg.item}</td>
+                      <td className="px-2 py-2 text-slate-500">{pkg.contractorEst}</td>
+                      <td className="px-2 py-2 text-slate-500">{pkg.ownerEst}</td>
+                      <td className="px-2 py-2 font-bold text-green-600">-{pkg.saving.toFixed(1)} M</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="mt-4 text-right">
+              <span className="text-sm text-slate-500">OFM Strategy Efficiency: </span>
+              <span className="text-lg font-bold text-green-600">Avoided 15-20% Markup</span>
+            </div>
+          </Card>
+        </div>
+      </div>
+    );
+
+    const TabBudget = ({ finalCapex, taxImpact }) => (
+      <div className="space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <Card title="Final Approved Envelope Split (Pre-Tax)">
+            <div className="flex flex-col md:flex-row items-center justify-around h-72">
+              <ResponsiveContainer width={300} height="100%">
+                <PieChart>
+                  <Pie
+                    data={finalBudgetSplit}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={60}
+                    outerRadius={80}
+                    paddingAngle={5}
+                    dataKey="value"
+                  >
+                    {finalBudgetSplit.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <RechartsTooltip formatter={(value) => `${value} M`} />
+                  <Legend verticalAlign="bottom" height={60} />
+                </PieChart>
+              </ResponsiveContainer>
+              <div className="space-y-4 w-full md:w-1/2">
+                {finalBudgetSplit.map((item, idx) => (
+                  <div key={idx} className="flex justify-between items-center border-b border-slate-100 pb-1">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full" style={{ backgroundColor: item.color }}></div>
+                      <span className="text-xs text-slate-600">{item.name}</span>
+                    </div>
+                    <span className="font-bold text-sm">{item.value.toFixed(1)} M</span>
+                  </div>
+                ))}
+
+                <div className="flex justify-between items-center pt-2 border-t border-slate-200 mt-2">
+                  <span className="text-base font-bold text-slate-800">TOTAL ENVELOPE</span>
+                  <span className="text-xl font-bold text-blue-700">{finalCapex.toFixed(1)} M</span>
+                </div>
+              </div>
+            </div>
+          </Card>
+
+          <Card title="Tax Liability & Resolutions">
+            <div className="grid grid-cols-2 gap-4 mb-4">
+              <div className="p-4 bg-white border border-slate-200 rounded text-center">
+                <p className="text-xs text-slate-400 uppercase">Input Tax Reserve</p>
+                <p className="text-xl font-bold text-red-500">{taxImpact.toFixed(1)} M</p>
+              </div>
+              <div className="p-4 bg-white border border-slate-200 rounded text-center">
+                <p className="text-xs text-slate-400 uppercase">Gross Authority</p>
+                <p className="text-xl font-bold text-slate-800">{(finalCapex + taxImpact).toFixed(1)} M</p>
+              </div>
+            </div>
+
+            <div className="p-4 bg-blue-50 rounded-lg border border-blue-100 space-y-3">
+              <div className="flex items-start gap-3">
+                <div className="text-blue-600 font-bold mt-1">✓</div>
+                <div>
+                  <h4 className="font-bold text-blue-900 text-sm">Requested Resolutions</h4>
+                  <ul className="text-xs text-blue-700 mt-1 list-disc pl-4 space-y-1">
+                    <li>Approve Total Capex Envelope of 63.5M (+Tax).</li>
+                    <li>Endorse OFM strategy for VRF, AV, Furniture.</li>
+                    <li>Authorise CEO to issue LOIs and reallocate savings.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </Card>
+        </div>
+      </div>
+    );
+
+    const TabTimeline = () => (
+      <div className="space-y-6">
+        <Card title="60-Day Execution Programme">
+          <div className="overflow-x-auto">
+            <div className="min-w-[600px] relative">
+              <div className="flex border-b border-slate-200 mb-4 pb-2">
+                <div className="w-1/4 font-bold text-xs text-slate-500 uppercase">Activity</div>
+                <div className="w-3/4 flex justify-between text-xs text-slate-400 px-2">
+                  <span>Day 0</span><span>Day 15</span><span>Day 30</span><span>Day 45</span><span>Day 60</span>
+                </div>
+              </div>
+              <div className="space-y-3">
+                {scheduleData.map((task, i) => (
+                  <div key={i} className="flex items-center">
+                    <div className="w-1/4 text-sm font-medium text-slate-700 truncate pr-4" title={task.task}>{task.task}</div>
+                    <div className="w-3/4 bg-slate-100 rounded-full h-4 relative">
+                      <div
+                        className={`absolute h-4 rounded-full text-[10px] text-white flex items-center justify-center
+                          ${task.type === 'Civil' ? 'bg-slate-400' :
+                            task.type === 'MEP' ? 'bg-blue-500' :
+                            task.type === 'OFM' ? 'bg-yellow-500' : 'bg-green-500'}`}
+                        style={{
+                          left: `${(task.start / 60) * 100}%`,
+                          width: `${(task.duration / 60) * 100}%`
+                        }}
+                      >
+                        {task.duration}d
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="absolute top-0 bottom-0 left-1/4 w-[1px] border-l border-dashed border-red-300"></div>
+              <div className="absolute top-[-10px] left-[25%] text-[10px] text-red-500 font-bold">Mobilisation</div>
+
+              <div className="absolute top-0 bottom-0 left-[90%] w-[1px] border-l border-dashed border-green-500"></div>
+              <div className="absolute top-[-10px] left-[90%] text-[10px] text-green-600 font-bold">Go-Live</div>
+            </div>
+          </div>
+        </Card>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <Card title="Critical Path Risks" className="md:col-span-1 border-l-4 border-l-red-400">
+            <ul className="text-sm space-y-2">
+              <li className="flex gap-2"><span className="text-red-500 font-bold mt-0.5">!</span> <span>VRF Delivery (Lead time 4-6 weeks)</span></li>
+              <li className="flex gap-2"><span className="text-red-500 font-bold mt-0.5">!</span> <span>Building NOC (Sky View Admin)</span></li>
+              <li className="flex gap-2"><span className="text-red-500 font-bold mt-0.5">!</span> <span>Furniture Fabric Selection</span></li>
+            </ul>
+          </Card>
+          <Card title="Mitigation Strategy" className="md:col-span-2 border-l-4 border-l-green-400">
+            <p className="text-sm text-slate-600">
+              Advance orders for VRF and Furniture will be placed <strong>parallel</strong> to the main contractor mobilization.
+              The Project Manager has already secured soft approval from Building Admin for demolition works starting Day 1.
+            </p>
+          </Card>
+        </div>
+      </div>
+    );
+
+    const TabBenchmark = ({ capexPerSqft }) => (
+      <div className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <Card title="NCGCL Metric" className="md:col-span-1 bg-slate-800 text-white border-none">
+            <div className="flex flex-col h-full justify-center items-center text-center">
+              <div className="text-4xl font-bold text-yellow-400 mb-1">{parseInt(capexPerSqft).toLocaleString()}</div>
+              <div className="text-xs uppercase tracking-widest text-slate-400">PKR per Sqft</div>
+              <div className="mt-4 px-3 py-1 bg-white/10 rounded-full text-xs text-white">
+                Corporate Grade B+ Fitout
+              </div>
+            </div>
+          </Card>
+
+          <Card title="Market Cost Positioning" className="md:col-span-3">
+            <div className="h-72">
+              <ResponsiveContainer width="100%" height="100%">
+                <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis type="number" dataKey="x" name="Area" unit=" sqft" label={{ value: 'Office Area (Sqft)', position: 'bottom', offset: 0 }} />
+                  <YAxis type="number" dataKey="y" name="Capex" unit=" PKR" label={{ value: 'Cost/Sqft', angle: -90, position: 'left' }} domain={[10000, 30000]} />
+                  <RechartsTooltip cursor={{ strokeDasharray: '3 3' }} />
+                  <Legend />
+                  <Scatter name="Market Standards" data={benchmarkData.filter(d => !d.name.includes("NCGCL"))} fill="#94a3b8" />
+                  <Scatter name="NCGCL Target" data={benchmarkData.filter(d => d.name.includes("NCGCL"))} shape="star" size={200} fill="#eab308" />
+                </ScatterChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="flex justify-center gap-6 mt-2 text-xs text-slate-500">
+              <span className="flex items-center gap-1"><div className="w-2 h-2 bg-slate-400 rounded-full"></div> Market Peer</span>
+              <span className="flex items-center gap-1"><div className="w-2 h-2 bg-yellow-500 transform rotate-45"></div> NCGCL Project</span>
+            </div>
+          </Card>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <Card title="Value Analysis" className="md:col-span-2">
+            <div className="space-y-3 text-sm text-slate-600">
+              <p>
+                At <strong>~PKR 15,500 per sqft</strong> (based on 4100 sqft), the NCGCL fit-out is delivering exceptional efficiency.
+                It aligns with the cost of a <strong>Basic Local Office</strong> (~15k) while providing specifications (VRF, Glass, Corporate Furniture) typical of the <strong>22k-25k range</strong>.
+              </p>
+              <div className="grid grid-cols-3 gap-4 mt-4 text-center">
+                <div className="p-2 bg-yellow-50 rounded border border-yellow-200 ring-1 ring-yellow-200">
+                  <p className="text-xs uppercase text-yellow-600 mb-1 font-bold">NCGCL Target</p>
+                  <p className="font-bold text-slate-800">~15.5k / sqft</p>
+                  <p className="text-[10px] text-slate-500">Corporate Grade Specs</p>
+                </div>
+                <div className="p-2 bg-slate-50 rounded border border-slate-100">
+                  <p className="text-xs uppercase text-slate-400 mb-1">Standard Corp.</p>
+                  <p className="font-bold text-slate-700">~22k / sqft</p>
+                  <p className="text-[10px] text-slate-400">Equivalent Specs</p>
+                </div>
+                <div className="p-2 bg-slate-50 rounded border border-slate-100">
+                  <p className="text-xs uppercase text-slate-400 mb-1">MNC Premium</p>
+                  <p className="font-bold text-slate-700">~28k+ / sqft</p>
+                  <p className="text-[10px] text-slate-400">Imported Finishes</p>
+                </div>
+              </div>
+            </div>
+          </Card>
+
+          <Card title="Cost Drivers" className="md:col-span-1">
+            <ul className="text-xs space-y-3 text-slate-600 mt-1">
+              <li className="flex gap-2">
+                <span className="text-green-600 font-bold">✓</span>
+                <span><strong>Direct Procurement:</strong> Bypassing markups on VRF/Furniture saved ~15-20%.</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-green-600 font-bold">✓</span>
+                <span><strong>Negotiated Rebate:</strong> Flat 8% discount from contractor baseline.</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-green-600 font-bold">✓</span>
+                <span><strong>Efficient Design:</strong> Open ceiling concept reduced material costs.</span>
+              </li>
+            </ul>
+          </Card>
+        </div>
+      </div>
+    );
+
+    // --- 4. MAIN COMPONENT ---
+    function NCGCLDashboard() {
+      const [activeTab, setActiveTab] = useState("process");
+
+      const finalCapex = 63.5;
+      const taxImpact = finalCapex * 0.16;
+      const capexPerSqft = (finalCapex * 1000000 / projectInfo.areaSqft).toFixed(0);
+
+      const renderTabContent = () => {
+        switch (activeTab) {
+          case "process": return <TabProcess />;
+          case "roadmap": return <TabRoadmap />;
+          case "breakdown": return <TabCostBreakdown />;
+          case "journey": return <TabSavingsJourney />;
+          case "optimization": return <TabOptimization />;
+          case "budget": return <TabBudget finalCapex={finalCapex} taxImpact={taxImpact} />;
+          case "timeline": return <TabTimeline />;
+          case "benchmark": return <TabBenchmark capexPerSqft={capexPerSqft} />;
+          default: return <TabProcess />;
+        }
+      };
+
+      const tabs = [
+        { id: "process", label: "1. Exec Summary" },
+        { id: "roadmap", label: "2. Procurement Roadmap" },
+        { id: "breakdown", label: "3. Contractor Breakdown" },
+        { id: "journey", label: "4. Savings Journey" },
+        { id: "optimization", label: "5. Component Opt." },
+        { id: "budget", label: "6. Final Budget" },
+        { id: "timeline", label: "7. Timeline" },
+        { id: "benchmark", label: "8. Peer Benchmarking" },
+      ];
+
+      return (
+        <div className="min-h-screen bg-slate-50 font-sans text-slate-800">
+          <header className="bg-slate-900 text-white p-6 shadow-md">
+            <div className="max-w-7xl mx-auto flex justify-between items-center">
+              <div>
+                <div className="flex items-center gap-3 mb-1">
+                  <div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center font-bold">N</div>
+                  <h1 className="text-xl font-bold tracking-tight">NCGCL Board Dashboard</h1>
+                </div>
+                <p className="text-slate-400 text-sm">Karachi Office Establishment | Sumya Sky View</p>
+              </div>
+              <div className="flex gap-6 text-right">
+                <div className="hidden md:block">
+                  <p className="text-xs text-slate-400 uppercase">Board Envelope Request</p>
+                  <p className="text-2xl font-bold text-blue-400">PKR 63.5 M <span className="text-sm text-slate-400">+ Tax</span></p>
+                </div>
+                <div className="hidden md:block">
+                  <p className="text-xs text-slate-400 uppercase">Timeline</p>
+                  <p className="text-xl font-bold text-white">60 Days</p>
+                </div>
+              </div>
+            </div>
+          </header>
+
+          <nav className="bg-white border-b border-slate-200 sticky top-0 z-10 overflow-hidden">
+            <div className="max-w-7xl mx-auto px-6 overflow-x-auto no-scrollbar">
+              <div className="flex gap-8 whitespace-nowrap min-w-max pb-2">
+                {tabs.map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`flex items-center gap-2 py-4 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
+                      activeTab === tab.id
+                        ? "border-blue-600 text-blue-600"
+                        : "border-transparent text-slate-500 hover:text-slate-800"
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </nav>
+
+          <main className="max-w-7xl mx-auto p-6">
+            {renderTabContent()}
+          </main>
+
+          <footer className="max-w-7xl mx-auto px-6 pb-6 text-center text-xs text-slate-400">
+            <p>Confidential - For Board Use Only. Generated based on Agenda 5 and Consolidated BOQ Rev-02.</p>
+          </footer>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<NCGCLDashboard />);
+  </script>
+</body>
+</html>
