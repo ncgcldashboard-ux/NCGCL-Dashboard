@@ -375,7 +375,7 @@
           <canvas id="annualChart"></canvas>
         </div>
         <div class="mt-4 text-xs text-slate-500 text-center italic">
-          *Scenario B includes a separate 'Other Costs' component (insurance, maintenance, etc.) by grade; Year 5 may show net inflow (negative) due to asset recovery.
+          *Year 5 may show net inflow (negative) due to asset recovery.
         </div>
       </div>
 
@@ -457,9 +457,9 @@
               <th class="py-2 pr-4 font-semibold">Grade</th>
               <th class="py-2 pr-4 font-semibold">Vehicle</th>
               <th class="py-2 pr-4 font-semibold">Price (PKR mn)</th>
-              <th class="py-2 pr-4 font-semibold">Insurance p.a. (1.2%)</th>
-              <th class="py-2 pr-4 font-semibold">Maintenance p.a. (5.0%)</th>
-              <th class="py-2 pr-0 font-semibold">Total Other Costs p.a. (6.2%)</th>
+              <th class="py-2 pr-4 font-semibold">Insurance p.a. (1.0%)</th>
+              <th class="py-2 pr-4 font-semibold">Maintenance p.a. (1.0%)</th>
+              <th class="py-2 pr-0 font-semibold">Total Other Costs p.a. (2.0%)</th>
             </tr>
           </thead>
           <tbody id="otherCostsTableBody" class="text-slate-700"></tbody>
@@ -504,11 +504,11 @@
   // Data (from your React file)
   // -------------------------
   const vehicleData = {
-    10: { grade: "Grade 10", vehicle: "Honda Civic RS 1.6", price: 10.58, scenarioA: 8.49, scenarioB: 6.90, savings: 1.59, percentSave: 18.7 },
-    9:  { grade: "Grade 9",  vehicle: "Toyota Corolla Altis 1.6", price: 7.04, scenarioA: 6.07, scenarioB: 4.60, savings: 1.47, percentSave: 24.2 },
-    8:  { grade: "Grade 8",  vehicle: "Honda City 1.5 Auto", price: 6.37, scenarioA: 5.40, scenarioB: 4.15, savings: 1.25, percentSave: 23.1 },
-    7:  { grade: "Grade 7",  vehicle: "Toyota Yaris CVT 1.3", price: 5.07, scenarioA: 4.07, scenarioB: 3.31, savings: 0.76, percentSave: 18.7 },
-    6:  { grade: "Grade 6",  vehicle: "Kia Picanto", price: 4.21, scenarioA: 3.56, scenarioB: 2.74, savings: 0.82, percentSave: 23.0 }
+    10: { grade: "Grade 10", vehicle: "Honda Civic RS 1.6", price: 10.58, scenarioA: 8.49, scenarioB: 6.34, savings: 2.15, percentSave: 25.3 },
+    9:  { grade: "Grade 9",  vehicle: "Toyota Corolla Altis 1.6", price: 7.04, scenarioA: 6.07, scenarioB: 4.23, savings: 1.84, percentSave: 30.3 },
+    8:  { grade: "Grade 8",  vehicle: "Honda City 1.5 Auto", price: 6.37, scenarioA: 5.40, scenarioB: 3.82, savings: 1.58, percentSave: 29.3 },
+    7:  { grade: "Grade 7",  vehicle: "Toyota Yaris CVT 1.3", price: 5.07, scenarioA: 4.07, scenarioB: 3.04, savings: 1.03, percentSave: 25.3 },
+    6:  { grade: "Grade 6",  vehicle: "Kia Picanto", price: 4.21, scenarioA: 3.56, scenarioB: 2.52, savings: 1.04, percentSave: 29.2 }
   };
   // Used in the 5-year NPV comparison chart (horizontal in React; we'll do vertical bars)
   const npvComparisonData = Object.values(vehicleData)
@@ -664,9 +664,9 @@
 
     grades.forEach(g => {
       const d = vehicleData[g];
-      const insurance = d.price * 0.012;
-      const maintenance = d.price * 0.05;
-      const total = d.price * 0.062;
+      const insurance = d.price * 0.01;
+      const maintenance = d.price * 0.01;
+      const total = d.price * 0.02;
 
       const tr = document.createElement("tr");
       tr.className = "border-b border-slate-100";
