@@ -133,6 +133,7 @@
     <!-- Grade Selector -->
     <div id="gradeSelector" class="flex justify-center flex-wrap gap-2"></div>
 
+    
     <!-- Main Stats Display -->
     <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 grid md:grid-cols-3 gap-6 items-center">
       <div class="md:col-span-1 space-y-1">
@@ -374,7 +375,7 @@
           <canvas id="annualChart"></canvas>
         </div>
         <div class="mt-4 text-xs text-slate-500 text-center italic">
-          *Scenario B Year 5 may show net inflow (negative) due to asset salvage value recovery.
+          *Scenario B includes a separate 'Other Costs' component (insurance, maintenance, etc.) by grade; Year 5 may show net inflow (negative) due to asset recovery.
         </div>
       </div>
 
@@ -439,7 +440,34 @@
 
 
 
-    <!-- Policy Disclaimer -->
+    
+
+<!-- Annual Other Costs Table -->
+    <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-6">
+      <div class="flex items-start justify-between gap-4 flex-wrap">
+        <div>
+          <h2 class="text-lg font-bold text-slate-800">Annual Other Costs by Grade</h2>
+</div>
+      </div>
+
+      <div class="overflow-x-auto mt-4">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="text-left text-slate-600 border-b border-slate-200">
+              <th class="py-2 pr-4 font-semibold">Grade</th>
+              <th class="py-2 pr-4 font-semibold">Vehicle</th>
+              <th class="py-2 pr-4 font-semibold">Price (PKR mn)</th>
+              <th class="py-2 pr-4 font-semibold">Insurance p.a. (1.2%)</th>
+              <th class="py-2 pr-4 font-semibold">Maintenance p.a. (5.0%)</th>
+              <th class="py-2 pr-0 font-semibold">Total Other Costs p.a. (6.2%)</th>
+            </tr>
+          </thead>
+          <tbody id="otherCostsTableBody" class="text-slate-700"></tbody>
+        </table>
+      </div>
+    </section>
+
+<!-- Policy Disclaimer -->
     <section class="paper-section">
       <div class="section-title">Policy · Disclaimer and Key Assumptions</div>
       <p class="essay-note">
@@ -476,13 +504,12 @@
   // Data (from your React file)
   // -------------------------
   const vehicleData = {
-    10: { grade: "Grade 10", vehicle: "Honda Civic RS 1.6", price: 10.58, scenarioA: 8.49, scenarioB: 6.07, savings: 2.42, percentSave: 28.5 },
-    9:  { grade: "Grade 9",  vehicle: "Toyota Corolla Altis 1.6", price: 7.04, scenarioA: 6.07, scenarioB: 4.05, savings: 2.02, percentSave: 33.3 },
-    8:  { grade: "Grade 8",  vehicle: "Honda City 1.5 Auto", price: 6.37, scenarioA: 5.40, scenarioB: 3.66, savings: 1.74, percentSave: 32.2 },
-    7:  { grade: "Grade 7",  vehicle: "Toyota Yaris CVT 1.3", price: 5.07, scenarioA: 4.07, scenarioB: 2.91, savings: 1.16, percentSave: 28.5 },
-    6:  { grade: "Grade 6",  vehicle: "Kia Picanto", price: 4.21, scenarioA: 3.56, scenarioB: 2.42, savings: 1.14, percentSave: 32.0 }
+    10: { grade: "Grade 10", vehicle: "Honda Civic RS 1.6", price: 10.58, scenarioA: 8.49, scenarioB: 6.90, savings: 1.59, percentSave: 18.7 },
+    9:  { grade: "Grade 9",  vehicle: "Toyota Corolla Altis 1.6", price: 7.04, scenarioA: 6.07, scenarioB: 4.60, savings: 1.47, percentSave: 24.2 },
+    8:  { grade: "Grade 8",  vehicle: "Honda City 1.5 Auto", price: 6.37, scenarioA: 5.40, scenarioB: 4.15, savings: 1.25, percentSave: 23.1 },
+    7:  { grade: "Grade 7",  vehicle: "Toyota Yaris CVT 1.3", price: 5.07, scenarioA: 4.07, scenarioB: 3.31, savings: 0.76, percentSave: 18.7 },
+    6:  { grade: "Grade 6",  vehicle: "Kia Picanto", price: 4.21, scenarioA: 3.56, scenarioB: 2.74, savings: 0.82, percentSave: 23.0 }
   };
-
   // Used in the 5-year NPV comparison chart (horizontal in React; we'll do vertical bars)
   const npvComparisonData = Object.values(vehicleData)
     .map(d => ({ grade: d.grade, Monetization: d.scenarioA, CompanyOwned: d.scenarioB }))
@@ -493,21 +520,23 @@
   // -------------------------
   // Year-by-year data logic (mirrors your useMemo)
   // -------------------------
-  function buildYearlyData(data) {
-    // Approximations copied from your file
-    const annualAllowance = (data.scenarioA / 3.4);      // proxy annuity factor
-    const maintenance = data.price * 0.02;               // annual maint/insurance
-    const salvageValue = data.price * 0.45;              // year-5 residual recovery
+  
+  function buildYearlyData(gradeId, data) {
+    // Note: Annual insurance/maintenance are displayed separately (not charted).
+    const annualAllowance = (data.scenarioA / 3.4);            // proxy annuity factor
+// PKR -> PKR million
+    const salvageValue = data.price * 0.45;                    // year-5 residual recovery (existing evaluation proxy)
 
     // In PKR million
     return [
-      { year: "Year 1", Monetization: +annualAllowance.toFixed(2), CompanyOwned: +(data.price + maintenance).toFixed(2) },
-      { year: "Year 2", Monetization: +annualAllowance.toFixed(2), CompanyOwned: +maintenance.toFixed(2) },
-      { year: "Year 3", Monetization: +annualAllowance.toFixed(2), CompanyOwned: +maintenance.toFixed(2) },
-      { year: "Year 4", Monetization: +annualAllowance.toFixed(2), CompanyOwned: +maintenance.toFixed(2) },
-      { year: "Year 5", Monetization: +annualAllowance.toFixed(2), CompanyOwned: +(maintenance - salvageValue).toFixed(2) } // negative possible
+      { year: "Year 1", Monetization: +annualAllowance.toFixed(2), Purchase: +data.price.toFixed(2), Recovery: 0 },
+      { year: "Year 2", Monetization: +annualAllowance.toFixed(2), Purchase: 0, Recovery: 0 },
+      { year: "Year 3", Monetization: +annualAllowance.toFixed(2), Purchase: 0, Recovery: 0 },
+      { year: "Year 4", Monetization: +annualAllowance.toFixed(2), Purchase: 0, Recovery: 0 },
+      { year: "Year 5", Monetization: +annualAllowance.toFixed(2), Purchase: 0, Recovery: +(-salvageValue).toFixed(2) }
     ];
   }
+
 
   // -------------------------
   // Charts (Chart.js)
@@ -523,8 +552,9 @@
       data: {
         labels: [],
         datasets: [
-          { label: "Monetization (Outflow)", data: [], borderWidth: 0 },
-          { label: "Company Owned (Net Flow)", data: [], borderWidth: 0 }
+          { label: "Scenario A: Monetization (Outflow)", data: [], borderWidth: 0, stack: "monetization" },
+          { label: "Scenario B: Purchase (Year 1)", data: [], borderWidth: 0, stack: "companyOwned" },
+          { label: "Scenario B: Recovery (Year 5)", data: [], borderWidth: 0, stack: "companyOwned" }
         ]
       },
       options: {
@@ -535,13 +565,13 @@
           legend: { position: "top", labels: { usePointStyle: true, pointStyle: "circle" } },
           tooltip: {
             callbacks: {
-              label: (ctx) => `${ctx.dataset.label}: PKR ${ctx.parsed.y.toFixed(2)}mn`
+              label: (ctx) => `${ctx.dataset.label}: PKR ${Number(ctx.parsed.y).toFixed(2)}mn`
             }
           }
         },
         scales: {
-          x: { grid: { display: false }, ticks: { color: "#64748b" } },
-          y: {
+          x: { stacked: true, grid: { display: false }, ticks: { color: "#64748b" } },
+          y: { stacked: true,
             grid: { color: "#e2e8f0" },
             ticks: { color: "#64748b" }
           }
@@ -583,7 +613,8 @@
   function updateAnnualChart(yearlyData) {
     annualChart.data.labels = yearlyData.map(d => d.year);
     annualChart.data.datasets[0].data = yearlyData.map(d => d.Monetization);
-    annualChart.data.datasets[1].data = yearlyData.map(d => d.CompanyOwned);
+    annualChart.data.datasets[1].data = yearlyData.map(d => d.Purchase);
+    annualChart.data.datasets[2].data = yearlyData.map(d => d.Recovery);
     annualChart.update();
   }
 
@@ -621,12 +652,46 @@
     document.getElementById("scenarioB").textContent = data.scenarioB.toFixed(2);
   }
 
+  function renderOtherCostsTable() {
+    const tbody = document.getElementById("otherCostsTableBody");
+    if (!tbody) return;
+
+    const grades = Object.keys(vehicleData)
+      .map(g => parseInt(g, 10))
+      .sort((a, b) => b - a);
+
+    tbody.innerHTML = "";
+
+    grades.forEach(g => {
+      const d = vehicleData[g];
+      const insurance = d.price * 0.012;
+      const maintenance = d.price * 0.05;
+      const total = d.price * 0.062;
+
+      const tr = document.createElement("tr");
+      tr.className = "border-b border-slate-100";
+
+      tr.innerHTML = `
+        <td class="py-2 pr-4 font-medium text-slate-800">Grade ${g}</td>
+        <td class="py-2 pr-4">${d.vehicle}</td>
+        <td class="py-2 pr-4">${d.price.toFixed(2)}</td>
+        <td class="py-2 pr-4">${insurance.toFixed(2)}</td>
+        <td class="py-2 pr-4">${maintenance.toFixed(2)}</td>
+        <td class="py-2 pr-0">${total.toFixed(2)}</td>
+      `;
+
+      tbody.appendChild(tr);
+    });
+  }
+
+
   function renderAll() {
     const data = vehicleData[activeGrade];
     renderGradeButtons();
     renderStats(data);
+    renderOtherCostsTable();
 
-    const yearly = buildYearlyData(data);
+    const yearly = buildYearlyData(activeGrade, data);
     updateAnnualChart(yearly);
   }
 
@@ -634,5 +699,9 @@
   initCharts();
   renderAll();
 </script>
+
+
+    
+
 </body>
 </html>
