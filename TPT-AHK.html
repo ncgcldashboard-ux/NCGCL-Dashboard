@@ -1,0 +1,1124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Two-Part Tariff Policy Framework – Dashboard</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    /* Utility: Hide Scrollbar */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* Custom Tooltip Styling */
+    .tt {
+      position: fixed;
+      pointer-events: none;
+      z-index: 50;
+      background: rgba(15,23,42,0.95);
+      color: #fff;
+      padding: 6px 8px;
+      border-radius: 8px;
+      font-size: 12px;
+      line-height: 1.2;
+      max-width: 260px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      transform: translate(10px, 10px);
+      display: none;
+      white-space: nowrap;
+    }
+
+    /* SVG Text Consistency */
+    svg text { font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
+
+    /* Smooth Tab Transitions */
+    .section { display: none; }
+    .section.active { display: block; animation: fadeIn 220ms ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px);} to { opacity: 1; transform: translateY(0);} }
+  </style>
+</head>
+
+<body class="bg-slate-50 text-slate-900 font-sans pb-12">
+  
+  <div id="tooltip" class="tt"></div>
+
+  <header class="bg-slate-900 text-white pt-8 pb-16 px-6 shadow-lg">
+    <div class="max-w-6xl mx-auto">
+      <div class="flex justify-between items-start">
+        <div>
+          <h1 class="text-3xl font-bold tracking-tight">Two-Part Tariff Policy Framework</h1>
+          <p class="text-slate-400 mt-2 max-w-2xl text-lg">
+            Proposal for Capacity Subscription Charge (CSC) &amp; Time-of-Use Marginal Pricing
+          </p>
+          <div class="flex gap-3 mt-4">
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800">Revenue Neutral</span>
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-700">Phase-1 Opt-In</span>
+          </div>
+        </div>
+        <div class="hidden md:block text-right">
+          <p class="text-xs text-slate-500 uppercase tracking-widest">Ministry of Power</p>
+          <p class="text-sm text-slate-400 mt-1">Strategic Policy Unit</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-6 -mt-8">
+    
+    <div class="flex overflow-x-auto pb-4 gap-2 mb-6 no-scrollbar" id="tabs">
+      </div>
+
+    <div class="min-h-[600px]">
+      
+      <section id="section-executive" class="section active">
+        <div class="space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6 border-l-4 border-l-indigo-500">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="text-slate-500 font-medium text-sm">Target Problem</h3>
+                <span class="text-indigo-500" aria-hidden="true" id="icon-shield"></span>
+              </div>
+              <p class="text-2xl font-bold text-slate-800">Grid Defection</p>
+              <p class="text-sm text-slate-600 mt-2">
+                Current tariff blends fixed costs into energy rates, encouraging BESS arbitrage and exit.
+              </p>
+            </div>
+
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6 border-l-4 border-l-emerald-500">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="text-slate-500 font-medium text-sm">Proposed Solution</h3>
+                <span class="text-emerald-500" aria-hidden="true" id="icon-check"></span>
+              </div>
+              <p class="text-2xl font-bold text-slate-800">Two-Part Tariff</p>
+              <p class="text-sm text-slate-600 mt-2">
+                <strong>Capacity Subscription (CSC)</strong> for fixed costs + <strong>ToU Marginal Pricing</strong> for energy.
+              </p>
+            </div>
+
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6 border-l-4 border-l-blue-500">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="text-slate-500 font-medium text-sm">Industrial Impact</h3>
+                <span class="text-blue-500" aria-hidden="true" id="icon-factory"></span>
+              </div>
+              <p class="text-2xl font-bold text-slate-800">Demand Stimulus</p>
+              <p class="text-sm text-slate-600 mt-2">
+                Reduces marginal cost of production during productive hours, discouraging captive generation.
+              </p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+              <h3 class="text-lg font-semibold text-slate-800 mb-4">Fixed Cost Recovery Pool (Jun-25 Data)</h3>
+              <p class="text-sm text-slate-500 mb-6">
+                The "Fixed Residual" that must be recovered via Capacity Charges (CSC) instead of volumetric units to ensure revenue neutrality.
+              </p>
+              <div class="h-64" id="chart-residual-pool"></div>
+            </div>
+
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+              <h3 class="text-lg font-semibold text-slate-800 mb-4">The "Death Spiral" Mechanism</h3>
+              <div class="relative h-64 bg-slate-50 rounded-lg flex items-center justify-center p-4">
+                <div class="w-full max-w-md space-y-4">
+                  <div class="flex items-center justify-between p-3 bg-white border border-rose-200 rounded shadow-sm opacity-50">
+                    <span class="text-sm font-medium">1. High Volumetric Tariff</span>
+                    <span class="text-slate-400" aria-hidden="true" id="icon-arrow-1"></span>
+                  </div>
+                  <div class="flex items-center justify-between p-3 bg-white border border-rose-300 rounded shadow-sm opacity-75">
+                    <span class="text-sm font-medium">2. Good Customers Exit (Solar/BESS)</span>
+                    <span class="text-slate-400" aria-hidden="true" id="icon-arrow-2"></span>
+                  </div>
+                  <div class="flex items-center justify-between p-3 bg-white border border-rose-500 rounded shadow-sm">
+                    <span class="text-sm font-medium">3. Grid Costs Shared by Fewer Units</span>
+                    <span class="text-slate-400" aria-hidden="true" id="icon-arrow-3"></span>
+                  </div>
+                  <div class="flex items-center justify-between p-3 bg-rose-50 border border-rose-600 rounded shadow-md">
+                    <span class="text-sm font-bold text-rose-700">4. Tariffs Rise Further (Collapse)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="section-strategic" class="section">
+        <div class="space-y-6">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+              <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                <span class="text-slate-600" aria-hidden="true" id="icon-factory-2"></span>
+                The "Kill Switch" for Captive Power
+              </h3>
+              <p class="text-sm text-slate-500 mb-6">
+                The strongest strategic argument for TPT is that it makes Grid Power cheaper than Captive Gas generation.
+                This reverses the industrial exodus.
+              </p>
+              <div class="h-64" id="chart-captive-vs-grid"></div>
+              <div class="mt-4 p-3 bg-emerald-50 border border-emerald-100 rounded text-xs text-emerald-800">
+                <strong>Key Insight:</strong> TPT Marginal Cost (16.1 PKR) is ~50% cheaper than Captive Gas.
+                Once fixed costs (CSC) are paid, every extra unit is far cheaper on the Grid.
+              </div>
+            </div>
+
+            <div class="space-y-6">
+              <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+                <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                  <span class="text-amber-500" aria-hidden="true" id="icon-flame"></span>
+                  National Gas Efficiency Bonus
+                </h3>
+                <div class="flex items-center justify-around h-48">
+                  <div class="text-center">
+                    <div class="relative w-32 h-32 mx-auto flex items-center justify-center rounded-full border-8 border-orange-100">
+                      <span class="text-3xl font-bold text-orange-500">35%</span>
+                    </div>
+                    <p class="mt-2 text-sm font-medium text-slate-600">Captive Plant</p>
+                  </div>
+                  <span class="text-slate-300" aria-hidden="true" id="icon-arrow-big"></span>
+                  <div class="text-center">
+                    <div class="relative w-32 h-32 mx-auto flex items-center justify-center rounded-full border-8 border-emerald-100">
+                      <span class="text-3xl font-bold text-emerald-600">60%</span>
+                    </div>
+                    <p class="mt-2 text-sm font-medium text-slate-600">Utility CCGT</p>
+                  </div>
+                </div>
+                <p class="text-sm text-slate-500 mt-2 text-center">
+                  Moving load to the grid saves imported LNG by utilizing efficient central plants.
+                </p>
+              </div>
+
+              <div class="bg-slate-800 text-white rounded-xl border border-slate-700 shadow-sm p-6">
+                <div class="flex items-start gap-4">
+                  <div class="p-3 bg-indigo-500/20 rounded-lg">
+                    <span class="text-indigo-400" aria-hidden="true" id="icon-linechart"></span>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-lg">Macro-Economic Wins</h4>
+                    <ul class="mt-2 space-y-2 text-sm text-slate-300">
+                      <li class="flex items-center gap-2">
+                        <span class="text-emerald-400" aria-hidden="true" id="icon-check-2"></span>
+                        Reduced Import Bill (Lower Gas consumption)
+                      </li>
+                      <li class="flex items-center gap-2">
+                        <span class="text-emerald-400" aria-hidden="true" id="icon-check-3"></span>
+                        Lower Capacity Payment per Unit (Denominator effect)
+                      </li>
+                      <li class="flex items-center gap-2">
+                        <span class="text-emerald-400" aria-hidden="true" id="icon-check-4"></span>
+                        Industrial Competitiveness (Lower input costs)
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="section-calculator" class="section">
+        <div class="space-y-6">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div class="lg:col-span-4 space-y-6">
+              <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6 h-full">
+                <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
+                  <span aria-hidden="true" id="icon-calc"></span> Industrial Simulator
+                </h3>
+
+                <div class="space-y-6">
+                  <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-2">Sanctioned Load / MDI (kW)</label>
+                    <input id="mdiRange" type="range" min="50" max="2000" step="50"
+                           class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600" />
+                    <div class="flex justify-between mt-1 text-xs text-slate-500 font-mono">
+                      <span>50 kW</span>
+                      <span class="text-indigo-600 font-bold" id="mdiVal">500 kW</span>
+                      <span>2000 kW</span>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-2">Load Factor (%)</label>
+                    <input id="lfRange" type="range" min="10" max="90" step="5"
+                           class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600" />
+                    <div class="flex justify-between mt-1 text-xs text-slate-500 font-mono">
+                      <span>10%</span>
+                      <span class="text-indigo-600 font-bold" id="lfVal">35%</span>
+                      <span>90%</span>
+                    </div>
+                  </div>
+
+                  <div class="flex items-center gap-4 bg-slate-50 p-3 rounded-lg border border-slate-200">
+                    <span class="text-sm font-medium text-slate-700">Season:</span>
+                    <button id="btnSummer" class="px-3 py-1 rounded text-sm bg-amber-100 text-amber-800 font-bold shadow-sm">Summer</button>
+                    <button id="btnWinter" class="px-3 py-1 rounded text-sm text-slate-500">Winter</button>
+                  </div>
+
+                  <div class="pt-4 border-t border-slate-100">
+                    <div class="flex justify-between items-center mb-2">
+                      <span class="text-sm text-slate-500">Monthly Consumption:</span>
+                      <span class="font-mono font-medium" id="consumptionVal">0 kWh</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                      <span class="text-sm text-slate-500">Applicable CSC:</span>
+                      <span class="font-mono font-medium" id="cscVal">PKR 0/kW</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="lg:col-span-8 space-y-6">
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="rounded-xl shadow-sm p-4 bg-slate-800 text-white">
+                  <p class="text-slate-400 text-xs uppercase tracking-wider">Current Bill</p>
+                  <p class="text-2xl font-bold mt-1" id="currentBillVal">PKR 0.00 M</p>
+                  <p class="text-slate-400 text-xs mt-1" id="flatRateVal">@ 31.88 PKR/kWh</p>
+                </div>
+                <div class="rounded-xl shadow-sm p-4 bg-indigo-600 text-white">
+                  <p class="text-indigo-200 text-xs uppercase tracking-wider">TPT Bill</p>
+                  <p class="text-2xl font-bold mt-1" id="tptBillVal">PKR 0.00 M</p>
+                  <p class="text-indigo-200 text-xs mt-1" id="effectiveUnitVal">Effective: 0.00 PKR/kWh</p>
+                </div>
+                <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4 text-white" id="savingsCard">
+                  <p class="text-emerald-100 text-xs uppercase tracking-wider" id="savingsTitle">Savings</p>
+                  <p class="text-2xl font-bold mt-1" id="savingsPctVal">0.0%</p>
+                  <p class="text-emerald-100 text-xs mt-1" id="savingsNote">Incentive to Produce</p>
+                </div>
+              </div>
+
+              <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+                <h3 class="text-lg font-semibold text-slate-800 mb-4">Cost Structure Comparison</h3>
+                <div class="h-64" id="chart-cost-structure"></div>
+
+                <div class="mt-4 p-4 bg-amber-50 rounded-lg border border-amber-100 text-sm text-amber-900 flex gap-3">
+                  <span aria-hidden="true" id="icon-info"></span>
+                  <p id="inflectionText"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="section-csc" class="section">
+        <div class="space-y-6">
+          <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+            <h3 class="text-lg font-bold text-slate-800 mb-2">CSC Rate Structure (By MDI Level)</h3>
+            <p class="text-sm text-slate-500 mb-6">
+              Visualizing the Capacity Subscription Charge (PKR/kW-month) across different MDI tiers.
+              Note the significant drop in rates for higher capacity connections (&gt;500 kW), reflecting better load stability.
+            </p>
+
+            <div class="h-96" id="chart-csc-structure"></div>
+
+            <div class="mt-8 overflow-hidden rounded-lg border border-slate-200">
+              <table class="min-w-full divide-y divide-slate-200">
+                <thead class="bg-slate-50">
+                  <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">MDI Level (kW)</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Applicable Rate (PKR/kW)</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Band Category</th>
+                  </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-slate-200" id="cscTableBody"></tbody>
+              </table>
+              <div class="px-6 py-3 bg-slate-50 text-xs text-slate-500 text-center border-t border-slate-200">
+                * Displaying every alternate step for table brevity. Chart shows full sequence.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="section-prosumer" class="section">
+        <div class="space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+              <h3 class="text-lg font-bold text-slate-800 mb-2">The "Solar Sponge" Risk</h3>
+              <p class="text-sm text-slate-500 mb-6">
+                With flat export rates, prosumers sell expensive solar when the system doesn't need it (mid-day)
+                and draw power when the system is stressed (evening).
+              </p>
+              <div class="h-64" id="chart-prosumer"></div>
+            </div>
+
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6 bg-slate-50">
+              <h3 class="text-lg font-bold text-slate-800 mb-4">Strategic Correction</h3>
+              <ul class="space-y-4">
+                <li class="flex gap-3 items-start">
+                  <div class="p-2 bg-white rounded shadow-sm text-rose-600" id="icon-trendingdown"></div>
+                  <div>
+                    <p class="font-semibold text-slate-800">Depress Mid-Day Export Rates</p>
+                    <p class="text-sm text-slate-600">
+                      Drop export tariff to ~9 PKR/kWh during "Solar Sponge" (10am-3pm). Discourages dumping on the grid when system marginal price is low.
+                    </p>
+                  </div>
+                </li>
+                <li class="flex gap-3 items-start">
+                  <div class="p-2 bg-white rounded shadow-sm text-emerald-600" id="icon-battery"></div>
+                  <div>
+                    <p class="font-semibold text-slate-800">Incentivize Storage</p>
+                    <p class="text-sm text-slate-600">
+                      Increase export tariff to ~20 PKR/kWh during Peak (6pm-10pm). Prosumers install batteries to store noon sun and sell at evening peak.
+                    </p>
+                  </div>
+                </li>
+                <li class="flex gap-3 items-start">
+                  <div class="p-2 bg-white rounded shadow-sm text-blue-600" id="icon-settings"></div>
+                  <div>
+                    <p class="font-semibold text-slate-800">Fair Capacity Recovery</p>
+                    <p class="text-sm text-slate-600">
+                      Net Metering users must pay CSC on their <strong>Gross Import Capacity</strong>, not Net Units. They use the grid as a backup battery; they must pay rent for the "wire."
+                    </p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="section-roadmap" class="section">
+        <div class="space-y-6">
+          <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-8">
+            <h3 class="text-xl font-bold text-slate-800 mb-8">Implementation Roadmap: Phase 1 to Maturity</h3>
+
+            <div class="relative border-l-2 border-indigo-200 ml-4 space-y-12">
+              <div class="relative pl-8">
+                <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-indigo-600 border-4 border-white shadow-sm"></div>
+                <div class="bg-indigo-50 p-6 rounded-lg border border-indigo-100">
+                  <div class="flex justify-between items-start mb-2">
+                    <h4 class="text-lg font-bold text-indigo-900">Phase 1: Voluntary Opt-In</h4>
+                    <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800">Immediate</span>
+                  </div>
+                  <p class="text-indigo-800 mb-4">
+                    Launch TPT for Industrial, Commercial, and High-Use Domestic (&gt;700 units) on a voluntary basis.
+                  </p>
+                  <ul class="list-disc pl-5 space-y-1 text-sm text-indigo-700">
+                    <li>Use <strong>Actual MDI</strong> where AMI exists.</li>
+                    <li>Use <strong>Inferred MDI</strong> (kWh / LF Hours) as fallback, with safeguards.</li>
+                    <li>Monthly national true-up for revenue neutrality.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="relative pl-8">
+                <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-slate-400 border-4 border-white shadow-sm"></div>
+                <div class="bg-white p-6 rounded-lg border border-slate-200 shadow-sm">
+                  <div class="flex justify-between items-start mb-2">
+                    <h4 class="text-lg font-bold text-slate-800">Phase 2: Data Strengthening (60-90 Days)</h4>
+                    <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-700">Short Term</span>
+                  </div>
+                  <p class="text-slate-600 mb-4">
+                    Fix the data gaps identified in the Policy Note to transition from "Inferred" to "Actual".
+                  </p>
+                  <ul class="list-disc pl-5 space-y-1 text-sm text-slate-600">
+                    <li>MDI Capture normalization across all DISCOs.</li>
+                    <li>Sanctioned Load vs. Actual MDI audit.</li>
+                    <li>Introduce "Coincident Peak" monitoring for advanced pricing.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="relative pl-8">
+                <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-slate-400 border-4 border-white shadow-sm"></div>
+                <div class="bg-white p-6 rounded-lg border border-slate-200 shadow-sm">
+                  <div class="flex justify-between items-start mb-2">
+                    <h4 class="text-lg font-bold text-slate-800">Phase 3: Advanced ToE & Transition</h4>
+                    <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-700">Mid Term</span>
+                  </div>
+                  <p class="text-slate-600 mb-4">
+                    Full integration of Prosumers and Global Best Practices (Australia/California Model).
+                  </p>
+                  <ul class="list-disc pl-5 space-y-1 text-sm text-slate-600">
+                    <li>Mandate Time-of-Export (ToE) pricing to manage "Solar Sponge".</li>
+                    <li>Move from Opt-In to Opt-Out for Industrial consumers.</li>
+                    <li>Dynamic Seasonal adjustments to CSC.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+              <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
+                <span class="text-amber-500" aria-hidden="true" id="icon-sun"></span>
+                Global Precedent: California (NEM 3.0)
+              </h3>
+              <p class="text-sm text-slate-600">
+                California faced the same "Duck Curve" issue. They moved to <strong>NEM 3.0</strong>, which drastically reduced export rates during solar hours and introduced electrification rates (low energy charge, high fixed charge) to encourage EV and Heat Pump adoption.
+              </p>
+            </div>
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+              <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
+                <span class="text-blue-500" aria-hidden="true" id="icon-users"></span>
+                Australia (Victoria)
+              </h3>
+              <p class="text-sm text-slate-600">
+                Implemented the <strong>"Solar Sponge"</strong> tariff. Network charges are high during evening peaks but drop significantly during the day to encourage consumers to run washing machines and pool pumps when solar is abundant.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <script>
+    // =========================
+    // DATA (from source code)
+    // =========================
+    const CSC_RATES_IND = { "0-50": 4669, "50-100": 4062, "100-200": 4542, "200-500": 3753, "500-1000": 2679, "1000+": 2244 };
+    const CURRENT_FLAT_RATE = 31.88;
+    const RESIDUAL_POOL = [
+      { name: "Domestic (>700)", value: 10.12, fill: "#34d399" },
+      { name: "Commercial", value: 45.21, fill: "#60a5fa" },
+      { name: "Industrial", value: 56.55, fill: "#818cf8" }
+    ];
+
+    const COMPARISON_DATA = [
+      { name: "Grid (Current Flat)", cost: 31.88, fill: "#ef4444" },
+      { name: "Captive Gas", cost: 35.50, fill: "#f97316" },
+      { name: "Captive Diesel", cost: 62.00, fill: "#71717a" },
+      { name: "Grid TPT (Marginal)", cost: 16.10, fill: "#10b981" },
+      { name: "Grid TPT (Effective)", cost: 21.69, fill: "#059669" }
+    ];
+
+    const EXPORT_DATA = [
+      { hour: "00:00", load: 40, solar: 0,   flatExport: 11, touExport: 15,  sysPrice: 20.2 },
+      { hour: "04:00", load: 35, solar: 0,   flatExport: 11, touExport: 15,  sysPrice: 17.8 },
+      { hour: "08:00", load: 55, solar: 20,  flatExport: 11, touExport: 12.6,sysPrice: 15.5 },
+      { hour: "10:00", load: 60, solar: 80,  flatExport: 11, touExport: 9,   sysPrice: 11.5 },
+      { hour: "12:00", load: 65, solar: 100, flatExport: 11, touExport: 9,   sysPrice: 11.5 },
+      { hour: "14:00", load: 70, solar: 85,  flatExport: 11, touExport: 9,   sysPrice: 11.5 },
+      { hour: "16:00", load: 80, solar: 40,  flatExport: 11, touExport: 15,  sysPrice: 18.5 },
+      { hour: "18:00", load: 95, solar: 5,   flatExport: 11, touExport: 19,  sysPrice: 22.1 },
+      { hour: "20:00", load: 90, solar: 0,   flatExport: 11, touExport: 20,  sysPrice: 21.3 },
+      { hour: "22:00", load: 60, solar: 0,   flatExport: 11, touExport: 17,  sysPrice: 20.8 }
+    ];
+
+    // =========================
+    // ICONS (minimal inline SVG)
+    // =========================
+    const ICON_PATHS = {
+      shield: "M12 2l8 4v6c0 5-3.4 9.7-8 11-4.6-1.3-8-6-8-11V6l8-4zm0 7v4m0 4h.01",
+      check:  "M22 11.1V12a10 10 0 1 1-5.9-9.1M22 4 12 14.01l-3-3",
+      arrow:  "M5 12h14m-7-7 7 7-7 7",
+      factory:"M2 20V8l6 4V8l6 4V8l8 5v7H2zm4 0v-4m4 4v-6m4 6v-8m4 8v-5",
+      calc:   "M7 2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm2 4h6m-6 4h2m2 0h2m-6 4h2m2 0h2m-6 4h6",
+      info:   "M12 18h.01M11 10h1v6h1M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z",
+      flame:  "M8.5 14.5c0-3 2.5-3.5 2.5-6.5 2 1 3.5 3 3.5 5.5 0 2.2-1.5 4-3.5 4s-2.5-1.5-2.5-2.5zM12 2c-2 2-4 4.5-4 8a6 6 0 1 0 12 0c0-3.5-2-6-4-8 0 0-1 2-4 0z",
+      linechart:"M3 3v18h18M7 14l3-3 4 4 6-8",
+      sun:    "M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12zM12 2v2m0 16v2M2 12h2m16 12h2M4.2 4.2l1.4 1.4m11.8 11.8 1.4 1.4M19.8 4.2l-1.4 1.4M6 18l-1.4 1.4",
+      users:  "M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8m13 10v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8",
+      trendingdown:"M3 7l6 6 4-4 8 8M21 21h-6",
+      battery:"M7 7h12v10H7V7zm12-2v2m0 10v2",
+      settings:"M12 15.5A3.5 3.5 0 1 0 12 8.5a3.5 3.5 0 0 0 0 7zM19.4 15a7.8 7.8 0 0 0 .1-2l2-1.5-2-3.5-2.4.6a7.7 7.7 0 0 0-1.7-1L15 4h-6l-.4 2.6a7.7 7.7 0 0 0-1.7 1l-2.4-.6-2 3.5 2 1.5a7.8 7.8 0 0 0 .1 2l-2 1.5 2 3.5 2.4-.6a7.7 7.7 0 0 0 1.7 1L9 20h6l.4-2.6a7.7 7.7 0 0 0 1.7-1l2.4.6 2-3.5-2-1.5"
+    };
+
+    function iconSvg(pathKey, cls="w-5 h-5") {
+      const d = ICON_PATHS[pathKey];
+      return `
+        <svg viewBox="0 0 24 24" class="${cls}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          ${d.split("M").filter(Boolean).map(seg => `<path d="M${seg}"></path>`).join("")}
+        </svg>`;
+    }
+
+    // Mount icons
+    const iconMounts = [
+      ["icon-shield","shield"],["icon-check","check"],["icon-factory","factory"],
+      ["icon-arrow-1","arrow"],["icon-arrow-2","arrow"],["icon-arrow-3","arrow"],
+      ["icon-factory-2","factory"],["icon-flame","flame"],["icon-arrow-big","arrow"],
+      ["icon-linechart","linechart"],["icon-check-2","check"],["icon-check-3","check"],["icon-check-4","check"],
+      ["icon-calc","calc"],["icon-info","info"],["icon-sun","sun"],["icon-users","users"],
+      ["icon-trendingdown","trendingdown"],["icon-battery","battery"],["icon-settings","settings"]
+    ];
+    iconMounts.forEach(([id,key]) => {
+      const el = document.getElementById(id);
+      if (el) el.innerHTML = iconSvg(key);
+    });
+
+    // =========================
+    // TABS + ROUTING
+    // =========================
+    const tabs = [
+      { id: "executive", label: "Executive Summary", iconKey: "info" },
+      { id: "strategic", label: "Strategic Impact", iconKey: "factory" },
+      { id: "calculator", label: "Industrial Calculator", iconKey: "calc" },
+      { id: "csc", label: "CSC Rate Structure", iconKey: "trendingdown" },
+      { id: "prosumer", label: "Prosumer & Solar", iconKey: "sun" },
+      { id: "roadmap", label: "Implementation", iconKey: "users" }
+    ];
+
+    const tabsEl = document.getElementById("tabs");
+
+    function setActiveTab(tabId) {
+      // buttons
+      [...tabsEl.querySelectorAll("button")].forEach(btn => {
+        const active = btn.dataset.tab === tabId;
+        btn.className = [
+          "flex items-center gap-2 px-6 py-3 rounded-lg font-medium text-sm transition-all shadow-sm whitespace-nowrap",
+          active ? "bg-white text-indigo-600 shadow-md ring-1 ring-indigo-100" : "bg-white/80 text-slate-600 hover:bg-white hover:text-slate-900"
+        ].join(" ");
+      });
+
+      // sections
+      document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+      const sec = document.getElementById("section-" + tabId);
+      if (sec) sec.classList.add("active");
+
+      // lazy render charts for tab
+      requestAnimationFrame(() => {
+        if (tabId === "executive") renderResidualPool();
+        if (tabId === "strategic") renderCaptiveVsGrid();
+        if (tabId === "calculator") { renderCostStructure(); recalc(); }
+        if (tabId === "csc") { renderCscStructure(); buildCscTable(); }
+        if (tabId === "prosumer") renderProsumer();
+      });
+    }
+
+    // Build tab buttons
+    tabs.forEach((t, idx) => {
+      const b = document.createElement("button");
+      b.dataset.tab = t.id;
+      b.type = "button";
+      b.innerHTML = `
+        <span>${iconSvg(t.iconKey, "w-4 h-4")}</span>
+        <span>${t.label}</span>
+      `;
+      b.addEventListener("click", () => setActiveTab(t.id));
+      tabsEl.appendChild(b);
+    });
+    setActiveTab("executive");
+
+    // =========================
+    // TOOLTIP HELPERS
+    // =========================
+    const tt = document.getElementById("tooltip");
+    function showTooltip(x, y, html) {
+      tt.innerHTML = html;
+      tt.style.left = x + "px";
+      tt.style.top = y + "px";
+      tt.style.display = "block";
+    }
+    function hideTooltip() { tt.style.display = "none"; }
+
+    // =========================
+    // SVG CHART UTILITIES (no external chart libs)
+    // =========================
+    function createSvg(container, width, height) {
+      container.innerHTML = "";
+      const svg = document.createElementNS("http://www.w3.org/2000/svg","svg");
+      svg.setAttribute("width","100%");
+      svg.setAttribute("height","100%");
+      svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+      svg.classList.add("overflow-visible");
+      container.appendChild(svg);
+      return svg;
+    }
+
+    function addText(svg, x, y, text, cls="fill-slate-600", anchor="start", size=12, weight=400) {
+      const t = document.createElementNS("http://www.w3.org/2000/svg","text");
+      t.setAttribute("x", x);
+      t.setAttribute("y", y);
+      t.setAttribute("text-anchor", anchor);
+      t.setAttribute("class", cls);
+      t.setAttribute("font-size", size);
+      t.setAttribute("font-weight", weight);
+      t.textContent = text;
+      svg.appendChild(t);
+      return t;
+    }
+
+    function addRect(svg, x, y, w, h, fill, rx=6) {
+      const r = document.createElementNS("http://www.w3.org/2000/svg","rect");
+      r.setAttribute("x", x);
+      r.setAttribute("y", y);
+      r.setAttribute("width", w);
+      r.setAttribute("height", h);
+      r.setAttribute("fill", fill);
+      r.setAttribute("rx", rx);
+      svg.appendChild(r);
+      return r;
+    }
+
+    function addLine(svg, x1, y1, x2, y2, stroke="#e2e8f0", dash="") {
+      const l = document.createElementNS("http://www.w3.org/2000/svg","line");
+      l.setAttribute("x1", x1); l.setAttribute("y1", y1);
+      l.setAttribute("x2", x2); l.setAttribute("y2", y2);
+      l.setAttribute("stroke", stroke);
+      if (dash) l.setAttribute("stroke-dasharray", dash);
+      svg.appendChild(l);
+      return l;
+    }
+
+    function fmt(n, d=2) { return Number(n).toFixed(d); }
+    function fmtInt(n) { return Math.round(n).toLocaleString(); }
+
+    // Horizontal bar chart
+    function renderHorizontalBars(container, data, opts) {
+      const W = 720, H = 260;
+      const pad = { l: 160, r: 26, t: 18, b: 28 };
+      const svg = createSvg(container, W, H);
+
+      const maxV = Math.max(...data.map(d => d.value));
+      const innerW = W - pad.l - pad.r;
+      const innerH = H - pad.t - pad.b;
+
+      // grid
+      const ticks = 4;
+      for (let i=0;i<=ticks;i++){
+        const x = pad.l + (innerW * i / ticks);
+        addLine(svg, x, pad.t, x, pad.t + innerH, "#e2e8f0", "4 4");
+        const v = maxV * i / ticks;
+        addText(svg, x, H - 8, opts.xTick(v), "fill-slate-500", "middle", 11, 500);
+      }
+
+      const barH = innerH / data.length * 0.6;
+      const gap = innerH / data.length * 0.4;
+
+      data.forEach((d, idx) => {
+        const y = pad.t + idx * (barH + gap) + gap/2;
+        addText(svg, pad.l - 10, y + barH*0.72, d.name, "fill-slate-700", "end", 12, 600);
+
+        const w = innerW * (d.value / maxV);
+        const rect = addRect(svg, pad.l, y, w, barH, d.fill || "#60a5fa", 6);
+
+        rect.addEventListener("mousemove", (e) => {
+          showTooltip(e.clientX, e.clientY, `<div class="font-semibold">${d.name}</div><div>${opts.tt(d.value)}</div>`);
+        });
+        rect.addEventListener("mouseleave", hideTooltip);
+      });
+
+      // axis label
+      if (opts.xLabel) addText(svg, pad.l + innerW/2, 14, opts.xLabel, "fill-slate-600", "middle", 12, 600);
+    }
+
+    // Vertical bar chart
+    function renderVerticalBars(container, data, opts) {
+      const W = 920, H = 420;
+      const pad = { l: 70, r: 30, t: 22, b: 70 };
+      const svg = createSvg(container, W, H);
+
+      const maxV = Math.max(...data.map(d => d.value));
+      const innerW = W - pad.l - pad.r;
+      const innerH = H - pad.t - pad.b;
+
+      // y-grid and labels
+      const ticks = 5;
+      for (let i=0;i<=ticks;i++){
+        const y = pad.t + innerH - (innerH * i / ticks);
+        addLine(svg, pad.l, y, pad.l + innerW, y, "#e2e8f0", "4 4");
+        const v = maxV * i / ticks;
+        addText(svg, pad.l - 10, y + 4, opts.yTick(v), "fill-slate-500", "end", 11, 500);
+      }
+
+      // bars
+      const n = data.length;
+      const barW = innerW / n * 0.7;
+      const step = innerW / n;
+
+      data.forEach((d, i) => {
+        const x = pad.l + i*step + (step - barW)/2;
+        const h = innerH * (d.value / maxV);
+        const y = pad.t + innerH - h;
+
+        const rect = addRect(svg, x, y, barW, h, d.fill || "#6366f1", 6);
+        addText(svg, x + barW/2, H - 36, opts.xTick(d.label), "fill-slate-600", "middle", 11, 600);
+
+        rect.addEventListener("mousemove", (e) => {
+          showTooltip(e.clientX, e.clientY, `<div class="font-semibold">${d.label}</div><div>${opts.tt(d.value)}</div>`);
+        });
+        rect.addEventListener("mouseleave", hideTooltip);
+      });
+
+      if (opts.xLabel) addText(svg, pad.l + innerW/2, H - 10, opts.xLabel, "fill-slate-600", "middle", 12, 600);
+      if (opts.yLabel) {
+        // simple vertical label
+        const t = document.createElementNS("http://www.w3.org/2000/svg","text");
+        t.setAttribute("x", 18);
+        t.setAttribute("y", pad.t + innerH/2);
+        t.setAttribute("transform", `rotate(-90 18 ${pad.t + innerH/2})`);
+        t.setAttribute("class","fill-slate-600");
+        t.setAttribute("font-size","12");
+        t.setAttribute("font-weight","600");
+        t.textContent = opts.yLabel;
+        svg.appendChild(t);
+      }
+    }
+
+    // Stacked horizontal bars (2 categories)
+    function renderStackedHorizontal(container, rows, keys, colors, opts) {
+      const W = 720, H = 260;
+      const pad = { l: 140, r: 26, t: 18, b: 28 };
+      const svg = createSvg(container, W, H);
+
+      const maxV = Math.max(...rows.map(r => keys.reduce((s,k)=>s+r[k],0)));
+      const innerW = W - pad.l - pad.r;
+      const innerH = H - pad.t - pad.b;
+
+      // axis
+      const ticks = 4;
+      for (let i=0;i<=ticks;i++){
+        const x = pad.l + (innerW * i / ticks);
+        addLine(svg, x, pad.t, x, pad.t + innerH, "#e2e8f0", "4 4");
+        const v = maxV * i / ticks;
+        addText(svg, x, H - 8, opts.xTick(v), "fill-slate-500", "middle", 11, 500);
+      }
+
+      // legend
+      const lx = pad.l;
+      const ly = 16;
+      keys.forEach((k, idx) => {
+        addRect(svg, lx + idx*120, ly-10, 10, 10, colors[idx], 2);
+        addText(svg, lx + idx*120 + 14, ly, opts.legend[k] || k, "fill-slate-600", "start", 11, 600);
+      });
+
+      const barH = innerH / rows.length * 0.6;
+      const gap = innerH / rows.length * 0.4;
+
+      rows.forEach((r, idx) => {
+        const y = pad.t + idx * (barH + gap) + gap/2;
+        addText(svg, pad.l - 10, y + barH*0.72, r.name, "fill-slate-700", "end", 12, 600);
+
+        let x0 = pad.l;
+        keys.forEach((k, ki) => {
+          const segW = innerW * (r[k] / maxV);
+          const rect = addRect(svg, x0, y, segW, barH, colors[ki], 6);
+          rect.addEventListener("mousemove", (e) => {
+            showTooltip(e.clientX, e.clientY,
+              `<div class="font-semibold">${r.name}</div>
+               <div>${opts.legend[k] || k}: ${opts.tt(r[k])}</div>`);
+          });
+          rect.addEventListener("mouseleave", hideTooltip);
+          x0 += segW;
+        });
+      });
+    }
+
+    // Simple line chart with optional filled area (dual axis)
+    function renderDualAxisLines(container, series, opts) {
+      const W = 720, H = 260;
+      const pad = { l: 50, r: 50, t: 18, b: 36 };
+      const svg = createSvg(container, W, H);
+
+      const innerW = W - pad.l - pad.r;
+      const innerH = H - pad.t - pad.b;
+
+      // x mapping
+      const n = series.x.length;
+      const xAt = (i) => pad.l + (innerW * (n === 1 ? 0 : i/(n-1)));
+
+      // left axis range (tariff)
+      const leftVals = series.lines.flatMap(l => l.axis === "left" ? l.values : []);
+      const rightVals = series.lines.flatMap(l => l.axis === "right" ? l.values : []);
+      const lMin = Math.min(...leftVals), lMax = Math.max(...leftVals);
+      const rMin = Math.min(...rightVals), rMax = Math.max(...rightVals);
+
+      const yLeft = (v) => pad.t + innerH - (innerH * (v - lMin) / (lMax - lMin || 1));
+      const yRight = (v) => pad.t + innerH - (innerH * (v - rMin) / (rMax - rMin || 1));
+
+      // grid + y labels
+      const ticks = 4;
+      for (let i=0;i<=ticks;i++){
+        const y = pad.t + innerH - (innerH*i/ticks);
+        addLine(svg, pad.l, y, pad.l + innerW, y, "#e2e8f0", "4 4");
+        const lv = lMin + (lMax - lMin)*i/ticks;
+        addText(svg, pad.l - 8, y + 4, opts.leftTick(lv), "fill-slate-500", "end", 11, 500);
+        const rv = rMin + (rMax - rMin)*i/ticks;
+        addText(svg, pad.l + innerW + 8, y + 4, opts.rightTick(rv), "fill-slate-500", "start", 11, 500);
+      }
+
+      // x labels
+      series.x.forEach((lab, i) => {
+        if (i === 0 || i === n-1 || i % 2 === 0) {
+          addText(svg, xAt(i), H - 10, lab, "fill-slate-500", "middle", 11, 500);
+        }
+      });
+
+      // optional filled area for first right-axis line (solar)
+      const solarLine = series.lines.find(l => l.fillArea);
+      if (solarLine) {
+        const pts = solarLine.values.map((v,i) => `${xAt(i)},${yRight(v)}`).join(" ");
+        const poly = document.createElementNS("http://www.w3.org/2000/svg","polyline");
+        poly.setAttribute("fill", solarLine.fill || "rgba(245,158,11,0.25)");
+        poly.setAttribute("stroke", "none");
+        const base = pad.t + innerH;
+        poly.setAttribute("points", `${xAt(0)},${base} ${pts} ${xAt(n-1)},${base}`);
+        svg.appendChild(poly);
+      }
+
+      // lines
+      series.lines.forEach((ln) => {
+        const yFn = (ln.axis === "right") ? yRight : yLeft;
+        // step line?
+        const pts = [];
+        for (let i=0;i<n;i++){
+          const x = xAt(i);
+          const y = yFn(ln.values[i]);
+          if (ln.step && i>0){
+            const prevX = xAt(i-1);
+            const prevY = yFn(ln.values[i-1]);
+            pts.push(`${x},${prevY}`);
+          }
+          pts.push(`${x},${y}`);
+        }
+        const pl = document.createElementNS("http://www.w3.org/2000/svg","polyline");
+        pl.setAttribute("fill","none");
+        pl.setAttribute("stroke", ln.stroke);
+        pl.setAttribute("stroke-width", ln.width || 2);
+        pl.setAttribute("points", pts.join(" "));
+        svg.appendChild(pl);
+      });
+
+      // legend
+      let lx = pad.l;
+      const ly = 16;
+      series.lines.forEach((ln, idx) => {
+        addRect(svg, lx + idx*170, ly-10, 10, 10, ln.stroke, 2);
+        addText(svg, lx + idx*170 + 14, ly, ln.name, "fill-slate-600", "start", 11, 600);
+      });
+    }
+
+    // =========================
+    // CHART RENDERERS
+    // =========================
+    function renderResidualPool() {
+      const el = document.getElementById("chart-residual-pool");
+      if (!el) return;
+      renderHorizontalBars(el, RESIDUAL_POOL, {
+        xLabel: "",
+        xTick: (v) => v.toFixed(0) + " bn",
+        tt: (v) => "PKR " + fmt(v,2) + " bn"
+      });
+    }
+
+    function renderCaptiveVsGrid() {
+      const el = document.getElementById("chart-captive-vs-grid");
+      if (!el) return;
+      renderHorizontalBars(el,
+        COMPARISON_DATA.map(d => ({ name: d.name, value: d.cost, fill: d.fill })),
+        {
+          xLabel: "",
+          xTick: (v) => v.toFixed(0),
+          tt: (v) => fmt(v,2) + " PKR/kWh"
+        }
+      );
+    }
+
+    function renderCostStructure() {
+      const el = document.getElementById("chart-cost-structure");
+      if (!el) return;
+      // placeholder - actual data injected by recalc()
+    }
+
+    function renderCscStructure() {
+      const el = document.getElementById("chart-csc-structure");
+      if (!el) return;
+
+      const points = [];
+      for (let m=50; m<=2050; m+=100) {
+        let rate = 2244;
+        if (m <= 50) rate = 4669;
+        else if (m <= 100) rate = 4062;
+        else if (m <= 200) rate = 4542;
+        else if (m <= 500) rate = 3753;
+        else if (m <= 1000) rate = 2679;
+        points.push({ label: String(m), value: rate, fill: "#6366f1" });
+      }
+
+      renderVerticalBars(el, points, {
+        xLabel: "MDI Level (kW)",
+        yLabel: "CSC Rate (PKR/kW)",
+        xTick: (lab) => lab,
+        yTick: (v) => "PKR " + Math.round(v).toString(),
+        tt: (v) => "PKR " + Math.round(v) + " /kW"
+      });
+    }
+
+    function renderProsumer() {
+      const el = document.getElementById("chart-prosumer");
+      if (!el) return;
+
+      const x = EXPORT_DATA.map(d => d.hour);
+      const solar = EXPORT_DATA.map(d => d.solar);
+      const flat = EXPORT_DATA.map(d => d.flatExport);
+      const tou  = EXPORT_DATA.map(d => d.touExport);
+
+      renderDualAxisLines(el, {
+        x,
+        lines: [
+          { name: "Solar Gen Profile", axis: "right", values: solar, stroke: "#f59e0b", width: 2, fillArea: true, fill: "rgba(245,158,11,0.18)" },
+          { name: "Current Flat Export", axis: "left", values: flat, stroke: "#ef4444", width: 2, step: true },
+          { name: "Proposed ToE (Time of Export)", axis: "left", values: tou, stroke: "#10b981", width: 2, step: true }
+        ]
+      }, {
+        leftTick: (v) => fmt(v,0),
+        rightTick: (v) => fmt(v,0)
+      });
+    }
+
+    // =========================
+    // CSC TABLE
+    // =========================
+    function bandLabel(mdi) {
+      if (mdi <= 50) return "0-50 kW";
+      if (mdi <= 100) return "50-100 kW";
+      if (mdi <= 200) return "100-200 kW";
+      if (mdi <= 500) return "200-500 kW";
+      if (mdi <= 1000) return "500-1000 kW";
+      return "1000+ kW";
+    }
+    function cscRateFor(mdi) {
+      if (mdi <= 50) return 4669;
+      if (mdi <= 100) return 4062;
+      if (mdi <= 200) return 4542;
+      if (mdi <= 500) return 3753;
+      if (mdi <= 1000) return 2679;
+      return 2244;
+    }
+    function buildCscTable() {
+      const body = document.getElementById("cscTableBody");
+      if (!body || body.dataset.built === "1") return;
+      const rows = [];
+      for (let m=50; m<=2050; m+=100) {
+        rows.push({ mdi: m, rate: cscRateFor(m) });
+      }
+      body.innerHTML = rows.filter((_,i)=>i%2===0).map(r => `
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">${r.mdi}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600">PKR ${r.rate}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">${bandLabel(r.mdi)}</td>
+        </tr>
+      `).join("");
+      body.dataset.built = "1";
+    }
+
+    // =========================
+    // CALCULATOR
+    // =========================
+    const mdiRange = document.getElementById("mdiRange");
+    const lfRange  = document.getElementById("lfRange");
+    const mdiVal = document.getElementById("mdiVal");
+    const lfVal  = document.getElementById("lfVal");
+    const consumptionVal = document.getElementById("consumptionVal");
+    const cscVal = document.getElementById("cscVal");
+    const currentBillVal = document.getElementById("currentBillVal");
+    const tptBillVal = document.getElementById("tptBillVal");
+    const effectiveUnitVal = document.getElementById("effectiveUnitVal");
+    const flatRateVal = document.getElementById("flatRateVal");
+    const savingsCard = document.getElementById("savingsCard");
+    const savingsTitle = document.getElementById("savingsTitle");
+    const savingsPctVal = document.getElementById("savingsPctVal");
+    const savingsNote = document.getElementById("savingsNote");
+    const inflectionText = document.getElementById("inflectionText");
+    const chartCost = document.getElementById("chart-cost-structure");
+
+    let isWinter = false;
+
+    // init defaults
+    if (mdiRange) mdiRange.value = 500;
+    if (lfRange) lfRange.value = 35;
+    if (flatRateVal) flatRateVal.textContent = "@ " + CURRENT_FLAT_RATE + " PKR/kWh";
+
+    function setSeason(winter) {
+      isWinter = winter;
+      const bS = document.getElementById("btnSummer");
+      const bW = document.getElementById("btnWinter");
+      if (!bS || !bW) return;
+
+      if (!winter) {
+        bS.className = "px-3 py-1 rounded text-sm bg-amber-100 text-amber-800 font-bold shadow-sm";
+        bW.className = "px-3 py-1 rounded text-sm text-slate-500";
+      } else {
+        bS.className = "px-3 py-1 rounded text-sm text-slate-500";
+        bW.className = "px-3 py-1 rounded text-sm bg-blue-100 text-blue-800 font-bold shadow-sm";
+      }
+      recalc();
+    }
+
+    document.getElementById("btnSummer")?.addEventListener("click", () => setSeason(false));
+    document.getElementById("btnWinter")?.addEventListener("click", () => setSeason(true));
+    mdiRange?.addEventListener("input", recalc);
+    lfRange?.addEventListener("input", recalc);
+
+    function recalc() {
+      if (!mdiRange || !lfRange) return;
+
+      const mdi = Number(mdiRange.value);
+      const lf = Number(lfRange.value);
+      const hours = 720;
+
+      const consumption = Math.round(mdi * hours * (lf/100));
+      const cscRate = cscRateFor(mdi);
+
+      const currentBill = consumption * CURRENT_FLAT_RATE;
+
+      const marginalRate = isWinter ? 18.73 : 16.10; // from original logic
+      const tptFixed = mdi * cscRate;
+      const tptEnergy = consumption * marginalRate;
+      const tptBill = tptFixed + tptEnergy;
+
+      const savings = currentBill - tptBill;
+      const savingsPct = (savings / (currentBill || 1)) * 100;
+      const effective = tptBill / (consumption || 1);
+
+      const inflectionPoint = (mdi * cscRate) / (CURRENT_FLAT_RATE - marginalRate);
+
+      // DOM updates
+      mdiVal.textContent = mdi + " kW";
+      lfVal.textContent = lf + "%";
+      consumptionVal.textContent = consumption.toLocaleString() + " kWh";
+      cscVal.textContent = "PKR " + cscRate + "/kW";
+
+      currentBillVal.textContent = "PKR " + (currentBill/1_000_000).toFixed(2) + " M";
+      tptBillVal.textContent = "PKR " + (tptBill/1_000_000).toFixed(2) + " M";
+      effectiveUnitVal.textContent = "Effective: " + effective.toFixed(2) + " PKR/kWh";
+
+      if (savings > 0) {
+        savingsCard.className = "bg-white rounded-xl border border-slate-200 shadow-sm p-4 bg-emerald-600 text-white";
+        savingsTitle.textContent = "Savings";
+        savingsTitle.className = "text-emerald-100 text-xs uppercase tracking-wider";
+        savingsNote.textContent = "Incentive to Produce";
+        savingsNote.className = "text-emerald-100 text-xs mt-1";
+      } else {
+        savingsCard.className = "bg-white rounded-xl border border-slate-200 shadow-sm p-4 bg-rose-600 text-white";
+        savingsTitle.textContent = "Increase";
+        savingsTitle.className = "text-rose-100 text-xs uppercase tracking-wider";
+        savingsNote.textContent = "Below Inflection Point";
+        savingsNote.className = "text-rose-100 text-xs mt-1";
+      }
+      savingsPctVal.textContent = savingsPct.toFixed(1) + "%";
+
+      inflectionText.innerHTML =
+        `<strong>The Inflection Point:</strong> For a ${mdi} kW connection, the TPT becomes cheaper than the flat tariff
+         once you consume more than <strong>${Math.round(inflectionPoint).toLocaleString()} kWh</strong> per month.
+         ${consumption > inflectionPoint
+            ? " You are currently ABOVE this threshold, benefiting from lower marginal costs."
+            : " You are currently BELOW this threshold. Increasing production will lower your average unit cost."}`;
+
+      // chart update
+      const rows = [
+        { name: "Current Tariff", Fixed: 0, Energy: currentBill },
+        { name: "Proposed TPT",  Fixed: tptFixed, Energy: tptEnergy }
+      ];
+      renderStackedHorizontal(chartCost, rows, ["Fixed","Energy"], ["#818cf8","#34d399"], {
+        xTick: (v) => "PKR " + (v/1_000_000).toFixed(0) + "M",
+        tt: (v) => "PKR " + (v/1_000_000).toFixed(2) + " M",
+        legend: { Fixed: "Capacity Charge", Energy: "Energy Charge" }
+      });
+    }
+
+    // First paint for calculator tab is lazy; but initialize values so no NaNs if you land there directly.
+    recalc();
+
+    // Render initial executive charts
+    renderResidualPool();
+  </script>
+</body>
+</html>
