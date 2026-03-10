@@ -1,0 +1,2240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Education Finance Architecture | Punjab & KP</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+  <style>
+    :root {
+      --ink: #0d1b2a;
+      --paper: #f5f0e8;
+      --cream: #ede8dc;
+      --white: #ffffff;
+      --border: #c8bfaf;
+      --muted: #78909c;
+      --ncgcl-green: #2b8c3a;
+      --ncgcl-blue: #1e6091;
+      --teal: #2b8c3a;
+      --teal2: #1a6b28;
+      --amber: #e65100;
+      --amber2: #ff8f00;
+      --red: #b71c1c;
+      --gold: #f9a825;
+      --slate: #37474f;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background-color: var(--paper);
+      color: var(--ink);
+      line-height: 1.6;
+      font-size: 0.82rem;
+    }
+
+    .container {
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 0 clamp(14px, 4vw, 32px);
+    }
+
+    /* Header */
+    .header {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 32px;
+      padding: clamp(24px, 5vw, 48px) 0;
+      border-bottom: 4px solid var(--ncgcl-green);
+      margin-bottom: clamp(32px, 5vw, 56px);
+    }
+
+    .header h1 {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+
+    .header p {
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin-top: 4px;
+    }
+
+    .header-badge {
+      background: var(--ncgcl-green);
+      color: var(--white);
+      padding: 12px 20px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    /* Navigation */
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 48px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+    }
+
+    .nav-tabs button {
+      background: none;
+      border: none;
+      padding: 12px 20px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      white-space: nowrap;
+      position: relative;
+      transition: color 0.2s;
+    }
+
+    .nav-tabs button.active {
+      color: var(--ncgcl-green);
+    }
+
+    .nav-tabs button.active::after {
+      content: '';
+      position: absolute;
+      bottom: -14px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--ncgcl-green);
+    }
+
+    /* Sections */
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    /* Grid layouts */
+    .g1 { display: grid; grid-template-columns: 1fr; gap: 28px; margin-bottom: 48px; }
+    .g2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; margin-bottom: 48px; }
+    .g3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-bottom: 48px; }
+    .g4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; margin-bottom: 48px; }
+    .g2x2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; margin-bottom: 48px; }
+
+    /* Card */
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      padding: clamp(20px, 3vw, 28px);
+      border-radius: 4px;
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: var(--ink);
+    }
+
+    .card-sub {
+      font-size: 0.68rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin-bottom: 16px;
+    }
+
+    /* Chart containers */
+    .ch { height: 280px; position: relative; margin-bottom: 8px; }
+    .ch-tall { height: 350px; }
+    .ch-short { height: 200px; }
+    .ch-wide { height: 320px; grid-column: span 2; }
+
+    /* KPI Strip */
+    .kpi-strip {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 16px;
+      background: var(--cream);
+      padding: 24px;
+      margin-bottom: 48px;
+      border-radius: 4px;
+    }
+
+    .kpi {
+      text-align: center;
+    }
+
+    .kpi-val {
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 700;
+      color: var(--ncgcl-green);
+      font-family: 'Courier New', monospace;
+      line-height: 1.1;
+    }
+
+    .kpi-label {
+      font-size: 0.68rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin-top: 6px;
+    }
+
+    /* Insight boxes */
+    .insight-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .insight {
+      background: var(--white);
+      border: 2px solid var(--ncgcl-green);
+      padding: 16px;
+      border-radius: 4px;
+      text-align: center;
+    }
+
+    .insight-n {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--ncgcl-green);
+      font-family: 'Courier New', monospace;
+    }
+
+    .insight-d {
+      font-size: 0.7rem;
+      color: var(--ink);
+      margin-top: 6px;
+      line-height: 1.4;
+    }
+
+    /* Exhibit boxes */
+    .exhibit {
+      background: var(--white);
+      border: 1px solid var(--border);
+      padding: 20px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+
+    .exhibit-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--ncgcl-blue);
+      color: var(--ncgcl-blue);
+    }
+
+    /* Flow diagrams */
+    .flow-horizontal {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .flow-box {
+      background: var(--cream);
+      border: 2px solid var(--ncgcl-blue);
+      padding: 14px;
+      border-radius: 4px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.8rem;
+      line-height: 1.4;
+    }
+
+    .flow-box.primary { background: #e8f5e9; border-color: var(--ncgcl-green); }
+    .flow-box.secondary { background: #e3f2fd; border-color: var(--ncgcl-blue); }
+    .flow-box.tertiary { background: #fff3e0; border-color: var(--amber); }
+    .flow-box.danger { background: #ffebee; border-color: var(--red); }
+
+    .flow-arrow {
+      text-align: center;
+      color: var(--ncgcl-green);
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    /* Matrix table */
+    .matrix-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--white);
+      font-size: 0.78rem;
+      margin-bottom: 20px;
+    }
+
+    .matrix-table th, .matrix-table td {
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+
+    .matrix-table th {
+      background: var(--cream);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-size: 0.7rem;
+      color: var(--ink);
+    }
+
+    .matrix-table tr:hover {
+      background: var(--paper);
+    }
+
+    .matrix-table td strong {
+      color: var(--ncgcl-green);
+    }
+
+    /* Waterfall visualization */
+    .waterfall-stage {
+      display: grid;
+      grid-template-columns: 100px 1fr 100px;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 16px;
+      padding: 12px;
+      background: var(--cream);
+      border-radius: 4px;
+    }
+
+    .waterfall-label {
+      font-weight: 700;
+      color: var(--ink);
+      font-size: 0.8rem;
+    }
+
+    .waterfall-bar {
+      height: 20px;
+      background: linear-gradient(90deg, var(--ncgcl-green) 0%, var(--teal2) 100%);
+      border-radius: 2px;
+      position: relative;
+    }
+
+    .waterfall-amount {
+      text-align: right;
+      font-weight: 700;
+      font-family: 'Courier New', monospace;
+      color: var(--ink);
+      font-size: 0.8rem;
+    }
+
+    /* Comparison panels */
+    .comparison-panel {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .comparison-item {
+      background: var(--cream);
+      padding: 16px;
+      border-radius: 4px;
+      border-left: 3px solid var(--ncgcl-green);
+    }
+
+    .comparison-item h4 {
+      font-size: 0.85rem;
+      margin-bottom: 8px;
+      color: var(--ink);
+    }
+
+    .comparison-item p {
+      font-size: 0.75rem;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+
+    /* Risk heat map */
+    .risk-heatmap {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .heatmap-cell {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      font-weight: 700;
+      color: var(--white);
+      font-size: 0.75rem;
+      text-align: center;
+      padding: 8px;
+    }
+
+    .heat-low { background: #81c784; }
+    .heat-med { background: #ffb74d; }
+    .heat-high { background: #e57373; }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      padding: 20px 0;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .timeline-date {
+      font-weight: 700;
+      color: var(--ncgcl-green);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .timeline-content {
+      background: var(--white);
+      border-left: 3px solid var(--ncgcl-green);
+      padding: 12px;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .timeline-content h4 {
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+      color: var(--ink);
+    }
+
+    .timeline-content p {
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* Stakeholder roles table */
+    .stakeholder-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .stakeholder-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      padding: 16px;
+      border-radius: 4px;
+      border-top: 3px solid var(--ncgcl-blue);
+    }
+
+    .stakeholder-name {
+      font-weight: 700;
+      color: var(--ncgcl-blue);
+      margin-bottom: 8px;
+      font-size: 0.85rem;
+    }
+
+    .stakeholder-role {
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .stakeholder-text {
+      font-size: 0.75rem;
+      line-height: 1.5;
+      color: var(--ink);
+    }
+
+    /* Product cards */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+
+    .product-card {
+      background: var(--white);
+      border: 2px solid var(--ncgcl-blue);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .product-header {
+      background: linear-gradient(135deg, var(--ncgcl-blue), var(--ncgcl-green));
+      color: var(--white);
+      padding: 16px;
+      border-bottom: 0;
+    }
+
+    .product-header h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .product-header p {
+      font-size: 0.7rem;
+      opacity: 0.9;
+    }
+
+    .product-body {
+      padding: 16px;
+    }
+
+    .product-metric {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .product-metric-label {
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .product-metric-value {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--ncgcl-green);
+      font-family: 'Courier New', monospace;
+    }
+
+    /* Section title */
+    h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 28px;
+      padding-bottom: 12px;
+      border-bottom: 3px solid var(--ncgcl-green);
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--ncgcl-blue);
+      margin-bottom: 12px;
+      margin-top: 20px;
+    }
+
+    /* Footer */
+    .footer {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 32px;
+      padding: 32px 0;
+      border-top: 2px solid var(--border);
+      margin-top: 56px;
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    .footer-brand {
+      color: var(--ncgcl-green);
+      font-weight: 700;
+      text-align: right;
+    }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .g4 { grid-template-columns: repeat(2, 1fr); }
+      .ch-wide { grid-column: span 1; }
+    }
+
+    @media (max-width: 768px) {
+      .g2, .g3, .g4, .ch-wide { grid-template-columns: 1fr; }
+      .kpi-strip { grid-template-columns: repeat(3, 1fr); }
+      .header { grid-template-columns: 1fr; gap: 16px; }
+      .flow-horizontal { grid-template-columns: 1fr; }
+      .waterfall-stage { grid-template-columns: 1fr; }
+      .footer { grid-template-columns: 1fr; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .kpi-strip { grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 16px; }
+      .kpi-val { font-size: 1.2rem; }
+      .nav-tabs { gap: 4px; }
+      .nav-tabs button { padding: 8px 12px; font-size: 0.75rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div>
+        <h1>Education Finance Architecture</h1>
+        <p>Innovative Financing for Schools in Punjab & Khyber Pakhtunkhwa</p>
+      </div>
+      <div class="header-badge">
+        POLICY FRAMEWORK<br>2025
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav-tabs">
+      <button class="tab-btn active" onclick="switchTab('overview', this)">Overview</button>
+      <button class="tab-btn" onclick="switchTab('problem', this)">Problem Analysis</button>
+      <button class="tab-btn" onclick="switchTab('architecture', this)">Capital Architecture</button>
+      <button class="tab-btn" onclick="switchTab('products', this)">Product Suite</button>
+      <button class="tab-btn" onclick="switchTab('risking', this)">Risk Framework</button>
+      <button class="tab-btn" onclick="switchTab('implementation', this)">Implementation</button>
+    </div>
+
+    <!-- ===== SECTION 1: OVERVIEW ===== -->
+    <div id="overview" class="section active">
+      <h2>Strategic Overview & Vision</h2>
+      
+      <div class="kpi-strip">
+        <div class="kpi">
+          <div class="kpi-val">40%+</div>
+          <div class="kpi-label">LCPS Enrollment</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-val">60K+</div>
+          <div class="kpi-label">Private Schools</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-val">PKR 2B</div>
+          <div class="kpi-label">Guarantee Cap</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-val">3–5x</div>
+          <div class="kpi-label">Initial Leverage</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-val">27x</div>
+          <div class="kpi-label">Global Benchmark</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-val">4 Products</div>
+          <div class="kpi-label">Integrated Suite</div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card">
+          <div class="card-title">Strategic Shift: Spending → Leveraging</div>
+          <div class="card-sub">From direct budget allocation to private capital mobilization</div>
+          <div class="ch"><canvas id="chartLeverage"></canvas></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Education Finance Gap</div>
+          <div class="card-sub">Infrastructure and LCPS underfunding despite fee-based cashflows</div>
+          <div class="ch"><canvas id="chartGap"></canvas></div>
+        </div>
+      </div>
+
+      <h3>Core Policy Thesis</h3>
+      <div class="insight-grid">
+        <div class="insight">
+          <div class="insight-n">GUARANTEE</div>
+          <div class="insight-d">Converts education debt into standardized bank-holdable asset</div>
+        </div>
+        <div class="insight">
+          <div class="insight-n">LEVERAGE</div>
+          <div class="insight-d">3–5x private finance per PKR of public first-loss capital</div>
+        </div>
+        <div class="insight">
+          <div class="insight-n">FISCAL SPACE</div>
+          <div class="insight-d">Protects public budget through partial, capped coverage</div>
+        </div>
+        <div class="insight">
+          <div class="insight-n">REGULATORY</div>
+          <div class="insight-d">Basel III capital relief + FSV provisioning shielding for banks</div>
+        </div>
+        <div class="insight">
+          <div class="insight-n">OUTCOMES</div>
+          <div class="insight-d">Quality covenants and verified service delivery embedded</div>
+        </div>
+        <div class="insight">
+          <div class="insight-n">SCALABLE</div>
+          <div class="insight-d">Portfolio approach enables diversification and risk transfer</div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card">
+          <div class="card-title">Implementation Timeline</div>
+          <div class="card-sub">12-month sandbox to scale</div>
+          <div class="ch"><canvas id="chartTimeline"></canvas></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Geographic Prioritization</div>
+          <div class="card-sub">District-level phased rollout strategy</div>
+          <div class="ch"><canvas id="chartGeo"></canvas></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SECTION 2: PROBLEM ANALYSIS ===== -->
+    <div id="problem" class="section">
+      <h2>Problem Statement & Barriers</h2>
+
+      <h3>The Macro-Fiscal Constraint</h3>
+      <div class="g2">
+        <div class="card">
+          <div class="card-title">Provincial Budget Rigidity</div>
+          <div class="card-sub">Non-discretionary spending crowds out development</div>
+          <div class="ch"><canvas id="chartRigidity"></canvas></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Fiscal Stress Impact</div>
+          <div class="card-sub">ADP cuts cascade through education infrastructure</div>
+          <div class="ch"><canvas id="chartStress"></canvas></div>
+        </div>
+      </div>
+
+      <h3>Missing Middle: The Education Financing Gap</h3>
+      <div class="g3">
+        <div class="exhibit">
+          <div class="exhibit-title">Elite Private Schools</div>
+          <p style="margin-bottom: 8px; font-size: 0.8rem;"><strong style="color: var(--ncgcl-green);">✓ Access</strong> to conventional bank lending</p>
+          <p style="margin-bottom: 8px; font-size: 0.8rem;"><strong style="color: var(--ncgcl-green);">✓ Collateral</strong> assets and land pledges</p>
+          <p style="margin-bottom: 8px; font-size: 0.8rem;"><strong style="color: var(--ncgcl-green);">✓ Balance sheet</strong> capacity</p>
+        </div>
+
+        <div class="exhibit" style="background: #fff3cd; border-left: 4px solid var(--gold);">
+          <div class="exhibit-title" style="border-color: var(--gold); color: var(--gold);">MISSING MIDDLE ⚠️</div>
+          <p style="margin-bottom: 8px; font-size: 0.8rem;"><strong style="color: var(--red);">✗ No collateral</strong> (rented premises)</p>
+          <p style="margin-bottom: 8px; font-size: 0.8rem;"><strong style="color: var(--red);">✗ Volatile cashflows</strong> (fee collection risk)</p>
+          <p style="margin-bottom: 8px; font-size: 0.8rem;"><strong style="color: var(--red);">✗ Regulatory blind spot</strong> (high SME risk weights)</p>
+        </div>
+
+        <div class="exhibit">
+          <div class="exhibit-title">Large Public Projects</div>
+          <p style="margin-bottom: 8px; font-size: 0.8rem;"><strong style="color: var(--ncgcl-green);">✓ Government</strong> guarantees</p>
+          <p style="margin-bottom: 8px; font-size: 0.8rem;"><strong style="color: var(--ncgcl-green);">✓ Direct ADP</strong> funding</p>
+          <p style="margin-bottom: 8px; font-size: 0.8rem;"><strong style="color: var(--ncgcl-green);">✓ Donor partner</strong> support</p>
+        </div>
+      </div>
+
+      <h3>Three Key Barriers to Private Finance Entry</h3>
+      <div class="g1">
+        <div class="card">
+          <div class="card-title">Barriers Analysis</div>
+          <div class="card-sub">Why education has been excluded from bank lending at scale</div>
+          
+          <div class="exhibit">
+            <div class="exhibit-title" style="border-color: var(--red); color: var(--red);">Barrier 1: Collateral Gap</div>
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-top: 12px;">
+              <div>
+                <p style="font-size: 0.8rem; line-height: 1.6; margin-bottom: 8px;">Schools operate in rented premises; no mortgageable land assets. LCPS operators lack fixed assets to pledge.</p>
+                <p style="font-size: 0.75rem; color: var(--muted);">Bank standard: 100–150% LTV on collateral. Education: 0% collateral availability.</p>
+              </div>
+              <div style="background: var(--paper); padding: 12px; border-radius: 4px; text-align: center;">
+                <div style="font-size: 1.8rem; font-weight: 700; color: var(--red);">0%</div>
+                <div style="font-size: 0.7rem; color: var(--muted); text-transform: uppercase;">Mortgageable Assets</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="exhibit" style="margin-top: 16px;">
+            <div class="exhibit-title" style="border-color: var(--red); color: var(--red);">Barrier 2: Receivable/Payment Risk</div>
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-top: 12px;">
+              <div>
+                <p style="font-size: 0.8rem; line-height: 1.6; margin-bottom: 8px;">Contractors face 90–180 day payment delays from government. Banks treat government receivables as illiquid and high-risk.</p>
+                <p style="font-size: 0.75rem; color: var(--muted);">Political risk, budget delays, procurement disputes compound collections risk.</p>
+              </div>
+              <div style="background: var(--paper); padding: 12px; border-radius: 4px; text-align: center;">
+                <div style="font-size: 1.8rem; font-weight: 700; color: var(--red);">90–180d</div>
+                <div style="font-size: 0.7rem; color: var(--muted); text-transform: uppercase;">Payment Lag</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="exhibit" style="margin-top: 16px;">
+            <div class="exhibit-title" style="border-color: var(--red); color: var(--red);">Barrier 3: Regulatory Blind Spot</div>
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-top: 12px;">
+              <div>
+                <p style="font-size: 0.8rem; line-height: 1.6; margin-bottom: 8px;">Education historically treated as consumption, not investment. Basel III risk weights: 75–100% for SME education loans.</p>
+                <p style="font-size: 0.75rem; color: var(--muted);">High capital consumption discourages bank participation even when loans are sound.</p>
+              </div>
+              <div style="background: var(--paper); padding: 12px; border-radius: 4px; text-align: center;">
+                <div style="font-size: 1.8rem; font-weight: 700; color: var(--red);">75–100%</div>
+                <div style="font-size: 0.7rem; color: var(--muted); text-transform: uppercase;">Risk Weight</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3>Donor Financing Shift</h3>
+      <div class="g2">
+        <div class="card">
+          <div class="card-title">"Big Aid" → "Smart Aid" Transition</div>
+          <div class="card-sub">Donor funding model evolution</div>
+          <div class="ch"><canvas id="chartDonorShift"></canvas></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Leverage Requirement for Donors</div>
+          <div class="card-sub">Each grant rupee must mobilize multiples of private capital</div>
+          <div class="ch"><canvas id="chartDonorLeverage"></canvas></div>
+        </div>
+      </div>
+
+      <h3>Market Sizing: The Opportunity</h3>
+      <div class="g2">
+        <div class="card">
+          <div class="card-title">LCPS Market in Punjab</div>
+          <div class="card-sub">60K+ schools serving 40%+ of enrollment</div>
+          <div class="ch"><canvas id="chartLCPS"></canvas></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Infrastructure Backlog: Public Schools</div>
+          <div class="card-sub">WASH, solar, classroom rehabilitation needs</div>
+          <div class="ch"><canvas id="chartInfraBacklog"></canvas></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SECTION 3: CAPITAL ARCHITECTURE ===== -->
+    <div id="architecture" class="section">
+      <h2>Financial Architecture & Capital Stack</h2>
+
+      <h3>The Blended Finance Capital Structure</h3>
+      <div class="g1">
+        <div class="card">
+          <div class="card-title">Capital Stack: Waterfall Risk Transfer</div>
+          <div class="card-sub">Three-tranche architecture with defined loss allocation</div>
+          
+          <div style="margin-bottom: 20px;">
+            <div style="background: linear-gradient(90deg, #e8f5e9 0%, #81c784 100%); padding: 16px; border-radius: 4px; margin-bottom: 8px;">
+              <div style="font-weight: 700; font-size: 0.85rem; color: #1a6b28; margin-bottom: 4px;">JUNIOR TRANCHE: First-Loss (20%)</div>
+              <div style="font-size: 0.75rem; color: #1a6b28;">Government / Donor · Absorbs first defaults · Equity-like grant/subsidy</div>
+            </div>
+            <div style="text-align: center; color: var(--muted); font-weight: 700; margin: 8px 0;">↓ Loss Cascade ↓</div>
+            <div style="background: linear-gradient(90deg, #fff3e0 0%, #ffb74d 100%); padding: 16px; border-radius: 4px; margin-bottom: 8px;">
+              <div style="font-weight: 700; font-size: 0.85rem; color: var(--amber); margin-bottom: 4px;">MEZZANINE TRANCHE: Guarantee (30–60%)</div>
+              <div style="font-size: 0.75rem; color: var(--amber);">NCGCL · Second-loss coverage · Capped allocation</div>
+            </div>
+            <div style="text-align: center; color: var(--muted); font-weight: 700; margin: 8px 0;">↓ Residual Risk ↓</div>
+            <div style="background: linear-gradient(90deg, #e3f2fd 0%, #64b5f6 100%); padding: 16px; border-radius: 4px;">
+              <div style="font-weight: 700; font-size: 0.85rem; color: var(--ncgcl-blue); margin-bottom: 4px;">SENIOR TRANCHE: Bank Liquidity (80–90%)</div>
+              <div style="font-size: 0.75rem; color: var(--ncgcl-blue);">Commercial Banks · Protected by guarantee · Market-rate pricing</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card">
+          <div class="card-title">Fiscal Multiplier Scenarios</div>
+          <div class="card-sub">Leverage ratios based on first-loss sizing</div>
+          <div class="ch-tall"><canvas id="chartMultiplier"></canvas></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Portfolio Loss Absorption</div>
+          <div class="card-sub">Example: PKR 100 loan portfolio with 20% first-loss</div>
+          
+          <div class="waterfall-stage">
+            <div class="waterfall-label">Defaults Occur</div>
+            <div class="waterfall-bar"></div>
+            <div class="waterfall-amount">Assumed 10–15%</div>
+          </div>
+
+          <div class="waterfall-stage">
+            <div class="waterfall-label">FL Absorbs</div>
+            <div class="waterfall-bar" style="width: 100%; background: #81c784;"></div>
+            <div class="waterfall-amount">PKR 20 Pool</div>
+          </div>
+
+          <div class="waterfall-stage">
+            <div class="waterfall-label">FL Exhausted</div>
+            <div class="waterfall-bar" style="width: 60%; background: #ffb74d;"></div>
+            <div class="waterfall-amount">Guarantee Kicks In</div>
+          </div>
+
+          <div class="waterfall-stage">
+            <div class="waterfall-label">GV Covers 50%</div>
+            <div class="waterfall-bar" style="width: 30%; background: #64b5f6;"></div>
+            <div class="waterfall-amount">Partial Coverage</div>
+          </div>
+
+          <div class="waterfall-stage">
+            <div class="waterfall-label">Bank Retains</div>
+            <div class="waterfall-bar" style="width: 20%; background: #90caf9;"></div>
+            <div class="waterfall-amount">"Skin in Game"</div>
+          </div>
+        </div>
+      </div>
+
+      <h3>Regulatory Enablers: SBP Capital Relief & Provisioning</h3>
+      <div class="g2">
+        <div class="card">
+          <div class="card-title">Basel III Risk Weight Reduction</div>
+          <div class="card-sub">Guaranteed portion enjoys significantly lower capital requirements</div>
+          <div class="ch"><canvas id="chartRiskWeight"></canvas></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Provisioning Shielding (Forced Sale Value)</div>
+          <div class="card-sub">NCGCL-guaranteed loans reduce FSV-based provisions</div>
+          <div class="ch"><canvas id="chartProvisioning"></canvas></div>
+        </div>
+      </div>
+
+      <h3>Coverage Calibration Matrix</h3>
+      <div class="g1">
+        <div class="card">
+          <table class="matrix-table">
+            <thead>
+              <tr>
+                <th>Scenario</th>
+                <th>Public Input (First-Loss)</th>
+                <th>Guarantee Coverage</th>
+                <th>Portfolio Cap</th>
+                <th>Leverage Multiple</th>
+                <th>Total Capital</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Conservative Pilot</strong></td>
+                <td>PKR 1B (33%)</td>
+                <td>60%</td>
+                <td>PKR 3B</td>
+                <td>3x</td>
+                <td>PKR 3B Total</td>
+              </tr>
+              <tr>
+                <td><strong>Mature Portfolio</strong></td>
+                <td>PKR 1B (20%)</td>
+                <td>40%</td>
+                <td>PKR 5B</td>
+                <td>5x</td>
+                <td>PKR 5B Total</td>
+              </tr>
+              <tr>
+                <td><strong>Aggressive Scale</strong></td>
+                <td>PKR 2B (15%)</td>
+                <td>30%</td>
+                <td>PKR 10B</td>
+                <td>6–7x</td>
+                <td>PKR 10B+ Total</td>
+              </tr>
+              <tr>
+                <td><strong>Global Benchmark (IFFEd)</strong></td>
+                <td>Contingent</td>
+                <td>Variable</td>
+                <td>Portfolio-based</td>
+                <td>27x Theoretical</td>
+                <td>Macro Scale</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <h3>Capital Relief Mechanisms: Bank ROE Improvement</h3>
+      <div class="g3">
+        <div class="comparison-item">
+          <h4>Standard SME Loan</h4>
+          <p><strong>Risk Weight:</strong> 75–100%</p>
+          <p><strong>RWA Impact:</strong> Full exposure</p>
+          <p><strong>Capital Required:</strong> High (8% of RWA)</p>
+          <p><strong>ROE Effect:</strong> Suppressed</p>
+        </div>
+        <div class="comparison-item">
+          <h4>Partially Guaranteed Loan (50%)</h4>
+          <p><strong>Risk Weight:</strong> 20–50% (blended)</p>
+          <p><strong>RWA Impact:</strong> Reduced 50%</p>
+          <p><strong>Capital Required:</strong> 4–5% of RWA</p>
+          <p><strong>ROE Effect:</strong> +40–60% improvement</p>
+        </div>
+        <div class="comparison-item">
+          <h4>Fully Guaranteed (Sovereign-Backed)</h4>
+          <p><strong>Risk Weight:</strong> 0% (potential)</p>
+          <p><strong>RWA Impact:</strong> Liquid asset treatment</p>
+          <p><strong>Capital Required:</strong> Minimal</p>
+          <p><strong>ROE Effect:</strong> Maximal</p>
+        </div>
+      </div>
+
+      <h3>Control Framework: Moral Hazard Mitigation</h3>
+      <div class="g2">
+        <div class="card">
+          <div class="card-title">Portfolio-Level Controls</div>
+          <div class="card-sub">Safeguards against gaming and adverse selection</div>
+          <table class="matrix-table">
+            <thead>
+              <tr>
+                <th>Control</th>
+                <th>Mechanism</th>
+                <th>Outcome</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Partial Coverage</strong></td>
+                <td>30–60% of eligible loss</td>
+                <td>Banks retain meaningful first-loss exposure</td>
+              </tr>
+              <tr>
+                <td><strong>Portfolio Cap</strong></td>
+                <td>Capped guarantee liability per facility</td>
+                <td>Protects fiscal contingent liability</td>
+              </tr>
+              <tr>
+                <td><strong>Bank Pari-Passu</strong></td>
+                <td>Risk-sharing on losses and recoveries</td>
+                <td>Aligns incentives for underwriting discipline</td>
+              </tr>
+              <tr>
+                <td><strong>Verification Gates</strong></td>
+                <td>Third-party confirmation before disbursement</td>
+                <td>Reduces fraud and execution risk</td>
+              </tr>
+              <tr>
+                <td><strong>Rulebook Claims</strong></td>
+                <td>Standardized documentation and timelines</td>
+                <td>Transparent, auditable claims process</td>
+              </tr>
+              <tr>
+                <td><strong>Stop-Loss Triggers</strong></td>
+                <td>Freeze new guarantees if NPL >10%</td>
+                <td>Portfolio-level circuit breaker</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Key Performance Drivers</div>
+          <div class="card-sub">Metrics that control for moral hazard</div>
+          <div class="ch"><canvas id="chartControls"></canvas></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SECTION 4: PRODUCT SUITE ===== -->
+    <div id="products" class="section">
+      <h2>Four-Product Suite for Punjab & KP</h2>
+
+      <h3>Product Architecture Overview</h3>
+      <div class="insight-grid">
+        <div class="insight">
+          <div class="insight-n">Product 1</div>
+          <div class="insight-d">EICGF: Public School Infrastructure</div>
+        </div>
+        <div class="insight">
+          <div class="insight-n">Product 2</div>
+          <div class="insight-d">LCPS: Low-Cost Private Schools</div>
+        </div>
+        <div class="insight">
+          <div class="insight-n">Product 3</div>
+          <div class="insight-d">RBF-g: Outcomes-Based Programs</div>
+        </div>
+        <div class="insight">
+          <div class="insight-n">Product 4</div>
+          <div class="insight-d">EdTech: Digital Learning & Devices</div>
+        </div>
+      </div>
+
+      <div class="product-grid">
+        <div class="product-card">
+          <div class="product-header">
+            <h3>Education Infrastructure Credit Guarantee Facility (EICGF)</h3>
+            <p>Public-School Rehabilitation with Private Capex Finance</p>
+          </div>
+          <div class="product-body">
+            <div class="product-metric">
+              <div class="product-metric-label">Target Borrowers</div>
+              <div class="product-metric-value">Contractors/SPVs</div>
+            </div>
+            <div class="product-metric">
+              <div class="product-metric-label">Eligible Works</div>
+              <div class="product-metric-value">WASH, Solar, Classrooms</div>
+            </div>
+            <div class="product-metric">
+              <div class="product-metric-label">Guarantee Scope</div>
+              <div class="product-metric-value">PKR 2–5B Portfolio</div>
+            </div>
+            <div class="product-metric">
+              <div class="product-metric-label">Key Innovation</div>
+              <div class="product-metric-value">Escrow-backed Payment Security</div>
+            </div>
+            <div class="product-metric">
+              <div class="product-metric-label">Verification</div>
+              <div class="product-metric-value">Technical Audit (TPV)</div>
+            </div>
+            <div class="product-metric">
+              <div class="product-metric-label">Tenor</div>
+              <div class="product-metric-value">2–5 Years</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-header">
+            <h3>LCPS Working Capital + Quality Upgrade</h3>
+            <p>Bankable Finance for Low-Cost Private Schools</p>
+          </div>
+          <div class="product-body">
+            <div class="product-metric">
+              <div class="product-metric-label">Target Borrowers</div>
+              <div class="product-metric-value">LCPS Operators</div>
+            </div>
+            <div class="product-metric">
+              <div class="product-metric-label">Fee Threshold</div>
+              <div class="product-metric-value">&lt; PKR 3,000/mo</div>
+            </div>
+            <div class="product-metric">
+              <div class="product-metric-label">Portfolio Target</div>
+              <div class="product-metric-value">PKR 5B+</div>
+            </div>
+            <div class="product-metric">
+              <div class="product-metric-label">Key Innovation</div>
+              <div class="product-metric-value">Quality-Linked Pricing</div>
+            </div>
+            <div class="product-metric">
+              <div class="product-metric-label">Verification</div>
+              <div class="product-metric-value">Low-Cost Sampling</div>
+            </div>
+            <div class="product-metric">
+              <div class="product-metric-label">Tenor</div>
+              <div class="product-metric-value">12–48 Months</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-header">
+            <h3>Results-Based Financing + Guarantee (RBF-g)</h3>
+            <p>DIB Bridge Finance with Outcome Funding</p>
+          </div>
+          <div class="product-body">
+            <div class="product-metric">
+              <div class="product-metric-label">Target Beneficiaries</div>
+              <div class="product-metric-value">NGOs/PPP Operators</div>
+            </div>
+            <div class="product-metric">
+              <div class="product-metric-label">Program Focus</div>
+              <div class="product-metric-value">OOSC/Foundational Learning</div>
+            </div>
+            <div class="product-metric">
+              <div class="product-metric-label">Bridge Financing</div>
+              <div class="product-metric-value">Working Capital Support</div>
+            </div>
+            <div class="product-metric">
+              <div class="product-metric-label">Key Innovation</div>
+              <div class="product-metric-value">Outcome Receivable Guarantee</div>
+            </div>
+            <div class="product-metric">
+              <div class="product-metric-label">Verification</div>
+              <div class="product-metric-value">Independent Verifier (IV)</div>
+            </div>
+            <div class="product-metric">
+              <div class="product-metric-label">Tenor</div>
+              <div class="product-metric-value">Outcome-Linked</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-header">
+            <h3>EdTech / Digital Learning Blended Facility</h3>
+            <p>Concessional First-Loss + Guarantee for Tech Scaling</p>
+          </div>
+          <div class="product-body">
+            <div class="product-metric">
+              <div class="product-metric-label">Target Borrowers</div>
+              <div class="product-metric-value">EdTech Vendors</div>
+            </div>
+            <div class="product-metric">
+              <div class="product-metric-label">Bundles</div>
+              <div class="product-metric-value">Devices/Content/Connectivity</div>
+            </div>
+            <div class="product-metric">
+              <div class="product-metric-label">First-Loss Pool</div>
+              <div class="product-metric-value">Adoption Failure Risk</div>
+            </div>
+            <div class="product-metric">
+              <div class="product-metric-label">Key Innovation</div>
+              <div class="product-metric-value">Real-Time Usage Analytics</div>
+            </div>
+            <div class="product-metric">
+              <div class="product-metric-label">Success Metric</div>
+              <div class="product-metric-value">70%+ DAU Threshold</div>
+            </div>
+            <div class="product-metric">
+              <div class="product-metric-label">Tenor</div>
+              <div class="product-metric-value">24–60 Months</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3>Product Comparison & Feasibility</h3>
+      <div class="g1">
+        <div class="card">
+          <table class="matrix-table">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Bottleneck Addressed</th>
+                <th>Risk Mitigant</th>
+                <th>Primary Feasibility Challenge</th>
+                <th>Readiness</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>EICGF</strong></td>
+                <td>Contractor working-capital + government payment lag</td>
+                <td>Escrow account + TPV + milestone disbursement</td>
+                <td>Political payment discipline on escrow</td>
+                <td style="color: var(--ncgcl-green); font-weight: 700;">HIGH</td>
+              </tr>
+              <tr>
+                <td><strong>LCPS</strong></td>
+                <td>LCPS lack collateral + standardized underwriting gap</td>
+                <td>Fee-ledger underwriting + quality covenants + bank first-loss</td>
+                <td>Data quality on fee ledgers and enrollment</td>
+                <td style="color: var(--ncgcl-green); font-weight: 700;">HIGH</td>
+              </tr>
+              <tr>
+                <td><strong>RBF-g</strong></td>
+                <td>DIB pre-financing constraint for NGO providers</td>
+                <td>Bridge guarantee + outcome fund discipline + IV rigor</td>
+                <td>IV capacity and verification timeliness SLAs</td>
+                <td style="color: var(--amber); font-weight: 700;">MEDIUM</td>
+              </tr>
+              <tr>
+                <td><strong>EdTech</strong></td>
+                <td>EdTech adoption risk + uncertain collections</td>
+                <td>Concessional first-loss + usage-linked incentives + data governance</td>
+                <td>Real-time usage analytics quality + privacy compliance</td>
+                <td style="color: var(--amber); font-weight: 700;">MEDIUM</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <h3>Detailed Product Flows</h3>
+      <div class="g2">
+        <div class="card">
+          <div class="card-title">EICGF Transaction Flow</div>
+          <div class="card-sub">Works verification and escrow-backed payment logic</div>
+          <div style="margin-top: 16px;">
+            <div class="flow-horizontal">
+              <div class="flow-box secondary">SED identifies project</div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-box secondary">Contractor pre-qualified</div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-box secondary">Bank finances capex</div>
+            </div>
+            <div class="flow-horizontal">
+              <div class="flow-box tertiary">Milestone 1 execution</div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-box tertiary">TPV confirms completion</div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-box tertiary">Invoice to escrow account</div>
+            </div>
+            <div class="flow-horizontal">
+              <div class="flow-box primary">Payment authorized from escrow</div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-box primary">Bank repays from escrow</div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-box primary">Guarantee covers eligible losses</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">LCPS Guarantee Origination Flow</div>
+          <div class="card-sub">From eligibility to disbursal and monitoring</div>
+          <div style="margin-top: 16px;">
+            <div class="flow-horizontal">
+              <div class="flow-box secondary">LCPS applies to bank</div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-box secondary">Scorecard assessment</div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-box secondary">DSCR verification</div>
+            </div>
+            <div class="flow-horizontal">
+              <div class="flow-box tertiary">Fee ledger sampling</div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-box tertiary">Safeguarding check</div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-box tertiary">Loan disbursed</div>
+            </div>
+            <div class="flow-horizontal">
+              <div class="flow-box primary">Quarterly monitoring</div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-box primary">Covenant checks (retention)</div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-box primary">Performance incentives (step-down fee)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3>Product Covenants & Eligibility Matrices</h3>
+      <div class="g2">
+        <div class="card">
+          <div class="card-title">LCPS Covenant Framework</div>
+          <div class="card-sub">Financial, operational, and quality gates</div>
+          <table class="matrix-table">
+            <thead>
+              <tr>
+                <th>Covenant Category</th>
+                <th>Minimum Requirement</th>
+                <th>Verification Method</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Eligibility</strong></td>
+                <td>Valid registration + bank account + 3-yr fee ledger</td>
+                <td>Document verification + registry check</td>
+              </tr>
+              <tr>
+                <td><strong>Financial</strong></td>
+                <td>DSCR > 1.2× on conservative fee assumptions</td>
+                <td>Fee-ledger sampling (36 months audited)</td>
+              </tr>
+              <tr>
+                <td><strong>Quality</strong></td>
+                <td>Retention > 90%; Grade-3 literacy pass/fail</td>
+                <td>Enrollment data + annual assessment</td>
+              </tr>
+              <tr>
+                <td><strong>Teacher Attendance</strong></td>
+                <td>> 85% monthly check-in</td>
+                <td>Digital attendance log (biometric/SMS)</td>
+              </tr>
+              <tr>
+                <td><strong>Safeguarding</strong></td>
+                <td>Child protection policy in place</td>
+                <td>Policy review + compliance audit at onboarding</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <div class="card-title">EICGF Verification & Payment Gate</div>
+          <div class="card-sub">Works classification and TPV scope</div>
+          <table class="matrix-table">
+            <thead>
+              <tr>
+                <th>Work Category</th>
+                <th>Verification Method</th>
+                <th>Timeline</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>WASH Facilities</strong></td>
+                <td>Technical audit + water quality test + geo-tagged photos</td>
+                <td>Within 48hrs post-completion claim</td>
+              </tr>
+              <tr>
+                <td><strong>Solarization</strong></td>
+                <td>Meter installation + geo-tagged photos + performance baseline</td>
+                <td>Post-commission within 72hrs</td>
+              </tr>
+              <tr>
+                <td><strong>Classrooms</strong></td>
+                <td>Stage-wise (foundation/roof/finishing) with photo evidence</td>
+                <td>Per-milestone within 5 days</td>
+              </tr>
+              <tr>
+                <td><strong>Boundary Walls / Other</strong></td>
+                <td>Engineer certificate + completion report + audit trail</td>
+                <td>Within 7 days of claimed completion</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SECTION 5: RISK FRAMEWORK ===== -->
+    <div id="risking" class="section">
+      <h2>Comprehensive Risk Framework & Mitigation</h2>
+
+      <h3>Risk Taxonomy & Heat Map</h3>
+      <div class="g2">
+        <div class="card">
+          <div class="card-title">Risk Landscape: 7 Key Risk Categories</div>
+          <div class="card-sub">Severity × likelihood assessment</div>
+          <div class="ch"><canvas id="chartRiskMap"></canvas></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Risk Heat Matrix</div>
+          <div class="card-sub">Probability vs. impact assessment by risk type</div>
+          <div class="risk-heatmap">
+            <div class="heatmap-cell heat-high" title="Credit Risk">Credit</div>
+            <div class="heatmap-cell heat-high" title="Political">Political</div>
+            <div class="heatmap-cell heat-med" title="Verification">Verif.</div>
+            <div class="heatmap-cell heat-low" title="Regulatory">Reg.</div>
+            <div class="heatmap-cell heat-med" title="Data Privacy">Data</div>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; font-size: 0.7rem; color: var(--muted); margin-top: 8px;">
+            <div>Credit Risk</div>
+            <div>Political/Payment</div>
+            <div>Verification/Fraud</div>
+            <div>Regulatory/Capital</div>
+            <div>Data/Privacy</div>
+          </div>
+        </div>
+      </div>
+
+      <h3>Detailed Risk Profiles & Mitigations</h3>
+      <div class="g1">
+        <div class="card">
+          <div class="exhibit">
+            <div class="exhibit-title" style="border-color: var(--red); color: var(--red);">RISK 1: Credit Risk (Borrower Default)</div>
+            <div style="margin-top: 12px;">
+              <p style="font-size: 0.8rem; margin-bottom: 8px;"><strong>Description:</strong> Borrowers (contractors, schools, vendors) fail to repay principal and interest. Portfolio default rate exceeds assumptions; macroeconomic shock triggers cascade defaults.</p>
+              <p style="font-size: 0.8rem; margin-bottom: 8px;"><strong>Indicators:</strong> Rising arrears, school closure, contractor bankruptcy, cashflow volatility</p>
+              <div style="background: #e8f5e9; border-left: 3px solid var(--ncgcl-green); padding: 12px; border-radius: 0 4px 4px 0; margin-bottom: 12px;">
+                <p style="font-size: 0.75rem; margin-bottom: 4px;"><strong style="color: var(--ncgcl-green);">Mitigations:</strong></p>
+                <ul style="font-size: 0.75rem; margin-left: 16px; line-height: 1.6;">
+                  <li>Portfolio diversification across districts and sectors</li>
+                  <li>Bank underwriting discipline (scorecard + DSCR thresholds)</li>
+                  <li>First-loss + guarantee layers absorb initial losses</li>
+                  <li>Stop-loss trigger: freeze new guarantees if NPL >10%</li>
+                  <li>Granular monitoring and early warning systems</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="exhibit">
+            <div class="exhibit-title" style="border-color: var(--red); color: var(--red);">RISK 2: Political / Payment Risk (EICGF Critical)</div>
+            <div style="margin-top: 12px;">
+              <p style="font-size: 0.8rem; margin-bottom: 8px;"><strong>Description:</strong> Government delays or refuses payment for valid contractor invoices. Budget cuts, procurement disputes, or political changes disrupt escrow fund discipline.</p>
+              <p style="font-size: 0.8rem; margin-bottom: 8px;"><strong>Indicators:</strong> Government withholding, escrow account frozen, audit queries, political controversy</p>
+              <div style="background: #e8f5e9; border-left: 3px solid var(--ncgcl-green); padding: 12px; border-radius: 0 4px 4px 0; margin-bottom: 12px;">
+                <p style="font-size: 0.75rem; margin-bottom: 4px;"><strong style="color: var(--ncgcl-green);">Mitigations:</strong></p>
+                <ul style="font-size: 0.75rem; margin-left: 16px; line-height: 1.6;">
+                  <li>Escrow account at commercial bank with ring-fenced balance</li>
+                  <li>Breach-of-contract clause in guarantee agreement</li>
+                  <li>Multi-year budget commitment from Finance Dept</li>
+                  <li>Project completion incentives to prioritize payment</li>
+                  <li>Transparency and reporting to provincial legislature</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="exhibit">
+            <div class="exhibit-title" style="border-color: var(--red); color: var(--red);">RISK 3: Verification & Fraud Risk</div>
+            <div style="margin-top: 12px;">
+              <p style="font-size: 0.8rem; margin-bottom: 8px;"><strong>Description:</strong> Ghost schools, over-invoicing, fake attendance/outcome data, collusive fraud between borrowers and verifiers or contractors and inspectors.</p>
+              <p style="font-size: 0.8rem; margin-bottom: 8px;"><strong>Indicators:</strong> Inconsistent enrollment data, missing school records, failed audits, external media exposés</p>
+              <div style="background: #e8f5e9; border-left: 3px solid var(--ncgcl-green); padding: 12px; border-radius: 0 4px 4px 0; margin-bottom: 12px;">
+                <p style="font-size: 0.75rem; margin-bottom: 4px;"><strong style="color: var(--ncgcl-green);">Mitigations:</strong></p>
+                <ul style="font-size: 0.75rem; margin-left: 16px; line-height: 1.6;">
+                  <li>Geo-tagged photography + biometric/digital attendance logs</li>
+                  <li>Auditor rotation (no single TPV on same project >2 years)</li>
+                  <li>Standardized documentation and invoice templates</li>
+                  <li>Risk-based sampling protocols + 100% spot audits on flagged items</li>
+                  <li>Whistleblowing channel + incident investigation SLAs</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="exhibit">
+            <div class="exhibit-title" style="border-color: var(--red); color: var(--red);">RISK 4: Regulatory / Capital Risk</div>
+            <div style="margin-top: 12px;">
+              <p style="font-size: 0.8rem; margin-bottom: 8px;"><strong>Description:</strong> SBP changes risk weights, withdraws liquid-asset treatment for NCGCL guarantees, or modifies clean-lending limits. Basel IV transitions could alter capital relief math.</p>
+              <p style="font-size: 0.8rem; margin-bottom: 8px;"><strong>Indicators:</strong> SBP policy consultation, regulatory guidance notes, industry letters, capital requirement increases</p>
+              <div style="background: #e8f5e9; border-left: 3px solid var(--ncgcl-green); padding: 12px; border-radius: 0 4px 4px 0; margin-bottom: 12px;">
+                <p style="font-size: 0.75rem; margin-bottom: 4px;"><strong style="color: var(--ncgcl-green);">Mitigations:</strong></p>
+                <ul style="font-size: 0.75rem; margin-left: 16px; line-height: 1.6;">
+                  <li>Continuous engagement with SBP SME Finance Department</li>
+                  <li>Scenario planning and stress-testing for Basel IV</li>
+                  <li>Portfolio-level diversification to reduce concentration risk</li>
+                  <li>Documentation of capital relief assumptions for compliance</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="exhibit">
+            <div class="exhibit-title" style="border-color: var(--red); color: var(--red);">RISK 5: Data / Privacy Risk (EdTech & LCPS)</div>
+            <div style="margin-top: 12px;">
+              <p style="font-size: 0.8rem; margin-bottom: 8px;"><strong>Description:</strong> Child data misuse, weak vendor cybersecurity, unauthorized data sharing, GDPR/local privacy law violations. Reputational damage from privacy breach.</p>
+              <p style="font-size: 0.8rem; margin-bottom: 8px;"><strong>Indicators:</strong> Vendor compliance failures, external audit findings, data breach incident, media coverage</p>
+              <div style="background: #e8f5e9; border-left: 3px solid var(--ncgcl-green); padding: 12px; border-radius: 0 4px 4px 0; margin-bottom: 12px;">
+                <p style="font-size: 0.75rem; margin-bottom: 4px;"><strong style="color: var(--ncgcl-green);">Mitigations:</strong></p>
+                <ul style="font-size: 0.75rem; margin-left: 16px; line-height: 1.6;">
+                  <li>Privacy-by-design and minimal necessary data principles</li>
+                  <li>Vendor due diligence + cybersecurity questionnaires</li>
+                  <li>Independent security audits (annual minimum)</li>
+                  <li>Data-sharing agreements with explicit consent language</li>
+                  <li>Incident response plan and communication protocols</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="exhibit">
+            <div class="exhibit-title" style="border-color: var(--red); color: var(--red);">RISK 6: Outcome Verification Disputes (RBF-g)</div>
+            <div style="margin-top: 12px;">
+              <p style="font-size: 0.8rem; margin-bottom: 8px;"><strong>Description:</strong> Disagreements on metric definitions, sampling adequacy, or outcome data quality. Verification delays prevent timely outcome payments and bridge loan repayment.</p>
+              <p style="font-size: 0.8rem; margin-bottom: 8px;"><strong>Indicators:</strong> Delayed verification reports, outcome payer payment delays, IV capacity constraints</p>
+              <div style="background: #e8f5e9; border-left: 3px solid var(--ncgcl-green); padding: 12px; border-radius: 0 4px 4px 0; margin-bottom: 12px;">
+                <p style="font-size: 0.75rem; margin-bottom: 4px;"><strong style="color: var(--ncgcl-green);">Mitigations:</strong></p>
+                <ul style="font-size: 0.75rem; margin-left: 16px; line-height: 1.6;">
+                  <li>Clear outcome definitions and baselines upfront</li>
+                  <li>IV procurement based on track record + capacity</li>
+                  <li>Service-level agreements for verification (e.g., <30 days)</li>
+                  <li>Dispute resolution mechanism with escalation</li>
+                  <li>Partial payment option for partial achievement</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="exhibit">
+            <div class="exhibit-title" style="border-color: var(--red); color: var(--red);">RISK 7: Moral Hazard</div>
+            <div style="margin-top: 12px;">
+              <p style="font-size: 0.8rem; margin-bottom: 8px;"><strong>Description:</strong> Banks reduce underwriting rigor if guarantee coverage is high; borrowers default strategically if coverage is too generous; verifiers collude with borrowers on data.</p>
+              <p style="font-size: 0.8rem; margin-bottom: 8px;"><strong>Indicators:</strong> Rising default rates, collusion red flags, verifier conflicts of interest</p>
+              <div style="background: #e8f5e9; border-left: 3px solid var(--ncgcl-green); padding: 12px; border-radius: 0 4px 4px 0; margin-bottom: 12px;">
+                <p style="font-size: 0.75rem; margin-bottom: 4px;"><strong style="color: var(--ncgcl-green);">Mitigations:</strong></p>
+                <ul style="font-size: 0.75rem; margin-left: 16px; line-height: 1.6;">
+                  <li>Partial coverage (30–60% of eligible loss, not 100%)</li>
+                  <li>Bank pari-passu exposure ("skin in the game")</li>
+                  <li>Portfolio caps on guarantee liability</li>
+                  <li>Performance-linked incentive fees (step-down on quality metrics)</li>
+                  <li>Verifier independence checks and conflict-of-interest declarations</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3>Portfolio Monitoring & Early Warning System</h3>
+      <div class="g2">
+        <div class="card">
+          <div class="card-title">Monthly MIS Dashboard Metrics</div>
+          <div class="card-sub">Portfolio health and operational KPIs</div>
+          <div class="ch"><canvas id="chartMIS"></canvas></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Stop-Loss Triggers & Circuit Breakers</div>
+          <div class="card-sub">Portfolio-level automatic intervention thresholds</div>
+          <table class="matrix-table">
+            <thead>
+              <tr>
+                <th>Trigger Metric</th>
+                <th>Threshold</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>NPL Ratio</strong></td>
+                <td>>10% of portfolio</td>
+                <td>Freeze new loan origination; conduct portfolio review</td>
+              </tr>
+              <tr>
+                <td><strong>Claims Payout Rate</strong></td>
+                <td>>80% of first-loss exhausted</td>
+                <td>Escalate to risk committee; recalibrate underwriting</td>
+              </tr>
+              <tr>
+                <td><strong>Verification Failure Rate</strong></td>
+                <td>>15% of transactions failed verification</td>
+                <td>Pause disbursements; audit verification protocols</td>
+              </tr>
+              <tr>
+                <td><strong>Payment Delay (EICGF)</strong></td>
+                <td>>30 days average from invoice to escrow disbursement</td>
+                <td>Escalate to provincial Finance Dept; activate breach clause</td>
+              </tr>
+              <tr>
+                <td><strong>Outcome Payment Delay (RBF-g)</strong></td>
+                <td>>45 days post-verification before payment</td>
+                <td>Activate outcome fund governance review</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SECTION 6: IMPLEMENTATION ===== -->
+    <div id="implementation" class="section">
+      <h2>12-Month Sandbox Implementation Roadmap</h2>
+
+      <h3>Phased Approach & Key Milestones</h3>
+      <div class="g1">
+        <div class="card">
+          <div class="card-title">12-Month Timeline: 4 Phases</div>
+          <div class="card-sub">Sandbox validation → scale readiness</div>
+          <div class="ch-tall"><canvas id="chartPhases"></canvas></div>
+        </div>
+      </div>
+
+      <h3>Detailed Phase Breakdown</h3>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-date">M 1–3</div>
+          <div class="timeline-content">
+            <h4>Phase 1: Setup & Legal Structuring</h4>
+            <p><strong>Weeks 1–2:</strong> Confirm pilot districts (2 per province); establish inter-departmental steering group; identify two participating banks; initiate MGA drafting</p>
+            <p><strong>Weeks 3–4:</strong> Finalize first-loss fund governance (trust/SPV); compile initial project pipeline (20 EICGF + 500 LCPS schools); shortlist TPV/IV providers</p>
+            <p><strong>Weeks 5–8:</strong> Finalize Master Guarantee Agreement, escrow account mechanics, data-sharing agreements; design sprint for term sheets & claims manual; SED eligibility criteria</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">M 4–6</div>
+          <div class="timeline-content">
+            <h4>Phase 2: Sandbox Launch</h4>
+            <p><strong>Weeks 9–10:</strong> Launch origination in pilot districts; banks onboard first applicants; conduct mock TPV on EICGF projects</p>
+            <p><strong>Weeks 11–12:</strong> First loan disbursements (EICGF capex + LCPS working capital); execute first verifications; measure verification timeliness</p>
+            <p><strong>Weeks 13–14:</strong> Escrow payment test (EICGF); LCPS fee-ledger sampling; RBF-g bridge facility design finalization</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">M 7–9</div>
+          <div class="timeline-content">
+            <h4>Phase 3: Tune & Recalibrate</h4>
+            <p><strong>Weeks 15–18:</strong> Analyze early repayment behavior; measure arrears patterns; assess verification bottlenecks</p>
+            <p><strong>Weeks 19–20:</strong> Recalibrate guarantee coverage (if needed, adjust 30–60% range); review portfolio performance vs. assumptions; adjust guarantee fee structure</p>
+            <p><strong>Weeks 21–24:</strong> Stress-test portfolio under macroeconomic scenarios; finalize EdTech product term sheet; prepare scale-up recommendation</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">M 10–12</div>
+          <div class="timeline-content">
+            <h4>Phase 4: Scale & Mainstream</h4>
+            <p><strong>Weeks 25–30:</strong> Present findings to steering committee; if NPL <5%, authorize expansion to 10 districts; formalize FY2026 ADP budget for first-loss</p>
+            <p><strong>Weeks 31–36:</strong> Publish "State of Education Finance" report; conduct dissemination workshops (banks, policymakers, donors); initiate scale-up procurement (additional banks, TPV/IV providers)</p>
+            <p><strong>Weeks 37–48:</strong> Begin Year 2 rollout in expanded districts; integrate into provincial education policy; engage global blended finance platforms</p>
+          </div>
+        </div>
+      </div>
+
+      <h3>Stakeholder Roles & Incentives</h3>
+      <div class="stakeholder-grid">
+        <div class="stakeholder-card">
+          <div class="stakeholder-name">Provincial Finance Dept</div>
+          <div class="stakeholder-role">Sponsor / First-Loss Provider</div>
+          <div class="stakeholder-text"><strong>Role:</strong> Allocates ADP funds to ring-fenced first-loss pool. <strong>Incentive:</strong> Fiscal multiplier (4–5x leverage). <strong>Constraint:</strong> Reluctance to park funds outside main treasury.</div>
+        </div>
+
+        <div class="stakeholder-card">
+          <div class="stakeholder-name">School Education Dept</div>
+          <div class="stakeholder-role">Client / Pipeline Developer</div>
+          <div class="stakeholder-text"><strong>Role:</strong> Defines infrastructure needs, quality standards, eligibility. <strong>Incentive:</strong> Faster project completion (EICGF). <strong>Constraint:</strong> Loss of direct control over procurement.</div>
+        </div>
+
+        <div class="stakeholder-card">
+          <div class="stakeholder-name">NCGCL / Guarantee Vehicle</div>
+          <div class="stakeholder-role">Guarantor & Portfolio Manager</div>
+          <div class="stakeholder-text"><strong>Role:</strong> Issues guarantees, manages portfolio, monitors risk. <strong>Incentive:</strong> Mandate fulfillment + guarantee fee revenue. <strong>Constraint:</strong> Data dependency on provinces.</div>
+        </div>
+
+        <div class="stakeholder-card">
+          <div class="stakeholder-name">Commercial Banks</div>
+          <div class="stakeholder-role">Lender & Originator</div>
+          <div class="stakeholder-text"><strong>Role:</strong> Originates loans, manages credit, services portfolio. <strong>Incentive:</strong> Basel III capital relief + ROE improvement. <strong>Constraint:</strong> Deep-seated education sector skepticism.</div>
+        </div>
+
+        <div class="stakeholder-card">
+          <div class="stakeholder-name">Contractors / Schools</div>
+          <div class="stakeholder-role">Borrowers & Service Providers</div>
+          <div class="stakeholder-text"><strong>Role:</strong> Execute works, deliver services. <strong>Incentive:</strong> Access to formal bank financing. <strong>Constraint:</strong> Documentation/compliance burden.</div>
+        </div>
+
+        <div class="stakeholder-card">
+          <div class="stakeholder-name">FCDO / Donors</div>
+          <div class="stakeholder-role">Catalyst & Technical Partner</div>
+          <div class="stakeholder-text"><strong>Role:</strong> TA provision, potential first-loss matching capital. <strong>Incentive:</strong> Sustainability / aid leverage. <strong>Constraint:</strong> Strict ESG & safeguarding requirements.</div>
+        </div>
+      </div>
+
+      <h3>Success Criteria & Gating Conditions</h3>
+      <div class="g2">
+        <div class="card">
+          <div class="card-title">Pilot-Phase Success Metrics</div>
+          <div class="card-sub">Portfolio performance & operational KPIs</div>
+          <table class="matrix-table">
+            <thead>
+              <tr>
+                <th>Metric</th>
+                <th>Target</th>
+                <th>Outcome</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>NPL Ratio</strong></td>
+                <td><5% of portfolio</td>
+                <td>Portfolio quality acceptable for scale</td>
+              </tr>
+              <tr>
+                <td><strong>Verification Timeliness</strong></td>
+                <td><48 hours average</td>
+                <td>TPV/IV operational efficiency proven</td>
+              </tr>
+              <tr>
+                <td><strong>Disbursement Timeliness</strong></td>
+                <td><5 days from invoice (EICGF)</td>
+                <td>Escrow discipline functional</td>
+              </tr>
+              <tr>
+                <td><strong>LCPS Retention Target</strong></td>
+                <td>>90% on cohort</td>
+                <td>Quality covenant effective</td>
+              </tr>
+              <tr>
+                <td><strong>EdTech DAU</strong></td>
+                <td>>70% active users</td>
+                <td>Adoption risk manageable</td>
+              </tr>
+              <tr>
+                <td><strong>Outcome Payment Timeliness (RBF-g)</strong></td>
+                <td><30 days post-verification</td>
+                <td>Outcome fund governance functional</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Pre-Requisites for Scale-Up (M12 Gate)</div>
+          <div class="card-sub">Conditions for expansion to 10 districts</div>
+          <table class="matrix-table">
+            <thead>
+              <tr>
+                <th>Gate Condition</th>
+                <th>Status Required</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>✓ NPL Performance</td>
+                <td><5% or acceptable trajectory with remediation</td>
+              </tr>
+              <tr>
+                <td>✓ Zero Major Fraud/Safeguarding Breaches</td>
+                <td>No reportable incidents in pilot</td>
+              </tr>
+              <tr>
+                <td>✓ Verification Protocols Debugged</td>
+                <td>Full documentation + training materials</td>
+              </tr>
+              <tr>
+                <td>✓ Claims Rulebook Tested</td>
+                <td>Dispute resolution functional + documented</td>
+              </tr>
+              <tr>
+                <td>✓ Data Governance Audit Passed</td>
+                <td>Privacy compliance confirmed</td>
+              </tr>
+              <tr>
+                <td>✓ Escrow / Payment Discipline Proven</td>
+                <td>No major delays or breaches</td>
+              </tr>
+              <tr>
+                <td>✓ Political Commitment Formalized</td>
+                <td>Budget commitment letter FY2026 signed</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <h3>Policy Decisions & Budget Implications</h3>
+      <div class="g2">
+        <div class="card">
+          <div class="card-title">Decisions: Government of Punjab & KP</div>
+          <div class="card-sub">7 core policy decisions required for pilot launch</div>
+          <ol style="font-size: 0.8rem; line-height: 1.8; margin-left: 16px;">
+            <li><strong>Pilot Geography:</strong> Approve 2 districts per province (developed + lagging)</li>
+            <li><strong>First-Loss Capital:</strong> Approve PKR 1–2B allocation from ADP/donor resources</li>
+            <li><strong>Governance:</strong> Authorize trust/SPV for first-loss fund outside main treasury</li>
+            <li><strong>Risk Appetite:</strong> Approve coverage ranges (30–60%), portfolio caps, stop-loss thresholds</li>
+            <li><strong>Verification:</strong> Approve TPV/IV procurement and SLA standards</li>
+            <li><strong>Claims & Escrow:</strong> Approve standardized claims rulebook and escrow mechanics</li>
+            <li><strong>Data & Safeguarding:</strong> Approve data-sharing agreements and child protection covenants</li>
+          </ol>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Budget Indicative Sizing (12-Month Pilot)</div>
+          <div class="card-sub">Cost components and funding sources</div>
+          <table class="matrix-table">
+            <thead>
+              <tr>
+                <th>Cost Category</th>
+                <th>Amount (PKR)</th>
+                <th>Source</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>First-Loss Pool (core guarantee)</td>
+                <td>PKR 1–2 Billion</td>
+                <td>Provincial ADP + Donor matching</td>
+              </tr>
+              <tr>
+                <td>TPV/IV Procurement (fees)</td>
+                <td>PKR 50–100 Million</td>
+                <td>B-TAG / FCDO technical budget</td>
+              </tr>
+              <tr>
+                <td>NCGCL Operational (staffing, MIS)</td>
+                <td>PKR 30–50 Million</td>
+                <td>Guarantee fees or project support</td>
+              </tr>
+              <tr>
+                <td>Steering Committee & Coordination</td>
+                <td>PKR 20–30 Million</td>
+                <td>Provincial / B-TAG</td>
+              </tr>
+              <tr>
+                <td>Dissemination & Final Report</td>
+                <td>PKR 10–20 Million</td>
+                <td>B-TAG</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <h3>Dissemination & Market Engagement</h3>
+      <div class="g1">
+        <div class="card">
+          <div class="card-title">Dissemination Strategy: Stakeholder Engagement Plan</div>
+          <div class="card-sub">Multi-level communication and advocacy approach</div>
+          
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 16px;">
+            <div style="padding: 16px; background: var(--paper); border-left: 3px solid var(--ncgcl-green); border-radius: 0 4px 4px 0;">
+              <div style="font-weight: 700; color: var(--ncgcl-green); margin-bottom: 8px;">Policy Briefs</div>
+              <p style="font-size: 0.75rem; line-height: 1.6;">Target: Provincial policymakers. Focus: Fiscal multiplier logic, governance safeguards, risk controls. Quantify "PKR 1B mobilizes PKR 3–5B private lending."</p>
+            </div>
+            <div style="padding: 16px; background: var(--paper); border-left: 3px solid var(--ncgcl-blue); border-radius: 0 4px 4px 0;">
+              <div style="font-weight: 700; color: var(--ncgcl-blue); margin-bottom: 8px;">Banking Sector Engagement</div>
+              <p style="font-size: 0.75rem; line-height: 1.6;">Target: Bank treasurers, SME heads. Focus: Basel III capital relief, FSV provisioning benefits, regulatory incentives. Demo MIS dashboards + pilot results.</p>
+            </div>
+            <div style="padding: 16px; background: var(--paper); border-left: 3px solid var(--amber); border-radius: 0 4px 4px 0;">
+              <div style="font-weight: 700; color: var(--amber); margin-bottom: 8px;">High-Level Panel</div>
+              <p style="font-size: 0.75rem; line-height: 1.6;">Convene: Government, banks, DFIs, INGOs, donors. Agenda: Scale-up pathways, pipeline targets, multi-year commitments, risk governance.</p>
+            </div>
+            <div style="padding: 16px; background: var(--paper); border-left: 3px solid #1e40af; border-radius: 0 4px 4px 0;">
+              <div style="font-weight: 700; color: #1e40af; margin-bottom: 8px;">Global Investor Outreach</div>
+              <p style="font-size: 0.75rem; line-height: 1.6;">Platforms: Convergence, FinDev, multilateral DFIs. Deliverable: "State of Education Finance in Pakistan" report with pilot results, evidence base for investor confidence.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div><strong>Education Finance Architecture Dashboard</strong> · Policy Framework 2025</div>
+    <div>Prepared for Provincial Governments of Punjab & KP under B-TAG / GOAL programme</div>
+    <div class="footer-brand">FCDO · Pakistan</div>
+  </div>
+
+  <script>
+    // Tab switching
+    function switchTab(sectionId, btnElement) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(sectionId).classList.add('active');
+      btnElement.classList.add('active');
+      setTimeout(() => window.scrollTo(0, 0), 100);
+    }
+
+    // Chart defaults
+    const chartDefaults = {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'top', labels: { font: { size: 10 }, boxWidth: 12, padding: 12 } },
+        tooltip: { backgroundColor: 'rgba(13,27,42,0.95)', padding: 8, titleFont: { size: 10 }, bodyFont: { size: 9 } }
+      },
+      scales: {
+        x: { grid: { display: false } },
+        y: { grid: { color: '#f0ebe0' }, beginAtZero: true }
+      }
+    };
+
+    // Chart color palette
+    const colors = {
+      green: '#1a6b28',
+      green2: '#2b8c3a',
+      blue: '#1e6091',
+      amber: '#e65100',
+      gold: '#f9a825',
+      red: '#b71c1c',
+      slate: '#37474f'
+    };
+
+    // Initialize all charts
+    function initCharts() {
+      // 1. Leverage Scenarios
+      const ctx1 = document.getElementById('chartLeverage')?.getContext('2d');
+      if (ctx1) {
+        new Chart(ctx1, {
+          type: 'bar',
+          data: {
+            labels: ['Direct\nSpending\n(Traditional)', 'Leverage\nModel\n(Guarantee)', 'Goal\nState\n(3–5x)'],
+            datasets: [{
+              label: 'Public Funds (PKR B)',
+              data: [10, 1, 1],
+              backgroundColor: colors.green
+            }, {
+              label: 'Private Capital Mobilized (PKR B)',
+              data: [0, 3, 5],
+              backgroundColor: colors.blue
+            }]
+          },
+          options: { ...chartDefaults }
+        });
+      }
+
+      // 2. Education Gap
+      const ctx2 = document.getElementById('chartGap')?.getContext('2d');
+      if (ctx2) {
+        new Chart(ctx2, {
+          type: 'doughnut',
+          data: {
+            labels: ['Funded\nServing', 'Capital\nGap\n(LCPS)', 'Infrastructure\nBacklog\n(Public)'],
+            datasets: [{
+              data: [45, 35, 20],
+              backgroundColor: [colors.green, colors.amber, colors.red]
+            }]
+          },
+          options: { ...chartDefaults, plugins: { ...chartDefaults.plugins } }
+        });
+      }
+
+      // 3. Timeline
+      const ctx3 = document.getElementById('chartTimeline')?.getContext('2d');
+      if (ctx3) {
+        new Chart(ctx3, {
+          type: 'bar',
+          data: {
+            labels: ['Setup\n(M1–3)', 'Launch\n(M4–6)', 'Tune\n(M7–9)', 'Scale\n(M10–12)'],
+            datasets: [{
+              label: 'Implementation Progress (%)',
+              data: [100, 75, 50, 25],
+              backgroundColor: [colors.gold, colors.amber, colors.blue, colors.green]
+            }]
+          },
+          options: { ...chartDefaults, indexAxis: 'y', scales: { x: { max: 100 } } }
+        });
+      }
+
+      // 4. Geographic Phasing
+      const ctx4 = document.getElementById('chartGeo')?.getContext('2d');
+      if (ctx4) {
+        new Chart(ctx4, {
+          type: 'line',
+          data: {
+            labels: ['Pilot\n(M1)', 'M3', 'M6', 'M9', 'M12'],
+            datasets: [{
+              label: 'Districts Covered',
+              data: [4, 4, 4, 8, 10],
+              borderColor: colors.green,
+              backgroundColor: 'rgba(42, 140, 58, 0.1)',
+              borderWidth: 3,
+              fill: true,
+              tension: 0.4
+            }]
+          },
+          options: { ...chartDefaults, scales: { y: { max: 12, beginAtZero: true } } }
+        });
+      }
+
+      // 5. Budget Rigidity
+      const ctx5 = document.getElementById('chartRigidity')?.getContext('2d');
+      if (ctx5) {
+        new Chart(ctx5, {
+          type: 'bar',
+          data: {
+            labels: ['Salaries\n& Pensions', 'Debt\nService', 'Current\nExpenditure', 'Development\nBudget'],
+            datasets: [{
+              data: [65, 15, 12, 8],
+              backgroundColor: [colors.red, colors.amber, colors.gold, colors.green]
+            }]
+          },
+          options: { ...chartDefaults, indexAxis: 'y', plugins: { ...chartDefaults.plugins, legend: { display: false } } }
+        });
+      }
+
+      // 6. Fiscal Stress
+      const ctx6 = document.getElementById('chartStress')?.getContext('2d');
+      if (ctx6) {
+        new Chart(ctx6, {
+          type: 'line',
+          data: {
+            labels: ['FY20', 'FY21', 'FY22', 'FY23', 'FY24', 'FY25'],
+            datasets: [{
+              label: 'ADP as % of Total Budget',
+              data: [22, 18, 15, 12, 10, 9],
+              borderColor: colors.red,
+              borderWidth: 2
+            }]
+          },
+          options: { ...chartDefaults }
+        });
+      }
+
+      // 7. Donor Shift
+      const ctx7 = document.getElementById('chartDonorShift')?.getContext('2d');
+      if (ctx7) {
+        new Chart(ctx7, {
+          type: 'bar',
+          data: {
+            labels: ['Budget\nSupport', 'Technical\nAssistance', 'Catalytic\nCapital', 'Outcome\nPayments'],
+            datasets: [{
+              label: 'Historical Model',
+              data: [60, 20, 15, 5],
+              backgroundColor: colors.red
+            }, {
+              label: 'Current / Future',
+              data: [15, 30, 35, 20],
+              backgroundColor: colors.green
+            }]
+          },
+          options: { ...chartDefaults }
+        });
+      }
+
+      // 8. Donor Leverage
+      const ctx8 = document.getElementById('chartDonorLeverage')?.getContext('2d');
+      if (ctx8) {
+        new Chart(ctx8, {
+          type: 'bar',
+          data: {
+            labels: ['Direct\nGrant', 'Co-Finance', 'Catalytic\nFirst-Loss', 'Outcome\nPayments'],
+            datasets: [{
+              label: 'Leverage Multiple',
+              data: [1, 2.5, 4, 3],
+              backgroundColor: colors.blue
+            }]
+          },
+          options: { ...chartDefaults, scales: { y: { max: 5 } } }
+        });
+      }
+
+      // 9. LCPS Market
+      const ctx9 = document.getElementById('chartLCPS')?.getContext('2d');
+      if (ctx9) {
+        new Chart(ctx9, {
+          type: 'doughnut',
+          data: {
+            labels: ['LCPS\nEnrollment', 'Public\nSchools', 'Elite\nPrivate'],
+            datasets: [{
+              data: [42, 48, 10],
+              backgroundColor: [colors.blue, colors.green, colors.gold]
+            }]
+          },
+          options: { ...chartDefaults, plugins: { ...chartDefaults.plugins } }
+        });
+      }
+
+      // 10. Infrastructure Backlog
+      const ctx10 = document.getElementById('chartInfraBacklog')?.getContext('2d');
+      if (ctx10) {
+        new Chart(ctx10, {
+          type: 'bar',
+          data: {
+            labels: ['WASH\nFacilities', 'Solarization', 'Classrooms', 'Boundary\nWalls'],
+            datasets: [{
+              label: 'Schools Needing Work (%)',
+              data: [68, 52, 45, 73],
+              backgroundColor: colors.red
+            }]
+          },
+          options: { ...chartDefaults, scales: { y: { max: 100 } } }
+        });
+      }
+
+      // 11. Multiplier
+      const ctx11 = document.getElementById('chartMultiplier')?.getContext('2d');
+      if (ctx11) {
+        new Chart(ctx11, {
+          type: 'bar',
+          data: {
+            labels: ['Conservative\nPilot', 'Mature\nPortfolio', 'Aggressive\nScale'],
+            datasets: [{
+              label: 'Public (First-Loss) PKR B',
+              data: [1, 1, 2],
+              backgroundColor: colors.green
+            }, {
+              label: 'Private Mobilized PKR B',
+              data: [3, 5, 10],
+              backgroundColor: colors.blue
+            }]
+          },
+          options: { ...chartDefaults }
+        });
+      }
+
+      // 12. Risk Weight Reduction
+      const ctx12 = document.getElementById('chartRiskWeight')?.getContext('2d');
+      if (ctx12) {
+        new Chart(ctx12, {
+          type: 'bar',
+          data: {
+            labels: ['Standard\nSME Loan', '30% Guarantee\nCoverage', '50% Guarantee\nCoverage', '100% Sovereign\nBacked'],
+            datasets: [{
+              label: 'Risk Weight (%)',
+              data: [100, 65, 35, 0],
+              backgroundColor: [colors.red, colors.amber, colors.gold, colors.green]
+            }]
+          },
+          options: { ...chartDefaults, scales: { y: { max: 120 } } }
+        });
+      }
+
+      // 13. Provisioning
+      const ctx13 = document.getElementById('chartProvisioning')?.getContext('2d');
+      if (ctx13) {
+        new Chart(ctx13, {
+          type: 'bar',
+          data: {
+            labels: ['PKR 10M\nBad Loan\n(No Guarantee)', 'With 60%\nGuarantee', 'With 50%\nGuarantee', 'With 40%\nGuarantee'],
+            datasets: [{
+              label: 'Bank Provision Required (PKR M)',
+              data: [10, 4, 5, 6],
+              backgroundColor: colors.red
+            }]
+          },
+          options: { ...chartDefaults, scales: { y: { max: 12 } } }
+        });
+      }
+
+      // 14. Controls
+      const ctx14 = document.getElementById('chartControls')?.getContext('2d');
+      if (ctx14) {
+        new Chart(ctx14, {
+          type: 'radar',
+          data: {
+            labels: ['Partial\nCoverage', 'Portfolio\nCap', 'Bank\nSkin-in-Game', 'Verification\nGates', 'Rulebook\nClaims', 'Stop-Loss\nTriggers'],
+            datasets: [{
+              label: 'Control Strength (out of 10)',
+              data: [8, 9, 9, 8, 8, 9],
+              borderColor: colors.green,
+              backgroundColor: 'rgba(26, 107, 40, 0.2)',
+              borderWidth: 2
+            }]
+          },
+          options: { ...chartDefaults, scales: { r: { beginAtZero: true, max: 10 } } }
+        });
+      }
+
+      // 15. Risk Map
+      const ctx15 = document.getElementById('chartRiskMap')?.getContext('2d');
+      if (ctx15) {
+        new Chart(ctx15, {
+          type: 'bubble',
+          data: {
+            datasets: [
+              { label: 'Credit', data: [{ x: 6, y: 8, r: 12 }], backgroundColor: colors.red },
+              { label: 'Political', data: [{ x: 7, y: 7, r: 14 }], backgroundColor: colors.amber },
+              { label: 'Verification', data: [{ x: 5, y: 6, r: 10 }], backgroundColor: colors.gold },
+              { label: 'Regulatory', data: [{ x: 3, y: 4, r: 8 }], backgroundColor: colors.blue },
+              { label: 'Data/Privacy', data: [{ x: 5, y: 5, r: 9 }], backgroundColor: colors.slate }
+            ]
+          },
+          options: {
+            ...chartDefaults,
+            scales: { x: { title: { display: true, text: 'Likelihood' }, max: 10 }, y: { title: { display: true, text: 'Impact' }, max: 10 } }
+          }
+        });
+      }
+
+      // 16. MIS Dashboard
+      const ctx16 = document.getElementById('chartMIS')?.getContext('2d');
+      if (ctx16) {
+        new Chart(ctx16, {
+          type: 'line',
+          data: {
+            labels: ['M1', 'M2', 'M3', 'M4', 'M5', 'M6'],
+            datasets: [
+              { label: 'Disbursements (PKR B)', data: [0.1, 0.3, 0.6, 1.0, 1.4, 1.8], borderColor: colors.green, borderWidth: 2 },
+              { label: 'NPL (%)', data: [0.5, 1.2, 2.1, 2.8, 3.2, 3.5], borderColor: colors.red, borderWidth: 2, yAxisID: 'y1' }
+            ]
+          },
+          options: {
+            ...chartDefaults,
+            scales: { y: { position: 'left', title: { display: true, text: 'Disbursements' } }, y1: { position: 'right', title: { display: true, text: 'NPL %' }, grid: { drawOnChartArea: false } } }
+          }
+        });
+      }
+
+      // 17. Phases
+      const ctx17 = document.getElementById('chartPhases')?.getContext('2d');
+      if (ctx17) {
+        new Chart(ctx17, {
+          type: 'bar',
+          data: {
+            labels: ['Setup\n(M1–3)', 'Launch\n(M4–6)', 'Tune\n(M7–9)', 'Scale\n(M10–12)'],
+            datasets: [
+              { label: 'Readiness %', data: [100, 75, 40, 0], backgroundColor: colors.gold },
+              { label: 'Operational %', data: [0, 35, 85, 100], backgroundColor: colors.green }
+            ]
+          },
+          options: { ...chartDefaults, scales: { y: { max: 100 } } }
+        });
+      }
+    }
+
+    // Initialize on load
+    document.addEventListener('DOMContentLoaded', initCharts);
+  </script>
+</body>
+</html>
