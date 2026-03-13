@@ -1,0 +1,560 @@
+<html>
+<head>
+<style>
+:root {
+  --ncgcl-green: #39A949;
+  --ncgcl-blue: #035076;
+  --ncgcl-cyan: #11688A;
+  --ink: #0d1b2a;
+  --paper: #f5f0e8;
+  --cream: #ede8dc;
+  --white: #ffffff;
+  --border: #c8bfaf;
+  --muted: #78909c;
+  --amber: #e65100;
+  --gold: #f9a825;
+  --slate: #37474f;
+  --red: #b71c1c;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--paper); color: var(--ink); }
+
+.dashboard { max-width: 1200px; margin: 0 auto; padding: 1.5rem; }
+
+.header {
+  background: var(--white);
+  border-bottom: 4px solid var(--ncgcl-green);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 4px;
+}
+
+.header h1 { font-size: 1.8rem; font-weight: 700; color: var(--ncgcl-blue); margin-bottom: 0.25rem; }
+.header-sub { font-size: 0.82rem; color: var(--muted); }
+
+.controls {
+  background: var(--white);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+}
+
+.control-group { margin-bottom: 1.5rem; }
+.control-group:last-child { margin-bottom: 0; }
+
+.control-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+  font-size: 0.82rem;
+  color: var(--ncgcl-blue);
+}
+
+.control-value {
+  color: var(--ncgcl-green);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+input[type="range"] {
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--cream);
+  outline: none;
+  -webkit-appearance: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--ncgcl-green);
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--ncgcl-green);
+  cursor: pointer;
+  border: none;
+}
+
+.toggle-group {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.toggle-btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border);
+  background: var(--white);
+  color: var(--ink);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.toggle-btn:hover { background: var(--cream); }
+.toggle-btn.active {
+  background: var(--ncgcl-green);
+  color: white;
+  border-color: var(--ncgcl-green);
+}
+
+.kpi-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.kpi {
+  background: var(--cream);
+  padding: 1.25rem;
+  border-radius: 4px;
+  border-left: 4px solid var(--ncgcl-green);
+}
+
+.kpi-val {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--ncgcl-blue);
+  margin-bottom: 0.25rem;
+  font-family: 'Courier New', monospace;
+}
+
+.kpi-label {
+  font-size: 0.72rem;
+  color: var(--muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1.5rem;
+}
+
+.card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ncgcl-blue);
+  margin-bottom: 0.25rem;
+}
+
+.card-sub {
+  font-size: 0.72rem;
+  color: var(--muted);
+  margin-bottom: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.ch { position: relative; height: 250px; margin-bottom: 1rem; }
+.ch-short { height: 200px; }
+
+.breakdown-table {
+  width: 100%;
+  font-size: 0.82rem;
+  border-collapse: collapse;
+}
+
+.breakdown-table th {
+  text-align: left;
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--border);
+  font-weight: 700;
+  color: var(--ncgcl-blue);
+  background: var(--cream);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.breakdown-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--cream);
+}
+
+.breakdown-table tr:hover { background: var(--cream); }
+
+.breakdown-label { color: var(--ink); }
+.breakdown-amount { color: var(--ncgcl-blue); font-weight: 700; font-family: 'Courier New', monospace; text-align: right; }
+.breakdown-pct { color: var(--ncgcl-green); font-weight: 700; text-align: right; }
+
+.insight {
+  background: var(--cream);
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 0.75rem;
+  border-left: 3px solid var(--ncgcl-green);
+}
+
+.insight-label {
+  font-size: 0.72rem;
+  color: var(--muted);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.insight-value {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--ncgcl-blue);
+  font-family: 'Courier New', monospace;
+}
+
+.footer {
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  padding: 1rem 1.5rem;
+  margin-top: 2rem;
+  font-size: 0.72rem;
+  color: var(--muted);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  border-radius: 4px;
+}
+
+.footer strong { color: var(--ncgcl-blue); font-weight: 700; }
+
+@media (max-width: 768px) {
+  .grid-2 { grid-template-columns: 1fr; }
+  .kpi-strip { grid-template-columns: repeat(2, 1fr); }
+  .header { padding: 1rem; }
+  .header h1 { font-size: 1.4rem; }
+}
+
+@media (max-width: 480px) {
+  .dashboard { padding: 1rem; }
+  .kpi-strip { grid-template-columns: 1fr; }
+  .footer { grid-template-columns: 1fr; gap: 0.75rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="dashboard">
+  <!-- Header -->
+  <div class="header">
+    <h1>NCGCL Islamabad Office Fit-Out</h1>
+    <p class="header-sub">Capital Expenditure Scenario Analysis & Budget Optimization</p>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls">
+    <div class="control-group">
+      <div class="control-label">
+        <span>Budget Ceiling (PKR Million)</span>
+        <span class="control-value" id="budgetDisplay">39</span>
+      </div>
+      <input type="range" id="budgetSlider" min="33" max="45" value="39" step="0.5">
+    </div>
+
+    <div class="control-group">
+      <div class="control-label">
+        <span>Cost per Sq. Ft (PKR)</span>
+        <span class="control-value" id="costPerSqftDisplay">15,000</span>
+      </div>
+      <input type="range" id="costPerSqftSlider" min="12000" max="18000" value="15000" step="500">
+    </div>
+
+    <div class="control-group">
+      <div class="control-label">Procurement Strategy</div>
+      <div class="toggle-group">
+        <button class="toggle-btn active" onclick="setStrategy('hybrid')">Hybrid (Owner-Supplied)</button>
+        <button class="toggle-btn" onclick="setStrategy('turnkey')">Turnkey (Contractor)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- KPIs -->
+  <div class="kpi-strip">
+    <div class="kpi">
+      <div class="kpi-val" id="kpiTotal">PKR 39.0M</div>
+      <div class="kpi-label">Total CAPEX</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val" id="kpiCostPerSqft">PKR 15,000</div>
+      <div class="kpi-label">Cost per Sq. Ft</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val" id="kpiSavings">PKR 6.2M</div>
+      <div class="kpi-label">vs. Turnkey</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val" id="kpiOccupancy">1 Jul 2026</div>
+      <div class="kpi-label">Go-Live</div>
+    </div>
+  </div>
+
+  <!-- Charts -->
+  <div class="grid-2">
+    <!-- Budget Allocation -->
+    <div class="card">
+      <div class="card-title">Budget Allocation</div>
+      <div class="card-sub">Current scenario distribution</div>
+      <div class="ch">
+        <canvas id="chartAllocation"></canvas>
+      </div>
+    </div>
+
+    <!-- Cost Scenario Comparison -->
+    <div class="card">
+      <div class="card-title">Procurement Comparison</div>
+      <div class="card-sub">Hybrid vs. turnkey impact</div>
+      <div class="ch">
+        <canvas id="chartScenario"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cost Breakdown -->
+  <div class="card" style="margin-bottom: 1.5rem;">
+    <div class="card-title">Cost Breakdown by Category</div>
+    <div class="card-sub">Itemised allocation from approved budget</div>
+    <table class="breakdown-table">
+      <thead>
+        <tr>
+          <th style="width: 50%;">Category</th>
+          <th style="width: 25%;">Amount</th>
+          <th style="width: 25%;">% of Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="breakdown-label">Civil & Interior Finishes</td>
+          <td class="breakdown-amount" id="amt-civil">PKR 15.7M</td>
+          <td class="breakdown-pct" id="pct-civil">40%</td>
+        </tr>
+        <tr>
+          <td class="breakdown-label">Electrical & Fire Safety</td>
+          <td class="breakdown-amount" id="amt-elec">PKR 12.0M</td>
+          <td class="breakdown-pct" id="pct-elec">31%</td>
+        </tr>
+        <tr>
+          <td class="breakdown-label">Furniture</td>
+          <td class="breakdown-amount" id="amt-furn">PKR 4.1M</td>
+          <td class="breakdown-pct" id="pct-furn">11%</td>
+        </tr>
+        <tr>
+          <td class="breakdown-label">HVAC Systems</td>
+          <td class="breakdown-amount" id="amt-hvac">PKR 1.3M</td>
+          <td class="breakdown-pct" id="pct-hvac">3%</td>
+        </tr>
+        <tr>
+          <td class="breakdown-label">Plumbing</td>
+          <td class="breakdown-amount" id="amt-plumb">PKR 1.1M</td>
+          <td class="breakdown-pct" id="pct-plumb">3%</td>
+        </tr>
+        <tr>
+          <td class="breakdown-label">Multimedia & AV</td>
+          <td class="breakdown-amount" id="amt-media">PKR 1.0M</td>
+          <td class="breakdown-pct" id="pct-media">3%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Key Insights -->
+  <div class="grid-2" style="margin-bottom: 1.5rem;">
+    <div>
+      <div class="insight">
+        <div class="insight-label">Contingency Buffer</div>
+        <div class="insight-value" id="contingency">PKR 6.0M</div>
+      </div>
+      <div class="insight">
+        <div class="insight-label">Space per Person</div>
+        <div class="insight-value">110 sq. ft</div>
+      </div>
+    </div>
+    <div>
+      <div class="insight">
+        <div class="insight-label">Cost Savings (Hybrid)</div>
+        <div class="insight-value" id="savings">12–20%</div>
+      </div>
+      <div class="insight">
+        <div class="insight-label">Warranty Period</div>
+        <div class="insight-value">5 Years</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div><strong>NCGCL</strong> · Islamabad Office Dashboard · March 2026</div>
+    <div style="color: var(--ncgcl-green); font-weight: 700;">Board-Ready | Scenario Analysis</div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const state = {
+  budget: 39,
+  costPerSqft: 15000,
+  sqft: 2370,
+  strategy: 'hybrid',
+  charts: {}
+};
+
+const baseAllocation = {
+  'Civil & Interior': 15.7,
+  'Electrical & Fire': 12.0,
+  'Furniture': 4.1,
+  'HVAC': 1.3,
+  'Plumbing': 1.1,
+  'Multimedia': 1.0
+};
+
+function formatNumber(n) {
+  if (n >= 1e6) return (n / 1e6).toFixed(1) + 'M';
+  if (n >= 1e3) return (n / 1e3).toFixed(0) + 'K';
+  return n.toString();
+}
+
+function formatCurrency(n) {
+  return 'PKR ' + formatNumber(n);
+}
+
+function updateCalculations() {
+  const total = state.budget;
+  const costPerSqft = state.costPerSqft;
+  
+  // Update KPI display
+  document.getElementById('budgetDisplay').textContent = total.toFixed(1);
+  document.getElementById('costPerSqftDisplay').textContent = costPerSqft.toLocaleString();
+  document.getElementById('kpiTotal').textContent = formatCurrency(total * 1e6);
+  document.getElementById('kpiCostPerSqft').textContent = formatCurrency(costPerSqft);
+
+  // Calculate turnkey cost and savings
+  const turnkeyMultiplier = 1.18; // 18% contractor markup
+  const turnkeyCost = total * turnkeyMultiplier;
+  const savings = (turnkeyCost - total);
+  document.getElementById('kpiSavings').textContent = formatCurrency(savings * 1e6);
+
+  // Calculate contingency
+  const baseTotal = 35; // Base allocation without contingency
+  const contingency = total - baseTotal;
+  document.getElementById('contingency').textContent = formatCurrency(contingency * 1e6);
+
+  // Update breakdown table
+  const allocations = {
+    'civil': 15.7,
+    'elec': 12.0,
+    'furn': 4.1,
+    'hvac': 1.3,
+    'plumb': 1.1,
+    'media': 1.0
+  };
+
+  for (const [key, amt] of Object.entries(allocations)) {
+    const pct = ((amt / total) * 100).toFixed(0);
+    document.getElementById(`amt-${key}`).textContent = formatCurrency(amt * 1e6);
+    document.getElementById(`pct-${key}`).textContent = pct + '%';
+  }
+
+  // Update charts
+  updateCharts();
+}
+
+function updateCharts() {
+  const total = state.budget;
+  const baseData = [15.7, 12.0, 4.1, 1.3, 1.1, 1.0];
+  const labels = ['Civil & Interior', 'Electrical', 'Furniture', 'HVAC', 'Plumbing', 'Multimedia'];
+
+  // Allocation pie chart
+  if (state.charts.allocation) state.charts.allocation.destroy();
+  state.charts.allocation = new Chart(document.getElementById('chartAllocation'), {
+    type: 'doughnut',
+    data: {
+      labels: labels,
+      datasets: [{
+        data: baseData,
+        backgroundColor: ['#39A949', '#035076', '#11688A', '#e65100', '#f9a825', '#37474f'],
+        borderColor: '#f5f0e8',
+        borderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom', labels: { font: {size:11}, boxWidth:10, padding: 12 }}
+      }
+    }
+  });
+
+  // Scenario comparison
+  if (state.charts.scenario) state.charts.scenario.destroy();
+  const turnkeyCost = total * 1.18;
+  state.charts.scenario = new Chart(document.getElementById('chartScenario'), {
+    type: 'bar',
+    data: {
+      labels: ['Hybrid (Owner-Supplied)', 'Turnkey (Contractor)'],
+      datasets: [{
+        label: 'Total CAPEX (PKR Million)',
+        data: [total, turnkeyCost],
+        backgroundColor: ['#39A949', '#b71c1c'],
+        borderRadius: 4,
+        borderSkipped: false
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false }
+      },
+      scales: {
+        x: { beginAtZero: true, max: 48, grid: {color: '#ede8dc'} }
+      }
+    }
+  });
+}
+
+function setStrategy(strategy) {
+  state.strategy = strategy;
+  document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  updateCalculations();
+}
+
+document.getElementById('budgetSlider').addEventListener('input', (e) => {
+  state.budget = parseFloat(e.target.value);
+  updateCalculations();
+});
+
+document.getElementById('costPerSqftSlider').addEventListener('input', (e) => {
+  state.costPerSqft = parseFloat(e.target.value);
+  updateCalculations();
+});
+
+// Initialize
+updateCalculations();
+</script>
+
+</body>
+</html>
