@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Two-Part Tariff: Comprehensive Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, sans-serif;
+            color: #1A202C;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container { max-width: 2000px; margin: 0 auto; }
+        
+        header {
+            background: linear-gradient(135deg, #1F5A96 0%, #0D47A1 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+        
+        header h1 { font-size: 36px; font-weight: 700; margin-bottom: 8px; }
+        header p { font-size: 16px; opacity: 0.95; }
+        
+        .executive-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .summary-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #1F5A96;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        
+        .summary-label { font-size: 12px; color: #718096; font-weight: 600; text-transform: uppercase; }
+        .summary-value { font-size: 24px; font-weight: 700; color: #1F5A96; margin: 8px 0; }
+        .summary-detail { font-size: 12px; color: #A0AEC0; }
+        
+        .control-section {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1F5A96;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .category-btn {
+            padding: 10px;
+            border: 2px solid #E2E8F0;
+            background: white;
+            color: #2C3E50;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.2s;
+            text-align: center;
+        }
+        
+        .category-btn:hover {
+            border-color: #1F5A96;
+            background: #F0F4F8;
+        }
+        
+        .category-btn.active {
+            background: #1F5A96;
+            color: white;
+            border-color: #1F5A96;
+        }
+        
+        .scenario-tabs {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .scenario-tab {
+            padding: 12px 16px;
+            border: 2px solid #E2E8F0;
+            background: white;
+            color: #2C3E50;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+            text-align: center;
+        }
+        
+        .scenario-tab:hover { border-color: #1F5A96; }
+        .scenario-tab.active {
+            background: #1F5A96;
+            color: white;
+            border-color: #1F5A96;
+        }
+        
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+        
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .input-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #2C3E50;
+            margin-bottom: 6px;
+        }
+        
+        input[type="number"] {
+            padding: 10px;
+            border: 1px solid #E2E8F0;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+        
+        .chart-container {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        
+        .chart-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1A202C;
+            margin-bottom: 16px;
+        }
+        
+        .chart-wrapper {
+            position: relative;
+            height: 360px;
+            width: 100%;
+        }
+        
+        .full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+        
+        .data-table th {
+            background: #F8F9FA;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #2C3E50;
+            border-bottom: 2px solid #E2E8F0;
+        }
+        
+        .data-table td {
+            padding: 12px;
+            border-bottom: 1px solid #E2E8F0;
+        }
+        
+        .data-table tr:hover {
+            background: #F8F9FA;
+        }
+        
+        .highlight-positive { color: #2E7D32; font-weight: 600; }
+        .highlight-negative { color: #D85A30; font-weight: 600; }
+        .highlight-neutral { color: #1F5A96; font-weight: 600; }
+        
+        .insight-section {
+            background: linear-gradient(135deg, #E6F1FB 0%, #F0F4F8 100%);
+            border-left: 4px solid #1F5A96;
+            padding: 20px;
+            border-radius: 6px;
+            margin-top: 24px;
+        }
+        
+        .insight-title { font-weight: 600; margin-bottom: 12px; }
+        .insight-list { margin-left: 20px; font-size: 13px; line-height: 1.8; }
+        
+        @media (max-width: 1400px) {
+            .charts-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚡ Two-Part Tariff: Comprehensive Analysis</h1>
+            <p>All 7 Customer Categories | Operating Pattern Impact | Complete Billing Comparison</p>
+        </header>
+        
+        <!-- EXECUTIVE SUMMARY -->
+        <div class="executive-summary" id="executiveSummary"></div>
+        
+        <!-- CONTROLS -->
+        <div class="control-section">
+            <div class="section-title">📊 Select Category & Scenario</div>
+            <div class="category-grid" id="categoryGrid"></div>
+            
+            <div class="section-title" style="margin-top: 20px;">🕐 Operating Pattern</div>
+            <div class="scenario-tabs" id="scenarioTabs"></div>
+            
+            <div class="section-title" style="margin-top: 20px;">⚙️ Adjust Parameters</div>
+            <div class="input-grid">
+                <div class="input-group">
+                    <label class="input-label">MDI - Maximum Demand Indicator (kW)</label>
+                    <input type="number" id="mdiInput" value="5000" min="100" step="100" onchange="updateDashboard()">
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Load Factor (%)</label>
+                    <input type="number" id="lfInput" value="50" min="0" max="100" step="5" onchange="updateDashboard()">
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Sanctioned Load (kW) [1.5 × MDI auto-calc]</label>
+                    <input type="number" id="sanctionedInput" value="7500" min="100" step="100" onchange="updateDashboard()" disabled style="background: #F8F9FA;">
+                </div>
+            </div>
+        </div>
+        
+        <!-- VISUALIZATIONS -->
+        <div class="charts-grid">
+            <div class="chart-container">
+                <div class="chart-title">📈 CSC Charges by Category</div>
+                <div class="chart-wrapper"><canvas id="cscChart"></canvas></div>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-title">⏰ ToU Blended Rates: 24H vs 9AM-5PM</div>
+                <div class="chart-wrapper"><canvas id="touChart"></canvas></div>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-title">💰 Monthly Bill Comparison (All Categories)</div>
+                <div class="chart-wrapper"><canvas id="billComparisonChart"></canvas></div>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-title">✅ TPT Savings % (24H vs 9AM-5PM)</div>
+                <div class="chart-wrapper"><canvas id="savingsPercentChart"></canvas></div>
+            </div>
+            
+            <div class="chart-container full-width">
+                <div class="chart-title">🔄 Operating Pattern Impact on Monthly Bill (Selected Category)</div>
+                <div class="chart-wrapper"><canvas id="patternImpactChart"></canvas></div>
+            </div>
+            
+            <div class="chart-container full-width">
+                <div class="chart-title">🎯 TPT Bill Breakdown: CSC vs Energy (Selected Category)</div>
+                <div class="chart-wrapper"><canvas id="breakdownChart"></canvas></div>
+            </div>
+        </div>
+        
+        <!-- DETAILED COMPARISON TABLE -->
+        <div class="control-section">
+            <div class="section-title">📋 Detailed Comparison Table: Current vs TPT</div>
+            <table class="data-table" id="comparisonTable">
+                <thead>
+                    <tr>
+                        <th>Billing Component</th>
+                        <th>Current System</th>
+                        <th>TPT (Fixed + Variable)</th>
+                        <th>Absolute Difference</th>
+                        <th>% Savings</th>
+                    </tr>
+                </thead>
+                <tbody id="comparisonTableBody"></tbody>
+            </table>
+        </div>
+        
+        <!-- ALL CATEGORIES COMPARISON -->
+        <div class="control-section">
+            <div class="section-title">🌐 Cross-Category Comparison (Current Scenario)</div>
+            <table class="data-table" id="allCategoriesTable">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>CSC (Rs/kW)</th>
+                        <th>ToU 24H</th>
+                        <th>ToU 9-5</th>
+                        <th>Current Bill</th>
+                        <th>TPT 24H</th>
+                        <th>TPT 9-5</th>
+                        <th>Savings 24H</th>
+                        <th>Savings 9-5</th>
+                    </tr>
+                </thead>
+                <tbody id="allCategoriesTableBody"></tbody>
+            </table>
+        </div>
+        
+        <!-- INSIGHTS -->
+        <div class="insight-section">
+            <div class="insight-title">💡 Key Insights & Recommendations</div>
+            <div class="insight-list" id="insightsText"></div>
+        </div>
+    </div>
+    
+    <script>
+        // ==================== OFFICIAL DATA ====================
+        const MONTHLY_HOURS = 730;
+        
+        const categories = {
+            'B1': { name: 'B1 ToU (0.4kV)', csc: 6973, nonsolar: 9.21, solar: 6.23, peak: 11.33 },
+            'B2': { name: 'B2 ToU (0.4kV)', csc: 6973, nonsolar: 9.21, solar: 6.23, peak: 11.33 },
+            'B3': { name: 'B3 (11kV)', csc: 7432, nonsolar: 8.84, solar: 5.98, peak: 10.87 },
+            'B4': { name: 'B4 (132kV)', csc: 7804, nonsolar: 8.26, solar: 5.59, peak: 10.16 },
+            'Domestic': { name: 'Domestic ToU (0.4kV)', csc: 10085, nonsolar: 9.21, solar: 6.23, peak: 11.33 },
+            'Commercial': { name: 'Commercial ToU (0.4kV)', csc: 9939, nonsolar: 9.21, solar: 6.23, peak: 11.33 },
+            'Agricultural': { name: 'Agricultural (0.4kV)', csc: 6973, nonsolar: 9.21, solar: 6.23, peak: 11.33 }
+        };
+        
+        const scenarios = {
+            '24h': { name: '24-Hour Operations', peak: 4/24, solar: 6/24, nonsolar: 14/24 },
+            '9to5': { name: '9AM-5PM Operations', peak: 0/8, solar: 6/8, nonsolar: 2/8 }
+        };
+        
+        // Current bundled rates (from PDF baseline - B3 at various LF)
+        const currentBundledRates = {
+            'B1': 28.14, 'B2': 28.14, 'B3': 28.14, 'B4': 28.14,
+            'Domestic': 37.92, 'Commercial': 37.92, 'Agricultural': 30.07
+        };
+        
+        let selectedCategory = 'B3';
+        let selectedScenario = '24h';
+        let allCharts = {};
+        
+        function formatNumber(num) {
+            if (Math.abs(num) >= 1_000_000) return (num / 1_000_000).toFixed(1) + 'M';
+            if (Math.abs(num) >= 1_000) return (num / 1_000).toFixed(1) + 'K';
+            return num.toFixed(1);
+        }
+        
+        function calculateBlendedToU(catKey, scenarioKey) {
+            const cat = categories[catKey];
+            const scen = scenarios[scenarioKey];
+            return cat.peak * scen.peak + cat.solar * scen.solar + cat.nonsolar * scen.nonsolar;
+        }
+        
+        function initializeUI() {
+            // Category buttons
+            const catGrid = document.getElementById('categoryGrid');
+            Object.keys(categories).forEach(code => {
+                const btn = document.createElement('button');
+                btn.className = 'category-btn' + (code === 'B3' ? ' active' : '');
+                btn.textContent = code;
+                btn.onclick = () => {
+                    document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    selectedCategory = code;
+                    updateDashboard();
+                };
+                catGrid.appendChild(btn);
+            });
+            
+            // Scenario tabs
+            const scenGrid = document.getElementById('scenarioTabs');
+            Object.keys(scenarios).forEach(code => {
+                const tab = document.createElement('button');
+                tab.className = 'scenario-tab' + (code === '24h' ? ' active' : '');
+                tab.textContent = scenarios[code].name;
+                tab.onclick = () => {
+                    document.querySelectorAll('.scenario-tab').forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    selectedScenario = code;
+                    updateDashboard();
+                };
+                scenGrid.appendChild(tab);
+            });
+        }
+        
+        function updateDashboard() {
+            const mdi = parseFloat(document.getElementById('mdiInput').value);
+            const lf = parseFloat(document.getElementById('lfInput').value);
+            const sanctioned = mdi * 1.5;
+            document.getElementById('sanctionedInput').value = sanctioned.toFixed(0);
+            
+            const consumption = sanctioned * (lf / 100) * MONTHLY_HOURS;
+            const cat = categories[selectedCategory];
+            const blendedToU = calculateBlendedToU(selectedCategory, selectedScenario);
+            const currentRate = currentBundledRates[selectedCategory];
+            
+            const currentBill = consumption * currentRate;
+            const cscCharge = mdi * cat.csc;
+            const energyCharge = consumption * blendedToU;
+            const tptBill = cscCharge + energyCharge;
+            const savings = currentBill - tptBill;
+            const savingsPct = (savings / currentBill * 100).toFixed(1);
+            
+            // Executive summary
+            const summary = document.getElementById('executiveSummary');
+            summary.innerHTML = `
+                <div class="summary-card">
+                    <div class="summary-label">Selected Category</div>
+                    <div class="summary-value">${selectedCategory}</div>
+                    <div class="summary-detail">${categories[selectedCategory].name}</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-label">Operating Pattern</div>
+                    <div class="summary-value">${scenarios[selectedScenario].name}</div>
+                    <div class="summary-detail">ToU: ${blendedToU.toFixed(2)} Rs/kWh</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-label">Current Monthly Bill</div>
+                    <div class="summary-value highlight-negative">${formatNumber(currentBill)}</div>
+                    <div class="summary-detail">Rate: ${currentRate.toFixed(2)} Rs/kWh</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-label">TPT Monthly Bill</div>
+                    <div class="summary-value highlight-positive">${formatNumber(tptBill)}</div>
+                    <div class="summary-detail">CSC: ${formatNumber(cscCharge)} | Energy: ${formatNumber(energyCharge)}</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-label">Monthly Savings</div>
+                    <div class="summary-value highlight-neutral">${formatNumber(savings)}</div>
+                    <div class="summary-detail">${savingsPct}% reduction</div>
+                </div>
+            `;
+            
+            // Comparison table
+            const tbody = document.getElementById('comparisonTableBody');
+            tbody.innerHTML = `
+                <tr>
+                    <td><strong>CSC Charge (MDI × Fixed)</strong></td>
+                    <td>—</td>
+                    <td>${formatNumber(cscCharge)}</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td><strong>Energy Charges</strong></td>
+                    <td>${formatNumber(currentBill)}</td>
+                    <td>${formatNumber(energyCharge)}</td>
+                    <td>${formatNumber(energyCharge - currentBill)}</td>
+                    <td>${((energyCharge - currentBill) / currentBill * 100).toFixed(1)}%</td>
+                </tr>
+                <tr style="background: #F8F9FA; font-weight: 600;">
+                    <td><strong>TOTAL MONTHLY BILL</strong></td>
+                    <td style="color: #D85A30;">${formatNumber(currentBill)}</td>
+                    <td style="color: #2E7D32;">${formatNumber(tptBill)}</td>
+                    <td style="color: #1F5A96;">${formatNumber(savings)}</td>
+                    <td style="color: #1F5A96;">${savingsPct}%</td>
+                </tr>
+            `;
+            
+            // All categories comparison
+            const allTable = document.getElementById('allCategoriesTableBody');
+            allTable.innerHTML = '';
+            Object.keys(categories).forEach(catKey => {
+                const c = categories[catKey];
+                const tou24 = calculateBlendedToU(catKey, '24h');
+                const tou9to5 = calculateBlendedToU(catKey, '9to5');
+                const currBill = consumption * currentBundledRates[catKey];
+                const tpt24 = mdi * c.csc + consumption * tou24;
+                const tpt9to5 = mdi * c.csc + consumption * tou9to5;
+                const sav24 = currBill - tpt24;
+                const sav9to5 = currBill - tpt9to5;
+                const savPct24 = (sav24 / currBill * 100).toFixed(1);
+                const savPct9to5 = (sav9to5 / currBill * 100).toFixed(1);
+                
+                const row = `
+                    <tr>
+                        <td><strong>${catKey}</strong></td>
+                        <td>${c.csc.toLocaleString()}</td>
+                        <td>${tou24.toFixed(2)}</td>
+                        <td>${tou9to5.toFixed(2)}</td>
+                        <td>${formatNumber(currBill)}</td>
+                        <td>${formatNumber(tpt24)}</td>
+                        <td>${formatNumber(tpt9to5)}</td>
+                        <td class="highlight-positive">${formatNumber(sav24)} (${savPct24}%)</td>
+                        <td class="highlight-positive">${formatNumber(sav9to5)} (${savPct9to5}%)</td>
+                    </tr>
+                `;
+                allTable.innerHTML += row;
+            });
+            
+            // Insights
+            const insights = document.getElementById('insightsText');
+            const tou24h = calculateBlendedToU(selectedCategory, '24h');
+            const tou9to5 = calculateBlendedToU(selectedCategory, '9to5');
+            
+            insights.innerHTML = `
+                <div>✅ <strong>Category ${selectedCategory}:</strong> CSC = ${cat.csc.toLocaleString()} Rs/kW-month</div>
+                <div>✅ <strong>Operating Pattern:</strong> ${scenarios[selectedScenario].name} | ToU Blended: ${blendedToU.toFixed(2)} Rs/kWh</div>
+                <div>✅ <strong>Monthly Savings:</strong> ${formatNumber(savings)} PKR (<span class="highlight-positive">${savingsPct}%</span>)</div>
+                <div style="margin-top: 12px;">✅ <strong>Why TPT Benefits This Scenario:</strong></div>
+                <ul style="margin: 8px 0 0 20px;">
+                    <li>CSC explicitly charges only for actual demand (${mdi.toLocaleString()} kW)</li>
+                    <li>ToU blended rate (${blendedToU.toFixed(2)}) is lower than bundled (${currentRate.toFixed(2)}) because fixed costs separated</li>
+                    <li>Operating pattern alignment: ${scenarios[selectedScenario].name} uses ${(scenarios[selectedScenario].solar * 100).toFixed(0)}% solar hours (cheapest)</li>
+                    <li>9AM-5PM scenario saves an additional Rs ${(tou24h - tou9to5).toFixed(2)}/kWh vs 24-hour ops</li>
+                </ul>
+                <div style="margin-top: 12px;">✅ <strong>Annual Impact:</strong> ${formatNumber(savings * 12)} PKR savings per year</div>
+            `;
+            
+            updateCharts(mdi, consumption);
+        }
+        
+        function updateCharts(mdi, consumption) {
+            // Chart 1: CSC by Category
+            const cscData = Object.entries(categories).map(([k, v]) => v.csc);
+            if (allCharts.csc) allCharts.csc.destroy();
+            allCharts.csc = new Chart(document.getElementById('cscChart'), {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(categories),
+                    datasets: [{ label: 'CSC (Rs/kW-month)', data: cscData, backgroundColor: '#1F5A96' }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y' }
+            });
+            
+            // Chart 2: ToU Comparison
+            const tou24Data = Object.keys(categories).map(k => calculateBlendedToU(k, '24h'));
+            const tou9to5Data = Object.keys(categories).map(k => calculateBlendedToU(k, '9to5'));
+            if (allCharts.tou) allCharts.tou.destroy();
+            allCharts.tou = new Chart(document.getElementById('touChart'), {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(categories),
+                    datasets: [
+                        { label: '24-Hour', data: tou24Data, backgroundColor: '#1F5A96' },
+                        { label: '9AM-5PM', data: tou9to5Data, backgroundColor: '#2E7D32' }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+            
+            // Chart 3: Bill Comparison
+            const currBills = Object.entries(categories).map(([k, v]) => 
+                consumption * currentBundledRates[k]
+            );
+            const tptBills24h = Object.entries(categories).map(([k, v]) => 
+                mdi * v.csc + consumption * calculateBlendedToU(k, '24h')
+            );
+            if (allCharts.bill) allCharts.bill.destroy();
+            allCharts.bill = new Chart(document.getElementById('billComparisonChart'), {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(categories),
+                    datasets: [
+                        { label: 'Current System', data: currBills, backgroundColor: '#D85A30' },
+                        { label: 'TPT (24H)', data: tptBills24h, backgroundColor: '#1F5A96' }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+            
+            // Chart 4: Savings %
+            const savingsPcts = Object.entries(categories).map(([k, v]) => {
+                const curr = consumption * currentBundledRates[k];
+                const tpt = mdi * v.csc + consumption * calculateBlendedToU(k, '24h');
+                return ((curr - tpt) / curr * 100);
+            });
+            if (allCharts.savings) allCharts.savings.destroy();
+            allCharts.savings = new Chart(document.getElementById('savingsPercentChart'), {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(categories),
+                    datasets: [{ label: 'Savings %', data: savingsPcts, backgroundColor: '#2E7D32' }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+            
+            // Chart 5: Pattern Impact
+            const cat = categories[selectedCategory];
+            const curr = consumption * currentBundledRates[selectedCategory];
+            const tpt24 = mdi * cat.csc + consumption * calculateBlendedToU(selectedCategory, '24h');
+            const tpt9to5 = mdi * cat.csc + consumption * calculateBlendedToU(selectedCategory, '9to5');
+            if (allCharts.pattern) allCharts.pattern.destroy();
+            allCharts.pattern = new Chart(document.getElementById('patternImpactChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['Current System', 'TPT 24H', 'TPT 9AM-5PM'],
+                    datasets: [{ label: 'Monthly Bill (PKR)', data: [curr, tpt24, tpt9to5], backgroundColor: ['#D85A30', '#1F5A96', '#2E7D32'] }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y' }
+            });
+            
+            // Chart 6: Breakdown
+            const cscChg = mdi * cat.csc;
+            const enChg = consumption * calculateBlendedToU(selectedCategory, selectedScenario);
+            if (allCharts.breakdown) allCharts.breakdown.destroy();
+            allCharts.breakdown = new Chart(document.getElementById('breakdownChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: [`CSC (Rs ${formatNumber(cscChg)})`, `Energy (Rs ${formatNumber(enChg)})`],
+                    datasets: [{ data: [cscChg, enChg], backgroundColor: ['#1F5A96', '#00897B'] }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+        
+        // Initialize
+        initializeUI();
+        updateDashboard();
+    </script>
+</body>
+</html>
