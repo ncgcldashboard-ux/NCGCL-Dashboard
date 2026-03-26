@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NCGCL Guarantee Pipeline — March 2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root {
+  --ink: #0d1b2a; --paper: #f5f0e8; --cream: #ede8dc;
+  --white: #ffffff; --border: #c8bfaf; --muted: #78909c;
+  --ncgcl-green: #2b8c3a; --ncgcl-blue: #1e6091;
+  --teal2: #1a6b28;
+  --amber: #e65100; --amber2: #ff8f00;
+  --red: #b71c1c; --gold: #f9a825; --slate: #37474f;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--paper);color:var(--ink);font-family:'Segoe UI',system-ui,sans-serif;font-size:0.82rem;line-height:1.5;}
+.wrap{max-width:1200px;margin:0 auto;padding:clamp(14px,4vw,32px);}
+
+/* HEADER */
+.header{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;padding-bottom:18px;border-bottom:3px solid var(--ncgcl-green);margin-bottom:24px;}
+.header-logo{width:68px;height:68px;display:flex;align-items:center;justify-content:center;border-radius:6px;background:transparent;overflow:hidden;}
+.header-logo img{max-width:100%;max-height:100%;object-fit:contain;display:block;}
+.header h1{font-size:clamp(1.1rem,3vw,1.7rem);font-weight:800;letter-spacing:-0.5px;color:var(--ink);}
+.header p{font-size:0.72rem;color:var(--muted);margin-top:2px;letter-spacing:0.3px;}
+.header-badge{background:var(--ncgcl-green);color:#fff;padding:6px 14px;border-radius:4px;font-weight:700;font-size:0.72rem;text-align:center;letter-spacing:0.5px;white-space:nowrap;}
+.header-badge span{display:block;font-size:1.1rem;font-weight:800;}
+
+/* KPI STRIP */
+.kpi-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;background:var(--cream);border:1px solid var(--border);border-radius:6px;padding:16px 20px;margin-bottom:24px;}
+.kpi{text-align:center;}
+.kpi-val{font-size:clamp(1.3rem,3vw,2rem);font-weight:800;color:var(--ncgcl-green);letter-spacing:-0.5px;font-family:'Courier New',monospace;}
+.kpi-val.blue{color:var(--ncgcl-blue);}
+.kpi-val.amber{color:var(--amber);}
+.kpi-val.slate{color:var(--slate);}
+.kpi-label{font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px;font-weight:600;margin-top:2px;}
+.kpi-sub{font-size:0.6rem;color:var(--border);margin-top:1px;}
+
+/* TABS */
+.tabs{display:flex;gap:6px;border-bottom:2px solid var(--border);margin-bottom:20px;overflow-x:auto;padding-bottom:2px;}
+.tab-btn{background:none;border:none;padding:8px 16px;font-family:inherit;font-size:0.78rem;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:color 0.15s;}
+.tab-btn:hover{color:var(--ink);}
+.tab-btn.active{color:var(--ncgcl-green);border-bottom-color:var(--ncgcl-green);}
+.tab-panel{display:none;}.tab-panel.active{display:block;}
+
+/* GRID */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px;}
+
+/* CARDS */
+.card{background:#fff;border:1px solid var(--border);border-radius:6px;padding:18px;margin-bottom:16px;}
+.card-title{font-size:0.82rem;font-weight:700;color:var(--ink);margin-bottom:2px;}
+.card-sub{font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:14px;}
+.ch{height:250px;}.ch-tall{height:300px;}.ch-short{height:180px;}
+
+/* PIPELINE TABLE */
+.tbl-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;min-width:700px;}
+thead th{background:var(--ink);color:#fff;padding:9px 12px;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;text-align:left;}
+thead th.right{text-align:right;}
+tbody tr{border-bottom:1px solid var(--cream);}
+tbody tr:hover{background:var(--cream);}
+tbody td{padding:8px 12px;font-size:0.78rem;vertical-align:top;}
+tbody td.mono{font-family:'Courier New',monospace;font-weight:700;text-align:right;}
+tbody td.muted{color:var(--muted);font-size:0.72rem;}
+.pill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:0.62rem;font-weight:700;letter-spacing:0.4px;white-space:nowrap;}
+.pill-fi{background:#e8f5e9;color:#1a6b28;}
+.pill-corp{background:#e3f2fd;color:#1e6091;}
+.pill-tech{background:#fce4ec;color:#880e4f;}
+.pill-port{background:#fff3e0;color:#e65100;}
+.pill-stff{background:#f3e5f5;color:#6a1b9a;}
+.pill-sukuk{background:#e0f7fa;color:#006064;}
+.pill-cp{background:#fafafa;color:#37474f;border:1px solid #ccc;}
+.pill-ewa{background:#f1f8e9;color:#33691e;}
+.pill-jfa{background:#ede7f6;color:#4527a0;}
+.pill-cons{background:#fff8e1;color:#f57f17;}
+.pill-tbd{background:#f5f5f5;color:#9e9e9e;border:1px solid #e0e0e0;}
+.status-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px;}
+.dot-active{background:var(--ncgcl-green);}
+.dot-pending{background:var(--amber);}
+.dot-tbd{background:var(--muted);}
+
+/* INSIGHTS ROW */
+.insights{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;}
+.insight{background:var(--cream);border-left:4px solid var(--ncgcl-green);border-radius:4px;padding:14px 16px;}
+.insight-n{font-size:1.4rem;font-weight:800;color:var(--ncgcl-green);font-family:'Courier New',monospace;}
+.insight-d{font-size:0.72rem;color:var(--ink);margin-top:3px;line-height:1.4;}
+.insight.amber{border-left-color:var(--amber);}.insight.amber .insight-n{color:var(--amber);}
+.insight.blue{border-left-color:var(--ncgcl-blue);}.insight.blue .insight-n{color:var(--ncgcl-blue);}
+
+/* STATUS LEGEND */
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:0.72rem;color:var(--muted);margin-bottom:14px;}
+.legend-item{display:flex;align-items:center;gap:5px;}
+
+/* FILTER ROW */
+.filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+.filter-btn{background:var(--cream);border:1px solid var(--border);border-radius:4px;padding:5px 12px;font-size:0.72rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.15s;}
+.filter-btn:hover,.filter-btn.active{background:var(--ncgcl-green);color:#fff;border-color:var(--ncgcl-green);}
+
+/* SECTION LABEL */
+.section-label{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:20px 0 10px;border-bottom:1px solid var(--border);padding-bottom:6px;}
+
+/* FOOTER */
+.footer{display:grid;grid-template-columns:1fr auto auto;gap:16px;align-items:center;padding-top:18px;border-top:1px solid var(--border);margin-top:24px;font-size:0.65rem;color:var(--muted);}
+.footer-brand{color:var(--ncgcl-green);font-weight:700;}
+
+/* RESPONSIVE */
+@media(max-width:768px){.g2,.g3{grid-template-columns:1fr;}.kpi-strip{grid-template-columns:repeat(3,1fr);}.insights{grid-template-columns:1fr;}.header{grid-template-columns:auto 1fr;}.header-badge{display:none;}.footer{grid-template-columns:1fr;}}
+@media(max-width:480px){.kpi-strip{grid-template-columns:repeat(2,1fr);}.header{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-logo"><img src="NCGCL Coloured Logo.png" alt="NCGCL logo"></div>
+  <div>
+    <h1>Guarantee Origination Pipeline</h1>
+    <p>National Credit Guarantee Company Limited · Pipeline Snapshot · March 2026 · Confidential</p>
+  </div>
+  <div class="header-badge">
+    <span>PKR 13.56 Bn</span>
+    QUANTIFIED PIPELINE
+  </div>
+</div>
+
+<!-- KPI STRIP -->
+<div class="kpi-strip">
+  <div class="kpi">
+    <div class="kpi-val">29</div>
+    <div class="kpi-label">Total Institutions</div>
+    <div class="kpi-sub">In active pipeline</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-val">13,560</div>
+    <div class="kpi-label">Quantified (PKR Mn)</div>
+    <div class="kpi-sub">18 confirmed amounts</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-val blue">11</div>
+    <div class="kpi-label">TBD / Unquantified</div>
+    <div class="kpi-sub">Amounts not yet set</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-val amber">10</div>
+    <div class="kpi-label">Product Types</div>
+    <div class="kpi-sub">Across guarantee spectrum</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-val slate">1</div>
+    <div class="kpi-label">Fee Received</div>
+    <div class="kpi-sub">PMIC — PKR 1,000 Mn</div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('overview',this)">Overview &amp; Charts</button>
+  <button class="tab-btn" onclick="switchTab('pipeline',this)">Full Pipeline Table</button>
+  <button class="tab-btn" onclick="switchTab('product',this)">By Product Type</button>
+  <button class="tab-btn" onclick="switchTab('status',this)">Status Tracker</button>
+</div>
+
+<!-- TAB: OVERVIEW -->
+<div id="tab-overview" class="tab-panel active">
+
+  <div class="insights">
+    <div class="insight">
+      <div class="insight-n">PKR 10.0 Bn</div>
+      <div class="insight-d">Credit Guarantee FI — largest segment. Eight banks engaged across the FI product, collectively anchoring the pipeline.</div>
+    </div>
+    <div class="insight amber">
+      <div class="insight-n">12 Institutions</div>
+      <div class="insight-d">Amounts still TBD — including ABL, Al Habib, HMB, Al Baraka, Faysal, Pak Oman, Pak China, Pak Kuwait, Pak Libya, PFSL, and Cash Now.</div>
+    </div>
+    <div class="insight blue">
+      <div class="insight-n">PKR 500 Mn</div>
+      <div class="insight-d">Dual Haball exposure — one Credit Guarantee Tech deal + one Sukuk, both with NDAs signed and meetings in progress.</div>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="card-title">Pipeline by Product Type — Quantified Amount (PKR Mn)</div>
+      <div class="card-sub">Confirmed amounts only · TBD excluded</div>
+      <div class="ch"><canvas id="c-product-bar"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Institution Count by Product Type</div>
+      <div class="card-sub">All 29 pipeline institutions</div>
+      <div class="ch"><canvas id="c-product-pie"></canvas></div>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="card-title">Quantified vs Unquantified Split</div>
+      <div class="card-sub">By institution count</div>
+      <div class="ch-short"><canvas id="c-tbd"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Deal Size Distribution — Quantified Deals</div>
+      <div class="card-sub">PKR Mn brackets</div>
+      <div class="ch-short"><canvas id="c-size-dist"></canvas></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- TAB: PIPELINE TABLE -->
+<div id="tab-pipeline" class="tab-panel">
+  <div class="filter-row" id="filter-row">
+    <button class="filter-btn active" onclick="filterTable('ALL',this)">All (29)</button>
+    <button class="filter-btn" onclick="filterTable('Credit Guarantee FI',this)">CG FI</button>
+    <button class="filter-btn" onclick="filterTable('Credit Guarantee Corp',this)">CG Corp</button>
+    <button class="filter-btn" onclick="filterTable('Credit Guarantee for Portfolio',this)">CG Portfolio</button>
+    <button class="filter-btn" onclick="filterTable('Credit Guarantee Tech',this)">CG Tech</button>
+    <button class="filter-btn" onclick="filterTable('STFF',this)">STFF</button>
+    <button class="filter-btn" onclick="filterTable('JFA',this)">JFA</button>
+    <button class="filter-btn" onclick="filterTable('Other',this)">Other</button>
+  </div>
+  <div class="legend">
+    <span class="legend-item"><span class="status-dot dot-active"></span>Active / Progress</span>
+    <span class="legend-item"><span class="status-dot dot-pending"></span>Pending / Awaiting</span>
+    <span class="legend-item"><span class="status-dot dot-tbd"></span>TBD / No update</span>
+  </div>
+  <div class="tbl-wrap">
+    <table id="pipeline-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Institution</th>
+          <th class="right">Amount (PKR Mn)</th>
+          <th>Product Type</th>
+          <th>Status Notes</th>
+        </tr>
+      </thead>
+      <tbody id="pipeline-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- TAB: BY PRODUCT TYPE -->
+<div id="tab-product" class="tab-panel">
+  <div id="product-breakdown"></div>
+</div>
+
+<!-- TAB: STATUS TRACKER -->
+<div id="tab-status" class="tab-panel">
+  <div class="insights">
+    <div class="insight">
+      <div class="insight-n">1</div>
+      <div class="insight-d"><strong>Fee Received</strong> — PMIC (PKR 1,000 Mn). Most advanced in the pipeline.</div>
+    </div>
+    <div class="insight blue">
+      <div class="insight-n">3</div>
+      <div class="insight-d"><strong>NDAs Signed</strong> — Haball (CG Tech), Haball-Sukuk, and PFSL. Integration or 2nd meeting in progress.</div>
+    </div>
+    <div class="insight amber">
+      <div class="insight-n">2</div>
+      <div class="insight-d"><strong>Post-Eid</strong> — Al Habib (meeting post Eid) and Pak Libya (First Meeting post Eid). Timeline contingent.</div>
+    </div>
+  </div>
+
+  <div class="section-label">Status Summary by Engagement Stage</div>
+  <div class="g3" id="status-cards"></div>
+
+  <div class="card">
+    <div class="card-title">Engagement Status Distribution</div>
+    <div class="card-sub">All 29 pipeline institutions</div>
+    <div class="ch"><canvas id="c-status-bar"></canvas></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div><strong>NCGCL · Guarantee Origination Pipeline</strong> · As at March 2026 · Confidential — Internal Use Only</div>
+  <div>Source: Internal pipeline tracker</div>
+  <div class="footer-brand">Prepared by NCGCL Management</div>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────────
+const pipeline = [
+  { name:'UNIDO',        amount:80,    product:'Consortium Guarantee',              status:'',                                                                    statusNotes:'—',                                                                              stage:'initial' },
+  { name:'PMIC',         amount:1000,  product:'Credit Guarantee FI',               status:'fee',                                                                 statusNotes:'Fee received. ✔',                                                                stage:'advanced' },
+  { name:'HBL MFB',      amount:1500,  product:'Credit Guarantee FI',               status:'pending',                                                             statusNotes:'Awaiting feedback from HBL MFB.',                                                stage:'pending' },
+  { name:'BIPL',         amount:1500,  product:'Credit Guarantee FI',               status:'active',                                                              statusNotes:'Initial comments from Business received. No comments from compliance yet.',     stage:'active' },
+  { name:'BAFL',         amount:1500,  product:'Credit Guarantee FI',               status:'active',                                                              statusNotes:'Needs time till Friday for liaison internally (Compliance & Risk).',            stage:'active' },
+  { name:'HBL FI',       amount:1000,  product:'Credit Guarantee FI',               status:'active',                                                              statusNotes:'Abridged MAGFA to be forwarded as received.',                                    stage:'active' },
+  { name:'JSBL',         amount:1000,  product:'Credit Guarantee FI',               status:'active',                                                              statusNotes:'Approval chains are in review from JSBL.',                                      stage:'active' },
+  { name:'MEBL',         amount:1000,  product:'Credit Guarantee FI',               status:'active',                                                              statusNotes:'Okay from Risk. New products to be launched (Hospitals & Education). COO discussion awaited.', stage:'active' },
+  { name:'UBL',          amount:1500,  product:'Credit Guarantee FI',               status:'pending',                                                             statusNotes:'Meeting alignment post weekend.',                                                stage:'pending' },
+  { name:'BEVL',         amount:150,   product:'Credit Guarantee Corp',             status:'active',                                                              statusNotes:'Concerns registered through SEDF.',                                             stage:'active' },
+  { name:'NRSP',         amount:70,    product:'Credit Guarantee Corp',             status:'tbd',                                                                 statusNotes:'No updates from POC.',                                                          stage:'stalled' },
+  { name:'HBL Zarai',    amount:60,    product:'Credit Guarantee Corp',             status:'active',                                                              statusNotes:'Reduced program size (Tentative - expected today). Concept paper agreed on.',   stage:'active' },
+  { name:'Haball',       amount:500,   product:'Credit Guarantee Tech',             status:'active',                                                              statusNotes:'NDA signed. System integration in process. Plan to meet on Friday.',          stage:'active' },
+  { name:'ABL',          amount:null,  product:'Credit Guarantee for Portfolio',    status:'tbd',                                                                 statusNotes:'—',                                                                              stage:'initial' },
+  { name:'Pak Oman',     amount:null,  product:'Credit Guarantee for Portfolio',    status:'active',                                                              statusNotes:'MOU shared; response awaited. Supply chain + climate product in IB.',         stage:'pending' },
+  { name:'Pak China',    amount:null,  product:'Credit Guarantee for Portfolio',    status:'pending',                                                             statusNotes:'MoU to be signed post Ramadan.',                                                stage:'pending' },
+  { name:'Pak Brunei',   amount:200,   product:'Credit Guarantee for Portfolio',    status:'tbd',                                                                 statusNotes:'—',                                                                              stage:'initial' },
+  { name:'Daewoo',       amount:500,   product:'Credit Guarantee and STFF',         status:'active',                                                              statusNotes:'2nd call for analysis on Friday — Fleet (E-Buses). Pricing mechanics missing.',stage:'active' },
+  { name:'Al Habib',     amount:null,  product:'Credit Guarantee for Portfolio',    status:'pending',                                                             statusNotes:'Meeting to be aligned with SME/Agri Heads post Eid.',                          stage:'pending' },
+  { name:'HMB',          amount:null,  product:'Credit Guarantee for Portfolio',    status:'tbd',                                                                 statusNotes:'—',                                                                              stage:'initial' },
+  { name:'Al Baraka',    amount:null,  product:'Credit Guarantee for Portfolio',    status:'tbd',                                                                 statusNotes:'—',                                                                              stage:'initial' },
+  { name:'Faysal',       amount:null,  product:'Credit Guarantee for Portfolio',    status:'tbd',                                                                 statusNotes:'—',                                                                              stage:'initial' },
+  { name:'Halan Microfinance', amount:500, product:'Credit Guarantee for Portfolio',status:'pending',                                                             statusNotes:'Call delayed.',                                                                 stage:'stalled' },
+  { name:'Pak Kuwait',   amount:null,  product:'Credit Guarantee for Portfolio',    status:'active',                                                              statusNotes:'2nd meeting with product TBD. Considering supply chain product with Haball.',  stage:'active' },
+  { name:'Haball — Sukuk',amount:500,  product:'Sukuk',                             status:'active',                                                              statusNotes:'NDA signed. 2nd meeting in the next week.',                                     stage:'active' },
+  { name:'PFSL',         amount:null,  product:'Capital Markets',                   status:'active',                                                              statusNotes:'NDA received.',                                                                 stage:'active' },
+  { name:'Cash Now',     amount:null,  product:'Commercial Paper',                  status:'pending',                                                             statusNotes:'Awaiting data. ETA — this week.',                                               stage:'pending' },
+  { name:'Askari Bank',  amount:1000,  product:'Guarantee & IB Advisory (JFA)',     status:'pending',                                                             statusNotes:'First Meeting — Postponed.',                                                    stage:'stalled' },
+  { name:'Pak Libya',    amount:null,  product:'Guarantee & IB Advisory (JFA)',     status:'pending',                                                             statusNotes:'First Meeting — Post Eid.',                                                     stage:'pending' },
+];
+
+// Product pill CSS class map
+const pillClass = {
+  'Credit Guarantee FI':             'pill-fi',
+  'Credit Guarantee Corp':           'pill-corp',
+  'Credit Guarantee Tech':           'pill-tech',
+  'Credit Guarantee for Portfolio':  'pill-port',
+  'Credit Guarantee and STFF':       'pill-stff',
+  'Sukuk':                           'pill-sukuk',
+  'Commercial Paper':                'pill-cp',
+  'Earned Wage Access':              'pill-ewa',
+  'Guarantee & IB Advisory (JFA)':   'pill-jfa',
+  'Consortium Guarantee':            'pill-cons',
+  'Capital Markets':                 'pill-cp',
+};
+
+const statusDot = { fee:'dot-active', active:'dot-active', pending:'dot-pending', tbd:'dot-tbd' };
+const chartColors = ['#1a6b28','#e65100','#1e6091','#f9a825','#37474f','#b71c1c','#006064','#4527a0','#880e4f','#f57f17'];
+
+// ── TAB SWITCH ────────────────────────────────────────────────────────────────
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── PIPELINE TABLE ────────────────────────────────────────────────────────────
+function renderTable(filter) {
+  const tbody = document.getElementById('pipeline-tbody');
+  let rows = pipeline;
+  if (filter !== 'ALL') {
+    if (filter === 'STFF') rows = pipeline.filter(d => d.product.includes('STFF'));
+    else if (filter === 'JFA') rows = pipeline.filter(d => d.product.includes('JFA'));
+    else if (filter === 'Other') rows = pipeline.filter(d => !['Credit Guarantee FI','Credit Guarantee Corp','Credit Guarantee for Portfolio','Credit Guarantee Tech','Credit Guarantee and STFF','Guarantee & IB Advisory (JFA)'].includes(d.product));
+    else rows = pipeline.filter(d => d.product === filter);
+  }
+  tbody.innerHTML = rows.map((d,i) => `
+    <tr data-product="${d.product}">
+      <td style="color:var(--muted);font-size:0.7rem">${pipeline.indexOf(d)+1}</td>
+      <td style="font-weight:700">${d.name}</td>
+      <td class="mono">${d.amount ? d.amount.toLocaleString() : '<span style="color:var(--muted);font-weight:400">TBD</span>'}</td>
+      <td><span class="pill ${pillClass[d.product]||'pill-tbd'}">${d.product}</span></td>
+      <td class="muted"><span class="status-dot ${statusDot[d.status]||'dot-tbd'}"></span>${d.statusNotes}</td>
+    </tr>
+  `).join('');
+}
+renderTable('ALL');
+
+function filterTable(f, btn) {
+  document.querySelectorAll('#filter-row .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTable(f);
+}
+
+// ── PRODUCT BREAKDOWN TAB ────────────────────────────────────────────────────
+const productGroups = {};
+pipeline.forEach(d => {
+  if (!productGroups[d.product]) productGroups[d.product] = { count:0, total:0, tbd:0, items:[] };
+  productGroups[d.product].count++;
+  productGroups[d.product].items.push(d);
+  if (d.amount) productGroups[d.product].total += d.amount;
+  else productGroups[d.product].tbd++;
+});
+
+const pbEl = document.getElementById('product-breakdown');
+let pbHTML = '';
+Object.entries(productGroups).forEach(([prod, g]) => {
+  pbHTML += `
+  <div class="section-label">${prod} <span style="font-weight:400;color:var(--border)">— ${g.count} institution${g.count>1?'s':''} · PKR ${g.total ? g.total.toLocaleString()+' Mn quantified' : 'TBD'}</span></div>
+  <div class="tbl-wrap" style="margin-bottom:20px">
+  <table><thead><tr><th>Institution</th><th class="right">Amount (PKR Mn)</th><th>Stage</th><th>Status Notes</th></tr></thead><tbody>
+  ${g.items.map(d => `<tr>
+    <td style="font-weight:700">${d.name}</td>
+    <td class="mono">${d.amount ? d.amount.toLocaleString() : '<span style="color:var(--muted);font-weight:400">TBD</span>'}</td>
+    <td><span style="text-transform:capitalize;font-size:0.72rem;color:var(--muted)">${d.stage}</span></td>
+    <td class="muted">${d.statusNotes}</td>
+  </tr>`).join('')}
+  </tbody></table></div>`;
+});
+pbEl.innerHTML = pbHTML;
+
+// ── STATUS CARDS ─────────────────────────────────────────────────────────────
+const stages = {
+  advanced: { label:'Fee Received / Advanced', color:'var(--ncgcl-green)', items:[] },
+  active:   { label:'Active Engagement',        color:'var(--ncgcl-blue)', items:[] },
+  pending:  { label:'Pending Action',           color:'var(--amber)',      items:[] },
+  stalled:  { label:'Stalled / Call Delayed',   color:'var(--red)',        items:[] },
+  initial:  { label:'Initial / No Update',      color:'var(--muted)',      items:[] },
+};
+pipeline.forEach(d => { if(stages[d.stage]) stages[d.stage].items.push(d.name); });
+const scEl = document.getElementById('status-cards');
+Object.entries(stages).forEach(([k,s]) => {
+  if (!s.items.length) return;
+  scEl.innerHTML += `<div class="card" style="border-top:3px solid ${s.color}">
+    <div class="card-title" style="color:${s.color}">${s.label}</div>
+    <div class="card-sub">${s.items.length} institution${s.items.length>1?'s':''}</div>
+    <div style="margin-top:8px">${s.items.map(n=>`<div style="padding:3px 0;border-bottom:1px solid var(--cream);font-size:0.78rem">${n}</div>`).join('')}</div>
+  </div>`;
+});
+
+// ── CHARTS ────────────────────────────────────────────────────────────────────
+const chartDefaults = {
+  responsive:true, maintainAspectRatio:false,
+  plugins:{ legend:{ labels:{ font:{size:10}, boxWidth:12, color:'#0d1b2a' } }, tooltip:{ backgroundColor:'rgba(13,27,42,0.95)' } }
+};
+
+// 1. Product Bar — quantified amount
+const prodNames = Object.keys(productGroups);
+const prodAmounts = prodNames.map(p => productGroups[p].total);
+new Chart(document.getElementById('c-product-bar'), {
+  type:'bar',
+  data:{ labels: prodNames.map(p => p.length>20?p.slice(0,20)+'…':p),
+         datasets:[{ data:prodAmounts, backgroundColor: chartColors, borderRadius:4, borderSkipped:false }] },
+  options:{ ...chartDefaults, plugins:{ ...chartDefaults.plugins, legend:{display:false} },
+    scales:{ x:{ grid:{display:false}, ticks:{font:{size:9}} },
+             y:{ beginAtZero:true, grid:{color:'#f0ebe0'}, ticks:{callback:v=>v>=1000?v/1000+'k':v} } } }
+});
+
+// 2. Product Pie — institution count
+new Chart(document.getElementById('c-product-pie'), {
+  type:'doughnut',
+  data:{ labels: prodNames.map(p => p.length>22?p.slice(0,22)+'…':p),
+         datasets:[{ data: prodNames.map(p=>productGroups[p].count), backgroundColor: chartColors, borderWidth:1, borderColor:'#fff' }] },
+  options:{ ...chartDefaults, plugins:{ ...chartDefaults.plugins, legend:{ position:'right', labels:{ font:{size:9}, boxWidth:10 } } }, cutout:'50%' }
+});
+
+// 3. TBD vs quantified
+new Chart(document.getElementById('c-tbd'), {
+  type:'bar',
+  data:{ labels:['Quantified Amount','TBD Amount'],
+         datasets:[{ data:[18,11], backgroundColor:['#1a6b28','#c8bfaf'], borderRadius:4, borderSkipped:false }] },
+  options:{ ...chartDefaults, indexAxis:'y', plugins:{ ...chartDefaults.plugins, legend:{display:false} },
+    scales:{ x:{ grid:{color:'#f0ebe0'}, beginAtZero:true }, y:{ grid:{display:false} } } }
+});
+
+// 4. Size distribution
+const sizeBuckets = { '<100':0, '100–499':0, '500–999':0, '1,000–1,499':0, '≥1,500':0 };
+pipeline.filter(d=>d.amount).forEach(d => {
+  if(d.amount<100) sizeBuckets['<100']++;
+  else if(d.amount<500) sizeBuckets['100–499']++;
+  else if(d.amount<1000) sizeBuckets['500–999']++;
+  else if(d.amount<1500) sizeBuckets['1,000–1,499']++;
+  else sizeBuckets['≥1,500']++;
+});
+new Chart(document.getElementById('c-size-dist'), {
+  type:'bar',
+  data:{ labels: Object.keys(sizeBuckets),
+         datasets:[{ data: Object.values(sizeBuckets), backgroundColor: chartColors, borderRadius:4, borderSkipped:false }] },
+  options:{ ...chartDefaults, plugins:{ ...chartDefaults.plugins, legend:{display:false} },
+    scales:{ x:{ grid:{display:false} }, y:{ beginAtZero:true, ticks:{stepSize:1}, grid:{color:'#f0ebe0'} } } }
+});
+
+// 5. Status bar
+const stageCounts = Object.fromEntries(Object.entries(stages).map(([k,v])=>[v.label,v.items.length]));
+new Chart(document.getElementById('c-status-bar'), {
+  type:'bar',
+  data:{ labels: Object.keys(stageCounts),
+         datasets:[{ data:Object.values(stageCounts), backgroundColor:['#1a6b28','#1e6091','#e65100','#b71c1c','#78909c'], borderRadius:4, borderSkipped:false }] },
+  options:{ ...chartDefaults, plugins:{ ...chartDefaults.plugins, legend:{display:false} },
+    scales:{ x:{ grid:{display:false}, ticks:{font:{size:10}} }, y:{ beginAtZero:true, ticks:{stepSize:1}, grid:{color:'#f0ebe0'} } } }
+});
+</script>
+</body>
+</html>
