@@ -1231,188 +1231,6 @@ tbody td.center{text-align:center;}
     </div>
   </div>
 
-</div><!-- /quadrant -->
-
-
-<!-- ══════════════════════════════════════════════════════════════════════════
-     TAB 6 — FINANCIAL MECHANICS
-══════════════════════════════════════════════════════════════════════════ -->
-<div id="tab-mechanics" class="tab-panel">
-
-  <div class="section-bar">How NCGCL Creates Financial Value — The Capital Chain</div>
-
-  <div class="insights">
-    <div class="insight">
-      <div class="insight-n">PKR 8 Bn → 40 Bn</div>
-      <div class="insight-label">The 5× Guarantee Leverage</div>
-      <div class="insight-d">NCGCL's PKR 8 Bn capital base is engineered to issue <strong>PKR 40 Bn in guarantees</strong> — a disciplined 5× leverage. This is the guarantee book that serves as the direct operating instrument of NCGCL's mandate.</div>
-    </div>
-    <div class="insight amber">
-      <div class="insight-n">PKR 40 Bn → 500 Bn</div>
-      <div class="insight-label">The Catalytic Credit Multiplier</div>
-      <div class="insight-d">PKR 40 Bn in NCGCL guarantees is engineered to catalyse up to <strong>PKR 500 Bn in total market credit</strong> — a further 12.5× amplification as FIs deploy backed lending across the guaranteed portfolio.</div>
-    </div>
-    <div class="insight blue">
-      <div class="insight-n">1.5–3.0%</div>
-      <div class="insight-label">Annual Guarantee Fee Range</div>
-      <div class="insight-d">Guarantee fee paid by FIs annually on the guaranteed portion. On a fully-deployed PKR 40 Bn book, this generates <strong>PKR 600 Mn – 1.2 Bn in annual fee income</strong> — NCGCL's primary revenue stream.</div>
-    </div>
-  </div>
-
-  <div class="g2">
-    <div class="card">
-      <div class="card-title">The 8→40→500 Capital Chain — Visualised</div>
-      <div class="card-sub">NCGCL capital base → guarantee book → total market credit catalysed</div>
-      <div class="ch"><canvas id="c-leverage"></canvas></div>
-    </div>
-    <div class="card">
-      <div class="card-title">Fee Income at PKR 40 Bn Target Book</div>
-      <div class="card-sub">Annual guarantee fee income at 1%, 2%, and 3% fee rates on deployed guarantee book</div>
-      <div class="ch"><canvas id="c-fee"></canvas></div>
-    </div>
-  </div>
-
-  <div class="card" style="margin-bottom:16px">
-    <div class="card-title">Sovereign NIM vs. NCGCL-Enabled SME Returns — The Commercial Case for FI Participation</div>
-    <div class="card-sub">Why banks need NCGCL to make SME lending commercially rational against 5.5–6% risk-free sovereign NIM</div>
-    <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Lending Option</th><th>Gross NIM</th><th>Risk Weight</th><th>Expected Loss</th><th>Net Risk-Adjusted Return</th><th>NCGCL Impact</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Sovereign / Govt Securities</strong></td><td class="mono" style="color:var(--ncgcl-green)">5.5–6.0%</td><td class="mono">0%</td><td class="mono">~0%</td><td class="mono" style="color:var(--ncgcl-green)">5.5–6.0% (risk-free)</td><td class="muted">—</td></tr>
-          <tr><td><strong>Large Corporate Lending</strong></td><td class="mono">3.5–4.5%</td><td class="mono">100%</td><td class="mono">0.5–1.0%</td><td class="mono">2.5–4.0%</td><td class="muted">Moderate benefit</td></tr>
-          <tr><td><strong>SME Lending (unguaranteed)</strong></td><td class="mono" style="color:var(--red)">6–8%</td><td class="mono">100–150%</td><td class="mono">4–8%</td><td class="mono" style="color:var(--red)">~0–2% (uncompetitive)</td><td class="muted">Without NCGCL: not viable</td></tr>
-          <tr><td><strong>SME Lending + NCGCL Guarantee</strong></td><td class="mono">6–8%</td><td class="mono">20–50%</td><td class="mono">1–2% (covered)</td><td class="mono" style="color:var(--ncgcl-green)">4–6% (competitive)</td><td class="muted"><strong style="color:var(--ncgcl-green)">Makes SME lending rational</strong></td></tr>
-          <tr class="tbl-total"><td>NCGCL Value Add</td><td colspan="3" class="muted">Reduces effective risk weight via SBP liquid asset recognition + absorbs 30–70% of expected loss</td><td colspan="2" class="mono" style="color:var(--ncgcl-green)">+3–5% net return improvement</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="section-bar">Loss Waterfall Mechanics</div>
-  <div class="g2">
-    <div class="card">
-      <div class="card-title">Illustrative Loss Distribution — Pari-Passu 30/70 Structure</div>
-      <div class="card-sub">How losses flow at different portfolio default rates</div>
-      <div class="ch"><canvas id="c-loss"></canvas></div>
-    </div>
-    <div class="card">
-      <div class="card-title">Scenario Analysis — Capital Adequacy</div>
-      <div class="card-sub">NCGCL capital required at different coverage % and portfolio sizes</div>
-      <div class="tbl-wrap" style="margin-top:8px">
-        <table>
-          <thead><tr><th>Portfolio (PKR Bn)</th><th>Coverage 30%</th><th>Coverage 50%</th><th>Coverage 70%</th></tr></thead>
-          <tbody>
-            <tr><td>5</td><td class="mono">1.50 Bn</td><td class="mono">2.50 Bn</td><td class="mono">3.50 Bn</td></tr>
-            <tr><td>10</td><td class="mono">3.00 Bn</td><td class="mono">5.00 Bn</td><td class="mono">7.00 Bn</td></tr>
-            <tr><td>15</td><td class="mono">4.50 Bn</td><td class="mono">7.50 Bn</td><td class="mono">10.50 Bn</td></tr>
-            <tr><td>20</td><td class="mono">6.00 Bn</td><td class="mono">10.00 Bn</td><td class="mono">14.00 Bn</td></tr>
-            <tr class="tbl-total"><td>Current Pipeline</td><td class="mono">4.07 Bn</td><td class="mono">6.78 Bn</td><td class="mono">9.49 Bn</td></tr>
-          </tbody>
-        </table>
-        <div style="font-size:.68rem;color:var(--muted);margin-top:8px">Assumes quantified pipeline of PKR 13.56 Bn fully executed. Capital figures represent maximum NCGCL guarantee exposure at each coverage level.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">The Investor Value Proposition — Summary Economics</div>
-    <div class="card-sub">Illustrative return and risk profile for patient capital in NCGCL guarantee structure</div>
-    <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Parameter</th><th>First-Loss Position</th><th>Second-Loss (NCGCL)</th><th>Mezzanine</th><th>FI Residual</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Risk Position</strong></td><td class="muted">Absorbs initial losses</td><td class="muted">After first-loss exhausted</td><td class="muted">Mid-stack</td><td class="muted">Tail risk only</td></tr>
-          <tr><td><strong>Expected Loss</strong></td><td class="muted">High — sized to clear market</td><td class="muted">Moderate — well-protected</td><td class="muted">Low-moderate</td><td class="muted">Low — historical FI default rates</td></tr>
-          <tr><td><strong>Return Profile</strong></td><td class="muted">Concessional / grant equivalent</td><td class="muted">Fee income + impact premium</td><td class="muted">Market rate + spread</td><td class="muted">Commercial lending rate</td></tr>
-          <tr><td><strong>Investor Type</strong></td><td class="muted">GoP / bilateral donor / DFI grant</td><td class="muted">NCGCL / patient capital investor</td><td class="muted">DFI / impact fund</td><td class="muted">Commercial bank</td></tr>
-          <tr><td><strong>Capital Recycling</strong></td><td class="muted">Consumed on default</td><td class="muted">Recycled — 5–7 year horizon</td><td class="muted">Term-matched</td><td class="muted">Rolling portfolio</td></tr>
-          <tr><td><strong>SBP Recognition</strong></td><td class="muted">N/A</td><td class="muted">Yes — full guarantee</td><td class="muted">Partial</td><td class="muted">N/A — FI on-balance sheet</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-</div><!-- /mechanics -->
-
-
-<!-- ══════════════════════════════════════════════════════════════════════════
-     TAB 7 — IMPACT FRAMEWORK
-══════════════════════════════════════════════════════════════════════════ -->
-<div id="tab-impact" class="tab-panel">
-
-  <div class="section-bar">Impact Thesis — NCGCL as Pakistan's Development Finance Multiplier</div>
-
-  <div class="impact-grid">
-    <div class="impact-cell">
-      <div class="impact-icon">🏭</div>
-      <div class="impact-val">5.2 Mn</div>
-      <div class="impact-label">MSMEs in Pakistan</div>
-      <div class="impact-sub">&lt;5% formally financed</div>
-    </div>
-    <div class="impact-cell">
-      <div class="impact-icon">💼</div>
-      <div class="impact-val">2.75 Mn</div>
-      <div class="impact-label">New Jobs Needed / Year</div>
-      <div class="impact-sub">National employment mandate</div>
-    </div>
-    <div class="impact-cell">
-      <div class="impact-icon">👩‍💼</div>
-      <div class="impact-val">22.7%</div>
-      <div class="impact-label">Female LFPR</div>
-      <div class="impact-sub">18.2% youth female unemployment</div>
-    </div>
-    <div class="impact-cell">
-      <div class="impact-icon">📊</div>
-      <div class="impact-val">85.7%</div>
-      <div class="impact-label">Informality Rate</div>
-      <div class="impact-sub">95.5% of firms: &lt;10 workers</div>
-    </div>
-  </div>
-
-  <div class="g2">
-    <div class="card green-top">
-      <div class="card-title">Credit Access &amp; MSME Formalization</div>
-      <div class="card-sub">Primary impact dimension — the structural enabler</div>
-      <div class="strat-point" style="margin-top:8px"><div class="sp-num">1</div><div class="sp-text"><strong>Formalization catalyst:</strong> Pakistan's 85.7% informality rate and 95.5% micro-enterprise share mean formal banking access is structurally blocked. NCGCL guarantees convert informal cashflows into bankable assets — the first step to enterprise formalization.</div></div>
-      <div class="strat-point"><div class="sp-num">2</div><div class="sp-text"><strong>Better credit terms:</strong> Guarantee coverage allows FIs to improve pricing, extend tenor, and reduce collateral demands. For an MSME paying 25%+ informal credit rates, formalisation through NCGCL-backed lending is transformative.</div></div>
-      <div class="strat-point"><div class="sp-num">3</div><div class="sp-text"><strong>2.75 million jobs imperative:</strong> Pakistan needs 2.75 million new jobs annually. These jobs come from MSMEs. MSMEs cannot hire without credit. Credit will not flow without risk transfer. <strong>NCGCL is the missing link in Pakistan's employment creation chain.</strong></div></div>
-      <div class="strat-point"><div class="sp-num">4</div><div class="sp-text"><strong>SME finance from 1% → 7% of GDP:</strong> Closing half the gap to the regional average (7–8%) would represent ~PKR 3 Tn in additional annual SME credit — the economic transformation NCGCL's 8→40→500 Bn capital chain is designed to unlock.</div></div>
-    </div>
-    <div class="card blue-top">
-      <div class="card-title">Gender, Climate &amp; Green Finance</div>
-      <div class="card-sub">Cross-cutting impact credentials — essential for DFI co-financing</div>
-      <div class="strat-point" style="margin-top:8px"><div class="sp-num">1</div><div class="sp-text"><strong>Wearing Apparel targeting:</strong> Export Finance directed to Wearing Apparel generates <strong>18,180 female jobs per PKR 100 Bn invested</strong> (60% female workforce). Not aspirational — a direct function of which sub-sector NCGCL's MAGFA targets.</div></div>
-      <div class="strat-point"><div class="sp-num">2</div><div class="sp-text"><strong>Dairy value chain:</strong> Agri interventions targeting Dairy generate <strong>69,660 female jobs per PKR 100 Bn</strong> — ranked #1 by gender employment multiplier, and the essential offset to AMaaS labour displacement.</div></div>
-      <div class="strat-point"><div class="sp-num">3</div><div class="sp-text"><strong>EV transition — PKR 1.32 Tn:</strong> 30–40 Mn registered bikes in Pakistan; 40% substitution = 6.6 Mn EV units at PKR 200,000 each. NCGCL guarantee on fleet and assembler financing directly enables Pakistan's green mobility transition.</div></div>
-      <div class="strat-point"><div class="sp-num">4</div><div class="sp-text"><strong>GCF Climate Facility:</strong> Active proposal positions NCGCL as Pakistan's national implementing entity for climate capital. Unlocks GCF/GEF concessional first-loss capital, further de-risking NCGCL's second-loss position on green products.</div></div>
-    </div>
-  </div>
-
-  <div class="section-bar">KPI Framework — Measurable Impact Outcomes</div>
-  <div class="card">
-    <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Impact Dimension</th><th>KPI</th><th>Measurement Method</th><th>Reporting Frequency</th><th>SDG Alignment</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Credit Access</strong></td><td>New MSME borrowers reached</td><td class="muted">FI quarterly reporting via MAGFA schedule</td><td class="muted">Quarterly</td><td class="muted">SDG 8, 10</td></tr>
-          <tr><td><strong>Financial Inclusion</strong></td><td>% of borrowers previously unbanked / underbanked</td><td class="muted">FI KYC data + NADRA / SBP cross-reference</td><td class="muted">Semi-annual</td><td class="muted">SDG 1, 10</td></tr>
-          <tr><td><strong>Gender</strong></td><td>Women-led enterprise share of guaranteed portfolio</td><td class="muted">FI origination data; minimum 25% target in product design</td><td class="muted">Quarterly</td><td class="muted">SDG 5, 8</td></tr>
-          <tr><td><strong>Employment</strong></td><td>Estimated jobs created/sustained per PKR Bn deployed</td><td class="muted">Proxy methodology; validated via FI sample surveys</td><td class="muted">Annual</td><td class="muted">SDG 8</td></tr>
-          <tr><td><strong>Climate</strong></td><td>CO₂-equivalent emissions reduced (tCO₂e)</td><td class="muted">M&amp;V protocol per green product; E-Bus + efficiency deals</td><td class="muted">Annual</td><td class="muted">SDG 13</td></tr>
-          <tr><td><strong>Agriculture</strong></td><td>Agri smallholder loans enabled</td><td class="muted">NEAGAP + HBL Zarai / agri-FI portfolio reporting</td><td class="muted">Semi-annual</td><td class="muted">SDG 2, 8</td></tr>
-          <tr><td><strong>Portfolio Quality</strong></td><td>NPL rate, vintage curve, delinquency buckets (30/60/90 DPD)</td><td class="muted">Monthly FI reporting; NCGCL claims tracking system</td><td class="muted">Monthly</td><td class="muted">Governance</td></tr>
-          <tr><td><strong>Leverage</strong></td><td>Guarantee capital × leverage ratio = FI lending mobilised</td><td class="muted">NCGCL portfolio management system</td><td class="muted">Quarterly</td><td class="muted">SDG 17</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="card" style="margin-top:0">
-    <div class="card-title">Illustrative Impact at Pipeline Scale</div>
-    <div class="card-sub">Estimated development outcomes if current pipeline converts at 75% — illustrative, assumption-based</div>
-    <div class="ch"><canvas id="c-impact"></canvas></div>
-  </div>
 
   <div class="section-bar">Indicative Capital Allocation Matrix</div>
 
@@ -1420,7 +1238,7 @@ tbody td.center{text-align:center;}
     The matrix below maps NCGCL's indicative capital allocation across its four catalytic product interventions and core guarantee book — scored by strategic priority, leverage potential, gender &amp; climate impact, execution risk, and SDG alignment. Allocations are indicative and subject to board approval; they reflect Q1 2026 product-led strategy and pipeline conversion assumptions. <strong style="color:var(--gold);">All figures are illustrative.</strong>
   </div>
 
-  <!-- Matrix table -->
+    <!-- Matrix table -->
   <div class="card" style="margin-bottom:16px;">
     <div class="card-title">Product-Level Capital Allocation — Indicative Q1 2026 View</div>
     <div class="card-sub">Across PKR 8 Bn capital base · leverage ratios, impact scores and SDG tags are illustrative</div>
@@ -1702,6 +1520,189 @@ tbody td.center{text-align:center;}
 
   <div style="background:var(--cream);border:1px solid var(--border);border-radius:5px;padding:12px 16px;font-size:.7rem;color:var(--muted);line-height:1.6;">
     <strong style="color:var(--ink);">Disclaimer:</strong> All capital allocation figures, leverage ratios, and impact scores are indicative only and presented for analytical purposes. Actual allocations are subject to NCGCL Board approval, SBP regulatory guidance, and pipeline conversion. Impact scores use a qualitative 5-point scale across credit access, gender, climate, employment, and scale velocity dimensions. SDG alignment follows GRI/IFC standards. Data as at Q1 2026.
+  </div>
+
+</div><!-- /quadrant -->
+
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     TAB 6 — FINANCIAL MECHANICS
+══════════════════════════════════════════════════════════════════════════ -->
+<div id="tab-mechanics" class="tab-panel">
+
+  <div class="section-bar">How NCGCL Creates Financial Value — The Capital Chain</div>
+
+  <div class="insights">
+    <div class="insight">
+      <div class="insight-n">PKR 8 Bn → 40 Bn</div>
+      <div class="insight-label">The 5× Guarantee Leverage</div>
+      <div class="insight-d">NCGCL's PKR 8 Bn capital base is engineered to issue <strong>PKR 40 Bn in guarantees</strong> — a disciplined 5× leverage. This is the guarantee book that serves as the direct operating instrument of NCGCL's mandate.</div>
+    </div>
+    <div class="insight amber">
+      <div class="insight-n">PKR 40 Bn → 500 Bn</div>
+      <div class="insight-label">The Catalytic Credit Multiplier</div>
+      <div class="insight-d">PKR 40 Bn in NCGCL guarantees is engineered to catalyse up to <strong>PKR 500 Bn in total market credit</strong> — a further 12.5× amplification as FIs deploy backed lending across the guaranteed portfolio.</div>
+    </div>
+    <div class="insight blue">
+      <div class="insight-n">1.5–3.0%</div>
+      <div class="insight-label">Annual Guarantee Fee Range</div>
+      <div class="insight-d">Guarantee fee paid by FIs annually on the guaranteed portion. On a fully-deployed PKR 40 Bn book, this generates <strong>PKR 600 Mn – 1.2 Bn in annual fee income</strong> — NCGCL's primary revenue stream.</div>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="card-title">The 8→40→500 Capital Chain — Visualised</div>
+      <div class="card-sub">NCGCL capital base → guarantee book → total market credit catalysed</div>
+      <div class="ch"><canvas id="c-leverage"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Fee Income at PKR 40 Bn Target Book</div>
+      <div class="card-sub">Annual guarantee fee income at 1%, 2%, and 3% fee rates on deployed guarantee book</div>
+      <div class="ch"><canvas id="c-fee"></canvas></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-title">Sovereign NIM vs. NCGCL-Enabled SME Returns — The Commercial Case for FI Participation</div>
+    <div class="card-sub">Why banks need NCGCL to make SME lending commercially rational against 5.5–6% risk-free sovereign NIM</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Lending Option</th><th>Gross NIM</th><th>Risk Weight</th><th>Expected Loss</th><th>Net Risk-Adjusted Return</th><th>NCGCL Impact</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Sovereign / Govt Securities</strong></td><td class="mono" style="color:var(--ncgcl-green)">5.5–6.0%</td><td class="mono">0%</td><td class="mono">~0%</td><td class="mono" style="color:var(--ncgcl-green)">5.5–6.0% (risk-free)</td><td class="muted">—</td></tr>
+          <tr><td><strong>Large Corporate Lending</strong></td><td class="mono">3.5–4.5%</td><td class="mono">100%</td><td class="mono">0.5–1.0%</td><td class="mono">2.5–4.0%</td><td class="muted">Moderate benefit</td></tr>
+          <tr><td><strong>SME Lending (unguaranteed)</strong></td><td class="mono" style="color:var(--red)">6–8%</td><td class="mono">100–150%</td><td class="mono">4–8%</td><td class="mono" style="color:var(--red)">~0–2% (uncompetitive)</td><td class="muted">Without NCGCL: not viable</td></tr>
+          <tr><td><strong>SME Lending + NCGCL Guarantee</strong></td><td class="mono">6–8%</td><td class="mono">20–50%</td><td class="mono">1–2% (covered)</td><td class="mono" style="color:var(--ncgcl-green)">4–6% (competitive)</td><td class="muted"><strong style="color:var(--ncgcl-green)">Makes SME lending rational</strong></td></tr>
+          <tr class="tbl-total"><td>NCGCL Value Add</td><td colspan="3" class="muted">Reduces effective risk weight via SBP liquid asset recognition + absorbs 30–70% of expected loss</td><td colspan="2" class="mono" style="color:var(--ncgcl-green)">+3–5% net return improvement</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section-bar">Loss Waterfall Mechanics</div>
+  <div class="g2">
+    <div class="card">
+      <div class="card-title">Illustrative Loss Distribution — Pari-Passu 30/70 Structure</div>
+      <div class="card-sub">How losses flow at different portfolio default rates</div>
+      <div class="ch"><canvas id="c-loss"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Scenario Analysis — Capital Adequacy</div>
+      <div class="card-sub">NCGCL capital required at different coverage % and portfolio sizes</div>
+      <div class="tbl-wrap" style="margin-top:8px">
+        <table>
+          <thead><tr><th>Portfolio (PKR Bn)</th><th>Coverage 30%</th><th>Coverage 50%</th><th>Coverage 70%</th></tr></thead>
+          <tbody>
+            <tr><td>5</td><td class="mono">1.50 Bn</td><td class="mono">2.50 Bn</td><td class="mono">3.50 Bn</td></tr>
+            <tr><td>10</td><td class="mono">3.00 Bn</td><td class="mono">5.00 Bn</td><td class="mono">7.00 Bn</td></tr>
+            <tr><td>15</td><td class="mono">4.50 Bn</td><td class="mono">7.50 Bn</td><td class="mono">10.50 Bn</td></tr>
+            <tr><td>20</td><td class="mono">6.00 Bn</td><td class="mono">10.00 Bn</td><td class="mono">14.00 Bn</td></tr>
+            <tr class="tbl-total"><td>Current Pipeline</td><td class="mono">4.07 Bn</td><td class="mono">6.78 Bn</td><td class="mono">9.49 Bn</td></tr>
+          </tbody>
+        </table>
+        <div style="font-size:.68rem;color:var(--muted);margin-top:8px">Assumes quantified pipeline of PKR 13.56 Bn fully executed. Capital figures represent maximum NCGCL guarantee exposure at each coverage level.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">The Investor Value Proposition — Summary Economics</div>
+    <div class="card-sub">Illustrative return and risk profile for patient capital in NCGCL guarantee structure</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Parameter</th><th>First-Loss Position</th><th>Second-Loss (NCGCL)</th><th>Mezzanine</th><th>FI Residual</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Risk Position</strong></td><td class="muted">Absorbs initial losses</td><td class="muted">After first-loss exhausted</td><td class="muted">Mid-stack</td><td class="muted">Tail risk only</td></tr>
+          <tr><td><strong>Expected Loss</strong></td><td class="muted">High — sized to clear market</td><td class="muted">Moderate — well-protected</td><td class="muted">Low-moderate</td><td class="muted">Low — historical FI default rates</td></tr>
+          <tr><td><strong>Return Profile</strong></td><td class="muted">Concessional / grant equivalent</td><td class="muted">Fee income + impact premium</td><td class="muted">Market rate + spread</td><td class="muted">Commercial lending rate</td></tr>
+          <tr><td><strong>Investor Type</strong></td><td class="muted">GoP / bilateral donor / DFI grant</td><td class="muted">NCGCL / patient capital investor</td><td class="muted">DFI / impact fund</td><td class="muted">Commercial bank</td></tr>
+          <tr><td><strong>Capital Recycling</strong></td><td class="muted">Consumed on default</td><td class="muted">Recycled — 5–7 year horizon</td><td class="muted">Term-matched</td><td class="muted">Rolling portfolio</td></tr>
+          <tr><td><strong>SBP Recognition</strong></td><td class="muted">N/A</td><td class="muted">Yes — full guarantee</td><td class="muted">Partial</td><td class="muted">N/A — FI on-balance sheet</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div><!-- /mechanics -->
+
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     TAB 7 — IMPACT FRAMEWORK
+══════════════════════════════════════════════════════════════════════════ -->
+<div id="tab-impact" class="tab-panel">
+
+  <div class="section-bar">Impact Thesis — NCGCL as Pakistan's Development Finance Multiplier</div>
+
+  <div class="impact-grid">
+    <div class="impact-cell">
+      <div class="impact-icon">🏭</div>
+      <div class="impact-val">5.2 Mn</div>
+      <div class="impact-label">MSMEs in Pakistan</div>
+      <div class="impact-sub">&lt;5% formally financed</div>
+    </div>
+    <div class="impact-cell">
+      <div class="impact-icon">💼</div>
+      <div class="impact-val">2.75 Mn</div>
+      <div class="impact-label">New Jobs Needed / Year</div>
+      <div class="impact-sub">National employment mandate</div>
+    </div>
+    <div class="impact-cell">
+      <div class="impact-icon">👩‍💼</div>
+      <div class="impact-val">22.7%</div>
+      <div class="impact-label">Female LFPR</div>
+      <div class="impact-sub">18.2% youth female unemployment</div>
+    </div>
+    <div class="impact-cell">
+      <div class="impact-icon">📊</div>
+      <div class="impact-val">85.7%</div>
+      <div class="impact-label">Informality Rate</div>
+      <div class="impact-sub">95.5% of firms: &lt;10 workers</div>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="card green-top">
+      <div class="card-title">Credit Access &amp; MSME Formalization</div>
+      <div class="card-sub">Primary impact dimension — the structural enabler</div>
+      <div class="strat-point" style="margin-top:8px"><div class="sp-num">1</div><div class="sp-text"><strong>Formalization catalyst:</strong> Pakistan's 85.7% informality rate and 95.5% micro-enterprise share mean formal banking access is structurally blocked. NCGCL guarantees convert informal cashflows into bankable assets — the first step to enterprise formalization.</div></div>
+      <div class="strat-point"><div class="sp-num">2</div><div class="sp-text"><strong>Better credit terms:</strong> Guarantee coverage allows FIs to improve pricing, extend tenor, and reduce collateral demands. For an MSME paying 25%+ informal credit rates, formalisation through NCGCL-backed lending is transformative.</div></div>
+      <div class="strat-point"><div class="sp-num">3</div><div class="sp-text"><strong>2.75 million jobs imperative:</strong> Pakistan needs 2.75 million new jobs annually. These jobs come from MSMEs. MSMEs cannot hire without credit. Credit will not flow without risk transfer. <strong>NCGCL is the missing link in Pakistan's employment creation chain.</strong></div></div>
+      <div class="strat-point"><div class="sp-num">4</div><div class="sp-text"><strong>SME finance from 1% → 7% of GDP:</strong> Closing half the gap to the regional average (7–8%) would represent ~PKR 3 Tn in additional annual SME credit — the economic transformation NCGCL's 8→40→500 Bn capital chain is designed to unlock.</div></div>
+    </div>
+    <div class="card blue-top">
+      <div class="card-title">Gender, Climate &amp; Green Finance</div>
+      <div class="card-sub">Cross-cutting impact credentials — essential for DFI co-financing</div>
+      <div class="strat-point" style="margin-top:8px"><div class="sp-num">1</div><div class="sp-text"><strong>Wearing Apparel targeting:</strong> Export Finance directed to Wearing Apparel generates <strong>18,180 female jobs per PKR 100 Bn invested</strong> (60% female workforce). Not aspirational — a direct function of which sub-sector NCGCL's MAGFA targets.</div></div>
+      <div class="strat-point"><div class="sp-num">2</div><div class="sp-text"><strong>Dairy value chain:</strong> Agri interventions targeting Dairy generate <strong>69,660 female jobs per PKR 100 Bn</strong> — ranked #1 by gender employment multiplier, and the essential offset to AMaaS labour displacement.</div></div>
+      <div class="strat-point"><div class="sp-num">3</div><div class="sp-text"><strong>EV transition — PKR 1.32 Tn:</strong> 30–40 Mn registered bikes in Pakistan; 40% substitution = 6.6 Mn EV units at PKR 200,000 each. NCGCL guarantee on fleet and assembler financing directly enables Pakistan's green mobility transition.</div></div>
+      <div class="strat-point"><div class="sp-num">4</div><div class="sp-text"><strong>GCF Climate Facility:</strong> Active proposal positions NCGCL as Pakistan's national implementing entity for climate capital. Unlocks GCF/GEF concessional first-loss capital, further de-risking NCGCL's second-loss position on green products.</div></div>
+    </div>
+  </div>
+
+  <div class="section-bar">KPI Framework — Measurable Impact Outcomes</div>
+  <div class="card">
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Impact Dimension</th><th>KPI</th><th>Measurement Method</th><th>Reporting Frequency</th><th>SDG Alignment</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Credit Access</strong></td><td>New MSME borrowers reached</td><td class="muted">FI quarterly reporting via MAGFA schedule</td><td class="muted">Quarterly</td><td class="muted">SDG 8, 10</td></tr>
+          <tr><td><strong>Financial Inclusion</strong></td><td>% of borrowers previously unbanked / underbanked</td><td class="muted">FI KYC data + NADRA / SBP cross-reference</td><td class="muted">Semi-annual</td><td class="muted">SDG 1, 10</td></tr>
+          <tr><td><strong>Gender</strong></td><td>Women-led enterprise share of guaranteed portfolio</td><td class="muted">FI origination data; minimum 25% target in product design</td><td class="muted">Quarterly</td><td class="muted">SDG 5, 8</td></tr>
+          <tr><td><strong>Employment</strong></td><td>Estimated jobs created/sustained per PKR Bn deployed</td><td class="muted">Proxy methodology; validated via FI sample surveys</td><td class="muted">Annual</td><td class="muted">SDG 8</td></tr>
+          <tr><td><strong>Climate</strong></td><td>CO₂-equivalent emissions reduced (tCO₂e)</td><td class="muted">M&amp;V protocol per green product; E-Bus + efficiency deals</td><td class="muted">Annual</td><td class="muted">SDG 13</td></tr>
+          <tr><td><strong>Agriculture</strong></td><td>Agri smallholder loans enabled</td><td class="muted">NEAGAP + HBL Zarai / agri-FI portfolio reporting</td><td class="muted">Semi-annual</td><td class="muted">SDG 2, 8</td></tr>
+          <tr><td><strong>Portfolio Quality</strong></td><td>NPL rate, vintage curve, delinquency buckets (30/60/90 DPD)</td><td class="muted">Monthly FI reporting; NCGCL claims tracking system</td><td class="muted">Monthly</td><td class="muted">Governance</td></tr>
+          <tr><td><strong>Leverage</strong></td><td>Guarantee capital × leverage ratio = FI lending mobilised</td><td class="muted">NCGCL portfolio management system</td><td class="muted">Quarterly</td><td class="muted">SDG 17</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:0">
+    <div class="card-title">Illustrative Impact at Pipeline Scale</div>
+    <div class="card-sub">Estimated development outcomes if current pipeline converts at 75% — illustrative, assumption-based</div>
+    <div class="ch"><canvas id="c-impact"></canvas></div>
   </div>
 
 </div><!-- /impact -->
