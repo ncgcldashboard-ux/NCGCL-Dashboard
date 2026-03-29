@@ -1,0 +1,1608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NCGCL — Investor Intelligence Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{
+  --ink:#0d1b2a;--paper:#f5f0e8;--cream:#ede8dc;--white:#ffffff;
+  --border:#c8bfaf;--muted:#78909c;--light:#e8e2d8;
+  --ncgcl-green:#2b8c3a;--ncgcl-blue:#1e6091;--teal2:#1a6b28;
+  --amber:#e65100;--amber2:#ff8f00;--red:#b71c1c;--gold:#f9a825;--slate:#37474f;
+  --purple:#4527a0;--teal:#006064;--maroon:#880e4f;
+  --font:'Inter',system-ui,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--paper);color:var(--ink);font-family:var(--font);font-size:.82rem;line-height:1.6;-webkit-font-smoothing:antialiased;letter-spacing:-.01em;}
+.wrap{max-width:1240px;margin:0 auto;padding:clamp(14px,4vw,36px);}
+
+/* ── HEADER ── */
+.header{display:grid;grid-template-columns:60px 1fr auto;gap:18px;align-items:center;padding-bottom:20px;border-bottom:3px solid var(--ncgcl-green);margin-bottom:28px;}
+.logo-box{width:60px;height:60px;display:flex;align-items:center;justify-content:center;}
+.logo-box img{width:100%;height:100%;object-fit:contain;}
+.header-meta h1{font-size:clamp(1.2rem,3vw,1.9rem);font-weight:800;letter-spacing:-.5px;color:var(--ink);}
+.header-meta p{font-size:.72rem;color:var(--muted);margin-top:3px;letter-spacing:.3px;}
+.header-creds{display:flex;flex-direction:column;gap:6px;align-items:flex-end;}
+.cred-badge{padding:5px 12px;border-radius:4px;font-weight:700;font-size:.68rem;letter-spacing:.6px;text-align:center;white-space:nowrap;}
+.cred-aaa{background:var(--ncgcl-green);color:#fff;}
+.cred-sbp{background:var(--ncgcl-blue);color:#fff;}
+.cred-conf{background:var(--cream);color:var(--muted);border:1px solid var(--border);}
+
+/* ── MARQUEE STRIP ── */
+.marquee-strip{background:var(--ink);color:#fff;font-size:.68rem;font-weight:600;letter-spacing:.5px;padding:6px 0;overflow:hidden;margin-bottom:24px;border-radius:3px;}
+.marquee-inner{display:inline-block;white-space:nowrap;animation:scroll 38s linear infinite;}
+@keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.marquee-inner span{margin:0 32px;opacity:.75;}
+.marquee-inner strong{opacity:1;color:var(--gold);}
+
+/* ── KPI STRIP ── */
+.kpi-strip{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;background:var(--cream);border:1px solid var(--border);border-radius:6px;padding:16px 20px;margin-bottom:26px;}
+.kpi{text-align:center;border-right:1px solid var(--border);padding-right:8px;}
+.kpi:last-child{border-right:none;padding-right:0;}
+.kpi-val{font-size:clamp(1.1rem,2.5vw,1.8rem);font-weight:800;color:var(--ncgcl-green);letter-spacing:-.5px;font-family:var(--mono);}
+.kpi-val.blue{color:var(--ncgcl-blue)}.kpi-val.amber{color:var(--amber)}.kpi-val.slate{color:var(--slate)}.kpi-val.gold{color:var(--gold)}
+.kpi-label{font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;font-weight:700;margin-top:2px;}
+.kpi-sub{font-size:.58rem;color:var(--border);margin-top:1px;}
+
+/* ── TABS ── */
+.tabs{display:flex;gap:4px;border-bottom:2px solid var(--border);margin-bottom:22px;overflow-x:auto;padding-bottom:0;scrollbar-width:none;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab-btn{background:none;border:none;padding:9px 18px;font-family:var(--font);font-size:.75rem;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:color .15s;flex-shrink:0;letter-spacing:.01em;}
+.tab-btn:hover{color:var(--ink);}
+.tab-btn.active{color:var(--ncgcl-green);border-bottom-color:var(--ncgcl-green);}
+.tab-panel{display:none}.tab-panel.active{display:block}
+
+/* ── GRID ── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:16px;}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;}
+.g21{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:16px;}
+.g12{display:grid;grid-template-columns:1fr 2fr;gap:16px;margin-bottom:16px;}
+
+/* ── CARDS ── */
+.card{background:#fff;border:1px solid var(--border);border-radius:6px;padding:20px;margin-bottom:16px;}
+.card.green-top{border-top:3px solid var(--ncgcl-green);}
+.card.blue-top{border-top:3px solid var(--ncgcl-blue);}
+.card.amber-top{border-top:3px solid var(--amber);}
+.card.gold-top{border-top:3px solid var(--gold);}
+.card-title{font-size:.85rem;font-weight:700;color:var(--ink);margin-bottom:3px;}
+.card-sub{font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px;line-height:1.4;}
+.ch{height:250px}.ch-tall{height:310px}.ch-short{height:175px}
+
+/* ── SECTION HEADERS ── */
+.section-bar{background:var(--ink);color:#fff;padding:8px 16px;border-radius:4px;font-size:.75rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;margin:24px 0 14px;}
+.section-label{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:20px 0 10px;border-bottom:1px solid var(--border);padding-bottom:6px;}
+.sep{height:1px;background:var(--border);margin:20px 0;}
+
+/* ── INSIGHT BOXES ── */
+.insights{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;}
+.insight{background:var(--cream);border-left:4px solid var(--ncgcl-green);border-radius:4px;padding:14px 16px;}
+.insight-n{font-size:1.4rem;font-weight:800;color:var(--ncgcl-green);font-family:var(--mono);line-height:1.2;}
+.insight-label{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--ncgcl-green);margin-top:2px;}
+.insight-d{font-size:.75rem;color:var(--ink);margin-top:6px;line-height:1.45;}
+.insight.amber{border-left-color:var(--amber)}.insight.amber .insight-n,.insight.amber .insight-label{color:var(--amber)}
+.insight.blue{border-left-color:var(--ncgcl-blue)}.insight.blue .insight-n,.insight.blue .insight-label{color:var(--ncgcl-blue)}
+.insight.gold{border-left-color:var(--gold)}.insight.gold .insight-n,.insight.gold .insight-label{color:#c27800}
+.insight.slate{border-left-color:var(--slate)}.insight.slate .insight-n,.insight.slate .insight-label{color:var(--slate)}
+
+/* ── TABLES ── */
+.tbl-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;min-width:640px;}
+thead th{background:var(--ink);color:#fff;padding:9px 12px;font-size:.7rem;text-transform:uppercase;letter-spacing:.5px;font-weight:600;text-align:left;}
+thead th.r{text-align:right;}
+tbody tr{border-bottom:1px solid var(--cream);}
+tbody tr:hover{background:var(--cream);}
+tbody td{padding:8px 12px;font-size:.78rem;vertical-align:top;}
+tbody td.mono{font-family:var(--mono);font-weight:700;text-align:right;}
+tbody td.muted{color:var(--muted);font-size:.72rem;}
+tbody td.center{text-align:center;}
+.tbl-total td{background:var(--cream);font-weight:700;border-top:2px solid var(--ncgcl-green);}
+
+/* ── PILLS ── */
+.pill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:.62rem;font-weight:700;letter-spacing:.3px;white-space:nowrap;}
+.p-fi{background:#e8f5e9;color:#1a6b28}
+.p-corp{background:#e3f2fd;color:#1e6091}
+.p-tech{background:#fce4ec;color:#880e4f}
+.p-port{background:#fff3e0;color:#e65100}
+.p-stff{background:#ede7f6;color:#4527a0}
+.p-sukuk{background:#e0f7fa;color:#006064}
+.p-cm{background:#f5f5f5;color:#37474f;border:1px solid #ddd}
+.p-ewa{background:#f1f8e9;color:#33691e}
+.p-jfa{background:#ede7f6;color:#4527a0}
+.p-cons{background:#fff8e1;color:#c27800}
+.p-adv{background:#e8f5e9;color:#1a6b28}
+.p-pen{background:#fff3e0;color:#e65100}
+.p-sta{background:#ffebee;color:#b71c1c}
+.p-ini{background:#f5f5f5;color:#78909c;border:1px solid #ddd}
+
+/* ── STATUS DOT ── */
+.sdot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px;vertical-align:middle;}
+.sdot-g{background:var(--ncgcl-green)}.sdot-a{background:var(--amber)}.sdot-r{background:var(--red)}.sdot-s{background:var(--muted)}
+
+/* ── RISK LAYER DIAGRAM ── */
+.risk-pyramid{display:flex;flex-direction:column;gap:0;margin:16px 0;}
+.risk-layer{display:flex;align-items:stretch;border-radius:4px;overflow:hidden;margin-bottom:4px;min-height:60px;}
+.rl-label{width:160px;flex-shrink:0;display:flex;align-items:center;padding:12px 14px;font-size:.72rem;font-weight:700;letter-spacing:.3px;}
+.rl-body{flex:1;padding:12px 16px;display:flex;flex-direction:column;justify-content:center;}
+.rl-title{font-size:.8rem;font-weight:700;margin-bottom:3px;}
+.rl-desc{font-size:.72rem;line-height:1.4;opacity:.9;}
+.rl-pct{font-size:1.1rem;font-weight:800;font-family:var(--mono);margin-left:auto;padding:0 12px;display:flex;align-items:center;flex-shrink:0;}
+/* Layer colors */
+.layer-donor .rl-label{background:#1a6b28;color:#fff}
+.layer-donor .rl-body{background:#e8f5e9;color:#1a6b28}
+.layer-donor .rl-pct{color:#1a6b28}
+.layer-ncgcl .rl-label{background:#1e6091;color:#fff}
+.layer-ncgcl .rl-body{background:#e3f2fd;color:#1e6091}
+.layer-ncgcl .rl-pct{color:#1e6091}
+.layer-mezz .rl-label{background:#4527a0;color:#fff}
+.layer-mezz .rl-body{background:#ede7f6;color:#4527a0}
+.layer-mezz .rl-pct{color:#4527a0}
+.layer-fi .rl-label{background:#37474f;color:#fff}
+.layer-fi .rl-body{background:#eceff1;color:#37474f}
+.layer-fi .rl-pct{color:#37474f}
+.layer-equity .rl-label{background:#c27800;color:#fff}
+.layer-equity .rl-body{background:#fff8e1;color:#9a5e00}
+.layer-equity .rl-pct{color:#9a5e00}
+
+/* ── PRODUCT CARDS ── */
+.prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;}
+.prod-card{border-radius:6px;padding:16px;border:1px solid var(--border);background:#fff;position:relative;}
+.prod-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:6px 6px 0 0;}
+.pc-fl::before{background:#1a6b28}
+.pc-sl::before{background:#1e6091}
+.pc-pp::before{background:#4527a0}
+.pc-mz::before{background:#e65100}
+.pc-eq::before{background:#c27800}
+.pc-stff::before{background:#006064}
+.prod-icon{font-size:1.4rem;margin-bottom:6px;}
+.prod-name{font-size:.82rem;font-weight:700;margin-bottom:4px;}
+.prod-desc{font-size:.72rem;color:var(--muted);line-height:1.45;margin-bottom:8px;}
+.prod-params{font-size:.68rem;background:var(--cream);border-radius:3px;padding:8px 10px;}
+.prod-params span{display:block;line-height:1.6;}
+.prod-params strong{color:var(--ink);}
+
+/* ── STRATEGY PANELS ── */
+.strat-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+.strat-panel{border:1px solid var(--border);border-radius:6px;padding:18px;background:#fff;}
+.strat-panel .sp-head{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.strat-panel .sp-head::before{content:'';display:block;width:20px;height:2px;background:var(--ncgcl-green);}
+.strat-point{display:flex;gap:10px;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid var(--cream);}
+.strat-point:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.sp-num{width:22px;height:22px;border-radius:50%;background:var(--ncgcl-green);color:#fff;font-size:.62rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.sp-text{font-size:.78rem;line-height:1.5;color:var(--ink);}
+.sp-text strong{color:var(--ncgcl-green);}
+
+/* ── LEVERAGE METER ── */
+.leverage-bar{height:20px;background:var(--cream);border-radius:4px;overflow:hidden;margin:6px 0;}
+.leverage-fill{height:100%;border-radius:4px;transition:width .6s ease;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;font-size:.62rem;font-weight:700;color:#fff;}
+
+/* ── IMPACT ICONS ── */
+.impact-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;}
+.impact-cell{text-align:center;background:#fff;border:1px solid var(--border);border-radius:6px;padding:16px 10px;}
+.impact-icon{font-size:1.8rem;margin-bottom:6px;}
+.impact-val{font-size:1.3rem;font-weight:800;font-family:var(--mono);color:var(--ncgcl-green);}
+.impact-label{font-size:.65rem;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);font-weight:700;margin-top:3px;}
+.impact-sub{font-size:.65rem;color:var(--border);margin-top:2px;}
+
+/* ── THESIS SECTION ── */
+.thesis-block{background:var(--ink);color:#fff;border-radius:6px;padding:24px 28px;margin-bottom:16px;}
+.thesis-block h3{font-size:1rem;font-weight:700;margin-bottom:12px;color:#fff;}
+.thesis-block p{font-size:.82rem;line-height:1.7;color:rgba(255,255,255,.82);}
+.thesis-block strong{color:var(--gold);}
+.thesis-pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px;}
+.thesis-pillar{background:rgba(255,255,255,.07);border-radius:4px;padding:14px;border-top:2px solid var(--ncgcl-green);}
+.tp-num{font-size:.6rem;font-weight:700;letter-spacing:1px;color:var(--gold);text-transform:uppercase;margin-bottom:6px;}
+.tp-title{font-size:.82rem;font-weight:700;color:#fff;margin-bottom:4px;}
+.tp-text{font-size:.72rem;color:rgba(255,255,255,.7);line-height:1.45;}
+
+/* ── FILTER ROW ── */
+.filter-row{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px;}
+.filter-btn{background:var(--cream);border:1px solid var(--border);border-radius:4px;padding:5px 12px;font-size:.7rem;font-weight:600;cursor:pointer;font-family:var(--font);transition:all .15s;}
+.filter-btn.active,.filter-btn:hover{background:var(--ncgcl-green);color:#fff;border-color:var(--ncgcl-green);}
+
+/* ── ANON NOTE ── */
+.anon-note{background:#eff6ff;border:1px solid #bfdbfe;border-radius:5px;padding:10px 14px;font-size:.75rem;color:#1e40af;margin-bottom:16px;}
+
+/* ── WATERFALL TABLE ── */
+.waterfall-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--cream);}
+.wf-label{width:200px;font-size:.78rem;color:var(--muted);}
+.wf-bar-wrap{flex:1;height:14px;background:var(--cream);border-radius:3px;overflow:hidden;}
+.wf-bar{height:100%;border-radius:3px;}
+.wf-val{width:90px;text-align:right;font-size:.78rem;font-weight:700;font-family:var(--mono);}
+
+/* ── FOOTER ── */
+.footer{display:grid;grid-template-columns:1fr auto auto;gap:16px;align-items:center;padding-top:18px;border-top:2px solid var(--border);margin-top:28px;font-size:.65rem;color:var(--muted);}
+.footer strong{color:var(--ncgcl-green);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){.g3,.g4{grid-template-columns:1fr 1fr}.prod-grid{grid-template-columns:1fr 1fr}.thesis-pillars{grid-template-columns:1fr}.impact-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){.g2,.g21,.g12,.strat-grid{grid-template-columns:1fr}.kpi-strip{grid-template-columns:repeat(3,1fr)}.insights{grid-template-columns:1fr}.header{grid-template-columns:50px 1fr}.header-creds{display:none}.prod-grid{grid-template-columns:1fr}}
+@media(max-width:480px){.kpi-strip{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ── HEADER ── -->
+<div class="header">
+  <div class="logo-box"><img src="NCGCL Coloured Logo.png" alt="NCGCL Logo"></div>
+  <div class="header-meta">
+    <h1>NCGCL Investor Intelligence Dashboard</h1>
+    <p>National Credit Guarantee Company Limited &nbsp;·&nbsp; Pipeline &amp; Strategy Brief &nbsp;·&nbsp; Q1 2026 &nbsp;·&nbsp; Restricted Distribution</p>
+  </div>
+  <div class="header-creds">
+    <span class="cred-badge cred-aaa">AAA / PACRA</span>
+    <span class="cred-badge cred-sbp">SBP Recognised</span>
+    <span class="cred-badge cred-conf">Confidential</span>
+  </div>
+</div>
+
+<!-- ── MARQUEE ── -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <strong>PKR 8 Bn</strong><span>NCGCL Capital Base</span>
+    <strong>→ PKR 40 Bn</strong><span>Guarantee Book Target (5× leverage)</span>
+    <strong>→ PKR 500 Bn</strong><span>Catalytic Credit Mobilised</span>
+    <strong>1% of GDP</strong><span>SME Financing Today — vs 7–8% Regional Average</span>
+    <strong>70–75%</strong><span>Bank Balance Sheets Lent to Government</span>
+    <strong>5.5–6%</strong><span>Risk-Free NIM Banks Earn on Sovereign</span>
+    <strong>85.7%</strong><span>Informality Rate — Pakistan Economy</span>
+    <strong>2.75 Mn</strong><span>New Jobs Needed Annually</span>
+    <strong>AAA / PACRA</strong><span>Credit Rating</span>
+    <strong>SBP Recognised</strong><span>Guarantee = Liquid Asset for FIs</span>
+    <strong>PKR 12 Tn</strong><span>Retail/Embedded Finance Market</span>
+    <strong>PKR 1.32 Tn</strong><span>EV Bike Financing Opportunity</span>
+    <strong>PKR 8 Bn</strong><span>NCGCL Capital Base</span>
+    <strong>→ PKR 40 Bn</strong><span>Guarantee Book Target (5× leverage)</span>
+    <strong>→ PKR 500 Bn</strong><span>Catalytic Credit Mobilised</span>
+    <strong>1% of GDP</strong><span>SME Financing Today — vs 7–8% Regional Average</span>
+    <strong>70–75%</strong><span>Bank Balance Sheets Lent to Government</span>
+    <strong>5.5–6%</strong><span>Risk-Free NIM Banks Earn on Sovereign</span>
+    <strong>85.7%</strong><span>Informality Rate — Pakistan Economy</span>
+    <strong>2.75 Mn</strong><span>New Jobs Needed Annually</span>
+    <strong>AAA / PACRA</strong><span>Credit Rating</span>
+    <strong>SBP Recognised</strong><span>Guarantee = Liquid Asset for FIs</span>
+    <strong>PKR 12 Tn</strong><span>Retail/Embedded Finance Market</span>
+    <strong>PKR 1.32 Tn</strong><span>EV Bike Financing Opportunity</span>
+  </div>
+</div>
+
+<!-- ── TABS ── -->
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('thesis',this)">Investor Thesis</button>
+  <button class="tab-btn" onclick="switchTab('pipeline',this)">Pipeline Overview</button>
+  <button class="tab-btn" onclick="switchTab('products',this)">Product Architecture</button>
+  <button class="tab-btn" onclick="switchTab('catalytic',this)">Catalytic Products</button>
+  <button class="tab-btn" onclick="switchTab('table',this)">Pipeline Intelligence</button>
+  <button class="tab-btn" onclick="switchTab('strategy',this)">Strategic Insights</button>
+  <button class="tab-btn" onclick="switchTab('mechanics',this)">Financial Mechanics</button>
+  <button class="tab-btn" onclick="switchTab('quadrant',this)">Impact Quadrant</button>
+  <button class="tab-btn" onclick="switchTab('impact',this)">Impact Framework</button>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     TAB 1 — INVESTOR THESIS
+══════════════════════════════════════════════════════════════════════════ -->
+<div id="tab-thesis" class="tab-panel active">
+
+<!-- ── KPI SCORECARD (Overview only) ── -->
+<div class="kpi-strip">
+  <div class="kpi">
+    <div class="kpi-val">PKR 8 Bn</div>
+    <div class="kpi-label">Capital Base</div>
+    <div class="kpi-sub">NCGCL deployed capital</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-val">PKR 40 Bn</div>
+    <div class="kpi-label">Guarantee Target</div>
+    <div class="kpi-sub">5× leverage on capital</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-val blue">PKR 500 Bn</div>
+    <div class="kpi-label">Catalytic Credit</div>
+    <div class="kpi-sub">Market credit mobilised</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-val amber">1% → 7%</div>
+    <div class="kpi-label">SME Finance GDP %</div>
+    <div class="kpi-sub">Today vs regional target</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-val gold">2.75 Mn</div>
+    <div class="kpi-label">Jobs Needed / Year</div>
+    <div class="kpi-sub">National employment mandate</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-val slate">AAA</div>
+    <div class="kpi-label">PACRA Rating</div>
+    <div class="kpi-sub">SBP-recognised guarantees</div>
+  </div>
+</div>
+
+  <!-- ── OPENING: WHY PATIENT CAPITAL ── -->
+  <div class="section-bar">Why Patient Capital Is The Right Structure</div>
+
+  <!-- Narrative intro -->
+  <div style="background:var(--ink);color:#fff;border-radius:6px;padding:28px 32px;margin-bottom:20px;">
+    <div style="display:grid;grid-template-columns:1fr auto;gap:32px;align-items:start;">
+      <div>
+        <div style="font-size:.62rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;">The Structural Problem</div>
+        <h3 style="font-size:1.25rem;font-weight:800;color:#fff;line-height:1.3;margin-bottom:14px;letter-spacing:-.3px;">Pakistan's banks have no commercial incentive to lend to SMEs. NCGCL exists to change that calculus.</h3>
+        <p style="font-size:.83rem;line-height:1.75;color:rgba(255,255,255,.82);">With <strong style="color:#fff;">70–75% of bank balance sheets lent to government</strong> and banks earning a risk-free NIM of <strong style="color:#fff;">5.5–6% on sovereign securities</strong>, the commercial case for SME lending simply does not exist — without structured risk transfer. The consequence is stark: SME financing stands at <strong style="color:var(--gold);">1% of GDP</strong> against a regional average of 7–8%. Pakistan's 5.2 million MSMEs generate 40% of GDP and 80% of non-agricultural employment, yet fewer than 5% access formal credit. Patient capital — absorbing defined loss tranches — is the only mechanism that shifts this commercial calculus.</p>
+      </div>
+      <div style="min-width:180px;">
+        <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:18px;text-align:center;">
+          <div style="font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gold);margin-bottom:12px;">The Capital Chain</div>
+          <div style="font-size:.78rem;font-weight:700;color:#fff;padding:8px;background:rgba(43,140,58,.25);border:1px solid rgba(43,140,58,.4);border-radius:4px;margin-bottom:4px;">PKR 8 Bn<br><span style="font-size:.65rem;font-weight:400;color:rgba(255,255,255,.6);">Capital Base</span></div>
+          <div style="color:var(--gold);font-size:1rem;font-weight:700;line-height:1.8;">↓ 5×</div>
+          <div style="font-size:.78rem;font-weight:700;color:#fff;padding:8px;background:rgba(30,96,145,.3);border:1px solid rgba(30,96,145,.5);border-radius:4px;margin-bottom:4px;">PKR 40 Bn<br><span style="font-size:.65rem;font-weight:400;color:rgba(255,255,255,.6);">Guarantee Book</span></div>
+          <div style="color:var(--gold);font-size:1rem;font-weight:700;line-height:1.8;">↓ 12.5×</div>
+          <div style="font-size:.78rem;font-weight:700;color:#fff;padding:8px;background:rgba(249,168,37,.15);border:1px solid rgba(249,168,37,.35);border-radius:4px;">PKR 500 Bn<br><span style="font-size:.65rem;font-weight:400;color:rgba(255,255,255,.6);">Catalytic Credit</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Four diagnostic scorecards -->
+  <div style="margin-bottom:6px;font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);">The Structural Diagnostic — Four Numbers That Define The Problem</div>
+  <div class="g4" style="margin-bottom:20px;">
+    <div style="background:#fff;border:1px solid var(--border);border-top:4px solid var(--red);border-radius:6px;padding:20px 16px;">
+      <div style="font-size:2rem;font-weight:800;font-family:var(--mono);color:var(--red);line-height:1;margin-bottom:6px;">70–75%</div>
+      <div style="font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--red);margin-bottom:8px;">Bank Balance Sheets</div>
+      <div style="width:32px;height:2px;background:var(--red);margin-bottom:10px;border-radius:2px;"></div>
+      <div style="font-size:.75rem;color:var(--ink);line-height:1.55;">Lent to government — scaling to 85% when quasi-government is included. Leaves virtually zero commercial appetite for SME risk underwriting.</div>
+    </div>
+    <div style="background:#fff;border:1px solid var(--border);border-top:4px solid var(--amber);border-radius:6px;padding:20px 16px;">
+      <div style="font-size:2rem;font-weight:800;font-family:var(--mono);color:var(--amber);line-height:1;margin-bottom:6px;">5.5–6%</div>
+      <div style="font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--amber);margin-bottom:8px;">Risk-Free NIM</div>
+      <div style="width:32px;height:2px;background:var(--amber);margin-bottom:10px;border-radius:2px;"></div>
+      <div style="font-size:.75rem;color:var(--ink);line-height:1.55;">Earned on sovereign securities. SME lending at any risk-adjusted return cannot compete — unless a guarantee absorbs the expected loss differential.</div>
+    </div>
+    <div style="background:#fff;border:1px solid var(--border);border-top:4px solid var(--ncgcl-blue);border-radius:6px;padding:20px 16px;">
+      <div style="font-size:2rem;font-weight:800;font-family:var(--mono);color:var(--ncgcl-blue);line-height:1;margin-bottom:6px;">1% of GDP</div>
+      <div style="font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--ncgcl-blue);margin-bottom:8px;">SME Finance Penetration</div>
+      <div style="width:32px;height:2px;background:var(--ncgcl-blue);margin-bottom:10px;border-radius:2px;"></div>
+      <div style="font-size:.75rem;color:var(--ink);line-height:1.55;">Against a regional average of 7–8%. The gap is structural: collateral asymmetry, data poverty, and risk perception — not a shortage of lendable funds.</div>
+    </div>
+    <div style="background:#fff;border:1px solid var(--border);border-top:4px solid var(--ncgcl-green);border-radius:6px;padding:20px 16px;">
+      <div style="font-size:2rem;font-weight:800;font-family:var(--mono);color:var(--ncgcl-green);line-height:1;margin-bottom:6px;">85.7%</div>
+      <div style="font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--ncgcl-green);margin-bottom:8px;">Economy Informality Rate</div>
+      <div style="width:32px;height:2px;background:var(--ncgcl-green);margin-bottom:10px;border-radius:2px;"></div>
+      <div style="font-size:.75rem;color:var(--ink);line-height:1.55;">95.5% of establishments employ fewer than 10 workers. Formalisation is structurally blocked without access to credit — and credit is blocked without risk transfer.</div>
+    </div>
+  </div>
+
+  <!-- Blended finance + institution type charts -->
+  <div style="margin-bottom:6px;font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);">The Patient Capital Answer — Blended Finance Unlocks Commercial Lending</div>
+  <div class="g2" style="margin-bottom:20px;">
+    <div class="card green-top">
+      <div class="card-title">The Blended Finance Case</div>
+      <div class="card-sub">Each layer of concessional capital multiplies commercial participation — NCGCL sits at the critical second-loss position</div>
+      <div class="ch-short"><canvas id="c-blend"></canvas></div>
+    </div>
+    <div class="card blue-top">
+      <div class="card-title">30 FIs Engaged — System-Wide Adoption</div>
+      <div class="card-sub">Breadth of institution types signals that NCGCL's guarantee is commercially relevant across Pakistan's entire financial system</div>
+      <div class="ch-short"><canvas id="c-inst-type"></canvas></div>
+    </div>
+  </div>
+
+  <!-- Three pillars -->
+  <div style="margin-bottom:6px;font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);">What Makes NCGCL The Right Vehicle</div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;">
+    <div style="background:#fff;border:1px solid var(--border);border-radius:6px;padding:20px;border-top:3px solid var(--ncgcl-green);">
+      <div style="font-size:.58rem;font-weight:700;letter-spacing:1px;color:var(--gold);text-transform:uppercase;margin-bottom:6px;">Pillar I</div>
+      <div style="font-size:.88rem;font-weight:700;color:var(--ink);margin-bottom:8px;">Institutional Credibility</div>
+      <div style="width:24px;height:2px;background:var(--ncgcl-green);margin-bottom:10px;border-radius:2px;"></div>
+      <div style="font-size:.75rem;color:var(--muted);line-height:1.6;"><strong style="color:var(--ink);">AAA / PACRA rated.</strong> SBP-recognised guarantees qualify as liquid assets, giving FIs measurable capital relief — making the product commercially rational even against a 5.5–6% sovereign NIM benchmark.</div>
+    </div>
+    <div style="background:#fff;border:1px solid var(--border);border-radius:6px;padding:20px;border-top:3px solid var(--ncgcl-blue);">
+      <div style="font-size:.58rem;font-weight:700;letter-spacing:1px;color:var(--gold);text-transform:uppercase;margin-bottom:6px;">Pillar II</div>
+      <div style="font-size:.88rem;font-weight:700;color:var(--ink);margin-bottom:8px;">The 8→40→500 Capital Chain</div>
+      <div style="width:24px;height:2px;background:var(--ncgcl-blue);margin-bottom:10px;border-radius:2px;"></div>
+      <div style="font-size:.75rem;color:var(--muted);line-height:1.6;"><strong style="color:var(--ink);">PKR 8 Bn → PKR 40 Bn → PKR 500 Bn.</strong> Patient capital absorbs tail risk at the second-loss layer, making each rupee of patient capital deploy ten to sixty times over into productive market credit.</div>
+    </div>
+    <div style="background:#fff;border:1px solid var(--border);border-radius:6px;padding:20px;border-top:3px solid var(--gold);">
+      <div style="font-size:.58rem;font-weight:700;letter-spacing:1px;color:var(--gold);text-transform:uppercase;margin-bottom:6px;">Pillar III</div>
+      <div style="font-size:.88rem;font-weight:700;color:var(--ink);margin-bottom:8px;">Data-Driven, Product-Led Growth</div>
+      <div style="width:24px;height:2px;background:var(--gold);margin-bottom:10px;border-radius:2px;"></div>
+      <div style="font-size:.75rem;color:var(--muted);line-height:1.6;"><strong style="color:var(--ink);">2026 mandate is product-led.</strong> Four catalytic interventions — Export Finance, Merchant Finance, EV Bikes, Agri-Mechanization — selected by a risk-complexity-impact matrix. 30 FIs engaged across Pakistan's full financial system.</div>
+    </div>
+  </div>
+
+  <!-- Institutional credentials table -->
+  <div style="margin-bottom:6px;font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);">Institutional Anchors — Why FIs And Investors Can Rely On NCGCL</div>
+  <div class="card">
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Credential</th><th>Detail</th><th>Commercial Significance</th></tr></thead>
+        <tbody>
+          <tr><td><strong>AAA / PACRA</strong></td><td>Highest domestic credit rating</td><td class="muted">Enables FI confidence in guarantee validity; sets pricing benchmarks; signals government backing</td></tr>
+          <tr><td><strong>SBP Recognition</strong></td><td>NCGCL guarantees recognised as liquid assets</td><td class="muted">FIs receive capital relief on guaranteed portfolios — directly improving return on equity; makes guarantee economically rational, not merely developmental</td></tr>
+          <tr><td><strong>MAGFA Framework</strong></td><td>Master Guarantee Facility Agreement template</td><td class="muted">Standardised legal framework reduces FI onboarding friction; enables rapid scale without bespoke negotiation per deal</td></tr>
+          <tr><td><strong>Governance Maturity</strong></td><td>Board-level risk, audit &amp; product approval committees</td><td class="muted">Investor-grade governance architecture; independent board oversight; published policy frameworks</td></tr>
+          <tr><td><strong>PSDP Linkage</strong></td><td>Active NEAGAP proposal — GoP budget backing</td><td class="muted">Public sector anchor reduces reliance on private capital for core operations; first-loss layer can be GoP-funded</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div><!-- /thesis -->
+
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     TAB 2 — PIPELINE OVERVIEW
+══════════════════════════════════════════════════════════════════════════ -->
+<div id="tab-pipeline" class="tab-panel">
+
+  <div class="insights">
+    <div class="insight">
+      <div class="insight-n">PKR 13.56 Bn</div>
+      <div class="insight-label">Quantified Pipeline</div>
+      <div class="insight-d">Credit Guarantee FI product dominates at PKR 10.0 Bn across 8 banking relationships — the most mature segment of the book.</div>
+    </div>
+    <div class="insight amber">
+      <div class="insight-n">PKR ~6 Bn</div>
+      <div class="insight-label">Conservative TBD Upside</div>
+      <div class="insight-d">12 institutions with unquantified deals. At a conservative PKR 300–500 Mn average, the total addressable pipeline exceeds PKR 19 Bn.</div>
+    </div>
+    <div class="insight blue">
+      <div class="insight-n">5 Verticals</div>
+      <div class="insight-label">Sector Coverage</div>
+      <div class="insight-d">FI (banking), Corporate, Tech/Fintech, Capital Markets, and Green/Transport — a genuinely diversified origination book.</div>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="card-title">Quantified Pipeline by Product (PKR Mn)</div>
+      <div class="card-sub">Confirmed amounts only · excludes TBD</div>
+      <div class="ch"><canvas id="c-prod-bar"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Institution Count by Product Type</div>
+      <div class="card-sub">All 30 engaged institutions</div>
+      <div class="ch"><canvas id="c-prod-pie"></canvas></div>
+    </div>
+  </div>
+
+  <div class="g3">
+    <div class="card">
+      <div class="card-title">Quantified vs Unquantified</div>
+      <div class="card-sub">Institution count</div>
+      <div class="ch-short"><canvas id="c-tbd"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Deal Size Distribution</div>
+      <div class="card-sub">Quantified deals by PKR Mn bracket</div>
+      <div class="ch-short"><canvas id="c-size"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Engagement Stage</div>
+      <div class="card-sub">All 30 institutions</div>
+      <div class="ch-short"><canvas id="c-stage"></canvas></div>
+    </div>
+  </div>
+
+  <div class="section-bar">Near-Term Critical Path — Next 90 Days</div>
+  <div class="g21">
+    <div class="card green-top">
+      <div class="card-title">Priority Actions &amp; Milestones</div>
+      <div class="card-sub">Sequenced by horizon · high-impact items only</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Horizon</th><th>Priority</th><th>Action</th><th>Expected Outcome</th><th class="r">Capital Impact</th></tr></thead>
+          <tbody>
+            <tr><td><strong>This Week</strong></td><td><span class="pill p-fi">HIGH</span></td><td>Fintech partner — confirm system integration milestones, plan Friday meeting</td><td>CG-Tech MAGFA execution</td><td class="mono">PKR 500 Mn</td></tr>
+            <tr><td><strong>This Week</strong></td><td><span class="pill p-fi">HIGH</span></td><td>Transport conglomerate — resolve STFF pricing mechanics before 2nd call</td><td>E-Bus CG+STFF term sheet</td><td class="mono">PKR 500 Mn</td></tr>
+            <tr><td><strong>This Week</strong></td><td><span class="pill p-adv">MED</span></td><td>Commercial Bank E — confirm COO meeting; Hospitals &amp; Education product scope</td><td>New sector expansion</td><td class="mono">PKR 1,000 Mn</td></tr>
+            <tr><td><strong>Post-Eid</strong></td><td><span class="pill p-fi">HIGH</span></td><td>4 bilateral banks — MoU signature drive; meeting scheduling</td><td>Bilateral portfolio activation</td><td class="mono">TBD +</td></tr>
+            <tr><td><strong>Post-Eid</strong></td><td><span class="pill p-fi">HIGH</span></td><td>3 unengaged commercial banks (Al Habib tier) — assign RM; first meetings</td><td>Pipeline depth in portfolio segment</td><td class="mono">TBD +</td></tr>
+            <tr><td><strong>30 Days</strong></td><td><span class="pill p-adv">MED</span></td><td>Capital markets partner — progress NDA to product structuring; PFSL</td><td>Capital markets fee mandate</td><td class="mono">TBD</td></tr>
+            <tr><td><strong>60 Days</strong></td><td><span class="pill p-adv">MED</span></td><td>MAGFA-Lite finalisation — reduce FI onboarding time to 4–6 weeks</td><td>Accelerates all CG-FI conversions</td><td class="mono">Pipeline velocity</td></tr>
+            <tr><td><strong>90 Days</strong></td><td><span class="pill p-adv">MED</span></td><td>NEAGAP PC-1 submission; GCF proposal advancement</td><td>GoP first-loss capital commitment</td><td class="mono">Blended leverage</td></tr>
+            <tr><td><strong>90 Days</strong></td><td><span class="pill p-fi">HIGH</span></td><td>Finalise PKR 1 Bn grant from Ministry of Finance for extending guarantees to export-oriented SMEs</td><td>Dedicated export SME guarantee facility activated</td><td class="mono">PKR 1,000 Mn</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Pipeline Summary</div>
+      <div class="card-sub">Key metrics for investor reference</div>
+      <div style="margin-top:4px">
+        <div class="waterfall-row"><div class="wf-label">Commercial Banks (FI)</div><div class="wf-bar-wrap"><div class="wf-bar" style="width:73%;background:#1a6b28"></div></div><div class="wf-val" style="color:#1a6b28">73.7%</div></div>
+        <div class="waterfall-row"><div class="wf-label">Bilateral Banks</div><div class="wf-bar-wrap"><div class="wf-bar" style="width:5%;background:#1e6091"></div></div><div class="wf-val" style="color:#1e6091">~5%</div></div>
+        <div class="waterfall-row"><div class="wf-label">Green / Transport</div><div class="wf-bar-wrap"><div class="wf-bar" style="width:8%;background:#4527a0"></div></div><div class="wf-val" style="color:#4527a0">~8%</div></div>
+        <div class="waterfall-row"><div class="wf-label">Capital Markets</div><div class="wf-bar-wrap"><div class="wf-bar" style="width:7%;background:#006064"></div></div><div class="wf-val" style="color:#006064">~7%</div></div>
+        <div class="waterfall-row"><div class="wf-label">Corporate / MFB</div><div class="wf-bar-wrap"><div class="wf-bar" style="width:6%;background:#e65100"></div></div><div class="wf-val" style="color:#e65100">~6%</div></div>
+        <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:.78rem"><span style="color:var(--muted)">Top 5 deals share of quantified pipeline</span><strong style="font-family:var(--mono)">68.4%</strong></div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:.78rem"><span style="color:var(--muted)">Deals ≥ PKR 1,000 Mn</span><strong style="font-family:var(--mono)">7 deals</strong></div>
+          <div style="display:flex;justify-content:space-between;font-size:.78rem"><span style="color:var(--muted)">Average quantified deal size</span><strong style="font-family:var(--mono)">PKR 753 Mn</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /pipeline -->
+
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     TAB 3 — PRODUCT ARCHITECTURE
+══════════════════════════════════════════════════════════════════════════ -->
+<div id="tab-products" class="tab-panel">
+
+  <div class="section-bar">Risk Layer Architecture — How NCGCL Structures Guarantees</div>
+
+  <!-- LOSS WATERFALL — full-width visual -->
+  <div class="card" style="margin-bottom:16px;">
+    <div class="card-title">The Loss Waterfall — How Risk Flows Through The Capital Stack</div>
+    <div class="card-sub">Illustrative blended structure · losses absorbed from top down · NCGCL sits at the second-loss position</div>
+
+    <div style="display:grid;grid-template-columns:1fr 3fr 1fr;gap:0;margin-top:20px;align-items:stretch;">
+
+      <!-- Left axis label -->
+      <div style="display:flex;flex-direction:column;justify-content:space-between;padding-right:14px;padding-bottom:4px;">
+        <div style="font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);text-align:right;padding-top:6px;">Loss<br>Absorbed<br>First</div>
+        <div style="flex:1;display:flex;align-items:center;justify-content:flex-end;">
+          <div style="writing-mode:vertical-lr;transform:rotate(180deg);font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--border);">← Losses Flow Down</div>
+        </div>
+        <div style="font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);text-align:right;padding-bottom:6px;">Senior<br>Tranche<br>(Protected)</div>
+      </div>
+
+      <!-- Stack layers -->
+      <div style="display:flex;flex-direction:column;gap:3px;">
+
+        <!-- Layer 1: Donor / First Loss -->
+        <div style="display:grid;grid-template-columns:140px 1fr 80px;border-radius:6px;overflow:hidden;min-height:72px;">
+          <div style="background:#1a6b28;display:flex;flex-direction:column;justify-content:center;padding:12px 14px;">
+            <div style="font-size:.6rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:3px;">First-Loss</div>
+            <div style="font-size:.82rem;font-weight:800;color:#fff;line-height:1.2;">Donor / GoP</div>
+          </div>
+          <div style="background:#e8f5e9;padding:12px 16px;display:flex;flex-direction:column;justify-content:center;">
+            <div style="font-size:.8rem;font-weight:700;color:#1a6b28;margin-bottom:3px;">First-Loss Credit Cover</div>
+            <div style="font-size:.72rem;color:#2d6a35;line-height:1.45;opacity:.9;">GoP budget, multilateral grant, or DFI concessional capital. Absorbs initial losses — enabling maximum FI participation at lowest cost. Funded via PSDP or blended finance facility.</div>
+          </div>
+          <div style="background:#c8e6c9;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;">
+            <div style="font-size:1.3rem;font-weight:800;font-family:var(--mono);color:#1a6b28;">0–5%</div>
+            <div style="font-size:.55rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#2d6a35;">of portfolio</div>
+          </div>
+        </div>
+
+        <!-- Arrow between layers -->
+        <div style="display:flex;align-items:center;justify-content:center;height:18px;color:var(--muted);">
+          <div style="flex:1;height:1px;background:var(--border);"></div>
+          <div style="font-size:.68rem;font-weight:700;color:var(--muted);padding:0 10px;">↓ once exhausted, losses pass to</div>
+          <div style="flex:1;height:1px;background:var(--border);"></div>
+        </div>
+
+        <!-- Layer 2: NCGCL — highlighted -->
+        <div style="display:grid;grid-template-columns:140px 1fr 80px;border-radius:6px;overflow:hidden;min-height:80px;box-shadow:0 0 0 2px var(--ncgcl-blue);position:relative;">
+          <div style="position:absolute;top:8px;right:88px;background:var(--ncgcl-blue);color:#fff;font-size:.55rem;font-weight:800;letter-spacing:.8px;padding:2px 8px;border-radius:10px;text-transform:uppercase;">★ NCGCL Position</div>
+          <div style="background:#1e6091;display:flex;flex-direction:column;justify-content:center;padding:12px 14px;">
+            <div style="font-size:.6rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:3px;">Second-Loss</div>
+            <div style="font-size:.82rem;font-weight:800;color:#fff;line-height:1.2;">NCGCL</div>
+          </div>
+          <div style="background:#e3f2fd;padding:14px 16px;display:flex;flex-direction:column;justify-content:center;">
+            <div style="font-size:.8rem;font-weight:700;color:#1e6091;margin-bottom:3px;">NCGCL Guarantee Tranche</div>
+            <div style="font-size:.72rem;color:#1a5276;line-height:1.45;opacity:.9;">NCGCL absorbs the defined second-loss tranche once first-loss is exhausted. AAA-rated, SBP-recognised as liquid asset — giving FIs direct capital relief on their balance sheets. Fee income generated at this layer.</div>
+          </div>
+          <div style="background:#bbdefb;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;">
+            <div style="font-size:1.3rem;font-weight:800;font-family:var(--mono);color:#1e6091;">5–20%</div>
+            <div style="font-size:.55rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#1a5276;">of portfolio</div>
+          </div>
+        </div>
+
+        <!-- Arrow -->
+        <div style="display:flex;align-items:center;justify-content:center;height:18px;color:var(--muted);">
+          <div style="flex:1;height:1px;background:var(--border);"></div>
+          <div style="font-size:.68rem;font-weight:700;color:var(--muted);padding:0 10px;">↓ once exhausted, losses pass to</div>
+          <div style="flex:1;height:1px;background:var(--border);"></div>
+        </div>
+
+        <!-- Layer 3: Mezzanine -->
+        <div style="display:grid;grid-template-columns:140px 1fr 80px;border-radius:6px;overflow:hidden;min-height:72px;">
+          <div style="background:#4527a0;display:flex;flex-direction:column;justify-content:center;padding:12px 14px;">
+            <div style="font-size:.6rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:3px;">Mezzanine</div>
+            <div style="font-size:.82rem;font-weight:800;color:#fff;line-height:1.2;">Patient Capital Investor</div>
+          </div>
+          <div style="background:#ede7f6;padding:12px 16px;display:flex;flex-direction:column;justify-content:center;">
+            <div style="font-size:.8rem;font-weight:700;color:#4527a0;margin-bottom:3px;">Mezzanine / Subordinated Layer</div>
+            <div style="font-size:.72rem;color:#3a2080;line-height:1.45;opacity:.9;">Patient capital investors occupy this mid-stack position — absorbing losses between NCGCL second-loss and the FI senior tranche. Enhanced yield in exchange for a longer commitment horizon.</div>
+          </div>
+          <div style="background:#d1c4e9;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;">
+            <div style="font-size:1.3rem;font-weight:800;font-family:var(--mono);color:#4527a0;">20–35%</div>
+            <div style="font-size:.55rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#3a2080;">of portfolio</div>
+          </div>
+        </div>
+
+        <!-- Arrow -->
+        <div style="display:flex;align-items:center;justify-content:center;height:18px;color:var(--muted);">
+          <div style="flex:1;height:1px;background:var(--border);"></div>
+          <div style="font-size:.68rem;font-weight:700;color:var(--muted);padding:0 10px;">↓ once exhausted, losses pass to</div>
+          <div style="flex:1;height:1px;background:var(--border);"></div>
+        </div>
+
+        <!-- Layer 4: FI Senior -->
+        <div style="display:grid;grid-template-columns:140px 1fr 80px;border-radius:6px;overflow:hidden;min-height:72px;">
+          <div style="background:#37474f;display:flex;flex-direction:column;justify-content:center;padding:12px 14px;">
+            <div style="font-size:.6rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:3px;">Senior / FI</div>
+            <div style="font-size:.82rem;font-weight:800;color:#fff;line-height:1.2;">Retained Risk</div>
+          </div>
+          <div style="background:#eceff1;padding:12px 16px;display:flex;flex-direction:column;justify-content:center;">
+            <div style="font-size:.8rem;font-weight:700;color:#37474f;margin-bottom:3px;">FI Residual Exposure</div>
+            <div style="font-size:.72rem;color:#2c3e40;line-height:1.45;opacity:.9;">FI retains tail risk above all covered tranches — preserving underwriting discipline and skin-in-the-game. SBP recognition of NCGCL guarantees as liquid assets directly improves FI ROE on the guaranteed book.</div>
+          </div>
+          <div style="background:#cfd8dc;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;">
+            <div style="font-size:1.3rem;font-weight:800;font-family:var(--mono);color:#37474f;">35%+</div>
+            <div style="font-size:.55rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#2c3e40;">of portfolio</div>
+          </div>
+        </div>
+
+        <!-- Equity / returns -->
+        <div style="margin-top:10px;padding:12px 16px;background:var(--cream);border:1px dashed var(--border);border-radius:6px;display:flex;align-items:center;gap:16px;">
+          <div style="flex-shrink:0;">
+            <div style="font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:#c27800;margin-bottom:3px;">Structured Products Only</div>
+            <div style="font-size:.82rem;font-weight:700;color:var(--ink);">Equity &amp; Returns Guarantee</div>
+          </div>
+          <div style="width:1px;height:36px;background:var(--border);flex-shrink:0;"></div>
+          <div style="font-size:.72rem;color:var(--muted);line-height:1.5;flex:1;">For Sukuk issuances and quasi-equity instruments — NCGCL backstops defined return levels for investors. Unlocks Islamic finance and capital markets participation. Bespoke coverage; applied to Sukuk and JFA advisory mandates.</div>
+          <div style="flex-shrink:0;background:#fff8e1;border:1px solid #ffe082;border-radius:4px;padding:6px 12px;text-align:center;">
+            <div style="font-size:1rem;font-weight:800;font-family:var(--mono);color:#c27800;">Bespoke</div>
+            <div style="font-size:.55rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#c27800;">tranche-specific</div>
+          </div>
+        </div>
+
+      </div><!-- /stack -->
+
+      <!-- Right: key stats sidebar -->
+      <div style="display:flex;flex-direction:column;gap:8px;padding-left:16px;justify-content:flex-start;padding-top:2px;">
+        <div style="font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:4px;">Key Metrics</div>
+        <div style="background:var(--cream);border-radius:5px;padding:12px;border-left:3px solid var(--ncgcl-green);">
+          <div style="font-size:1rem;font-weight:800;font-family:var(--mono);color:var(--ncgcl-green);">30–70%</div>
+          <div style="font-size:.62rem;font-weight:600;color:var(--muted);margin-top:2px;line-height:1.4;">Typical pari-passu coverage range</div>
+        </div>
+        <div style="background:var(--cream);border-radius:5px;padding:12px;border-left:3px solid var(--ncgcl-blue);">
+          <div style="font-size:1rem;font-weight:800;font-family:var(--mono);color:var(--ncgcl-blue);">1.5–3%</div>
+          <div style="font-size:.62rem;font-weight:600;color:var(--muted);margin-top:2px;line-height:1.4;">Annual guarantee fee earned by NCGCL</div>
+        </div>
+        <div style="background:var(--cream);border-radius:5px;padding:12px;border-left:3px solid var(--amber);">
+          <div style="font-size:1rem;font-weight:800;font-family:var(--mono);color:var(--amber);">5×</div>
+          <div style="font-size:.62rem;font-weight:600;color:var(--muted);margin-top:2px;line-height:1.4;">Capital leverage on guarantee book</div>
+        </div>
+        <div style="background:var(--cream);border-radius:5px;padding:12px;border-left:3px solid var(--purple);">
+          <div style="font-size:1rem;font-weight:800;font-family:var(--mono);color:var(--purple);">0%</div>
+          <div style="font-size:.62rem;font-weight:600;color:var(--muted);margin-top:2px;line-height:1.4;">SBP risk weight on NCGCL-guaranteed FI exposure</div>
+        </div>
+      </div>
+
+    </div><!-- /grid -->
+  </div><!-- /waterfall card -->
+
+  <!-- Structure comparison cards -->
+  <div class="g3" style="margin-bottom:16px;">
+    <div class="card">
+      <div style="font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--ncgcl-green);margin-bottom:6px;">Most Common Structure</div>
+      <div class="card-title" style="margin-bottom:6px;">Pari-Passu (Pro-Rata)</div>
+      <div style="display:flex;align-items:center;gap:4px;margin-bottom:10px;border-radius:4px;overflow:hidden;height:24px;">
+        <div style="flex:7;background:#e8f5e9;height:100%;display:flex;align-items:center;padding-left:8px;font-size:.68rem;font-weight:700;color:#1a6b28;">FI Retains — 70%</div>
+        <div style="flex:3;background:#bbdefb;height:100%;display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:700;color:#1e6091;">NCGCL 30%</div>
+      </div>
+      <div style="font-size:.73rem;color:var(--muted);line-height:1.55;">NCGCL covers a fixed % of every loss across the portfolio. Simple, transparent, widely used for MSME portfolio guarantees. Coverage ratio agreed at MAGFA level.</div>
+    </div>
+    <div class="card">
+      <div style="font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--amber);margin-bottom:6px;">Threshold-Triggered Structure</div>
+      <div class="card-title" style="margin-bottom:6px;">Stop-Loss / Excess-of-Loss</div>
+      <div style="display:flex;align-items:center;gap:4px;margin-bottom:10px;border-radius:4px;overflow:hidden;height:24px;">
+        <div style="flex:5;background:#eceff1;height:100%;display:flex;align-items:center;padding-left:8px;font-size:.68rem;font-weight:700;color:#37474f;">FI First — 5% of portfolio</div>
+        <div style="flex:5;background:#e3f2fd;height:100%;display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:700;color:#1e6091;">NCGCL — Excess</div>
+      </div>
+      <div style="font-size:.73rem;color:var(--muted);line-height:1.55;">Cover triggers only when portfolio losses exceed a defined threshold. Lower annual fee; FI has strong incentive to maintain underwriting quality below the trigger.</div>
+    </div>
+    <div class="card">
+      <div style="font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--slate);margin-bottom:6px;">Capped Exposure Structure</div>
+      <div class="card-title" style="margin-bottom:6px;">Portfolio Loss Cap</div>
+      <div style="display:flex;align-items:center;gap:4px;margin-bottom:10px;border-radius:4px;overflow:hidden;height:24px;">
+        <div style="flex:85;background:#e8f5e9;height:100%;display:flex;align-items:center;padding-left:8px;font-size:.68rem;font-weight:700;color:#1a6b28;">NCGCL covers up to cap</div>
+        <div style="flex:15;background:#eceff1;height:100%;display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:700;color:#37474f;">FI</div>
+      </div>
+      <div style="font-size:.73rem;color:var(--muted);line-height:1.55;">NCGCL guarantee capped at a defined % of total portfolio principal (e.g., 15%). Predictable maximum exposure; FI bears losses above the cap. Best suited to mature FI relationships with strong historical data.</div>
+    </div>
+  </div>
+
+  
+  <div class="prod-grid">
+    <div class="prod-card pc-fl">
+      <div class="prod-icon">🛡</div>
+      <div class="prod-name">Credit Guarantee — FI (Portfolio)</div>
+      <div class="prod-desc">NCGCL provides a portfolio-level guarantee to commercial banks, MFBs, and Islamic banks for MSME and priority segment lending. Pari-passu or first-loss structure. MAGFA-governed.</div>
+      <div class="prod-params">
+        <span><strong>Pipeline:</strong> PKR 10,000 Mn quantified · 9 FIs</span>
+        <span><strong>Structure:</strong> Pari-passu (30–70%) or First-Loss</span>
+        <span><strong>Target segment:</strong> SME, Agri, Women-led, Microenterprise</span>
+        <span><strong>SBP capital relief:</strong> Yes — guarantees recognised as liquid assets</span>
+      </div>
+    </div>
+    <div class="prod-card pc-sl">
+      <div class="prod-icon">🏗</div>
+      <div class="prod-name">Credit Guarantee — Corporate</div>
+      <div class="prod-desc">Transaction-level guarantees for corporate borrowers in agriculture, rural finance, and development sectors. Enables lending to underserved corporate entities with limited credit history.</div>
+      <div class="prod-params">
+        <span><strong>Pipeline:</strong> PKR 280 Mn quantified · 3 entities</span>
+        <span><strong>Structure:</strong> Transaction guarantee or first-loss cover</span>
+        <span><strong>Target segment:</strong> Agri-corporates, RSPs, rural value chains</span>
+        <span><strong>SEDF linkage:</strong> Some deals routed via SEDF framework</span>
+      </div>
+    </div>
+    <div class="prod-card pc-pp">
+      <div class="prod-icon">💻</div>
+      <div class="prod-name">Credit Guarantee — Tech/Fintech</div>
+      <div class="prod-desc">Guarantees enabling fintech and tech-driven lenders to deploy MSME credit via digital rails. Covers system-integrated portfolios. NDA-first engagement model with API/data-sharing requirements.</div>
+      <div class="prod-params">
+        <span><strong>Pipeline:</strong> PKR 500 Mn · 1 fintech partner</span>
+        <span><strong>Structure:</strong> Portfolio guarantee with system integration</span>
+        <span><strong>Innovation:</strong> Real-time data flows; automated claim triggers</span>
+        <span><strong>Additionality:</strong> Enables lending outside branch banking infrastructure</span>
+      </div>
+    </div>
+    <div class="prod-card pc-mz">
+      <div class="prod-icon">📦</div>
+      <div class="prod-name">Credit Guarantee — Portfolio (Bilateral)</div>
+      <div class="prod-desc">Guarantees structured for bilateral and foreign-owned banks operating in Pakistan. Often paired with supply-chain finance, climate lending, or MoU-governed facilities. Key pipeline for green and trade finance.</div>
+      <div class="prod-params">
+        <span><strong>Pipeline:</strong> PKR 200 Mn confirmed · 5 bilateral FIs TBD</span>
+        <span><strong>Structure:</strong> Portfolio + supply chain + climate-linked</span>
+        <span><strong>Green finance:</strong> Climate product in Investment Banking (IB)</span>
+        <span><strong>Post-Eid:</strong> MoU signings pending for 2 bilateral banks</span>
+      </div>
+    </div>
+    <div class="prod-card pc-stff">
+      <div class="prod-icon">🚌</div>
+      <div class="prod-name">Credit Guarantee + STFF</div>
+      <div class="prod-desc">Supply and Trade Finance Facility layered with credit guarantee. Currently structured for E-Bus fleet financing — a green transport deal with climate finance characteristics. 2nd-loss structure with pricing mechanics under development.</div>
+      <div class="prod-params">
+        <span><strong>Pipeline:</strong> PKR 500 Mn · 1 transport conglomerate</span>
+        <span><strong>Structure:</strong> Credit guarantee + STFF (second-loss)</span>
+        <span><strong>Green angle:</strong> E-Bus fleet — emissions reduction, urban mobility</span>
+        <span><strong>Status:</strong> 2nd technical call scheduled; pricing TBD</span>
+      </div>
+    </div>
+    <div class="prod-card pc-eq">
+      <div class="prod-icon">📜</div>
+      <div class="prod-name">Sukuk / Capital Markets Guarantee</div>
+      <div class="prod-desc">NCGCL backs Sukuk issuances and quasi-equity capital market instruments. Guarantee covers defined return/principal tranches. Unlocks Shariah-compliant patient capital for MSME and green projects. NDA signed; 2nd meeting imminent.</div>
+      <div class="prod-params">
+        <span><strong>Pipeline:</strong> PKR 500 Mn · 1 Sukuk SPV</span>
+        <span><strong>Structure:</strong> Returns/principal guarantee on Sukuk tranche</span>
+        <span><strong>Investor:</strong> Islamic finance pools + institutional investors</span>
+        <span><strong>Also active:</strong> Commercial Paper, Earned Wage Access, JFA</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Product Structure Comparison — Key Parameters</div>
+    <div class="card-sub">For investor reference</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Structure</th><th>Risk Position</th><th>NCGCL Loss Trigger</th><th>FI Skin-in-Game</th><th>Typical Coverage %</th><th>Best For</th></tr></thead>
+        <tbody>
+          <tr><td><strong>First-Loss Guarantee</strong></td><td class="muted">Highest risk / most additionality</td><td class="muted">First rupee of loss</td><td class="muted">Tail risk retained</td><td class="mono">5–15%</td><td class="muted">New segments, donor-funded facilities, agri</td></tr>
+          <tr><td><strong>Second-Loss Guarantee</strong></td><td class="muted">Moderate risk, donor takes first-loss</td><td class="muted">After first-loss exhausted</td><td class="muted">Below first-loss tranche</td><td class="mono">15–30%</td><td class="muted">Blended finance, GoP PSDP-backed programs</td></tr>
+          <tr><td><strong>Pari-Passu (Pro-Rata)</strong></td><td class="muted">Shared proportionally</td><td class="muted">Pro-rata from first loss</td><td class="muted">Proportional (FI retains ≥50%)</td><td class="mono">30–70%</td><td class="muted">Standard MSME portfolio, bilateral FIs</td></tr>
+          <tr><td><strong>Mezzanine Layer</strong></td><td class="muted">Mid-stack — between donor &amp; FI</td><td class="muted">After first-loss, before FI equity</td><td class="muted">FI retains equity tranche</td><td class="mono">15–25%</td><td class="muted">Large structured deals, multilateral co-investment</td></tr>
+          <tr><td><strong>Stop-Loss / Excess-of-Loss</strong></td><td class="muted">Low frequency, high severity</td><td class="muted">Above portfolio loss threshold</td><td class="muted">FI fully exposed below threshold</td><td class="mono">Up to 100%</td><td class="muted">Seasoned portfolios, mature FI relationships</td></tr>
+          <tr><td><strong>Equity / Returns Guarantee</strong></td><td class="muted">Bespoke — capital market</td><td class="muted">Return or principal default</td><td class="muted">Issuer retains operational risk</td><td class="mono">Tranche-specific</td><td class="muted">Sukuk, JFA, infrastructure quasi-equity</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div><!-- /products -->
+
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     TAB 4 — CATALYTIC PRODUCTS (NEW — from strategy session)
+══════════════════════════════════════════════════════════════════════════ -->
+<div id="tab-catalytic" class="tab-panel">
+
+  <div class="thesis-block" style="margin-bottom:20px">
+    <h3>Four Catalytic Product Interventions — 2026 Product-Led Growth Strategy</h3>
+    <p>Following the completion of foundational legal frameworks in 2025 (MGFA, PACRA AAA, multi-tier product suite), NCGCL's 2026 mandate is <strong>data-driven, product-led growth</strong>. To counter both State Bank 0%-cost guarantees and the sovereign lending arbitrage, NCGCL has prioritised four catalytic interventions, selected and sequenced by <strong>risk, complexity, and scalable impact</strong>. Each is designed to unlock a structurally underserved credit market where the guarantee mechanism is the essential enabling condition.</p>
+  </div>
+
+  <!-- Product I: Export Finance -->
+  <div class="section-bar">I. Post-Shipment Export Finance — The "North Star" Product</div>
+  <div class="g12">
+    <div>
+      <div style="background:#e8f5e9;border:1px solid #a5d6a7;border-radius:6px;padding:16px;margin-bottom:12px;text-align:center">
+        <div style="font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#1a6b28;margin-bottom:4px">Risk / Complexity Profile</div>
+        <div style="font-size:1.8rem;font-weight:800;color:#1a6b28;font-family:var(--mono)">LOWEST</div>
+        <div style="font-size:.72rem;color:#1a6b28;margin-top:4px">Highest priority for execution</div>
+      </div>
+      <div class="card" style="margin-bottom:12px">
+        <div class="card-title">Market Parameters</div>
+        <div class="card-sub">Sizing and sector focus</div>
+        <div style="font-size:.78rem;line-height:1.8">
+          <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--cream)"><span style="color:var(--muted)">Tenor</span><strong>60–120 day cycles</strong></div>
+          <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--cream)"><span style="color:var(--muted)">Collateral</span><strong>LCs + export docs</strong></div>
+          <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--cream)"><span style="color:var(--muted)">Target sector</span><strong>Wearing Apparel, Textiles</strong></div>
+          <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--cream)"><span style="color:var(--muted)">Borrower type</span><strong>Small-medium exporters</strong></div>
+          <div style="display:flex;justify-content:space-between;padding:4px 0"><span style="color:var(--muted)">Data source</span><strong>Pakistan Single Window (PSW)</strong></div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Why This Is the North Star</div>
+      <div class="card-sub">Lowest execution risk · highest strategic priority · direct FX generation</div>
+      <div class="strat-point" style="margin-top:8px"><div class="sp-num">1</div><div class="sp-text"><strong>Mature, documented borrowers:</strong> Export entities hold verified orders, registered LC documentation, and PSW records. This is the closest NCGCL gets to collateralised lending — digital collateral via verified export data. Risk perception gap is large; actual risk is not.</div></div>
+      <div class="strat-point"><div class="sp-num">2</div><div class="sp-text"><strong>Foreign exchange generation:</strong> Post-shipment working capital directly supports Pakistan's export base. Every rupee guaranteed here contributes to Pakistan's current account — making this a macroeconomic priority, not just a development one.</div></div>
+      <div class="strat-point"><div class="sp-num">3</div><div class="sp-text"><strong>Gender multiplier — Wearing Apparel:</strong> Targeting Wearing Apparel generates <strong>18,180 female jobs per PKR 100 Bn invested</strong> (60% female workforce share) — the highest female employment multiplier of any export sub-sector. NCGCL's sector targeting directly determines gender impact.</div></div>
+      <div class="strat-point"><div class="sp-num">4</div><div class="sp-text"><strong>PSW integration is the execution unlock:</strong> Access to Pakistan Single Window data converts opaque export SMEs into documentable, scoreable borrowers. This is the primary execution challenge — and the key technical investment to prioritise.</div></div>
+    </div>
+  </div>
+
+  <!-- Product II: Platform/Merchant Finance -->
+  <div class="section-bar">II. Platform-Based Merchant Finance — Embedded Finance at Scale</div>
+  <div class="g12">
+    <div>
+      <div style="background:#e3f2fd;border:1px solid #90caf9;border-radius:6px;padding:16px;margin-bottom:12px;text-align:center">
+        <div style="font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#1e6091;margin-bottom:4px">Risk / Complexity Profile</div>
+        <div style="font-size:1.8rem;font-weight:800;color:#1e6091;font-family:var(--mono)">LOW</div>
+        <div style="font-size:.72rem;color:#1e6091;margin-top:4px">Self-liquidating closed-loop structure</div>
+      </div>
+      <div class="card" style="margin-bottom:12px">
+        <div class="card-title">Market Sizing</div>
+        <div class="card-sub">Scale of the opportunity</div>
+        <div style="font-size:.78rem;line-height:1.8">
+          <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--cream)"><span style="color:var(--muted)">Downstream retail market</span><strong style="color:var(--ncgcl-blue)">PKR 12 Tn</strong></div>
+          <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--cream)"><span style="color:var(--muted)">Addressable credit bubble</span><strong style="color:var(--ncgcl-blue)">PKR 1–1.5 Tn</strong></div>
+          <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--cream)"><span style="color:var(--muted)">Platforms</span><strong>Daraz, Foodpanda, Bazaar</strong></div>
+          <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--cream)"><span style="color:var(--muted)">Collateral type</span><strong>"Digital collateral" — order data</strong></div>
+          <div style="display:flex;justify-content:space-between;padding:4px 0"><span style="color:var(--muted)">NCGCL structure</span><strong>First or second-loss wrap</strong></div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Mechanism &amp; Strategic Rationale</div>
+      <div class="card-sub">Digital ordering data as collateral · closed-loop repayment discipline</div>
+      <div class="strat-point" style="margin-top:8px"><div class="sp-num">1</div><div class="sp-text"><strong>Digital collateral innovation:</strong> Platform transaction data (order history, GMV, COD completion rates) replaces traditional collateral. Daraz merchants, Kiryana retailers, and Foodpanda vendors have rich, verifiable digital footprints that banks currently ignore. NCGCL's guarantee makes this data bankable.</div></div>
+      <div class="strat-point"><div class="sp-num">2</div><div class="sp-text"><strong>Self-liquidating risk structure:</strong> Closed-loop platforms collect repayments through the same channel as disbursement — reducing repayment risk dramatically. NCGCL first/second-loss wrap on revolving credit means expected losses are manageable and bounded.</div></div>
+      <div class="strat-point"><div class="sp-num">3</div><div class="sp-text"><strong>The escrow agent challenge:</strong> Primary execution risk is platform reluctance to act as escrow agents or assume tri-party liability. Structuring this requires careful legal engineering — NCGCL's MAGFA framework needs a dedicated platform finance addendum.</div></div>
+      <div class="strat-point"><div class="sp-num">4</div><div class="sp-text"><strong>Scale speed:</strong> Once a single major platform is onboarded, portfolio can scale rapidly. PKR 12 Tn retail market means even 10 basis points of penetration = PKR 120 Bn guaranteed portfolio. This is NCGCL's highest-velocity product.</div></div>
+    </div>
+  </div>
+
+  <!-- Product III: EV Bikes -->
+  <div class="section-bar">III. EV Bike Ecosystem Financing — Green Mobility at Scale</div>
+  <div class="g12">
+    <div>
+      <div style="background:#fff3e0;border:1px solid #ffcc80;border-radius:6px;padding:16px;margin-bottom:12px;text-align:center">
+        <div style="font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#e65100;margin-bottom:4px">Risk / Complexity Profile</div>
+        <div style="font-size:1.8rem;font-weight:800;color:#e65100;font-family:var(--mono)">HIGH IMPACT</div>
+        <div style="font-size:.72rem;color:#e65100;margin-top:4px">High risk, high development impact</div>
+      </div>
+      <div class="card" style="margin-bottom:12px">
+        <div class="card-title">Market Sizing</div>
+        <div class="card-sub">The EV transition opportunity</div>
+        <div style="font-size:.78rem;line-height:1.8">
+          <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--cream)"><span style="color:var(--muted)">Registered bikes (Pakistan)</span><strong style="color:var(--amber)">30–40 Mn</strong></div>
+          <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--cream)"><span style="color:var(--muted)">Target substitution rate</span><strong>40% = 6.6 Mn EV units</strong></div>
+          <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--cream)"><span style="color:var(--muted)">Price per unit</span><strong>~PKR 200,000</strong></div>
+          <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--cream)"><span style="color:var(--muted)">Total market opportunity</span><strong style="color:var(--amber)">PKR 1.32 Tn</strong></div>
+          <div style="display:flex;justify-content:space-between;padding:4px 0"><span style="color:var(--muted)">Insurance premium (EV)</span><strong>4–5% vs 1.5% ICE</strong></div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Mechanism, Risk &amp; Execution Strategy</div>
+      <div class="card-sub">B2B-first approach · fleet operators · domestic assemblers</div>
+      <div class="strat-point" style="margin-top:8px"><div class="sp-num">1</div><div class="sp-text"><strong>B2B-first execution:</strong> Initial targeting of commercial fleet operators (Bykea, Leopard) and domestic assemblers rather than individual consumers. B2B buyers have predictable cash flows, formal contracts, and established credit relationships — dramatically stabilising repayment profiles versus retail EV lending.</div></div>
+      <div class="strat-point"><div class="sp-num">2</div><div class="sp-text"><strong>Battery swapping infrastructure:</strong> NCGCL guarantee covers not just EV unit financing but ancillary battery swapping station development — the ecosystem-enabler that unlocks commercial viability of the entire fleet transition.</div></div>
+      <div class="strat-point"><div class="sp-num">3</div><div class="sp-text"><strong>Key risks to manage:</strong> Rapid asset depreciation, evolving battery technology standards, and elevated insurance premiums (4–5% vs 1.5% for ICE). Guarantee structure must embed asset quality covenants and residual value floors to protect the loss book.</div></div>
+      <div class="strat-point"><div class="sp-num">4</div><div class="sp-text"><strong>Climate finance eligibility:</strong> EV fleet transition qualifies for GCF/GEF co-financing and carbon credit potential. NCGCL's guarantee on PKR 1.32 Tn market opportunity positions it as Pakistan's primary climate mobility institution — a DFI magnet.</div></div>
+    </div>
+  </div>
+
+  <!-- Product IV: AMaaS -->
+  <div class="section-bar">IV. Agri-Mechanization as a Service (AMaaS) — Highest Complexity, Highest Transformation</div>
+  <div class="g12">
+    <div>
+      <div style="background:#ede7f6;border:1px solid #b39ddb;border-radius:6px;padding:16px;margin-bottom:12px;text-align:center">
+        <div style="font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#4527a0;margin-bottom:4px">Risk / Complexity Profile</div>
+        <div style="font-size:1.8rem;font-weight:800;color:#4527a0;font-family:var(--mono)">HIGHEST</div>
+        <div style="font-size:.72rem;color:#4527a0;margin-top:4px">Highest complexity · highest transformation</div>
+      </div>
+      <div class="card" style="margin-bottom:12px">
+        <div class="card-title">Economic Parameters</div>
+        <div class="card-sub">Value generation potential</div>
+        <div style="font-size:.78rem;line-height:1.8">
+          <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--cream)"><span style="color:var(--muted)">Revenue per machine/year</span><strong style="color:var(--purple)">PKR 15 Mn</strong></div>
+          <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--cream)"><span style="color:var(--muted)">Working season</span><strong>60-day cycles</strong></div>
+          <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--cream)"><span style="color:var(--muted)">At 10,000 machines</span><strong style="color:var(--purple)">PKR 150 Bn economic value</strong></div>
+          <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--cream)"><span style="color:var(--muted)">Target borrower</span><strong>Mid-tier agri corporates</strong></div>
+          <div style="display:flex;justify-content:space-between;padding:4px 0"><span style="color:var(--muted)">Key constraint</span><strong>Zero land collateral</strong></div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">The AMaaS Innovation &amp; Its Trade-Off</div>
+      <div class="card-sub">Corporate service providers · not smallholder farmers · with a critical tension</div>
+      <div class="strat-point" style="margin-top:8px"><div class="sp-num">1</div><div class="sp-text"><strong>Why corporate service providers, not farmers:</strong> Traditional banks cannot finance smallholder farmers (no collateral, fragmented, seasonal). AMaaS targets the mid-tier corporate operators who service large rural clusters with drone sprayers and harvester fleets — entities with revenue streams, contracts, and scalable operations.</div></div>
+      <div class="strat-point"><div class="sp-num">2</div><div class="sp-text"><strong>The collateral gap NCGCL solves:</strong> AMaaS operators lack land — the only collateral banks recognise. A drone spraying company with PKR 15 Mn in annual revenue from 60-day contracts has no bank access. NCGCL's guarantee converts cashflow-backed operators into bankable entities.</div></div>
+      <div class="strat-point"><div class="sp-num">3</div><div class="sp-text"><strong style="color:var(--red)">Critical tension — labour displacement:</strong> AMaaS drives massive dollar-value productivity but <em>natively displaces manual agricultural labour</em> — 200–300 jobs per machine. This creates a negative immediate employment multiplier. NCGCL must pair AMaaS with downstream labour transition provisions or dairy/horticulture targeting to offset displacement.</div></div>
+      <div class="strat-point"><div class="sp-num">4</div><div class="sp-text"><strong>Dairy value chain mitigant:</strong> To offset the employment displacement, agri interventions must target <strong>Dairy Value Chains</strong>, which generate <strong>69,660 female jobs per PKR 100 Bn</strong> invested — ranked #1 by gender employment multiplier. Dairy + AMaaS together create a net-positive employment and income impact.</div></div>
+    </div>
+  </div>
+
+  <!-- Complexity Matrix -->
+  <div class="section-bar">Product Complexity &amp; Risk Matrix</div>
+  <div class="card">
+    <div class="card-title">Four Products — Sequenced by Complexity, Risk &amp; Scale Horizon</div>
+    <div class="card-sub">NCGCL strategic prioritisation framework from 2026 strategy session</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Product</th><th>Risk Level</th><th>Complexity</th><th>Market Size</th><th>Key Unlock</th><th>Employment Impact</th><th>Gender Impact</th><th>Priority</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>I. Post-Shipment Export Finance</strong></td>
+            <td><span class="pill p-fi">Lowest</span></td>
+            <td class="muted">Lowest — verified docs, mature borrowers</td>
+            <td class="mono">Moderate</td>
+            <td class="muted">PSW data integration</td>
+            <td class="muted">High — large labour-intensive sectors</td>
+            <td><span class="pill p-adv">★★★ Highest</span></td>
+            <td><span class="pill p-fi">North Star</span></td>
+          </tr>
+          <tr>
+            <td><strong>II. Platform/Merchant Finance</strong></td>
+            <td><span class="pill p-adv">Low</span></td>
+            <td class="muted">Medium — tri-party legal structuring</td>
+            <td class="mono">PKR 1–1.5 Tn</td>
+            <td class="muted">Platform escrow agreement</td>
+            <td class="muted">Very high — millions of merchants</td>
+            <td><span class="pill p-adv">★★ High</span></td>
+            <td><span class="pill p-corp">Fast Scale</span></td>
+          </tr>
+          <tr>
+            <td><strong>III. EV Bike Ecosystem</strong></td>
+            <td><span class="pill p-pen">High</span></td>
+            <td class="muted">High — tech risk, depreciation, insurance</td>
+            <td class="mono">PKR 1.32 Tn</td>
+            <td class="muted">B2B fleet operators; assembler ecosystem</td>
+            <td class="muted">Medium — fleet operators + supply chain</td>
+            <td><span class="pill p-adv">★★ High</span></td>
+            <td><span class="pill p-stff">Green / DFI</span></td>
+          </tr>
+          <tr>
+            <td><strong>IV. Agri-Mechanization (AMaaS)</strong></td>
+            <td><span class="pill p-sta">Highest</span></td>
+            <td class="muted">Highest — seasonal, no collateral, displacement</td>
+            <td class="mono">PKR 150 Bn value</td>
+            <td class="muted">Dairy value chain pairing to offset displacement</td>
+            <td class="muted">Net negative without dairy pairing</td>
+            <td><span class="pill p-ini">★ Selective</span></td>
+            <td><span class="pill p-jfa">Long-Term</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div><!-- /catalytic -->
+
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     TAB 4 — PIPELINE INTELLIGENCE (ANONYMISED)
+══════════════════════════════════════════════════════════════════════════ -->
+<div id="tab-table" class="tab-panel">
+
+  <div class="anon-note">
+    <strong>Anonymisation Notice:</strong> Specific institution names are withheld for commercial sensitivity. Institutions are classified by type and deal code. Amounts, product structures, and engagement status are accurate as of the pipeline snapshot date. Full detail available under NDA upon request.
+  </div>
+
+  <div class="filter-row" id="filter-row">
+    <button class="filter-btn active" onclick="filterTable('ALL',this)">All Deals (30)</button>
+    <button class="filter-btn" onclick="filterTable('fi',this)">CG — FI</button>
+    <button class="filter-btn" onclick="filterTable('corp',this)">CG — Corporate</button>
+    <button class="filter-btn" onclick="filterTable('portfolio',this)">CG — Portfolio</button>
+    <button class="filter-btn" onclick="filterTable('tech',this)">CG — Tech</button>
+    <button class="filter-btn" onclick="filterTable('green',this)">Green / STFF</button>
+    <button class="filter-btn" onclick="filterTable('cm',this)">Capital Markets</button>
+    <button class="filter-btn" onclick="filterTable('advanced',this)">● Fee Received</button>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr>
+        <th>#</th>
+        <th>Deal Code</th>
+        <th>Institution Type</th>
+        <th class="r">Amount (PKR Mn)</th>
+        <th>Product Structure</th>
+        <th>Risk Layer</th>
+        <th>Stage</th>
+        <th>Key Status</th>
+      </tr></thead>
+      <tbody id="anon-tbody"></tbody>
+    </table>
+  </div>
+
+  <div style="margin-top:12px;font-size:.72rem;color:var(--muted)">
+    <strong>Stage key:</strong>
+    <span class="sdot sdot-g"></span>Advanced (fee received/executed) &nbsp;
+    <span class="sdot sdot-g"></span>Active (engagement underway) &nbsp;
+    <span class="sdot sdot-a"></span>Pending (awaiting response/data) &nbsp;
+    <span class="sdot sdot-r"></span>Stalled &nbsp;
+    <span class="sdot sdot-s"></span>Initial contact
+  </div>
+
+</div><!-- /table -->
+
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     TAB 5 — STRATEGIC INSIGHTS
+══════════════════════════════════════════════════════════════════════════ -->
+<div id="tab-strategy" class="tab-panel">
+
+  <div class="section-bar">Strategic Priorities — FY2026 Direction of Travel</div>
+
+  <div class="strat-grid">
+    <div class="strat-panel">
+      <div class="sp-head">FI Engagement &amp; Pipeline Conversion</div>
+      <div class="strat-point"><div class="sp-num">1</div><div class="sp-text"><strong>Scale commercial bank adoption:</strong> 8 commercial FIs in CG-FI pipeline totalling PKR 10 Bn. Converting 4–5 to executed MAGFAs by Q3 2026 is the single largest short-term value driver.</div></div>
+      <div class="strat-point"><div class="sp-num">2</div><div class="sp-text"><strong>Bilateral bank MoU acceleration:</strong> Multiple bilateral bank relationships pending MoU signature. These carry multilateral credibility and potential co-guarantee structures with foreign DFIs.</div></div>
+      <div class="strat-point"><div class="sp-num">3</div><div class="sp-text"><strong>Islamic finance mainstreaming:</strong> Sukuk guarantee (PKR 500 Mn) and 2 Islamic bank portfolio deals in pipeline. Shariah-compliant guarantee structures position NCGCL for Islamic DFI capital.</div></div>
+      <div class="strat-point"><div class="sp-num">4</div><div class="sp-text"><strong>Post-Eid pipeline activation:</strong> Targeted follow-ups for 4+ institutions deferred to post-Eid. Meeting scheduling in first week back is priority for BD team.</div></div>
+    </div>
+
+    <div class="strat-panel">
+      <div class="sp-head">Product Innovation &amp; New Verticals</div>
+      <div class="strat-point"><div class="sp-num">1</div><div class="sp-text"><strong>Green transport guarantee (E-Bus):</strong> PKR 500 Mn STFF+CG deal for electric bus fleet financing. Pricing mechanics being finalised. Climate finance characteristics enable GCF/GEF eligibility for co-financing.</div></div>
+      <div class="strat-point"><div class="sp-num">2</div><div class="sp-text"><strong>Supply chain finance:</strong> Multiple bilateral FIs exploring supply chain + guarantee structures. Pak Oman has climate + supply chain product in IB. Haball supply chain integration with bilateral bank TBD.</div></div>
+      <div class="strat-point"><div class="sp-num">3</div><div class="sp-text"><strong>Earned Wage Access (EWA):</strong> Novel product — guarantee backing EWA platform receivables. Enables fintech deployment at scale; targets salaried MSME-adjacent workforce. Follow-up questions stage.</div></div>
+      <div class="strat-point"><div class="sp-num">4</div><div class="sp-text"><strong>Capital markets expansion:</strong> Commercial Paper (data awaited), Sukuk guarantee (NDA signed), and JFA advisory for 2 institutional banks in pipeline. Builds fee income beyond guarantee book.</div></div>
+    </div>
+
+    <div class="strat-panel">
+      <div class="sp-head">Blended Finance Architecture</div>
+      <div class="strat-point"><div class="sp-num">1</div><div class="sp-text"><strong>NEAGAP / PSDP anchor:</strong> Five-year agricultural guarantee programme under PC-1 development. GoP budget backing enables first-loss layer to be publicly funded — unlocking maximum NCGCL leverage on patient capital.</div></div>
+      <div class="strat-point"><div class="sp-num">2</div><div class="sp-text"><strong>GCF Climate Finance Facility:</strong> Active proposal to Green Climate Fund for a Pakistan Climate Finance Guarantee Facility. Positions NCGCL as national implementing entity for climate-linked guarantee capital.</div></div>
+      <div class="strat-point"><div class="sp-num">3</div><div class="sp-text"><strong>DFI co-guarantee targeting:</strong> IFC, ADB, and bilateral DFIs as natural co-guarantee partners. NCGCL's AAA rating and SBP recognition make co-guarantee structuring straightforward for multilateral risk committees.</div></div>
+      <div class="strat-point"><div class="sp-num">4</div><div class="sp-text"><strong>Leverage optimisation:</strong> Target 10–15× leverage ratio on deployed guarantee capital. First-loss GoP/donor funding magnifies NCGCL's second-loss position, enabling larger guaranteed portfolio per rupee of patient capital invested.</div></div>
+    </div>
+
+    <div class="strat-panel">
+      <div class="sp-head">Institutional &amp; Governance Scale-Up</div>
+      <div class="strat-point"><div class="sp-num">1</div><div class="sp-text"><strong>MAGFA standardisation:</strong> Abridged MAGFA (MAGFA-Lite) under development for faster FI onboarding. Reduces legal friction from 3–6 months to 4–6 weeks. Critical for pipeline velocity.</div></div>
+      <div class="strat-point"><div class="sp-num">2</div><div class="sp-text"><strong>Digital pipeline infrastructure:</strong> Automated guarantee origination pipeline dashboard and GitHub Pages deployment. Enables real-time investor reporting, board visibility, and FI status tracking without manual intervention.</div></div>
+      <div class="strat-point"><div class="sp-num">3</div><div class="sp-text"><strong>Fixed income portfolio:</strong> NCGCL managing an internal fixed income portfolio to generate treasury yield on uncalled guarantee capital. Enhances financial self-sufficiency before fee income scales.</div></div>
+      <div class="strat-point"><div class="sp-num">4</div><div class="sp-text"><strong>Board audit &amp; risk frameworks:</strong> 5th Board Audit Committee meeting completed. Risk framework, RACI, and HRIS operational. Governance maturity signals to investors that capital deployment will be disciplined.</div></div>
+    </div>
+  </div>
+
+  <div class="section-bar">Near-Term Critical Path — Next 90 Days</div>
+  <div class="card">
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Horizon</th><th>Priority</th><th>Action</th><th>Expected Outcome</th><th>Capital Impact</th></tr></thead>
+        <tbody>
+          <tr><td><strong>This Week</strong></td><td><span class="pill p-fi">HIGH</span></td><td>Fintech partner — confirm system integration milestones, plan Friday meeting</td><td>CG-Tech MAGFA execution</td><td class="mono">PKR 500 Mn</td></tr>
+          <tr><td><strong>This Week</strong></td><td><span class="pill p-fi">HIGH</span></td><td>Transport conglomerate — resolve STFF pricing mechanics before 2nd call</td><td>E-Bus CG+STFF term sheet</td><td class="mono">PKR 500 Mn</td></tr>
+          <tr><td><strong>This Week</strong></td><td><span class="pill p-adv">MED</span></td><td>Commercial Bank E — confirm COO meeting; Hospitals &amp; Education product scope</td><td>New sector expansion</td><td class="mono">PKR 1,000 Mn</td></tr>
+          <tr><td><strong>Post-Eid</strong></td><td><span class="pill p-fi">HIGH</span></td><td>4 bilateral banks — MoU signature drive; meeting scheduling</td><td>Bilateral portfolio activation</td><td class="mono">TBD +</td></tr>
+          <tr><td><strong>Post-Eid</strong></td><td><span class="pill p-fi">HIGH</span></td><td>3 unengaged commercial banks (Al Habib tier) — assign RM; first meetings</td><td>Pipeline depth in portfolio segment</td><td class="mono">TBD +</td></tr>
+          <tr><td><strong>30 Days</strong></td><td><span class="pill p-adv">MED</span></td><td>Capital markets partner — progress NDA to product structuring; PFSL</td><td>Capital markets fee mandate</td><td class="mono">TBD</td></tr>
+          <tr><td><strong>60 Days</strong></td><td><span class="pill p-adv">MED</span></td><td>MAGFA-Lite finalisation — reduce FI onboarding time to 4–6 weeks</td><td>Accelerates all CG-FI conversions</td><td class="mono">Pipeline velocity</td></tr>
+          <tr><td><strong>90 Days</strong></td><td><span class="pill p-adv">MED</span></td><td>NEAGAP PC-1 submission; GCF proposal advancement</td><td>GoP first-loss capital commitment</td><td class="mono">Blended leverage</td></tr>
+          <tr><td><strong>90 Days</strong></td><td><span class="pill p-fi">HIGH</span></td><td>Finalise PKR 1 Bn grant from Ministry of Finance for extending guarantees to export-oriented SMEs</td><td>Dedicated export SME guarantee facility activated</td><td class="mono">PKR 1,000 Mn</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div><!-- /strategy -->
+
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     TAB 8 — IMPACT QUADRANT MATRIX (NEW from strategy doc)
+══════════════════════════════════════════════════════════════════════════ -->
+<div id="tab-quadrant" class="tab-panel">
+
+  <div class="thesis-block" style="margin-bottom:20px">
+    <h3>The Depth vs. Breadth Capital Allocation Framework</h3>
+    <p>NCGCL uses a proprietary <strong>Depth vs. Breadth</strong> matrix to optimise capital allocation across its product portfolio. <strong>Depth</strong> measures the dollar value and economic output of each intervention — its GDP contribution, FX generation, or productivity per unit of capital. <strong>Breadth</strong> measures the number of jobs created and people impacted. The ideal product sits in the <strong>top-right quadrant</strong>: high economic depth and high social breadth — what NCGCL has designated its "North Star" position.</p>
+  </div>
+
+  <!-- 2×2 Quadrant Visual -->
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-title">NCGCL Capital Allocation Matrix — Depth vs. Breadth</div>
+    <div class="card-sub">Strategic positioning of four catalytic product interventions</div>
+    <div style="display:grid;grid-template-columns:36px 1fr;grid-template-rows:1fr 36px;gap:0;height:440px;margin-top:12px;">
+      <!-- Y-axis label -->
+      <div style="display:flex;align-items:center;justify-content:center;writing-mode:vertical-lr;transform:rotate(180deg);font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted)">Economic Depth →</div>
+      <!-- 2×2 grid -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:6px;position:relative;">
+        <!-- Top Left: High Depth / Low Breadth -->
+        <div style="background:#fff;border:1px solid var(--border);border-radius:6px;padding:18px;position:relative;border-left:4px solid var(--purple)">
+          <div style="font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--purple);margin-bottom:6px">High Depth / Low Breadth</div>
+          <div style="font-size:.85rem;font-weight:700;margin-bottom:8px">Efficiency Focus</div>
+          <div style="display:inline-block;background:#ede7f6;color:#4527a0;font-size:.7rem;font-weight:700;padding:4px 10px;border-radius:10px;margin-bottom:10px">Agri-Mechanization (AMaaS)</div>
+          <div style="font-size:.72rem;color:var(--muted);line-height:1.5">A single machine generates <strong style="color:var(--ink)">PKR 15 Mn/year</strong> in revenue — massive economic output. But displaces <strong style="color:var(--red)">200–300 manual jobs</strong> per unit. Must be paired with dairy value chain interventions for net-positive employment.</div>
+          <div style="position:absolute;bottom:12px;right:12px;width:40px;height:40px;border-radius:50%;background:#ede7f6;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:#4527a0;text-align:center;line-height:1.2">High<br>Depth</div>
+        </div>
+        <!-- Top Right: NORTH STAR — High Depth / High Breadth -->
+        <div style="background:#e8f5e9;border:2px solid var(--ncgcl-green);border-radius:6px;padding:18px;position:relative;">
+          <div style="position:absolute;top:12px;right:12px;background:var(--ncgcl-green);color:#fff;font-size:.6rem;font-weight:800;padding:3px 8px;border-radius:10px;letter-spacing:.5px">★ NORTH STAR</div>
+          <div style="font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--ncgcl-green);margin-bottom:6px">High Depth / High Breadth</div>
+          <div style="font-size:.85rem;font-weight:700;margin-bottom:8px">Maximum Strategic Impact</div>
+          <div style="display:inline-block;background:#c8e6c9;color:#1a6b28;font-size:.7rem;font-weight:700;padding:4px 10px;border-radius:10px;margin-bottom:10px">Post-Shipment Export Finance</div>
+          <div style="font-size:.72rem;color:var(--ink);line-height:1.5;margin-bottom:8px">Generates direct <strong>foreign exchange</strong> (high depth) while supporting large, <strong>labour-intensive manufacturing sectors</strong> (high breadth). Wearing Apparel yields <strong>18,180 female jobs per PKR 100 Bn</strong> — highest female employment multiplier in export finance. Lowest risk execution profile of all four products.</div>
+          <div style="font-size:.68rem;color:var(--ncgcl-green);font-weight:700;border-top:1px solid #a5d6a7;padding-top:8px">Priority: Immediate execution. PSW integration is the critical path.</div>
+        </div>
+        <!-- Bottom Left: Niche / Moonshot -->
+        <div style="background:#fff;border:1px solid var(--border);border-radius:6px;padding:18px;border-left:4px solid var(--muted)">
+          <div style="font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin-bottom:6px">Low Depth / Low Breadth</div>
+          <div style="font-size:.85rem;font-weight:700;margin-bottom:8px">Niche / Moonshot</div>
+          <div style="display:inline-block;background:#f5f5f5;color:#37474f;font-size:.7rem;font-weight:700;padding:4px 10px;border-radius:10px;margin-bottom:10px;border:1px solid #ddd">Entertainment / Carbon Credits</div>
+          <div style="font-size:.72rem;color:var(--muted);line-height:1.5">High informal job multipliers but <strong>invisible to the tax and banking system</strong>. Highly difficult to formalize, collateralize, or scale through commercial FIs. Low priority for current capital allocation; monitored for future product development as formalization improves.</div>
+        </div>
+        <!-- Bottom Right: Social / Inclusion -->
+        <div style="background:#fff;border:1px solid var(--border);border-radius:6px;padding:18px;border-left:4px solid var(--amber)">
+          <div style="font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--amber);margin-bottom:6px">Medium Depth / High Breadth</div>
+          <div style="font-size:.85rem;font-weight:700;margin-bottom:8px">Social &amp; Inclusion Focus</div>
+          <div style="margin-bottom:10px">
+            <span style="display:inline-block;background:#fff3e0;color:#e65100;font-size:.68rem;font-weight:700;padding:3px 8px;border-radius:10px;margin-right:4px">Platform/Merchant Finance</span>
+            <span style="display:inline-block;background:#e0f7fa;color:#006064;font-size:.68rem;font-weight:700;padding:3px 8px;border-radius:10px">EV Bike Ecosystem</span>
+          </div>
+          <div style="font-size:.72rem;color:var(--ink);line-height:1.5">Financing <strong>Kiryana merchants</strong> or <strong>commercial EV fleets</strong> impacts millions of individuals — very high social breadth. Individual transaction sizes are moderate (medium depth), but <strong>PKR 12 Tn retail market</strong> and <strong>PKR 1.32 Tn EV market</strong> mean aggregate economic impact at scale is substantial. EV adds climate finance credentials.</div>
+        </div>
+        <!-- Axis labels -->
+        <div style="grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:8px;padding-top:4px">
+          <div style="width:80px;height:1px;background:var(--border)"></div>
+          <span style="font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted)">← Social Breadth (Jobs &amp; People Reached) →</span>
+          <div style="width:80px;height:1px;background:var(--border)"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gender Integration -->
+  <div class="section-bar">Gender &amp; Labour Integration — Sector-Specific Employment Multipliers</div>
+  <div class="g2">
+    <div class="card">
+      <div class="card-title">Female Employment per PKR 100 Bn Invested — Key Sectors</div>
+      <div class="card-sub">Why sector targeting directly determines NCGCL's gender impact credentials</div>
+      <div class="ch"><canvas id="c-gender-mult"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Pakistan Labour Market — The Formalization Crisis</div>
+      <div class="card-sub">Context for NCGCL's credit access mandate</div>
+      <div style="margin-top:8px">
+        <div class="waterfall-row" style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--cream)">
+          <div style="width:200px;font-size:.78rem;color:var(--muted)">Economy informality rate</div>
+          <div style="flex:1;height:16px;background:var(--cream);border-radius:3px;overflow:hidden"><div style="height:100%;background:var(--red);width:85.7%;border-radius:3px"></div></div>
+          <div style="width:70px;text-align:right;font-weight:700;font-family:var(--mono);color:var(--red)">85.7%</div>
+        </div>
+        <div class="waterfall-row" style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--cream)">
+          <div style="width:200px;font-size:.78rem;color:var(--muted)">Establishments &lt;10 workers</div>
+          <div style="flex:1;height:16px;background:var(--cream);border-radius:3px;overflow:hidden"><div style="height:100%;background:var(--amber);width:95.5%;border-radius:3px"></div></div>
+          <div style="width:70px;text-align:right;font-weight:700;font-family:var(--mono);color:var(--amber)">95.5%</div>
+        </div>
+        <div class="waterfall-row" style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--cream)">
+          <div style="width:200px;font-size:.78rem;color:var(--muted)">Female LFPR (national)</div>
+          <div style="flex:1;height:16px;background:var(--cream);border-radius:3px;overflow:hidden"><div style="height:100%;background:var(--ncgcl-blue);width:22.7%;border-radius:3px"></div></div>
+          <div style="width:70px;text-align:right;font-weight:700;font-family:var(--mono);color:var(--ncgcl-blue)">22.7%</div>
+        </div>
+        <div class="waterfall-row" style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--cream)">
+          <div style="width:200px;font-size:.78rem;color:var(--muted)">Youth female unemployment</div>
+          <div style="flex:1;height:16px;background:var(--cream);border-radius:3px;overflow:hidden"><div style="height:100%;background:var(--maroon);width:18.2%;border-radius:3px"></div></div>
+          <div style="width:70px;text-align:right;font-weight:700;font-family:var(--mono);color:var(--maroon)">18.2%</div>
+        </div>
+        <div class="waterfall-row" style="display:flex;align-items:center;gap:10px;padding:10px 0">
+          <div style="width:200px;font-size:.78rem;color:var(--muted)">SME financing / GDP</div>
+          <div style="flex:1;height:16px;background:var(--cream);border-radius:3px;overflow:hidden"><div style="height:100%;background:var(--ncgcl-green);width:1%;border-radius:3px"></div></div>
+          <div style="width:70px;text-align:right;font-weight:700;font-family:var(--mono);color:var(--ncgcl-green)">1%</div>
+        </div>
+        <div style="margin-top:12px;padding:10px;background:var(--cream);border-radius:4px;font-size:.72rem;color:var(--muted)">Regional SME finance average: 7–8% of GDP. Pakistan's gap represents a multi-decade structural failure that cannot close without institutional risk transfer.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Strategic Targeting — Gender-Maximising Product Pairs</div>
+    <div class="card-sub">How NCGCL's sector selection directly determines gender impact credentials for DFI reporting</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Product</th><th>Target Sub-Sector</th><th>Female Jobs / PKR 100 Bn</th><th>Female Share %</th><th>Strategic Logic</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Export Finance</strong></td><td>Wearing Apparel</td><td class="mono" style="color:var(--ncgcl-green)">18,180</td><td class="mono">60%</td><td class="muted">Highest female employment multiplier in export finance. Mandatory sector focus for gender credentials.</td></tr>
+          <tr><td><strong>Agri (AMaaS offset)</strong></td><td>Dairy Value Chain</td><td class="mono" style="color:var(--ncgcl-green)">69,660</td><td class="mono">~65%</td><td class="muted">Ranked #1 by female job generation. Essential pairing with AMaaS to offset labour displacement. Net-positive gender outcome.</td></tr>
+          <tr><td><strong>Platform/Merchant Finance</strong></td><td>Female Kiryana operators</td><td class="mono">TBD</td><td class="mono">Target 30%+</td><td class="muted">Platform data enables identification and targeting of female-owned merchants. MAGFA minimum threshold recommended.</td></tr>
+          <tr><td><strong>EV Bike Ecosystem</strong></td><td>Female assembler workforce</td><td class="mono">TBD</td><td class="mono">Target 25%+</td><td class="muted">Domestic EV assembler supply chain offers gender integration opportunity at manufacturing level.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div><!-- /quadrant -->
+
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     TAB 6 — FINANCIAL MECHANICS
+══════════════════════════════════════════════════════════════════════════ -->
+<div id="tab-mechanics" class="tab-panel">
+
+  <div class="section-bar">How NCGCL Creates Financial Value — The Capital Chain</div>
+
+  <div class="insights">
+    <div class="insight">
+      <div class="insight-n">PKR 8 Bn → 40 Bn</div>
+      <div class="insight-label">The 5× Guarantee Leverage</div>
+      <div class="insight-d">NCGCL's PKR 8 Bn capital base is engineered to issue <strong>PKR 40 Bn in guarantees</strong> — a disciplined 5× leverage. This is the guarantee book that serves as the direct operating instrument of NCGCL's mandate.</div>
+    </div>
+    <div class="insight amber">
+      <div class="insight-n">PKR 40 Bn → 500 Bn</div>
+      <div class="insight-label">The Catalytic Credit Multiplier</div>
+      <div class="insight-d">PKR 40 Bn in NCGCL guarantees is engineered to catalyse up to <strong>PKR 500 Bn in total market credit</strong> — a further 12.5× amplification as FIs deploy backed lending across the guaranteed portfolio.</div>
+    </div>
+    <div class="insight blue">
+      <div class="insight-n">1.5–3.0%</div>
+      <div class="insight-label">Annual Guarantee Fee Range</div>
+      <div class="insight-d">Guarantee fee paid by FIs annually on the guaranteed portion. On a fully-deployed PKR 40 Bn book, this generates <strong>PKR 600 Mn – 1.2 Bn in annual fee income</strong> — NCGCL's primary revenue stream.</div>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="card-title">The 8→40→500 Capital Chain — Visualised</div>
+      <div class="card-sub">NCGCL capital base → guarantee book → total market credit catalysed</div>
+      <div class="ch"><canvas id="c-leverage"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Fee Income at PKR 40 Bn Target Book</div>
+      <div class="card-sub">Annual guarantee fee income at 1%, 2%, and 3% fee rates on deployed guarantee book</div>
+      <div class="ch"><canvas id="c-fee"></canvas></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-title">Sovereign NIM vs. NCGCL-Enabled SME Returns — The Commercial Case for FI Participation</div>
+    <div class="card-sub">Why banks need NCGCL to make SME lending commercially rational against 5.5–6% risk-free sovereign NIM</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Lending Option</th><th>Gross NIM</th><th>Risk Weight</th><th>Expected Loss</th><th>Net Risk-Adjusted Return</th><th>NCGCL Impact</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Sovereign / Govt Securities</strong></td><td class="mono" style="color:var(--ncgcl-green)">5.5–6.0%</td><td class="mono">0%</td><td class="mono">~0%</td><td class="mono" style="color:var(--ncgcl-green)">5.5–6.0% (risk-free)</td><td class="muted">—</td></tr>
+          <tr><td><strong>Large Corporate Lending</strong></td><td class="mono">3.5–4.5%</td><td class="mono">100%</td><td class="mono">0.5–1.0%</td><td class="mono">2.5–4.0%</td><td class="muted">Moderate benefit</td></tr>
+          <tr><td><strong>SME Lending (unguaranteed)</strong></td><td class="mono" style="color:var(--red)">6–8%</td><td class="mono">100–150%</td><td class="mono">4–8%</td><td class="mono" style="color:var(--red)">~0–2% (uncompetitive)</td><td class="muted">Without NCGCL: not viable</td></tr>
+          <tr><td><strong>SME Lending + NCGCL Guarantee</strong></td><td class="mono">6–8%</td><td class="mono">20–50%</td><td class="mono">1–2% (covered)</td><td class="mono" style="color:var(--ncgcl-green)">4–6% (competitive)</td><td class="muted"><strong style="color:var(--ncgcl-green)">Makes SME lending rational</strong></td></tr>
+          <tr class="tbl-total"><td>NCGCL Value Add</td><td colspan="3" class="muted">Reduces effective risk weight via SBP liquid asset recognition + absorbs 30–70% of expected loss</td><td colspan="2" class="mono" style="color:var(--ncgcl-green)">+3–5% net return improvement</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section-bar">Loss Waterfall Mechanics</div>
+  <div class="g2">
+    <div class="card">
+      <div class="card-title">Illustrative Loss Distribution — Pari-Passu 30/70 Structure</div>
+      <div class="card-sub">How losses flow at different portfolio default rates</div>
+      <div class="ch"><canvas id="c-loss"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Scenario Analysis — Capital Adequacy</div>
+      <div class="card-sub">NCGCL capital required at different coverage % and portfolio sizes</div>
+      <div class="tbl-wrap" style="margin-top:8px">
+        <table>
+          <thead><tr><th>Portfolio (PKR Bn)</th><th>Coverage 30%</th><th>Coverage 50%</th><th>Coverage 70%</th></tr></thead>
+          <tbody>
+            <tr><td>5</td><td class="mono">1.50 Bn</td><td class="mono">2.50 Bn</td><td class="mono">3.50 Bn</td></tr>
+            <tr><td>10</td><td class="mono">3.00 Bn</td><td class="mono">5.00 Bn</td><td class="mono">7.00 Bn</td></tr>
+            <tr><td>15</td><td class="mono">4.50 Bn</td><td class="mono">7.50 Bn</td><td class="mono">10.50 Bn</td></tr>
+            <tr><td>20</td><td class="mono">6.00 Bn</td><td class="mono">10.00 Bn</td><td class="mono">14.00 Bn</td></tr>
+            <tr class="tbl-total"><td>Current Pipeline</td><td class="mono">4.07 Bn</td><td class="mono">6.78 Bn</td><td class="mono">9.49 Bn</td></tr>
+          </tbody>
+        </table>
+        <div style="font-size:.68rem;color:var(--muted);margin-top:8px">Assumes quantified pipeline of PKR 13.56 Bn fully executed. Capital figures represent maximum NCGCL guarantee exposure at each coverage level.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">The Investor Value Proposition — Summary Economics</div>
+    <div class="card-sub">Illustrative return and risk profile for patient capital in NCGCL guarantee structure</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Parameter</th><th>First-Loss Position</th><th>Second-Loss (NCGCL)</th><th>Mezzanine</th><th>FI Residual</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Risk Position</strong></td><td class="muted">Absorbs initial losses</td><td class="muted">After first-loss exhausted</td><td class="muted">Mid-stack</td><td class="muted">Tail risk only</td></tr>
+          <tr><td><strong>Expected Loss</strong></td><td class="muted">High — sized to clear market</td><td class="muted">Moderate — well-protected</td><td class="muted">Low-moderate</td><td class="muted">Low — historical FI default rates</td></tr>
+          <tr><td><strong>Return Profile</strong></td><td class="muted">Concessional / grant equivalent</td><td class="muted">Fee income + impact premium</td><td class="muted">Market rate + spread</td><td class="muted">Commercial lending rate</td></tr>
+          <tr><td><strong>Investor Type</strong></td><td class="muted">GoP / bilateral donor / DFI grant</td><td class="muted">NCGCL / patient capital investor</td><td class="muted">DFI / impact fund</td><td class="muted">Commercial bank</td></tr>
+          <tr><td><strong>Capital Recycling</strong></td><td class="muted">Consumed on default</td><td class="muted">Recycled — 5–7 year horizon</td><td class="muted">Term-matched</td><td class="muted">Rolling portfolio</td></tr>
+          <tr><td><strong>SBP Recognition</strong></td><td class="muted">N/A</td><td class="muted">Yes — full guarantee</td><td class="muted">Partial</td><td class="muted">N/A — FI on-balance sheet</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div><!-- /mechanics -->
+
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     TAB 7 — IMPACT FRAMEWORK
+══════════════════════════════════════════════════════════════════════════ -->
+<div id="tab-impact" class="tab-panel">
+
+  <div class="section-bar">Impact Thesis — NCGCL as Pakistan's Development Finance Multiplier</div>
+
+  <div class="impact-grid">
+    <div class="impact-cell">
+      <div class="impact-icon">🏭</div>
+      <div class="impact-val">5.2 Mn</div>
+      <div class="impact-label">MSMEs in Pakistan</div>
+      <div class="impact-sub">&lt;5% formally financed</div>
+    </div>
+    <div class="impact-cell">
+      <div class="impact-icon">💼</div>
+      <div class="impact-val">2.75 Mn</div>
+      <div class="impact-label">New Jobs Needed / Year</div>
+      <div class="impact-sub">National employment mandate</div>
+    </div>
+    <div class="impact-cell">
+      <div class="impact-icon">👩‍💼</div>
+      <div class="impact-val">22.7%</div>
+      <div class="impact-label">Female LFPR</div>
+      <div class="impact-sub">18.2% youth female unemployment</div>
+    </div>
+    <div class="impact-cell">
+      <div class="impact-icon">📊</div>
+      <div class="impact-val">85.7%</div>
+      <div class="impact-label">Informality Rate</div>
+      <div class="impact-sub">95.5% of firms: &lt;10 workers</div>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="card green-top">
+      <div class="card-title">Credit Access &amp; MSME Formalization</div>
+      <div class="card-sub">Primary impact dimension — the structural enabler</div>
+      <div class="strat-point" style="margin-top:8px"><div class="sp-num">1</div><div class="sp-text"><strong>Formalization catalyst:</strong> Pakistan's 85.7% informality rate and 95.5% micro-enterprise share mean formal banking access is structurally blocked. NCGCL guarantees convert informal cashflows into bankable assets — the first step to enterprise formalization.</div></div>
+      <div class="strat-point"><div class="sp-num">2</div><div class="sp-text"><strong>Better credit terms:</strong> Guarantee coverage allows FIs to improve pricing, extend tenor, and reduce collateral demands. For an MSME paying 25%+ informal credit rates, formalisation through NCGCL-backed lending is transformative.</div></div>
+      <div class="strat-point"><div class="sp-num">3</div><div class="sp-text"><strong>2.75 million jobs imperative:</strong> Pakistan needs 2.75 million new jobs annually. These jobs come from MSMEs. MSMEs cannot hire without credit. Credit will not flow without risk transfer. <strong>NCGCL is the missing link in Pakistan's employment creation chain.</strong></div></div>
+      <div class="strat-point"><div class="sp-num">4</div><div class="sp-text"><strong>SME finance from 1% → 7% of GDP:</strong> Closing half the gap to the regional average (7–8%) would represent ~PKR 3 Tn in additional annual SME credit — the economic transformation NCGCL's 8→40→500 Bn capital chain is designed to unlock.</div></div>
+    </div>
+    <div class="card blue-top">
+      <div class="card-title">Gender, Climate &amp; Green Finance</div>
+      <div class="card-sub">Cross-cutting impact credentials — essential for DFI co-financing</div>
+      <div class="strat-point" style="margin-top:8px"><div class="sp-num">1</div><div class="sp-text"><strong>Wearing Apparel targeting:</strong> Export Finance directed to Wearing Apparel generates <strong>18,180 female jobs per PKR 100 Bn invested</strong> (60% female workforce). Not aspirational — a direct function of which sub-sector NCGCL's MAGFA targets.</div></div>
+      <div class="strat-point"><div class="sp-num">2</div><div class="sp-text"><strong>Dairy value chain:</strong> Agri interventions targeting Dairy generate <strong>69,660 female jobs per PKR 100 Bn</strong> — ranked #1 by gender employment multiplier, and the essential offset to AMaaS labour displacement.</div></div>
+      <div class="strat-point"><div class="sp-num">3</div><div class="sp-text"><strong>EV transition — PKR 1.32 Tn:</strong> 30–40 Mn registered bikes in Pakistan; 40% substitution = 6.6 Mn EV units at PKR 200,000 each. NCGCL guarantee on fleet and assembler financing directly enables Pakistan's green mobility transition.</div></div>
+      <div class="strat-point"><div class="sp-num">4</div><div class="sp-text"><strong>GCF Climate Facility:</strong> Active proposal positions NCGCL as Pakistan's national implementing entity for climate capital. Unlocks GCF/GEF concessional first-loss capital, further de-risking NCGCL's second-loss position on green products.</div></div>
+    </div>
+  </div>
+
+  <div class="section-bar">KPI Framework — Measurable Impact Outcomes</div>
+  <div class="card">
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Impact Dimension</th><th>KPI</th><th>Measurement Method</th><th>Reporting Frequency</th><th>SDG Alignment</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Credit Access</strong></td><td>New MSME borrowers reached</td><td class="muted">FI quarterly reporting via MAGFA schedule</td><td class="muted">Quarterly</td><td class="muted">SDG 8, 10</td></tr>
+          <tr><td><strong>Financial Inclusion</strong></td><td>% of borrowers previously unbanked / underbanked</td><td class="muted">FI KYC data + NADRA / SBP cross-reference</td><td class="muted">Semi-annual</td><td class="muted">SDG 1, 10</td></tr>
+          <tr><td><strong>Gender</strong></td><td>Women-led enterprise share of guaranteed portfolio</td><td class="muted">FI origination data; minimum 25% target in product design</td><td class="muted">Quarterly</td><td class="muted">SDG 5, 8</td></tr>
+          <tr><td><strong>Employment</strong></td><td>Estimated jobs created/sustained per PKR Bn deployed</td><td class="muted">Proxy methodology; validated via FI sample surveys</td><td class="muted">Annual</td><td class="muted">SDG 8</td></tr>
+          <tr><td><strong>Climate</strong></td><td>CO₂-equivalent emissions reduced (tCO₂e)</td><td class="muted">M&amp;V protocol per green product; E-Bus + efficiency deals</td><td class="muted">Annual</td><td class="muted">SDG 13</td></tr>
+          <tr><td><strong>Agriculture</strong></td><td>Agri smallholder loans enabled</td><td class="muted">NEAGAP + HBL Zarai / agri-FI portfolio reporting</td><td class="muted">Semi-annual</td><td class="muted">SDG 2, 8</td></tr>
+          <tr><td><strong>Portfolio Quality</strong></td><td>NPL rate, vintage curve, delinquency buckets (30/60/90 DPD)</td><td class="muted">Monthly FI reporting; NCGCL claims tracking system</td><td class="muted">Monthly</td><td class="muted">Governance</td></tr>
+          <tr><td><strong>Leverage</strong></td><td>Guarantee capital × leverage ratio = FI lending mobilised</td><td class="muted">NCGCL portfolio management system</td><td class="muted">Quarterly</td><td class="muted">SDG 17</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:0">
+    <div class="card-title">Illustrative Impact at Pipeline Scale</div>
+    <div class="card-sub">Estimated development outcomes if current pipeline converts at 75% — illustrative, assumption-based</div>
+    <div class="ch"><canvas id="c-impact"></canvas></div>
+  </div>
+
+</div><!-- /impact -->
+
+
+<!-- ── FOOTER ── -->
+<div class="footer">
+  <div><strong>NCGCL · Investor Intelligence Dashboard</strong> · Q1 2026 · Restricted Distribution · For Authorised Recipients Only</div>
+  <div>Pipeline data: internal NCGCL origination tracker</div>
+  <div style="color:var(--ncgcl-green);font-weight:700">National Credit Guarantee Company Limited</div>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────
+Chart.defaults.font.family = "'Inter', system-ui, sans-serif";
+const COLORS = ['#1a6b28','#e65100','#1e6091','#f9a825','#37474f','#b71c1c','#006064','#4527a0','#880e4f','#f57f17','#00838f','#558b2f'];
+const CD = {responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{font:{size:10},boxWidth:12}},tooltip:{backgroundColor:'rgba(13,27,42,0.95)'}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,grid:{color:'#f0ebe0'}}}};
+let charts={};
+
+function makeChart(id,type,labels,datasets,opts={}){
+  if(charts[id]) charts[id].destroy();
+  const ctx=document.getElementById(id); if(!ctx) return;
+  charts[id]=new Chart(ctx,{type,data:{labels,datasets},options:{
+    responsive:true,maintainAspectRatio:false,
+    indexAxis:opts.indexAxis||'x',
+    plugins:{
+      legend:opts.legend!==undefined?opts.legend:{position:'top',labels:{font:{size:10},boxWidth:12,color:'#0d1b2a'}},
+      tooltip:{backgroundColor:'rgba(13,27,42,0.95)'}
+    },
+    cutout:opts.cutout,
+    scales:type==='doughnut'?undefined:{
+      x:{grid:{display:opts.indexAxis==='y'}},
+      y:opts.y===null?{display:false}:{beginAtZero:true,grid:{color:'#f0ebe0'},...(opts.y||{})}
+    }
+  }});
+}
+
+// ── PIPELINE DATA (anonymised) ──────────────────────────────────────────
+const anonPipeline = [
+  {code:'CB-01',type:'Commercial Bank',typeCode:'fi',   amt:1000,product:'Credit Guarantee FI',layer:'Pari-Passu',stage:'advanced',dot:'sdot-g',stageLabel:'Fee Received',pill:'p-fi',  notes:'MAGFA fee received. Most advanced deal.'},
+  {code:'MFB-01',type:'Microfinance Bank',typeCode:'fi', amt:1500,product:'Credit Guarantee FI',layer:'First-Loss',stage:'active',dot:'sdot-g',stageLabel:'Active',pill:'p-fi',  notes:'Awaiting internal feedback; follow-up scheduled.'},
+  {code:'CB-02',type:'Commercial Bank',typeCode:'fi',   amt:1500,product:'Credit Guarantee FI',layer:'Pari-Passu',stage:'active',dot:'sdot-g',stageLabel:'Active',pill:'p-fi',  notes:'Business comments received; compliance review pending.'},
+  {code:'CB-03',type:'Commercial Bank',typeCode:'fi',   amt:1500,product:'Credit Guarantee FI',layer:'Pari-Passu',stage:'active',dot:'sdot-g',stageLabel:'Active',pill:'p-fi',  notes:'Internal liaison (Compliance & Risk) in progress.'},
+  {code:'CB-04',type:'Commercial Bank',typeCode:'fi',   amt:1000,product:'Credit Guarantee FI',layer:'Pari-Passu',stage:'active',dot:'sdot-g',stageLabel:'Active',pill:'p-fi',  notes:'Abridged MAGFA to be forwarded.'},
+  {code:'CB-05',type:'Commercial Bank',typeCode:'fi',   amt:1000,product:'Credit Guarantee FI',layer:'Pari-Passu',stage:'active',dot:'sdot-g',stageLabel:'Active',pill:'p-fi',  notes:'Approval chains in review internally.'},
+  {code:'CB-06',type:'Commercial Bank (Islamic)',typeCode:'fi', amt:1000,product:'Credit Guarantee FI',layer:'Pari-Passu',stage:'active',dot:'sdot-g',stageLabel:'Active',pill:'p-fi',  notes:'Risk cleared. New product verticals (Health & Education) under discussion. COO meeting awaited.'},
+  {code:'CB-07',type:'Commercial Bank',typeCode:'fi',   amt:1500,product:'Credit Guarantee FI',layer:'Pari-Passu',stage:'pending',dot:'sdot-a',stageLabel:'Pending',pill:'p-pen', notes:'Meeting alignment post weekend.'},
+  {code:'CORP-01',type:'Corporate Entity',typeCode:'corp',amt:150,product:'Credit Guarantee Corp',layer:'First-Loss',stage:'active',dot:'sdot-g',stageLabel:'Active',pill:'p-corp',notes:'Concerns raised via development finance channel; under review.'},
+  {code:'RSP-01',type:'Rural Support Programme',typeCode:'corp',amt:70,product:'Credit Guarantee Corp',layer:'Pari-Passu',stage:'initial',dot:'sdot-s',stageLabel:'Initial',pill:'p-ini',notes:'No updates from POC.'},
+  {code:'AGRI-01',type:'Agricultural Finance Partner',typeCode:'corp',amt:60,product:'Credit Guarantee Corp',layer:'First-Loss',stage:'active',dot:'sdot-g',stageLabel:'Active',pill:'p-corp',notes:'Reduced program size (tentative). Concept paper agreed.'},
+  {code:'FIN-01',type:'Fintech Platform',typeCode:'tech', amt:500,product:'Credit Guarantee Tech',layer:'Portfolio Cover',stage:'active',dot:'sdot-g',stageLabel:'Active',pill:'p-tech',notes:'NDA signed. System integration in process. Meeting Friday.'},
+  {code:'BNK-08',type:'Commercial Bank',typeCode:'portfolio', amt:null,product:'CG — Portfolio',layer:'Pari-Passu TBD',stage:'initial',dot:'sdot-s',stageLabel:'Initial',pill:'p-ini',notes:'Initial contact established.'},
+  {code:'BIL-01',type:'Bilateral Bank A',typeCode:'portfolio', amt:null,product:'CG — Portfolio',layer:'Pari-Passu',stage:'pending',dot:'sdot-a',stageLabel:'Pending',pill:'p-pen',notes:'MOU shared; response awaited. Supply chain + climate product in IB.'},
+  {code:'BIL-02',type:'Bilateral Bank B',typeCode:'portfolio', amt:null,product:'CG — Portfolio',layer:'Pari-Passu',stage:'pending',dot:'sdot-a',stageLabel:'Pending',pill:'p-pen',notes:'MoU to be signed post-Ramadan.'},
+  {code:'BIL-03',type:'Bilateral Bank C',typeCode:'portfolio', amt:200,product:'CG — Portfolio',layer:'Pari-Passu',stage:'initial',dot:'sdot-s',stageLabel:'Initial',pill:'p-ini',notes:'Deal size confirmed; engagement in early stage.'},
+  {code:'GRFIN-01',type:'Transport Conglomerate',typeCode:'green',amt:500,product:'CG + STFF (Green)',layer:'Second-Loss',stage:'active',dot:'sdot-g',stageLabel:'Active',pill:'p-stff',notes:'2nd call scheduled — E-Bus fleet (green transport). Pricing mechanics under development.'},
+  {code:'BNK-09',type:'Commercial Bank (Islamic)',typeCode:'portfolio',amt:null,product:'CG — Portfolio',layer:'Pari-Passu',stage:'pending',dot:'sdot-a',stageLabel:'Pending',pill:'p-pen',notes:'SME/Agri heads meeting post-Eid.'},
+  {code:'BNK-10',type:'Commercial Bank',typeCode:'portfolio',amt:null,product:'CG — Portfolio',layer:'Pari-Passu TBD',stage:'initial',dot:'sdot-s',stageLabel:'Initial',pill:'p-ini',notes:'Pipeline — TBD.'},
+  {code:'BNK-11',type:'Islamic Bank A',typeCode:'portfolio', amt:null,product:'CG — Portfolio',layer:'Pari-Passu TBD',stage:'initial',dot:'sdot-s',stageLabel:'Initial',pill:'p-ini',notes:'Pipeline — TBD.'},
+  {code:'BNK-12',type:'Islamic Bank B',typeCode:'portfolio', amt:null,product:'CG — Portfolio',layer:'Pari-Passu TBD',stage:'initial',dot:'sdot-s',stageLabel:'Initial',pill:'p-ini',notes:'Pipeline — TBD.'},
+  {code:'MFB-02',type:'Microfinance Institution',typeCode:'portfolio',amt:500,product:'CG — Portfolio',layer:'First-Loss',stage:'stalled',dot:'sdot-r',stageLabel:'Stalled',pill:'p-sta',notes:'Call delayed.'},
+  {code:'BIL-04',type:'Bilateral Bank D',typeCode:'portfolio', amt:null,product:'CG — Portfolio',layer:'Pari-Passu',stage:'active',dot:'sdot-g',stageLabel:'Active',pill:'p-adv',notes:'2nd meeting TBD. Supply chain product with fintech partner under discussion.'},
+  {code:'SPV-01',type:'Sukuk SPV / Fintech',typeCode:'cm',amt:500,product:'Sukuk Guarantee',layer:'Returns Guarantee',stage:'active',dot:'sdot-g',stageLabel:'Active',pill:'p-sukuk',notes:'NDA signed. 2nd meeting next week.'},
+  {code:'CM-01',type:'Capital Markets Partner',typeCode:'cm',amt:null,product:'Capital Markets',layer:'Mezzanine',stage:'active',dot:'sdot-g',stageLabel:'Active',pill:'p-cm',notes:'NDA received. Structuring discussions to begin.'},
+  {code:'DIG-01',type:'Digital Lending Platform',typeCode:'cm',amt:null,product:'Commercial Paper',layer:'Portfolio Cover',stage:'pending',dot:'sdot-a',stageLabel:'Pending',pill:'p-pen',notes:'Awaiting data. ETA this week.'},
+  {code:'EWA-01',type:'Earned Wage Access Platform',typeCode:'cm',amt:null,product:'Earned Wage Access',layer:'Receivables Cover',stage:'active',dot:'sdot-g',stageLabel:'Active',pill:'p-ewa',notes:'Information shared. Follow-up questions to be shared.'},
+  {code:'JFA-01',type:'Commercial Bank (Large)',typeCode:'cm',amt:1000,product:'Guarantee + IB Advisory',layer:'Equity/JFA',stage:'stalled',dot:'sdot-r',stageLabel:'Stalled',pill:'p-sta',notes:'First meeting postponed. Rescheduling required.'},
+  {code:'JFA-02',type:'Bilateral Bank E',typeCode:'cm',amt:null,product:'Guarantee + IB Advisory',layer:'Equity/JFA',stage:'pending',dot:'sdot-a',stageLabel:'Pending',pill:'p-pen',notes:'First meeting post-Eid.'},
+  {code:'MULTI-01',type:'Multilateral Partner',typeCode:'corp',amt:80,product:'Consortium Guarantee',layer:'Blended',stage:'initial',dot:'sdot-s',stageLabel:'Initial',pill:'p-cons',notes:'Consortium structure under exploration.'},
+];
+
+const FILTER_MAP = {fi:'fi',corp:'corp',portfolio:'portfolio',tech:'tech',green:'green',cm:'cm',advanced:'advanced'};
+
+function renderAnonTable(filter){
+  let rows = anonPipeline;
+  if(filter==='advanced') rows=anonPipeline.filter(d=>d.stage==='advanced');
+  else if(filter!=='ALL') rows=anonPipeline.filter(d=>d.typeCode===filter);
+  document.getElementById('anon-tbody').innerHTML=rows.map((d,i)=>`
+    <tr>
+      <td style="color:var(--muted);font-size:.7rem">${anonPipeline.indexOf(d)+1}</td>
+      <td style="font-weight:700;font-family:var(--mono);font-size:.78rem">${d.code}</td>
+      <td style="font-size:.75rem">${d.type}</td>
+      <td class="mono">${d.amt?d.amt.toLocaleString():'<span style="color:var(--muted);font-weight:400">TBD</span>'}</td>
+      <td><span class="pill ${d.pill}">${d.product}</span></td>
+      <td style="font-size:.72rem;color:var(--muted)">${d.layer}</td>
+      <td><span class="sdot ${d.dot}"></span><span style="font-size:.72rem;font-weight:600">${d.stageLabel}</span></td>
+      <td style="font-size:.72rem;color:var(--muted)">${d.notes}</td>
+    </tr>`).join('');
+}
+renderAnonTable('ALL');
+
+function filterTable(f,btn){
+  document.querySelectorAll('#filter-row .filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderAnonTable(f);
+}
+
+// ── TAB SWITCH ─────────────────────────────────────────────────────────────
+function switchTab(id,btn){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+  setTimeout(()=>initCharts(),50);
+}
+
+// ── CHARTS ──────────────────────────────────────────────────────────────────
+let chartsInited = false;
+function initCharts(){
+  if(chartsInited) return;
+  chartsInited = true;
+
+  // Blended finance stacked
+  makeChart('c-blend','bar',['Without NCGCL','With First-Loss','With NCGCL 2nd-Loss','Fully Blended'],
+    [{label:'Commercial Lending',data:[20,60,85,100],backgroundColor:'#1a6b28',borderRadius:4,borderSkipped:false},
+     {label:'NCGCL Guarantee',data:[0,0,10,15],backgroundColor:'#1e6091',borderRadius:4,borderSkipped:false},
+     {label:'Donor First-Loss',data:[0,5,5,10],backgroundColor:'#f9a825',borderRadius:4,borderSkipped:false}],
+    {legend:{position:'top',labels:{font:{size:10},boxWidth:12}},y:{stacked:true,ticks:{callback:v=>v+'%'}}});
+
+  // Institution type pie
+  const itypes={'Commercial Bank':11,'Bilateral Bank':5,'Microfinance/MFB':3,'Islamic Bank':3,'Fintech/Platform':3,'Corporate/Other':5};
+  makeChart('c-inst-type','doughnut',Object.keys(itypes),
+    [{data:Object.values(itypes),backgroundColor:COLORS,borderWidth:1,borderColor:'#fff'}],
+    {legend:{position:'right',labels:{font:{size:9},boxWidth:10}},cutout:'55%',y:null});
+
+  // Product bar
+  const prods={'CG — FI':10000,'CG — Corp':280,'CG — Tech':500,'CG — Portfolio':700,'CG+STFF Green':500,'Sukuk':500,'Capital Markets':0,'Consortium':80,'JFA Advisory':1000};
+  makeChart('c-prod-bar','bar',Object.keys(prods),
+    [{data:Object.values(prods),backgroundColor:COLORS,borderRadius:4,borderSkipped:false}],
+    {legend:{display:false},y:{ticks:{callback:v=>v>=1000?(v/1000)+'k':v}}});
+
+  // Product pie
+  const pct=[9,3,1,5,2,2,3,2,3];
+  const plabels=['CG FI (9)','CG Corp (3)','CG Tech (1)','CG Portfolio (5)','CG+STFF (1)','Sukuk (1)','Cap Mkts (3)','Consortium (1)','JFA (2)'];
+  makeChart('c-prod-pie','doughnut',plabels,
+    [{data:pct,backgroundColor:COLORS,borderWidth:1,borderColor:'#fff'}],
+    {legend:{position:'right',labels:{font:{size:9},boxWidth:10}},cutout:'50%',y:null});
+
+  // TBD vs quantified
+  makeChart('c-tbd','bar',['Quantified','TBD'],
+    [{data:[18,12],backgroundColor:['#1a6b28','#c8bfaf'],borderRadius:4,borderSkipped:false}],
+    {legend:{display:false},indexAxis:'y',y:null});
+
+  // Size distribution
+  makeChart('c-size','bar',['<100','100–499','500–999','1,000–1,499','≥1,500'],
+    [{data:[2,1,6,4,5],backgroundColor:COLORS,borderRadius:4,borderSkipped:false}],
+    {legend:{display:false},y:{stepSize:1}});
+
+  // Stage
+  makeChart('c-stage','bar',['Fee Received','Active','Pending','Stalled','Initial'],
+    [{data:[1,13,8,2,6],backgroundColor:['#1a6b28','#1e6091','#e65100','#b71c1c','#78909c'],borderRadius:4,borderSkipped:false}],
+    {legend:{display:false},y:{stepSize:1}});
+
+  // Leverage chain: 8→40→500
+  makeChart('c-leverage','bar',['Capital Base\n(PKR 8 Bn)','Guarantee Book\n(PKR 40 Bn)','Market Credit\n(PKR 500 Bn)'],
+    [{label:'Capital chain (PKR Bn)',data:[8,40,500],backgroundColor:['#1a6b28','#1e6091','#f9a825'],borderRadius:4,borderSkipped:false}],
+    {legend:{display:false},y:{ticks:{callback:v=>v>=100?v+' Bn':v+' Bn'}}});
+
+  // Fee income on 40 Bn book
+  makeChart('c-fee','bar',['PKR 10 Bn\ndeployed','PKR 20 Bn\ndeployed','PKR 30 Bn\ndeployed','PKR 40 Bn\n(target book)'],
+    [{label:'At 1% fee',data:[100,200,300,400],backgroundColor:'#e8f5e9',borderRadius:4,borderSkipped:false},
+     {label:'At 2% fee',data:[200,400,600,800],backgroundColor:'#2b8c3a',borderRadius:4,borderSkipped:false},
+     {label:'At 3% fee',data:[300,600,900,1200],backgroundColor:'#1a6b28',borderRadius:4,borderSkipped:false}],
+    {legend:{position:'top',labels:{font:{size:10},boxWidth:12}},y:{ticks:{callback:v=>'PKR '+v+' Mn'}}});
+
+  // Loss waterfall
+  const lossRates=[2,4,6,8,10];
+  makeChart('c-loss','bar',lossRates.map(r=>r+'% default rate'),
+    [{label:'FI bears (70%)',data:lossRates.map(r=>r*0.7),backgroundColor:'#eceff1',borderRadius:4,borderSkipped:false},
+     {label:'NCGCL bears (30%)',data:lossRates.map(r=>r*0.3),backgroundColor:'#1e6091',borderRadius:4,borderSkipped:false}],
+    {legend:{position:'top',labels:{font:{size:10},boxWidth:12}},y:{stacked:true,ticks:{callback:v=>v+'%'}}});
+
+  // Gender employment multiplier
+  makeChart('c-gender-mult','bar',
+    ['Dairy\nValue Chain','Wearing\nApparel','Textiles','Agri\n(general)','Platform\nMerchants','EV\nEcosystem'],
+    [{label:'Female jobs per PKR 100 Bn invested',data:[69660,18180,12400,9200,7500,4200],backgroundColor:['#1a6b28','#2b8c3a','#1e6091','#f9a825','#e65100','#006064'],borderRadius:4,borderSkipped:false}],
+    {legend:{display:false},y:{ticks:{callback:v=>v.toLocaleString()}}});
+
+  // Impact at scale chart
+  makeChart('c-impact','bar',
+    ['MSME loans\nenabled (Bn PKR)','Jobs sustained\n(\'000s)','Female workers\nreached (\'000s)','EV units financed\n(\'000s)'],
+    [{label:'At 40 Bn guarantee book, 50% conversion',data:[200,500,85,330],backgroundColor:['#1a6b28','#1e6091','#f9a825','#006064'],borderRadius:4,borderSkipped:false}],
+    {legend:{display:false},y:{ticks:{callback:v=>v}}});
+}
+
+// Init charts on load for first tab
+setTimeout(()=>initCharts(),100);
+</script>
+</body>
+</html>
