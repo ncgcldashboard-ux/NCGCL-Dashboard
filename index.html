@@ -1,176 +1,851 @@
 <!DOCTYPE html>
 <html lang="en">
-<header>
-  <img src="ncgclwhite.png" alt="NCGCL Logo" style="height: 48px; vertical-align: middle; margin-right: 16px;">
-  <span style="font-size: 28px; font-weight: 600; vertical-align: middle;">
-    NCGCL – Board Dashboard
-  </span>
-  <p>Guarantee, investment, and risk overview</p>
-</header>
-  <head>
+<head>
   <meta charset="UTF-8" />
-  <title>NCGCL – Board Dashboard</title>
+  <title>NCGCL – Board Portal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
-    body { font-family: system-ui, -apple-system, "Roboto"; margin: 0; background: #f5f7fb; }
-    header { background: #035076; color: white; padding: 20px 40px; }
-    .container { max-width: 1100px; margin: 24px auto; padding: 0 16px; }
-    .card { background: white; padding: 20px; margin-bottom: 16px; border-radius: 12px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.04); }
-    .card h2 { margin-top: 0; color: #035076; }
-    .muted { color: #666; font-size: 0.9rem; }
-
-    .button-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 12px;
+    :root {
+      --navy:       #02334d;
+      --navy-mid:   #035076;
+      --navy-light: #0a6896;
+      --gold:       #c9a84c;
+      --gold-light: #e5c97a;
+      --cream:      #f8f6f1;
+      --white:      #ffffff;
+      --ink:        #1a1a2e;
+      --muted:      #6b7280;
+      --border:     #e2ddd6;
+      --shadow-sm:  0 1px 3px rgba(2,51,77,0.08);
+      --shadow-md:  0 4px 16px rgba(2,51,77,0.10);
+      --shadow-lg:  0 12px 40px rgba(2,51,77,0.14);
     }
 
-    .link-button {
-      display: inline-block;
-      padding: 10px 16px;
-      border-radius: 999px;
-      border: 1px solid #035076;
-      text-decoration: none;
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      min-height: 100vh;
+    }
+
+    /* ─── TOP BAR ─────────────────────────────────────────── */
+    .topbar {
+      background: var(--navy);
+      padding: 0 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      border-bottom: 1px solid rgba(201,168,76,0.25);
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.55);
+      font-weight: 400;
+      letter-spacing: 0.04em;
+    }
+
+    .topbar-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--gold);
+      opacity: 0.8;
+    }
+
+    .topbar-right {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* ─── HEADER ──────────────────────────────────────────── */
+    header {
+      background: var(--navy);
+      padding: 48px 48px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::after {
+      content: '';
+      display: block;
+      height: 1px;
+      background: linear-gradient(90deg, var(--gold) 0%, rgba(201,168,76,0.15) 60%, transparent 100%);
+      margin-top: 48px;
+    }
+
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+      padding-bottom: 0;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo-lockup {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo-box {
+      width: 52px; height: 52px;
+      background: var(--gold);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .logo-box img {
+      height: 34px;
+      width: auto;
+      display: block;
+    }
+
+    .logo-placeholder {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: 0.04em;
+    }
+
+    .brand-text {}
+
+    .brand-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.85rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.01em;
+      line-height: 1.15;
+    }
+
+    .brand-subtitle {
+      font-size: 0.82rem;
+      color: var(--gold-light);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-top: 4px;
+      font-weight: 400;
+    }
+
+    .header-meta {
+      text-align: right;
+      padding-bottom: 2px;
+    }
+
+    .header-meta .date-label {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .header-meta .date-value {
       font-size: 0.9rem;
-      color: #035076;
-      background: #f5f7fb;
+      color: rgba(255,255,255,0.75);
+      margin-top: 2px;
+      font-weight: 500;
+    }
+
+    /* ─── NAV TABS ────────────────────────────────────────── */
+    .nav-row {
+      background: var(--navy);
+      padding: 0 48px;
+    }
+
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      gap: 0;
+    }
+
+    .nav-tab {
+      padding: 14px 22px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      border-bottom: 2px solid transparent;
+      cursor: default;
+      transition: color 0.2s;
+    }
+
+    .nav-tab.active {
+      color: var(--gold-light);
+      border-bottom-color: var(--gold);
+    }
+
+    /* ─── MAIN ────────────────────────────────────────────── */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 48px 80px;
+    }
+
+    /* ─── BANNER STRIP ────────────────────────────────────── */
+    .banner {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+      border-radius: 10px;
+      padding: 28px 36px;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      box-shadow: var(--shadow-md);
+      border: 1px solid rgba(201,168,76,0.2);
+    }
+
+    .banner-text h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .banner-text p {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.6);
+      margin-top: 4px;
+      line-height: 1.55;
+    }
+
+    .banner-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(201,168,76,0.18);
+      border: 1px solid rgba(201,168,76,0.35);
+      border-radius: 6px;
+      padding: 10px 18px;
+      flex-shrink: 0;
+    }
+
+    .badge-dot {
+      width: 8px; height: 8px;
+      background: var(--gold);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .badge-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--gold-light);
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
       white-space: nowrap;
     }
 
-    .link-button:hover {
-      background: #035076;
-      color: #fff;
+    /* ─── STATS ROW ───────────────────────────────────────── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
     }
 
-    @media (max-width: 600px) {
-      .link-button {
-        width: 100%;
-        text-align: center;
-        white-space: normal;
-      }
+    .stat-card {
+      background: var(--white);
+      border-radius: 10px;
+      padding: 22px 24px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--gold);
+    }
+
+    .stat-label {
+      font-size: 0.73rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .stat-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1;
+    }
+
+    .stat-sub {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    /* ─── TWO-COL LAYOUT ──────────────────────────────────── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    /* ─── BOARD PACKS CARD ────────────────────────────────── */
+    .card {
+      background: var(--white);
+      border-radius: 10px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 22px 28px 18px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .card-count {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--navy-light);
+      background: rgba(3,80,118,0.08);
+      padding: 4px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.04em;
+    }
+
+    .card-body {
+      padding: 24px 28px;
+    }
+
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 22px;
+    }
+
+    /* ─── PACK BUTTONS ────────────────────────────────────── */
+    .pack-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .pack-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      text-decoration: none;
+      background: var(--cream);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .pack-item:hover {
+      border-color: var(--navy-mid);
+      background: rgba(3,80,118,0.04);
+      box-shadow: var(--shadow-sm);
+      transform: translateX(2px);
+    }
+
+    .pack-icon {
+      width: 36px; height: 36px;
+      background: var(--navy);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .pack-icon svg {
+      width: 16px; height: 16px;
+      fill: none;
+      stroke: rgba(255,255,255,0.85);
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .pack-name {
+      flex: 1;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--ink);
+      text-transform: capitalize;
+    }
+
+    .pack-arrow {
+      color: var(--navy-light);
+      opacity: 0.5;
+      font-size: 1rem;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .pack-item:hover .pack-arrow {
+      opacity: 1;
+      transform: translateX(2px);
+    }
+
+    .pack-empty {
+      font-size: 0.85rem;
+      color: var(--muted);
+      padding: 12px 0;
+    }
+
+    #pack-error {
+      font-size: 0.82rem;
+      color: #b91c1c;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-radius: 6px;
+      padding: 10px 14px;
+      display: none;
+    }
+
+    /* ─── SIDEBAR ─────────────────────────────────────────── */
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .info-card {
+      background: var(--white);
+      border-radius: 10px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      padding: 22px 24px;
+    }
+
+    .info-card-title {
+      font-size: 0.73rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.84rem;
+    }
+
+    .info-row:last-child { border-bottom: none; }
+
+    .info-row-label { color: var(--muted); font-weight: 400; }
+
+    .info-row-value {
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      padding: 3px 9px;
+      border-radius: 20px;
+    }
+
+    .status-pill.active {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .status-pill::before {
+      content: '';
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .divider-rule {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 4px 0;
+    }
+
+    /* ─── FOOTER ──────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      background: var(--white);
+      padding: 20px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-left {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .footer-right {
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    /* ─── LOADING SKELETON ────────────────────────────────── */
+    @keyframes shimmer {
+      0%   { background-position: -400px 0; }
+      100% { background-position: 400px 0; }
+    }
+
+    .skeleton {
+      background: linear-gradient(90deg, #f0ece6 25%, #e8e3dc 50%, #f0ece6 75%);
+      background-size: 800px 100%;
+      animation: shimmer 1.4s infinite;
+      border-radius: 6px;
+      height: 48px;
+    }
+
+    /* ─── RESPONSIVE ──────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .container { padding: 28px 24px 60px; }
+      .header-inner, .header { padding: 32px 24px 0; }
+      .topbar, .nav-row, footer { padding-left: 24px; padding-right: 24px; }
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .two-col { grid-template-columns: 1fr; }
+      .banner { flex-direction: column; align-items: flex-start; gap: 16px; }
+    }
+
+    @media (max-width: 540px) {
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .brand-title { font-size: 1.4rem; }
     }
   </style>
 </head>
 <body>
 
+  <!-- Top utility bar -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <span>NCGCL</span>
+      <div class="topbar-dot"></div>
+      <span>Board Portal</span>
+      <div class="topbar-dot"></div>
+      <span>Restricted Access</span>
+    </div>
+    <div class="topbar-right" id="current-date"></div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="header-inner">
+      <div class="header-brand">
+        <div class="logo-lockup">
+          <div class="logo-box">
+            <img src="ncgclwhite.png" alt="NCGCL" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+            <span class="logo-placeholder" style="display:none;">N</span>
+          </div>
+          <div class="brand-text">
+            <div class="brand-title">NCGCL Board Portal</div>
+            <div class="brand-subtitle">Guarantee · Investment · Risk Overview</div>
+          </div>
+        </div>
+      </div>
+      <div class="header-meta">
+        <div class="date-label">Portal last refreshed</div>
+        <div class="date-value" id="refresh-date">—</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Nav tabs -->
+  <div class="nav-row">
+    <div class="nav-inner">
+      <div class="nav-tab active">Dashboard Home</div>
+      <div class="nav-tab">Board Packs</div>
+      <div class="nav-tab">Reports</div>
+      <div class="nav-tab">Governance</div>
+    </div>
+  </div>
+
+  <!-- Main content -->
   <main class="container">
-    <!-- Intro / current description (static text, you can tweak as needed) -->
-    <section class="card">
-      <h2>Board Portal Home</h2>
-      <p>
-        This page serves as the entry point for all NCGCL board dashboards and
-        related HTML packs hosted in this repository.
-      </p>
-      <p class="muted">
-        The buttons below are automatically generated by reading all <code>.html</code> files
-        in this GitHub repository (excluding this home page).
-      </p>
-    </section>
 
-    <!-- Auto-generated list of all other HTML files -->
-    <section class="card">
-      <h2>All Board Packs</h2>
-      <p class="muted">
-        Click any button to open the corresponding HTML dashboard or board pack in a new tab.
-      </p>
+    <!-- Banner -->
+    <div class="banner">
+      <div class="banner-text">
+        <h1>Board Portal — Document Repository</h1>
+        <p>Centralised access to all board packs, dashboards, and governance documents.<br>
+          Documents are hosted in a secured repository and available to authorised board members only.</p>
+      </div>
+      <div class="banner-badge">
+        <div class="badge-dot"></div>
+        <span class="badge-label">Portal Active</span>
+      </div>
+    </div>
 
-      <div id="html-buttons" class="button-grid">
-        <!-- JS will populate this -->
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-label">Documents Available</div>
+        <div class="stat-value" id="doc-count">—</div>
+        <div class="stat-sub">HTML board packs</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Repository Status</div>
+        <div class="stat-value" style="font-size:1.1rem; padding-top:4px;">
+          <span class="status-pill active">Active</span>
+        </div>
+        <div class="stat-sub">All systems operational</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Portal Version</div>
+        <div class="stat-value">2.0</div>
+        <div class="stat-sub">Current release</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Access Level</div>
+        <div class="stat-value" style="font-size:1.05rem; padding-top:4px;">
+          <span class="status-pill active">Board</span>
+        </div>
+        <div class="stat-sub">Restricted distribution</div>
+      </div>
+    </div>
+
+    <!-- Two-column layout -->
+    <div class="two-col">
+
+      <!-- Board packs -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Board Packs &amp; Dashboards</div>
+          <div class="card-count" id="pack-count-badge">Loading…</div>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">
+            All available HTML board packs are listed below. Each document opens in a new tab.
+            The list is dynamically generated from the repository and reflects the latest available materials.
+          </p>
+          <div id="pack-list" class="pack-grid">
+            <!-- Skeleton loaders -->
+            <div class="skeleton"></div>
+            <div class="skeleton" style="opacity:.7"></div>
+            <div class="skeleton" style="opacity:.45"></div>
+          </div>
+          <div id="pack-error">
+            Unable to retrieve the document list. Please refresh the page or contact the portal administrator.
+          </div>
+        </div>
       </div>
 
-      <p id="all-error" class="muted" style="color:#c00; margin-top:12px; display:none;">
-        Unable to load the list of HTML pages at the moment.
-      </p>
-    </section>
+      <!-- Sidebar -->
+      <div class="sidebar">
+
+        <!-- Portal info -->
+        <div class="info-card">
+          <div class="info-card-title">Portal Information</div>
+          <div class="info-row">
+            <span class="info-row-label">Organisation</span>
+            <span class="info-row-value">NCGCL</span>
+          </div>
+          <div class="info-row">
+            <span class="info-row-label">Document type</span>
+            <span class="info-row-value">HTML Board Packs</span>
+          </div>
+          <div class="info-row">
+            <span class="info-row-label">Hosting</span>
+            <span class="info-row-value">GitHub Pages</span>
+          </div>
+          <div class="info-row">
+            <span class="info-row-label">Distribution</span>
+            <span class="info-row-value">Restricted</span>
+          </div>
+        </div>
+
+        <!-- Coverage -->
+        <div class="info-card">
+          <div class="info-card-title">Coverage Areas</div>
+          <div class="info-row">
+            <span class="info-row-label">Guarantee monitoring</span>
+            <span class="status-pill active">Included</span>
+          </div>
+          <div class="info-row">
+            <span class="info-row-label">Investment overview</span>
+            <span class="status-pill active">Included</span>
+          </div>
+          <div class="info-row">
+            <span class="info-row-label">Risk dashboard</span>
+            <span class="status-pill active">Included</span>
+          </div>
+          <div class="info-row">
+            <span class="info-row-label">Governance reports</span>
+            <span class="status-pill active">Included</span>
+          </div>
+        </div>
+
+        <!-- Guidance -->
+        <div class="info-card" style="background:rgba(2,51,77,0.04); border-color:rgba(2,51,77,0.12);">
+          <div class="info-card-title" style="color: var(--navy-mid);">Usage Guidance</div>
+          <p style="font-size:0.82rem; color:var(--muted); line-height:1.65;">
+            Documents are for authorised board use only. Do not redistribute without board approval. For technical issues, contact the portal administrator.
+          </p>
+        </div>
+
+      </div>
+    </div>
   </main>
 
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-left">© NCGCL — Board Portal. All rights reserved.</span>
+      <span class="footer-right">CONFIDENTIAL — RESTRICTED DISTRIBUTION</span>
+    </div>
+  </footer>
+
   <script>
-    // Small helper to convert "2025-Q1-board-pack.html" → "2025 Q1 board pack"
-    function niceLabelFromPath(path) {
-      const parts = path.split('/');
-      const file = parts[parts.length - 1];
-      const name = file.replace(/\.html$/i, '');
-      return name.replace(/[-_]/g, ' ');
+    // ── Dates ──────────────────────────────────────────────────────
+    const now = new Date();
+    const fmt = d => d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+    document.getElementById('current-date').textContent = fmt(now);
+    document.getElementById('refresh-date').textContent  = fmt(now);
+
+    // ── Label helper ───────────────────────────────────────────────
+    function niceLabel(path) {
+      const file = path.split('/').pop();
+      return file.replace(/\.html$/i, '').replace(/[-_]/g, ' ');
     }
 
+    // ── Document icon SVG ──────────────────────────────────────────
+    const docIcon = `<svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>`;
+
+    // ── Fetch & render ─────────────────────────────────────────────
     (async function () {
+      const listEl    = document.getElementById('pack-list');
+      const badgeEl   = document.getElementById('pack-count-badge');
+      const countEl   = document.getElementById('doc-count');
+      const errorEl   = document.getElementById('pack-error');
+
       try {
-        // Derive owner + repo from the current GitHub Pages URL
-        // e.g. https://username.github.io/repo-name/
         const hostParts = window.location.hostname.split('.');
-        const owner = hostParts[0];  // "username" in username.github.io
-
+        const owner     = hostParts[0];
         const pathParts = window.location.pathname.split('/').filter(Boolean);
-        const repo = pathParts[0];   // "repo-name" in /repo-name/
+        const repo      = pathParts[0];
 
-        if (!owner || !repo) {
-          throw new Error('Unable to infer owner/repo from URL.');
-        }
+        if (!owner || !repo) throw new Error('Cannot infer owner/repo from URL.');
 
         const apiBase = `https://api.github.com/repos/${owner}/${repo}/contents`;
 
-        // Recursively fetch all .html files in the repo
         async function fetchHtmlFiles(subPath = '') {
           const url = subPath ? `${apiBase}/${subPath}` : apiBase;
           const res = await fetch(url);
-          if (!res.ok) {
-            throw new Error(`GitHub API HTTP ${res.status} for ${url}`);
-          }
+          if (!res.ok) throw new Error(`GitHub API ${res.status}`);
           const items = await res.json();
           let results = [];
-
           for (const item of items) {
             if (item.type === 'file' && item.name.toLowerCase().endsWith('.html')) {
-              const relPath = subPath ? `${subPath}/${item.name}` : item.name;
-              // Exclude index.html (home page)
-              if (relPath.toLowerCase() !== 'index.html') {
-                results.push(relPath);
-              }
+              const rel = subPath ? `${subPath}/${item.name}` : item.name;
+              if (rel.toLowerCase() !== 'index.html') results.push(rel);
             } else if (item.type === 'dir') {
-              const nested = await fetchHtmlFiles(item.path);
-              results = results.concat(nested);
+              results = results.concat(await fetchHtmlFiles(item.path));
             }
           }
           return results;
         }
 
-        const htmlFiles = await fetchHtmlFiles('');
+        const files = await fetchHtmlFiles('');
 
-        const container = document.getElementById('html-buttons');
-        if (!htmlFiles.length) {
-          container.innerHTML = '<p class="muted">No additional HTML pages found in this repository.</p>';
+        // Update counters
+        countEl.textContent  = files.length;
+        badgeEl.textContent  = `${files.length} document${files.length !== 1 ? 's' : ''}`;
+        listEl.innerHTML = '';
+
+        if (!files.length) {
+          listEl.innerHTML = '<p class="pack-empty">No board pack documents found in this repository.</p>';
           return;
         }
 
-        // Base URL for GitHub Pages (ensure trailing slash)
         let basePath = window.location.pathname;
-        // If we're on /repo or /repo/index.html, normalize to /repo/
         if (!basePath.endsWith('/')) {
           basePath = basePath.replace(/index\.html$/i, '');
           if (!basePath.endsWith('/')) basePath += '/';
         }
         const baseUrl = window.location.origin + basePath;
 
-        htmlFiles.forEach(relPath => {
-          const btn = document.createElement('a');
-          btn.className = 'link-button';
-          btn.href = baseUrl + relPath;
-          btn.target = '_blank';
-          btn.textContent = niceLabelFromPath(relPath);
-          container.appendChild(btn);
+        files.forEach(relPath => {
+          const a = document.createElement('a');
+          a.className = 'pack-item';
+          a.href      = baseUrl + relPath;
+          a.target    = '_blank';
+          a.rel       = 'noopener noreferrer';
+          a.innerHTML = `
+            <div class="pack-icon">${docIcon}</div>
+            <span class="pack-name">${niceLabel(relPath)}</span>
+            <span class="pack-arrow">→</span>
+          `;
+          listEl.appendChild(a);
         });
 
       } catch (err) {
-        console.error('Error listing HTML files:', err);
-        document.getElementById('all-error').style.display = 'block';
+        console.error('Portal error:', err);
+        listEl.innerHTML = '';
+        errorEl.style.display = 'block';
+        badgeEl.textContent  = 'Unavailable';
+        countEl.textContent  = '—';
       }
     })();
   </script>
+
 </body>
 </html>
-
-
-
-
