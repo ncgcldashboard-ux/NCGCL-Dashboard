@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pakistan Yield Curve Analysis - March 2-30, 2026</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #2C3E50;
+            background: #FAFAFA;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #1F4788 0%, #1A2740 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 32px;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        header p {
+            font-size: 14px;
+            opacity: 0.95;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Main content */
+        main {
+            padding: 2rem;
+        }
+        
+        /* Narrative box */
+        .narrative-box {
+            background: #F5F3ED;
+            border-left: 4px solid #1F4788;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-radius: 4px;
+            font-size: 15px;
+            line-height: 1.8;
+        }
+        
+        /* Metrics grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .metric-card {
+            background: #F5F3ED;
+            padding: 1rem;
+            border-radius: 6px;
+            border: 1px solid #E0D9CC;
+            text-align: center;
+        }
+        
+        .metric-label {
+            font-size: 11px;
+            color: #546E7A;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .metric-value {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1F4788;
+        }
+        
+        /* Section titles */
+        h2 {
+            font-size: 20px;
+            color: #1F4788;
+            margin-top: 2rem;
+            margin-bottom: 1.2rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid #E0D9CC;
+        }
+        
+        h3 {
+            font-size: 13px;
+            color: #1F4788;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        /* Charts */
+        .chart-wrapper {
+            background: white;
+            border: 1px solid #E0D9CC;
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            position: relative;
+            height: 420px;
+        }
+        
+        .chart-wrapper canvas {
+            max-height: 350px;
+        }
+        
+        /* Data table */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin-bottom: 2rem;
+            border: 1px solid #E0D9CC;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        
+        .data-table th {
+            background: #1F4788;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .data-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #E0D9CC;
+        }
+        
+        .data-table tr:hover {
+            background: #F5F3ED;
+        }
+        
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .data-table .positive {
+            color: #2D6A4F;
+            font-weight: 600;
+        }
+        
+        .data-table .peak {
+            background: #FFF8DC;
+            font-weight: 600;
+        }
+        
+        /* Insight cards */
+        .insight-card {
+            background: white;
+            border: 1px solid #E0D9CC;
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .insight-card h4 {
+            font-size: 13px;
+            color: #1F4788;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .insight-card p {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #2C3E50;
+        }
+        
+        .insight-card strong {
+            color: #1F4788;
+        }
+        
+        .insight-card em {
+            color: #546E7A;
+        }
+        
+        /* Timeline */
+        .timeline {
+            margin: 1.5rem 0;
+        }
+        
+        .timeline-item {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .timeline-date {
+            min-width: 80px;
+            font-weight: 600;
+            color: #1F4788;
+            font-size: 13px;
+        }
+        
+        .timeline-text {
+            font-size: 14px;
+            color: #2C3E50;
+            line-height: 1.7;
+        }
+        
+        /* Footer */
+        footer {
+            background: #F5F3ED;
+            padding: 2rem;
+            text-align: center;
+            font-size: 12px;
+            color: #546E7A;
+            border-top: 1px solid #E0D9CC;
+        }
+        
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+            }
+            
+            .chart-wrapper {
+                page-break-inside: avoid;
+            }
+        }
+        
+        /* List styling */
+        ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Pakistan Yield Curve Analysis</h1>
+            <p>March 2–30, 2026: Market Expectations & Interest Rate Dynamics</p>
+        </header>
+        
+        <main>
+            <!-- Executive Summary -->
+            <div class="narrative-box">
+                <p>
+                    <strong>What Happened:</strong> In March 2026, Pakistan's yield curve shifted sharply upward as market participants 
+                    repriced expectations for future interest rates. Despite the State Bank of Pakistan holding its policy rate steady, 
+                    yields across the curve increased by 16 basis points (1-week) to 198 basis points (3-year). This shift reflects 
+                    market expectations of sustained higher rates driven by fiscal pressures from government fuel subsidies and the 
+                    escalating Iran geopolitical crisis. The peak shift occurred at the 2–3 year maturity, signaling that markets expect 
+                    interest rates to remain elevated over the near-to-medium term.
+                </p>
+            </div>
+            
+            <!-- Key Metrics -->
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-label">Max Spread (3Y)</div>
+                    <div class="metric-value">198 bps</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Min Spread (1W)</div>
+                    <div class="metric-value">16 bps</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Avg Spread (1Y–5Y)</div>
+                    <div class="metric-value">149 bps</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Time Period</div>
+                    <div class="metric-value">28 Days</div>
+                </div>
+            </div>
+            
+            <!-- Chart -->
+            <h2>Yield Curve Shift: March 2 vs. March 30, 2026</h2>
+            <div class="chart-wrapper">
+                <canvas id="yieldCurveChart"></canvas>
+            </div>
+            
+            <!-- Data Table -->
+            <h2>Complete Yield Curve Data</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Maturity</th>
+                        <th>March 2, 2026</th>
+                        <th>March 30, 2026</th>
+                        <th>Spread Change (bps)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>1 Week</strong></td>
+                        <td>10.45%</td>
+                        <td>10.61%</td>
+                        <td class="positive">+16 bps</td>
+                    </tr>
+                    <tr>
+                        <td><strong>2 Weeks</strong></td>
+                        <td>10.39%</td>
+                        <td>10.71%</td>
+                        <td class="positive">+32 bps</td>
+                    </tr>
+                    <tr>
+                        <td><strong>1 Month</strong></td>
+                        <td>10.35%</td>
+                        <td>11.03%</td>
+                        <td class="positive">+68 bps</td>
+                    </tr>
+                    <tr>
+                        <td><strong>3 Months</strong></td>
+                        <td>10.34%</td>
+                        <td>11.27%</td>
+                        <td class="positive">+93 bps</td>
+                    </tr>
+                    <tr>
+                        <td><strong>6 Months</strong></td>
+                        <td>10.56%</td>
+                        <td>11.61%</td>
+                        <td class="positive">+105 bps</td>
+                    </tr>
+                    <tr>
+                        <td><strong>1 Year</strong></td>
+                        <td>10.62%</td>
+                        <td>11.91%</td>
+                        <td class="positive">+129 bps</td>
+                    </tr>
+                    <tr class="peak">
+                        <td><strong>2 Years</strong></td>
+                        <td>10.55%</td>
+                        <td>12.47%</td>
+                        <td class="positive">+192 bps ← PEAK</td>
+                    </tr>
+                    <tr class="peak">
+                        <td><strong>3 Years</strong></td>
+                        <td>10.50%</td>
+                        <td>12.48%</td>
+                        <td class="positive">+198 bps ← HIGHEST</td>
+                    </tr>
+                    <tr>
+                        <td><strong>5 Years</strong></td>
+                        <td>11.07%</td>
+                        <td>12.52%</td>
+                        <td class="positive">+145 bps</td>
+                    </tr>
+                    <tr>
+                        <td><strong>10 Years</strong></td>
+                        <td>11.60%</td>
+                        <td>12.78%</td>
+                        <td class="positive">+118 bps</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <!-- Why Did the Curve Shift -->
+            <h2>Why Did the Yield Curve Shift?</h2>
+            
+            <div class="insight-card">
+                <h4>1. The Geopolitical Shock: Iran Crisis Escalation</h4>
+                <p>
+                    In early March 2026, escalating tensions in Iran created global uncertainty about energy markets and regional stability. 
+                    While Pakistan is not directly engaged, the geopolitical risk premium increased risk appetite requirements across emerging markets. 
+                    Despite the State Bank of Pakistan maintaining its policy rate, market participants immediately began repricing yields upward 
+                    as a risk buffer.
+                </p>
+            </div>
+            
+            <div class="insight-card">
+                <h4>2. Market Expectations: "Rates Will Stay Higher for Longer"</h4>
+                <p>
+                    The yield curve shift is not driven by what the State Bank is doing <em>today</em>, but by what the market expects the State Bank 
+                    <em>will need to do</em> in the future. Market participants began pricing in expectations of persistently higher interest rates 
+                    through 2027 and beyond. This is evident from the 198 bps increase at the 3-year mark—the market is saying: 
+                    <strong>"We expect rates to be significantly higher two to three years from now."</strong>
+                </p>
+            </div>
+            
+            <div class="insight-card">
+                <h4>3. Fiscal Deficit Expectations: Fuel Subsidies & Government Borrowing</h4>
+                <p>
+                    <strong>The Mechanism:</strong> The Government of Pakistan continues heavy fuel subsidies to keep petrol and diesel prices 
+                    below market levels. These subsidies create a fiscal deficit—the government must spend more money than it collects in taxes. 
+                    To finance this deficit, the government must borrow more money. When the government borrows more, it increases the demand for capital. 
+                    With demand for funds exceeding supply, the cost of borrowing (interest rates) must rise.
+                    <br><br>
+                    <strong>The Pricing:</strong> Market participants expect this dynamic to persist and worsen. The peak spread at the 2–3 year mark 
+                    reflects the consensus view that government borrowing needs will remain elevated for at least two years, keeping rates high.
+                </p>
+            </div>
+            
+            <div class="insight-card">
+                <h4>4. Why the 2–3 Year Mark Saw the Biggest Shift</h4>
+                <p>
+                    The 198 basis point increase at the 3-year maturity reveals market thinking:
+                    <ul>
+                        <li><strong>Near-term (1 week to 3 months):</strong> Smaller increases (16–93 bps) reflect modest expectations of immediate SBP action.</li>
+                        <li><strong>2–3 year horizon:</strong> Maximum increases (192–198 bps) reflect peak expectations that rates will rise significantly as 
+                        fiscal pressures mount.</li>
+                        <li><strong>Long-term (5–10 years):</strong> Moderating increases (145–118 bps) suggest belief that fiscal pressures will eventually be 
+                        addressed, allowing gradual rate normalization.</li>
+                    </ul>
+                    The inverted U-shape of the spread curve tells a story: markets expect high rates for 2–3 years, then gradual improvement.
+                </p>
+            </div>
+            
+            <!-- Timeline -->
+            <h2>Timeline: What Happened in March 2026</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">March 2</div>
+                    <div class="timeline-text">
+                        <strong>Baseline Yield Curve:</strong> 1-week at 10.45%, 3-year at 10.50%. Relatively flat across short to medium tenors, 
+                        suggesting stable rate expectations.
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">March 5–10</div>
+                    <div class="timeline-text">
+                        <strong>Geopolitical Uncertainty Rises:</strong> Iran tensions escalate. Global risk appetite declines. Emerging market yields 
+                        begin moving upward as investors demand higher returns for perceived risk.
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">March 10–20</div>
+                    <div class="timeline-text">
+                        <strong>Market Repricing Accelerates:</strong> Analysts and market participants begin incorporating expectations of:
+                        <ul>
+                            <li>Higher geopolitical risk premium</li>
+                            <li>Increased fiscal deficit from fuel subsidies</li>
+                            <li>Potential SBP rate increases down the road</li>
+                        </ul>
+                        Yield curve shifts upward, with 2–3 year maturities leading the move.
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">March 30</div>
+                    <div class="timeline-text">
+                        <strong>Final Curve Position:</strong> 1-week at 10.61% (+16 bps), 3-year at 12.48% (+198 bps). 
+                        The market has fully repriced expectations for elevated rates through 2027–2028.
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Market Implications -->
+            <h2>Market Implications for Investors & Borrowers</h2>
+            
+            <div class="insight-card">
+                <h4>For Bond Investors</h4>
+                <p>
+                    <strong>Negative for Existing Holdings:</strong> If you owned 2–3 year bonds on March 2, the 198 bps jump in yields means 
+                    your bond's market value has fallen significantly. A bond with 4–5 year duration loses approximately 8% in value for a 200 bps 
+                    yield increase.
+                    <br><br>
+                    <strong>Opportunity Going Forward:</strong> The higher yields now offer better entry points for new purchases. Investors can lock in 
+                    12.5%+ yields on 3-year bonds, compensating for the expectation of rates staying high.
+                </p>
+            </div>
+            
+            <div class="insight-card">
+                <h4>For Borrowers (Government & Corporates)</h4>
+                <p>
+                    <strong>Higher Funding Costs:</strong> The Government of Pakistan's latest bond auctions are at 12.47% (2-year) and 12.48% (3-year)—
+                    up significantly from 10.55% and 10.50% just 28 days earlier. This increases the burden of servicing the debt.
+                    <br><br>
+                    <strong>Cascading Effects:</strong> Corporate borrowers face even higher spreads. If a corporate must pay 300 bps over government bonds, 
+                    their 3-year cost is now 15.48%—making capital investment decisions more challenging.
+                </p>
+            </div>
+            
+            <div class="insight-card">
+                <h4>What This Tells Us About Future Rates</h4>
+                <p>
+                    The yield curve embedded in March 30 data is a <strong>market forecast of future short rates.</strong> 
+                    The forward rate from year 2 to year 3 is approximately 12.49%, suggesting the market expects 1-year rates to be near 12.5% 
+                    in March 2027 and March 2028. The State Bank's current policy rate doesn't matter—what matters is where the market expects 
+                    it to be, and that's significantly higher than today.
+                </p>
+            </div>
+            
+            <!-- Key Takeaways -->
+            <h2>Key Takeaways</h2>
+            
+            <div class="insight-card">
+                <h4>The Policy Rate Didn't Change, But Market Rates Did</h4>
+                <p>
+                    The State Bank's policy rate is set by monetary policy decisions. But market interest rates are set by expectations and supply-demand. 
+                    When geopolitical risk rises or fiscal pressures mount, market rates adjust immediately—even without policy changes.
+                </p>
+            </div>
+            
+            <div class="insight-card">
+                <h4>The Yield Curve Is a Forecast</h4>
+                <p>
+                    The upward-sloping curve with peak at 2–3 years is the market's way of saying: "Rates will be elevated for the next 2–3 years, 
+                    then gradually normalize." This forecast is embedded in every bond price.
+                </p>
+            </div>
+            
+            <div class="insight-card">
+                <h4>Fiscal Policy Drives Long-Term Rates</h4>
+                <p>
+                    While the State Bank controls the short-term policy rate, long-term rates are driven by expectations about fiscal deficits, 
+                    government borrowing, and inflation. Pakistan's fuel subsidies directly impact the 5–10 year yield curve through this mechanism.
+                </p>
+            </div>
+            
+            <div class="insight-card">
+                <h4>Duration Risk Was Real</h4>
+                <p>
+                    Investors who held long-duration bonds (high interest rate sensitivity) suffered losses when the curve shifted. A 4.5-year 
+                    duration bond loses roughly 9% in value for a 200 bps yield increase. This is why duration management is critical.
+                </p>
+            </div>
+        </main>
+        
+        <footer>
+            <p><strong>Pakistan Yield Curve Analysis</strong></p>
+            <p>Institute of Business Administration • Fixed Income Course Module</p>
+            <p>Data Period: March 2–30, 2026 | Document prepared March 31, 2026</p>
+            <p style="margin-top: 1rem; border-top: 1px solid #E0D9CC; padding-top: 1rem;">
+                This analysis is based on actual yield curve data and market observations. 
+                For institutional use in teaching and learning contexts.
+            </p>
+        </footer>
+    </div>
+    
+    <script>
+        // Data from the Excel file
+        const maturities = ['1W', '2W', '1M', '2M', '3M', '4M', '6M', '9M', '1Y', '2Y', '3Y', '4Y', '5Y', '6Y', '7Y', '8Y', '9Y', '10Y'];
+        const march2 = [10.45, 10.39, 10.35, 10.36, 10.34, 10.46, 10.56, 10.63, 10.62, 10.55, 10.50, 11.04, 11.07, 11.20, 11.30, 11.40, 11.55, 11.60];
+        const march30 = [10.61, 10.71, 11.03, 11.15, 11.27, 11.47, 11.61, 11.91, 11.91, 12.47, 12.48, 12.49, 12.52, 12.58, 12.63, 12.68, 12.72, 12.78];
+
+        // Chart 1: Yield Curve Comparison
+        const ctx1 = document.getElementById('yieldCurveChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: maturities,
+                datasets: [
+                    {
+                        label: 'March 2, 2026',
+                        data: march2,
+                        borderColor: '#1F4788',
+                        backgroundColor: 'rgba(31, 71, 136, 0.08)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 4,
+                        pointBackgroundColor: '#1F4788',
+                        pointBorderColor: 'white',
+                        pointBorderWidth: 2
+                    },
+                    {
+                        label: 'March 30, 2026',
+                        data: march30,
+                        borderColor: '#E24B4A',
+                        backgroundColor: 'rgba(226, 75, 74, 0.08)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 4,
+                        pointBackgroundColor: '#E24B4A',
+                        pointBorderColor: 'white',
+                        pointBorderWidth: 2
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        labels: { font: { size: 12, weight: '500' }, usePointStyle: true, padding: 20, color: '#2C3E50' }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(44, 62, 80, 0.9)',
+                        padding: 12,
+                        titleFont: { size: 12, weight: 'bold' },
+                        bodyFont: { size: 11 },
+                        borderColor: 'rgba(255,255,255,0.1)',
+                        borderWidth: 1,
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': ' + context.parsed.y.toFixed(2) + '%';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        min: 10,
+                        max: 13,
+                        ticks: { callback: function(value) { return value.toFixed(1) + '%'; }, font: { size: 11 }, color: '#546E7A' },
+                        title: { display: true, text: 'Yield to Maturity (%)', font: { size: 12, weight: 'bold' }, color: '#2C3E50' },
+                        grid: { color: 'rgba(0,0,0,0.05)' }
+                    },
+                    x: {
+                        title: { display: true, text: 'Maturity', font: { size: 12, weight: 'bold' }, color: '#2C3E50' },
+                        ticks: { font: { size: 11 }, color: '#546E7A' },
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
