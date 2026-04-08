@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NCGCL Guarantee Pipeline — March 2026</title>
+<title>NCGCL Guarantee Pipeline — April 2026</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
 :root {
@@ -28,7 +28,7 @@ body{background:var(--paper);color:var(--ink);font-family:'Segoe UI',system-ui,s
 .header-badge span{display:block;font-size:1.1rem;font-weight:800;}
 
 /* KPI STRIP */
-.kpi-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;background:var(--cream);border:1px solid var(--border);border-radius:6px;padding:16px 20px;margin-bottom:24px;}
+.kpi-strip{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;background:var(--cream);border:1px solid var(--border);border-radius:6px;padding:16px 20px;margin-bottom:24px;}
 .kpi{text-align:center;}
 .kpi-val{font-size:clamp(1.3rem,3vw,2rem);font-weight:800;color:var(--ncgcl-green);letter-spacing:-0.5px;font-family:'Courier New',monospace;}
 .kpi-val.blue{color:var(--ncgcl-blue);}
@@ -76,10 +76,14 @@ tbody td.muted{color:var(--muted);font-size:0.72rem;}
 .pill-jfa{background:#ede7f6;color:#4527a0;}
 .pill-cons{background:#fff8e1;color:#f57f17;}
 .pill-tbd{background:#f5f5f5;color:#9e9e9e;border:1px solid #e0e0e0;}
+.pill-islamic{background:#e8f5e9;color:#1a6b28;border:1px solid #a5d6a7;}
+.pill-farm{background:#f1f8e9;color:#33691e;}
+.pill-rdf{background:#e8eaf6;color:#283593;}
 .status-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px;}
 .dot-active{background:var(--ncgcl-green);}
 .dot-pending{background:var(--amber);}
 .dot-tbd{background:var(--muted);}
+.dot-declined{background:#b71c1c;}
 
 /* INSIGHTS ROW */
 .insights{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;}
@@ -118,33 +122,47 @@ tbody td.muted{color:var(--muted);font-size:0.72rem;}
   <div class="header-logo"><img src="NCGCL Coloured Logo.png" alt="NCGCL logo"></div>
   <div>
     <h1>Guarantee Origination Pipeline</h1>
-    <p>National Credit Guarantee Company Limited · Pipeline Snapshot · March 2026 · Confidential</p>
+    <p>National Credit Guarantee Company Limited · Pipeline Snapshot · April 2026 · Confidential</p>
   </div>
   <div class="header-badge">
-    <span>PKR 13.56 Bn</span>
+    <span>PKR 13.59 Bn</span>
     QUANTIFIED PIPELINE
+  </div>
+</div>
+
+
+<!-- SHARIAH COMPLIANCE MILESTONE BANNER -->
+<div style="background:linear-gradient(135deg,#1a6b28 0%,#1e6091 100%);border-radius:6px;padding:14px 20px;margin-bottom:20px;display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;color:#fff;">
+  <div style="font-size:2rem;line-height:1;">☪</div>
+  <div>
+    <div style="font-size:0.82rem;font-weight:800;letter-spacing:0.3px;margin-bottom:2px;">SECP APPROVES NCGCL'S ISLAMIC RISK-SHARING PRODUCT — 4 April 2026</div>
+    <div style="font-size:0.72rem;opacity:0.9;line-height:1.5;">Pakistan's first Shariah-compliant credit risk-sharing product approved. NCGCL's <strong>Wakalah-based pooled fund structure (Tabarru')</strong> enables Islamic FIs to expand financing to MSMEs &amp; agriculture. SECP Shariah Advisory Committee has reviewed and approved the structure.</div>
+  </div>
+  <div style="text-align:right;white-space:nowrap;">
+    <div style="font-size:0.62rem;opacity:0.75;text-transform:uppercase;letter-spacing:0.5px;">Shariah Compliance</div>
+    <div style="font-size:0.85rem;font-weight:700;background:rgba(255,255,255,0.2);padding:4px 10px;border-radius:4px;margin-top:4px;">✔ Approved</div>
   </div>
 </div>
 
 <!-- KPI STRIP -->
 <div class="kpi-strip">
   <div class="kpi">
-    <div class="kpi-val">29</div>
+    <div class="kpi-val">33</div>
     <div class="kpi-label">Total Institutions</div>
     <div class="kpi-sub">In active pipeline</div>
   </div>
   <div class="kpi">
-    <div class="kpi-val">13,560</div>
+    <div class="kpi-val">13,585</div>
     <div class="kpi-label">Quantified (PKR Mn)</div>
-    <div class="kpi-sub">18 confirmed amounts</div>
+    <div class="kpi-sub">20 confirmed amounts</div>
   </div>
   <div class="kpi">
-    <div class="kpi-val blue">11</div>
+    <div class="kpi-val blue">13</div>
     <div class="kpi-label">TBD / Unquantified</div>
     <div class="kpi-sub">Amounts not yet set</div>
   </div>
   <div class="kpi">
-    <div class="kpi-val amber">10</div>
+    <div class="kpi-val amber">13</div>
     <div class="kpi-label">Product Types</div>
     <div class="kpi-sub">Across guarantee spectrum</div>
   </div>
@@ -152,6 +170,11 @@ tbody td.muted{color:var(--muted);font-size:0.72rem;}
     <div class="kpi-val slate">1</div>
     <div class="kpi-label">Fee Received</div>
     <div class="kpi-sub">PMIC — PKR 1,000 Mn</div>
+  </div>
+  <div class="kpi" style="border-left:2px solid #1a6b28">
+    <div class="kpi-val" style="color:#1a6b28;font-size:1.1rem">SECP ✔</div>
+    <div class="kpi-label">Shariah Product</div>
+    <div class="kpi-sub">Wakalah structure approved</div>
   </div>
 </div>
 
@@ -166,7 +189,7 @@ tbody td.muted{color:var(--muted);font-size:0.72rem;}
 <!-- TAB: OVERVIEW -->
 <div id="tab-overview" class="tab-panel active">
 
-  <div class="insights">
+  <div class="insights" style="grid-template-columns:repeat(4,1fr)">
     <div class="insight">
       <div class="insight-n">PKR 10.0 Bn</div>
       <div class="insight-d">Credit Guarantee FI — largest segment. Eight banks engaged across the FI product, collectively anchoring the pipeline.</div>
@@ -177,7 +200,11 @@ tbody td.muted{color:var(--muted);font-size:0.72rem;}
     </div>
     <div class="insight blue">
       <div class="insight-n">PKR 500 Mn</div>
-      <div class="insight-d">Dual Haball exposure — one Credit Guarantee Tech deal + one Sukuk, both with NDAs signed and meetings in progress.</div>
+      <div class="insight-d">Dual Haball exposure — one Credit Guarantee Tech deal + one Sukuk, both with NDAs signed. New: WASL Mobility Modaraba (2-3 Wheeler Pilot) under Islamic Risk-Sharing structure.</div>
+    </div>
+    <div class="insight" style="border-left-color:#1a6b28;background:#f0fdf4;">
+      <div class="insight-n" style="color:#1a6b28;font-size:1rem;">☪ Apr 4</div>
+      <div class="insight-d"><strong>SECP approved NCGCL's Islamic Risk-Sharing product</strong> — Wakalah-based Tabarru' pool. First Shariah-compliant credit risk-sharing structure in Pakistan. Unlocks Islamic FI segment.</div>
     </div>
   </div>
 
@@ -189,7 +216,7 @@ tbody td.muted{color:var(--muted);font-size:0.72rem;}
     </div>
     <div class="card">
       <div class="card-title">Institution Count by Product Type</div>
-      <div class="card-sub">All 29 pipeline institutions</div>
+      <div class="card-sub">All 33 pipeline institutions</div>
       <div class="ch"><canvas id="c-product-pie"></canvas></div>
     </div>
   </div>
@@ -212,7 +239,7 @@ tbody td.muted{color:var(--muted);font-size:0.72rem;}
 <!-- TAB: PIPELINE TABLE -->
 <div id="tab-pipeline" class="tab-panel">
   <div class="filter-row" id="filter-row">
-    <button class="filter-btn active" onclick="filterTable('ALL',this)">All (29)</button>
+    <button class="filter-btn active" onclick="filterTable('ALL',this)">All (33)</button>
     <button class="filter-btn" onclick="filterTable('Credit Guarantee FI',this)">CG FI</button>
     <button class="filter-btn" onclick="filterTable('Credit Guarantee Corp',this)">CG Corp</button>
     <button class="filter-btn" onclick="filterTable('Credit Guarantee for Portfolio',this)">CG Portfolio</button>
@@ -220,6 +247,7 @@ tbody td.muted{color:var(--muted);font-size:0.72rem;}
     <button class="filter-btn" onclick="filterTable('STFF',this)">STFF</button>
     <button class="filter-btn" onclick="filterTable('JFA',this)">JFA</button>
     <button class="filter-btn" onclick="filterTable('Other',this)">Other</button>
+    <button class="filter-btn" onclick="filterTable('Islamic',this)">Islamic</button>
   </div>
   <div class="legend">
     <span class="legend-item"><span class="status-dot dot-active"></span>Active / Progress</span>
@@ -256,7 +284,7 @@ tbody td.muted{color:var(--muted);font-size:0.72rem;}
     </div>
     <div class="insight blue">
       <div class="insight-n">3</div>
-      <div class="insight-d"><strong>NDAs Signed</strong> — Haball (CG Tech), Haball-Sukuk, and PFSL. Integration or 2nd meeting in progress.</div>
+      <div class="insight-d"><strong>NDAs Signed / Meetings Done</strong> — Haball (CG Tech), Haball-Sukuk, PFSL, Askari Bank &amp; WASL Mobility Modaraba. Engagement advanced.</div>
     </div>
     <div class="insight amber">
       <div class="insight-n">2</div>
@@ -269,14 +297,14 @@ tbody td.muted{color:var(--muted);font-size:0.72rem;}
 
   <div class="card">
     <div class="card-title">Engagement Status Distribution</div>
-    <div class="card-sub">All 29 pipeline institutions</div>
+    <div class="card-sub">All 33 pipeline institutions</div>
     <div class="ch"><canvas id="c-status-bar"></canvas></div>
   </div>
 </div>
 
 <!-- FOOTER -->
 <div class="footer">
-  <div><strong>NCGCL · Guarantee Origination Pipeline</strong> · As at March 2026 · Confidential — Internal Use Only</div>
+  <div><strong>NCGCL · Guarantee Origination Pipeline</strong> · As at April 2026 · Confidential — Internal Use Only</div>
   <div>Source: Internal pipeline tracker</div>
   <div class="footer-brand">Prepared by NCGCL Management</div>
 </div>
@@ -313,8 +341,12 @@ const pipeline = [
   { name:'Haball — Sukuk',amount:500,  product:'Sukuk',                             status:'active',                                                              statusNotes:'NDA signed. 2nd meeting in the next week.',                                     stage:'active' },
   { name:'PFSL',         amount:null,  product:'Capital Markets',                   status:'active',                                                              statusNotes:'NDA received.',                                                                 stage:'active' },
   { name:'Cash Now',     amount:null,  product:'Commercial Paper',                  status:'pending',                                                             statusNotes:'Awaiting data. ETA — this week.',                                               stage:'pending' },
-  { name:'Askari Bank',  amount:1000,  product:'Guarantee & IB Advisory (JFA)',     status:'pending',                                                             statusNotes:'First Meeting — Postponed.',                                                    stage:'stalled' },
+  { name:'Askari Bank',  amount:1000,  product:'Guarantee & IB Advisory (JFA)',     status:'pending',                                                             statusNotes:'First meeting held 26 Mar 2026. Portfolio & Sukuk guarantees discussed. NDA shared.',stage:'active' },
   { name:'Pak Libya',    amount:null,  product:'Guarantee & IB Advisory (JFA)',     status:'pending',                                                             statusNotes:'First Meeting — Post Eid.',                                                     stage:'pending' },
+  { name:'Neem Financial Services', amount:null, product:'Earned Wage Access',              status:'declined',                                                            statusNotes:'Decided against — Minimum Equity Requirement (MER) not met. Company needs to stabilize before guarantee discussion can resume.', stage:'declined' },
+  { name:'Pantera',      amount:null,  product:'Commercial Farming Initiative',      status:'active',                                                              statusNotes:'Business model discussions underway.',                                          stage:'active' },
+  { name:'WASL Mobility Modaraba', amount:null, product:'Islamic Risk-Sharing (Wakalah)',  status:'active',                                                              statusNotes:'2-3 Wheeler Pilot. NDA shared. Portfolio & Sukuk guarantees discussed.', stage:'active' },
+  { name:'Smart Finance',  amount:25,    product:'Receivables Discounting Facility',   status:'active',                                                              statusNotes:'Initial engagement underway. Factoring / receivables discounting structure under consideration. Indicative guarantee size: PKR ~25 Mn.', stage:'active' },
 ];
 
 // Product pill CSS class map
@@ -329,10 +361,14 @@ const pillClass = {
   'Earned Wage Access':              'pill-ewa',
   'Guarantee & IB Advisory (JFA)':   'pill-jfa',
   'Consortium Guarantee':            'pill-cons',
+  'Islamic Risk-Sharing (Wakalah)':    'pill-islamic',
+  'Receivables Discounting Facility':  'pill-rdf',
+  'Commercial Farming Initiative':     'pill-farm',
+  'Earned Wage Access':                'pill-ewa',
   'Capital Markets':                 'pill-cp',
 };
 
-const statusDot = { fee:'dot-active', active:'dot-active', pending:'dot-pending', tbd:'dot-tbd' };
+const statusDot = { fee:'dot-active', active:'dot-active', pending:'dot-pending', tbd:'dot-tbd', declined:'dot-declined' };
 const chartColors = ['#1a6b28','#e65100','#1e6091','#f9a825','#37474f','#b71c1c','#006064','#4527a0','#880e4f','#f57f17'];
 
 // ── TAB SWITCH ────────────────────────────────────────────────────────────────
@@ -350,18 +386,24 @@ function renderTable(filter) {
   if (filter !== 'ALL') {
     if (filter === 'STFF') rows = pipeline.filter(d => d.product.includes('STFF'));
     else if (filter === 'JFA') rows = pipeline.filter(d => d.product.includes('JFA'));
+    else if (filter === 'Islamic') rows = pipeline.filter(d => d.product.includes('Islamic') || d.product.includes('Sukuk') || d.product.includes('Wakalah'));
     else if (filter === 'Other') rows = pipeline.filter(d => !['Credit Guarantee FI','Credit Guarantee Corp','Credit Guarantee for Portfolio','Credit Guarantee Tech','Credit Guarantee and STFF','Guarantee & IB Advisory (JFA)'].includes(d.product));
     else rows = pipeline.filter(d => d.product === filter);
   }
-  tbody.innerHTML = rows.map((d,i) => `
-    <tr data-product="${d.product}">
+  tbody.innerHTML = rows.map((d,i) => {
+    const isDeclined = d.stage === 'declined';
+    const rowStyle = isDeclined ? 'opacity:0.5;background:#fff5f5;' : '';
+    const nameStyle = isDeclined ? 'font-weight:700;text-decoration:line-through;color:var(--muted)' : 'font-weight:700';
+    const declinedBadge = isDeclined ? ' <span style="font-size:0.6rem;background:#ffebee;color:#b71c1c;padding:1px 6px;border-radius:3px;font-weight:700;text-decoration:none;display:inline-block;vertical-align:middle;margin-left:4px;">MER NOT MET</span>' : '';
+    return `
+    <tr data-product="${d.product}" style="${rowStyle}">
       <td style="color:var(--muted);font-size:0.7rem">${pipeline.indexOf(d)+1}</td>
-      <td style="font-weight:700">${d.name}</td>
+      <td style="${nameStyle}">${d.name}${declinedBadge}</td>
       <td class="mono">${d.amount ? d.amount.toLocaleString() : '<span style="color:var(--muted);font-weight:400">TBD</span>'}</td>
       <td><span class="pill ${pillClass[d.product]||'pill-tbd'}">${d.product}</span></td>
       <td class="muted"><span class="status-dot ${statusDot[d.status]||'dot-tbd'}"></span>${d.statusNotes}</td>
-    </tr>
-  `).join('');
+    </tr>`;
+  }).join('');
 }
 renderTable('ALL');
 
@@ -405,6 +447,7 @@ const stages = {
   pending:  { label:'Pending Action',           color:'var(--amber)',      items:[] },
   stalled:  { label:'Stalled / Call Delayed',   color:'var(--red)',        items:[] },
   initial:  { label:'Initial / No Update',      color:'var(--muted)',      items:[] },
+  declined: { label:'Decided Against (MER / Criteria Not Met)', color:'var(--red)', items:[] },
 };
 pipeline.forEach(d => { if(stages[d.stage]) stages[d.stage].items.push(d.name); });
 const scEl = document.getElementById('status-cards');
