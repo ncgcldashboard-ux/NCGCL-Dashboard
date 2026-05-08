@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NCGCL Monthly Board Update – May 2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root{--bg:#fff;--bg2:#FAFAFA;--bdr:#E5E5E5;--acc:#C8923A;--grn:#52B788;--red:#9B2335;--txt:#1A1A1A;--txt2:#666;--txt3:#999}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',sans-serif;background:var(--bg);color:#2D2D2D;line-height:1.6;font-size:14px}
+.container{max-width:1100px;margin:0 auto;padding:0 1.5rem 4rem}
+
+/* Header */
+.hdr{border-bottom:1px solid var(--bdr);padding:2.5rem 0 2rem;margin-bottom:3rem}
+.hdr-eyebrow{font-size:12px;font-weight:500;letter-spacing:.08em;color:var(--txt3);text-transform:uppercase;margin-bottom:.75rem}
+.hdr-title{font-family:Georgia,serif;font-size:36px;font-weight:400;color:var(--txt);line-height:1.2;margin-bottom:.6rem}
+.hdr-sub{font-size:15px;color:var(--txt2);margin-bottom:1.25rem}
+.hdr-meta{display:flex;gap:2rem;flex-wrap:wrap;font-size:12px;color:var(--txt3);padding-top:1rem;border-top:1px solid var(--bdr)}
+.hdr-meta span strong{color:var(--txt);font-weight:600}
+
+/* Jump nav */
+.jump-nav{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2.5rem;padding-bottom:1rem;border-bottom:1px solid var(--bdr)}
+.jump-nav a{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--txt3);text-decoration:none;padding:4px 10px;border:1px solid var(--bdr);border-radius:3px;transition:all .15s}
+.jump-nav a:hover{color:var(--txt);border-color:var(--acc);color:var(--acc)}
+
+/* Section */
+.sec{margin:3rem 0 2rem}
+.sec-eyebrow{font-size:11px;font-weight:600;letter-spacing:.1em;color:var(--txt3);text-transform:uppercase;margin-bottom:.4rem}
+.sec-title{font-family:Georgia,serif;font-size:24px;font-weight:400;color:var(--txt);margin-bottom:.4rem}
+.sec-sub{font-size:13px;color:var(--txt2);margin-bottom:1.5rem}
+.ex-tag{font-size:10px;font-weight:700;letter-spacing:.1em;color:var(--txt3);text-transform:uppercase;margin-bottom:.35rem}
+hr.div{border:none;border-top:1px solid var(--bdr);margin:2.5rem 0}
+
+/* Grids */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+
+/* KPI boxes */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
+.kbox{background:var(--bg);border:1px solid var(--bdr);border-radius:8px;padding:1.25rem 1.5rem;border-top:3px solid var(--bdr)}
+.kbox.am{border-top-color:var(--acc)}
+.kbox.gn{border-top-color:var(--grn)}
+.kbox.rd{border-top-color:var(--red)}
+.kbox.sl{border-top-color:#888}
+.kbox.bl{border-top-color:#6EA8C4}
+.knum{font-family:Georgia,serif;font-size:28px;font-weight:400;color:var(--txt);line-height:1}
+.klbl{font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;margin-top:.4rem}
+.knote{font-size:11px;color:var(--acc);margin-top:.4rem;font-weight:500}
+.knote.gn{color:var(--grn)}
+
+/* Panels */
+.panel{background:var(--bg2);border:1px solid var(--bdr);border-radius:8px;padding:1.5rem}
+.ptitle{font-family:Georgia,serif;font-size:15px;font-weight:400;color:var(--txt);margin-bottom:.2rem}
+.psub{font-size:12px;color:var(--txt3);margin-bottom:1rem}
+
+/* Chart heights */
+.ch{position:relative;width:100%}
+.h260{height:260px}.h230{height:230px}.h300{height:300px}.h200{height:200px}.h180{height:180px}
+
+/* Tables */
+.tbl{width:100%;border-collapse:collapse;font-size:12px}
+.tbl th{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--txt);padding:.6rem .75rem;border-bottom:2px solid var(--bdr);background:var(--bg);text-align:left;white-space:nowrap}
+.tbl td{padding:.6rem .75rem;border-bottom:1px solid var(--bdr);color:#2D2D2D;vertical-align:middle}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:var(--bg2)}
+.tbl .mono{font-family:'SFMono-Regular',Consolas,monospace;font-size:10px;color:var(--txt3)}
+.tbl .val{font-family:Georgia,serif;font-size:13px;text-align:right;white-space:nowrap}
+.tbl .na{color:var(--txt3);font-style:italic;text-align:right}
+.tbl .strong{font-weight:700;color:var(--txt)}
+
+/* Badges */
+.b{display:inline-block;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:600;white-space:nowrap}
+.b-live{background:#EAF5EF;color:#1a6b3c}
+.b-magfa{background:#EBF3FB;color:#1a4f7a}
+.b-ic{background:#EDF7F4;color:#1a5c47}
+.b-ts{background:#FDF3E6;color:#8B5E1A}
+.b-dd{background:#F5F5F5;color:#555}
+.b-init{background:#F9F9F9;color:#888}
+.b-pipe{background:#F3EEF8;color:#5a3a8c}
+.b-new{background:#FFF0F3;color:var(--red)}
+.b-up{background:#FDF3E6;color:var(--acc)}
+
+/* Product cards */
+.prod-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
+.pc{background:var(--bg);border:1px solid var(--bdr);border-radius:8px;padding:1.25rem;border-left:3px solid var(--bdr)}
+.pc.live{border-left-color:var(--grn)}
+.pc.str{border-left-color:var(--acc)}
+.pc.rev{border-left-color:#888}
+.pc.con{border-left-color:var(--bdr)}
+.pc.new{border-left-color:var(--red)}
+.pname{font-family:Georgia,serif;font-size:13px;font-weight:400;color:var(--txt);margin-bottom:.2rem}
+.pmeta{font-size:11px;color:var(--txt3);margin-bottom:.5rem}
+.pnote{font-size:11px;color:var(--txt2);background:var(--bg2);padding:.4rem .65rem;border-radius:3px;line-height:1.5}
+.pfi{font-size:10px;color:var(--acc);margin-top:.4rem;font-weight:600}
+.sb-row{display:flex;gap:3px;margin:.4rem 0;align-items:center}
+.sb{height:3px;flex:1;border-radius:2px;background:var(--bdr)}
+.sb.on{background:var(--grn)}.sb.am{background:var(--acc)}.sb.gy{background:#bbb}
+.sl{font-size:10px;font-weight:600;margin-left:6px}
+
+/* Proj cards */
+.proj-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-bottom:1.5rem}
+.pjc{background:var(--bg);border:1px solid var(--bdr);border-radius:8px;padding:1.25rem}
+.pjn{font-family:Georgia,serif;font-size:13px;color:var(--txt);margin-bottom:.2rem}
+.pja{font-size:10px;color:var(--txt3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.6rem}
+.pjd{font-size:11px;color:var(--txt2);line-height:1.5;margin-bottom:.6rem}
+
+/* Fin / investment panels */
+.fin-highlight{background:var(--bg2);border:1px solid var(--bdr);border-left:4px solid var(--acc);border-radius:0 8px 8px 0;padding:1rem 1.25rem;font-size:13px;color:var(--txt2);margin:1rem 0}
+.fin-highlight strong{color:var(--txt);font-weight:600}
+.milestone{background:#EAF5EF;border:1px solid #b7dfc7;border-radius:8px;padding:1rem 1.25rem;margin-bottom:1rem}
+.milestone-head{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#1a6b3c;margin-bottom:.25rem}
+.milestone-text{font-size:13px;color:#1a3d26}
+
+/* Ratio table */
+.ratio-card{background:var(--bg);border:1px solid var(--bdr);border-radius:8px;padding:1.5rem}
+.ratio-title{font-family:Georgia,serif;font-size:15px;color:var(--txt);margin-bottom:1rem;border-bottom:1px solid var(--bdr);padding-bottom:.5rem}
+
+/* Stat strip */
+.stat-strip{display:grid;grid-template-columns:repeat(6,1fr);gap:1rem;padding:1.5rem;background:var(--bg2);border:1px solid var(--bdr);border-radius:8px}
+.si .sv{font-family:Georgia,serif;font-size:20px;color:var(--txt)}
+.si .sl2{font-size:10px;color:var(--txt3);text-transform:uppercase;letter-spacing:.06em;margin-top:.2rem}
+
+/* Portfolio perf boxes */
+.perf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem}
+.perfbox{background:var(--bg);border:1px solid var(--bdr);border-radius:8px;padding:1.25rem;text-align:center}
+.perf-lbl{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--txt3);margin-bottom:.5rem}
+.perf-ret{font-family:Georgia,serif;font-size:28px;color:var(--txt);line-height:1}
+.perf-bm{font-size:12px;color:var(--txt3);margin-top:.35rem}
+.perf-alpha{font-size:13px;font-weight:600;margin-top:.35rem}
+.alpha-pos{color:var(--grn)}.alpha-neg{color:var(--red)}.alpha-note{font-size:10px;color:var(--txt3);margin-top:.2rem}
+
+/* Footer */
+.footer{border-top:1px solid var(--bdr);padding:2rem 0;margin-top:3rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-size:12px;color:var(--txt3)}
+.footer strong{color:var(--txt)}
+
+@media(max-width:768px){
+.g2,.g3,.g4,.kpi-grid,.prod-grid,.proj-grid,.stat-strip,.perf-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-eyebrow">National Credit Guarantee Company Limited · Monthly Board Update</div>
+  <h1 class="hdr-title">Pipeline, Product &amp; Financial Performance</h1>
+  <p class="hdr-sub">Comprehensive monthly update for Board Members and Key Stakeholders · May 2026</p>
+  <div class="hdr-meta">
+    <span><strong>Pipeline Value</strong> · PKR 16.4 Bn (quantified)</span>
+    <span><strong>Active Deals</strong> · 31 engagements</span>
+    <span><strong>Investment Portfolio</strong> · PKR 9.58 Bn</span>
+    <span><strong>YTD Alpha</strong> · +43 bps vs peer universe</span>
+    <span><strong>Classification</strong> · Board Confidential · AAA Rated</span>
+  </div>
+</div>
+
+<!-- JUMP NAV -->
+<div class="jump-nav">
+  <a href="#snapshot">A · Snapshot</a>
+  <a href="#pipeline">B · Deal Pipeline</a>
+  <a href="#products">C · Products</a>
+  <a href="#projects">D · Projects</a>
+  <a href="#financials">E · Financials</a>
+  <a href="#investment">F · Investment Portfolio</a>
+  <a href="#analytics">G · Analytics</a>
+</div>
+
+<!-- ═══════════════════════════════ A · EXECUTIVE SNAPSHOT ═══════════════════ -->
+<div id="snapshot" class="sec">
+  <div class="sec-eyebrow">Section A</div>
+  <h2 class="sec-title">Executive Snapshot</h2>
+  <p class="sec-sub">Portfolio-level metrics as at May 2026 · Financial data YTD April 2026</p>
+
+  <div class="ex-tag">Exhibit A-1 · Headline Portfolio Metrics</div>
+  <div class="kpi-grid">
+    <div class="kbox am"><div class="knum">PKR 16.4Bn</div><div class="klbl">Quantified Deal Pipeline</div><div class="knote">31 active · 17 additional TBD</div></div>
+    <div class="kbox gn"><div class="knum">PKR 9.58Bn</div><div class="klbl">Total Asset Base</div><div class="knote gn">PKR 9.29Bn deployed in investments</div></div>
+    <div class="kbox sl"><div class="knum">9.74%</div><div class="klbl">YTD Investment Return</div><div class="knote">+43 bps alpha vs peer fund universe</div></div>
+    <div class="kbox rd"><div class="knum">PKR 293Mn</div><div class="klbl">YTD Investment Income</div><div class="knote">First guarantee revenue recognised</div></div>
+  </div>
+
+  <div class="milestone">
+    <div class="milestone-head">⭐ Corporate Milestone — First-Ever Guarantee Revenue Recognised</div>
+    <div class="milestone-text">YTD April 2026 marks a historic milestone for NCGCL: the Company recognised its first-ever core operating revenue of <strong>PKR 125,000</strong> in Guarantee Revenue, out of the PKR 2.5 million upfront fee received from PMIC. This reflects the activation of the Company's primary business mandate and marks the beginning of a sustainable guarantee fee income stream.</div>
+  </div>
+
+  <div class="g2">
+    <div class="panel">
+      <div class="ex-tag">Exhibit A-2</div>
+      <div class="ptitle">Deal Pipeline by Product Category</div>
+      <div class="psub">Quantified PKR pipeline · 18 confirmed deals</div>
+      <div class="ch h260"><canvas id="cA2"></canvas></div>
+    </div>
+    <div class="panel">
+      <div class="ex-tag">Exhibit A-3</div>
+      <div class="ptitle">Deal Stage Distribution</div>
+      <div class="psub">28 active In Progress engagements by origination stage</div>
+      <div class="ch h260"><canvas id="cA3"></canvas></div>
+    </div>
+  </div>
+</div>
+
+<hr class="div">
+
+<!-- ═══════════════════════════════ B · GUARANTEE DEAL PIPELINE ════════════════ -->
+<div id="pipeline" class="sec">
+  <div class="sec-eyebrow">Section B</div>
+  <h2 class="sec-title">Guarantee Deal Pipeline</h2>
+  <p class="sec-sub">Institution-level tracking across the 21-stage NCGCL origination framework · MAGFA as master guarantee agreement</p>
+
+  <div class="panel" style="margin-bottom:1.5rem">
+    <div class="ex-tag">Exhibit B-1</div>
+    <div class="ptitle">Top Deals by Guarantee Value</div>
+    <div class="psub">PKR Mn · 12 largest quantified deals · Colour by origination stage</div>
+    <div class="ch h300"><canvas id="cB1"></canvas></div>
+  </div>
+
+  <div class="panel" style="margin-bottom:1.5rem">
+    <div class="ex-tag">Exhibit B-2</div>
+    <div class="ptitle">Active Deal Tracker — All Engagements</div>
+    <div class="psub">Status reflects latest update as of first week May 2026 · <span class="b b-up">Updated</span> indicates change from prior period</div>
+    <div style="overflow-x:auto">
+    <table class="tbl">
+      <thead><tr><th>Deal ID</th><th>Institution</th><th>Product Type</th><th>Amount</th><th>Stage</th><th>Latest Status</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">GUA-2025-001</td><td class="strong">PMIC</td><td>Credit Guarantee – FI</td><td class="val">PKR 1,000 Mn</td><td><span class="b b-live">First Issuance Ready</span></td><td style="font-size:11px">Fee received. System demo to be arranged at PMIC offices with NCGCL team member present to guide. <span class="b b-up">Updated</span></td></tr>
+        <tr><td class="mono">GUA-2025-005</td><td class="strong">HBL FI</td><td>Credit Guarantee – FI</td><td class="val">PKR 1,000 Mn</td><td><span class="b b-magfa">MAGFA Finalised</span></td><td style="font-size:11px">Agreement finalised; HBL confirming system access. Demo to follow.</td></tr>
+        <tr><td class="mono">GUA-2025-003</td><td class="strong">BIPL</td><td>Credit Guarantee – FI</td><td class="val">PKR 200 Mn</td><td><span class="b b-magfa">MAGFA — Business Confirmed</span></td><td style="font-size:11px">Business team confirmed MAGFA. Shariah and Legal team's response still awaited. <span class="b b-up">Updated</span></td></tr>
+        <tr><td class="mono">GUA-2025-010</td><td class="strong">NRSP</td><td>Credit Guarantee – Corp</td><td class="val">PKR 70 Mn</td><td><span class="b b-magfa">MAGFA Stage</span></td><td style="font-size:11px">HBL–NRSP arrangement for NOC release finalised; NCGCL guarantee to replace cash margin.</td></tr>
+        <tr><td class="mono">GUA-2025-006</td><td class="strong">JS Bank (JSBL)</td><td>Credit Guarantee – FI</td><td class="val">PKR 2,000 Mn</td><td><span class="b b-ic">IC Approval</span></td><td style="font-size:11px">Approval under process at JSBL. Satisfactory CCO &amp; Treasurer meeting held; process expediting.</td></tr>
+        <tr><td class="mono">GUA-2025-004</td><td class="strong">Bank Alfalah (BAFL)</td><td>Credit Guarantee – FI</td><td class="val">PKR 2,000 Mn</td><td><span class="b b-ts">Term Sheet</span></td><td style="font-size:11px">Revised term sheet shared. Corporate Farming &amp; Supply Chain financing also deliberated.</td></tr>
+        <tr><td class="mono">GUA-2026-031</td><td class="strong">Bank of Punjab</td><td>Credit Guarantee – FI</td><td class="val">PKR 2,000 Mn</td><td><span class="b b-ts">Term Sheet</span></td><td style="font-size:11px">Satisfactory meeting with Head of FIs for on-lending to MFIs. Draft term sheet shared.</td></tr>
+        <tr><td class="mono">GUA-2025-002</td><td class="strong">HBL MFB</td><td>Credit Guarantee – FI</td><td class="val">PKR 1,500 Mn</td><td><span class="b b-ts">Term Sheet</span></td><td style="font-size:11px">Meeting set for Thursday, 07-May-26. <span class="b b-up">Updated</span></td></tr>
+        <tr><td class="mono">GUA-2025-008</td><td class="strong">UBL</td><td>Credit Guarantee – FI</td><td class="val">PKR 1,500 Mn</td><td><span class="b b-dd">Due Diligence</span></td><td style="font-size:11px">Meeting to be arranged with Chief Product Officer and Head Digital Lending. <span class="b b-up">Updated</span></td></tr>
+        <tr><td class="mono">GUA-2025-011</td><td class="strong">Haball</td><td>Credit Guarantee – Tech</td><td class="val">PKR 500 Mn</td><td><span class="b b-dd">Due Diligence</span></td><td style="font-size:11px">System demo by Haball to NCGCL team to be scheduled. Al Baraka to be introduced post demo.</td></tr>
+        <tr><td class="mono">GUA-2025-015</td><td class="strong">Daewoo</td><td>Credit Guarantee – STFF</td><td class="val">PKR 500 Mn</td><td><span class="b b-dd">Due Diligence</span></td><td style="font-size:11px">Financial model and waste management business data still awaited.</td></tr>
+        <tr><td class="mono">GUA-2025-000</td><td class="strong">UNIDO</td><td>Consortium Guarantee</td><td class="val">PKR 80 Mn</td><td><span class="b b-dd">Consortium DD</span></td><td style="font-size:11px">Phase 1 findings shared. Multi-stakeholder meeting with PFIs, PAIDAR, UNIDO to be arranged at SAFCO HO.</td></tr>
+        <tr><td class="mono">GUA-2026-026</td><td class="strong">Askari Bank</td><td>Guarantee &amp; IB Advisory</td><td class="val">PKR 1,000 Mn</td><td><span class="b b-init">Initial Engagement</span></td><td style="font-size:11px">Portfolio &amp; Sukuk guarantees + Treasury credit line discussed. NDA signed.</td></tr>
+        <tr><td class="mono">GUA-2026-030</td><td class="strong">Bank of Khyber</td><td>Credit Guarantee – Portfolio</td><td class="val">PKR 1,000 Mn</td><td><span class="b b-init">MoU Stage</span></td><td style="font-size:11px">MoU draft under review at BOK; signing ceremony targeted 2nd week May in Peshawar. <span class="b b-up">Updated</span></td></tr>
+        <tr><td class="mono">GUA-2025-007</td><td class="strong">Meezan Bank (MEBL)</td><td>Credit Guarantee – FI</td><td class="val">PKR 1,000 Mn</td><td><span class="b b-init">Initial Engagement</span></td><td style="font-size:11px">CEO-level discussion with Faisal to be initiated.</td></tr>
+        <tr><td class="mono">GUA-2025-020</td><td class="strong">Halan Microfinance</td><td>Microfinance Guarantee</td><td class="val">PKR 500 Mn</td><td><span class="b b-init">Initial Engagement</span></td><td style="font-size:11px">Meeting to be arranged by CEO.</td></tr>
+        <tr><td class="mono">SUK-2026-021</td><td class="strong">Haball – Sukuk</td><td>Sukuk</td><td class="val">PKR 500 Mn</td><td><span class="b b-init">NDA Signed</span></td><td style="font-size:11px">NDA signed. 2nd meeting in the next week.</td></tr>
+        <tr><td class="mono">GUA-2025-010b</td><td class="strong">HBL Zarai</td><td>Credit Guarantee – Corp</td><td class="val">PKR 37.5 Mn</td><td><span class="b b-init">Concept Stage</span></td><td style="font-size:11px">Concept paper under internal review per Research Head &amp; CEO discussion.</td></tr>
+        <tr><td class="mono">GUA-2025-013</td><td class="strong">Pak China</td><td>Credit Guarantee – Portfolio</td><td class="na">TBD</td><td><span class="b b-init">MoU Signed</span></td><td style="font-size:11px">MoU signed. Meeting in Islamabad planned for 07-May-26. <span class="b b-up">Updated</span></td></tr>
+        <tr><td class="mono">GUA-2025-012b</td><td class="strong">Pak Oman</td><td>Credit Guarantee – Portfolio</td><td class="na">TBD</td><td><span class="b b-init">MoU Imminent</span></td><td style="font-size:11px">MoU signing this week 06-May-26; meeting with Corporate &amp; SME Team to follow. <span class="b b-up">Updated</span></td></tr>
+        <tr><td class="mono">GUA-2025-021</td><td class="strong">Pak Kuwait</td><td>Credit Guarantee – Portfolio</td><td class="na">TBD</td><td><span class="b b-init">Initial Engagement</span></td><td style="font-size:11px">2nd meeting pending; supply chain with Haball under consideration.</td></tr>
+        <tr><td class="mono">GUA-2025-012</td><td class="strong">Allied Bank (ABL)</td><td>Credit Guarantee – Portfolio</td><td class="na">TBD</td><td><span class="b b-init">Meeting Set</span></td><td style="font-size:11px">Meeting with RCH set for Wednesday, 06-May-26. <span class="b b-up">Updated</span></td></tr>
+        <tr><td class="mono">GUA-2026-029</td><td class="strong">Climate Core Asia</td><td>Equity Guarantee</td><td class="na">TBD</td><td><span class="b b-init">LOI Received</span></td><td style="font-size:11px">LOIs from Pak Libya (PKR 300 Mn) &amp; Saudi Pak (PKR 1 Bn). Licensing in 2–3 weeks.</td></tr>
+        <tr><td class="mono">GUA-2026-028</td><td class="strong">WASL Mobility Modaraba</td><td>2-3 Wheeler Pilot</td><td class="na">TBD</td><td><span class="b b-init">Preliminary DD</span></td><td style="font-size:11px">Portfolio &amp; Sukuk discussed with CFO. Documentation and risk framework requested.</td></tr>
+        <tr><td class="mono">GUA-2025-014</td><td class="strong">Pak Brunei</td><td>Credit Guarantee – Portfolio</td><td class="na">TBD</td><td><span class="b b-init">Initial Engagement</span></td><td style="font-size:11px">No satisfactory updates; credit line for Thardeep unlikely per verbal confirmation.</td></tr>
+        <tr><td class="mono">GUA-2026-027</td><td class="strong">Pak Libya</td><td>Guarantee &amp; IB Advisory</td><td class="na">TBD</td><td><span class="b b-pipe">Pending</span></td><td style="font-size:11px">Meeting to be arranged post CEO availability.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p style="font-size:11px;color:var(--txt3);margin-top:.75rem">Additionally tracked: Al Habib, HMB, Al Baraka, Faysal (engagement pending, N/A status) · Pantera declined</p>
+  </div>
+
+  <div class="g2">
+    <div class="panel">
+      <div class="ex-tag">Exhibit B-3</div>
+      <div class="ptitle">Pipeline by Origination Team</div>
+      <div class="psub">PKR Mn · Quantified deals by originating function</div>
+      <div class="ch h230"><canvas id="cB3"></canvas></div>
+    </div>
+    <div class="panel">
+      <div class="ex-tag">Exhibit B-4</div>
+      <div class="ptitle">Deal Status Distribution</div>
+      <div class="psub">Deal count by stage · 28 active engagements</div>
+      <div class="ch h230"><canvas id="cB4"></canvas></div>
+    </div>
+  </div>
+</div>
+
+<hr class="div">
+
+<!-- ═══════════════════════════════ C · PRODUCT PIPELINE ═══════════════════════ -->
+<div id="products" class="sec">
+  <div class="sec-eyebrow">Section C</div>
+  <h2 class="sec-title">Product Pipeline Status</h2>
+  <p class="sec-sub">12 core products + 4 strategic collaborations · FI partners and Q3/Q4 2026 timelines now confirmed</p>
+
+  <div class="ex-tag" style="margin-bottom:.75rem">Exhibit C-1 · Product Development Stage Tracker — Updated May 2026</div>
+  <div style="display:flex;gap:1.25rem;flex-wrap:wrap;font-size:11px;color:var(--txt3);margin-bottom:1rem">
+    <span style="color:#1a6b3c">● Live</span><span style="color:var(--acc)">● Structuring</span><span style="color:#555">● Board Review</span><span style="color:#aaa">● Concept</span><span style="color:var(--red)">● New This Period</span>
+  </div>
+
+  <div class="prod-grid">
+
+    <div class="pc live">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+        <div class="pname">M&amp;SME Guarantee Programme</div><span class="b b-live">Live · 3Q26</span>
+      </div>
+      <div class="pmeta">SME · Account &amp; FL/SL · POC: Majid</div>
+      <div class="sb-row"><div class="sb on"></div><div class="sb on"></div><div class="sb on"></div><div class="sb on"></div><span class="sl" style="color:#1a6b3c">Stage 4</span></div>
+      <div class="pnote">In-placed · Active FI onboarding in progress</div>
+      <div class="pfi">FI Partners: HBL MFB · Meezan · HBL · BOP · BOK · JS Bank · ASA</div>
+    </div>
+
+    <div class="pc live">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+        <div class="pname">Agriculture Guarantee Structure</div><span class="b b-live">Live · 3Q26</span>
+      </div>
+      <div class="pmeta">Agriculture · Joint FL &amp; SL · POC: Majid</div>
+      <div class="sb-row"><div class="sb on"></div><div class="sb on"></div><div class="sb on"></div><div class="sb on"></div><span class="sl" style="color:#1a6b3c">Stage 4</span></div>
+      <div class="pnote">In-placed · FI onboarding active · SWAT region visit planned</div>
+      <div class="pfi">FI Partners: UBL · BOP · BIPL · BOK</div>
+    </div>
+
+    <div class="pc live">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+        <div class="pname">Microfinance On-Lending Guarantee</div><span class="b b-live">Live · 3Q26</span>
+      </div>
+      <div class="pmeta">Microenterprises · Joint FL &amp; SL · POC: Majid</div>
+      <div class="sb-row"><div class="sb on"></div><div class="sb on"></div><div class="sb on"></div><div class="sb on"></div><span class="sl" style="color:#1a6b3c">Stage 4</span></div>
+      <div class="pnote">In-placed · On-lending MFI arrangements in active development</div>
+      <div class="pfi">FI Partners: PMIC · Pak Brunei · JS Bank · BOP · HBL FI · Askari FI</div>
+    </div>
+
+    <div class="pc str">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+        <div class="pname">Digital Lending Guarantee</div><span class="b b-ts">Structuring · 3Q26</span>
+      </div>
+      <div class="pmeta">MSME &amp; Agri · Pari Passu · POC: Majid</div>
+      <div class="sb-row"><div class="sb on"></div><div class="sb on"></div><div class="sb on"></div><div class="sb am"></div><span class="sl" style="color:var(--acc)">Stage 3</span></div>
+      <div class="pnote">Term sheet at closure with Bank Alfalah. Covers Embedded, COD, POS, Merchant financing</div>
+      <div class="pfi">FI Partners: Bank Alfalah · UBL</div>
+    </div>
+
+    <div class="pc str">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+        <div class="pname">FinTech / Start-up Financing</div><span class="b b-ts">Pilot Active · 4Q26</span>
+      </div>
+      <div class="pmeta">FinTech · Account Level · POC: Majid</div>
+      <div class="sb-row"><div class="sb on"></div><div class="sb on"></div><div class="sb on"></div><div class="sb am"></div><span class="sl" style="color:var(--acc)">Stage 3</span></div>
+      <div class="pnote">Smart Finance pilot confirmed: 30% coverage on PKR 50 Mn. ALIF discussions underway for structure. <span class="b b-up">Updated</span></div>
+      <div class="pfi">FI Partners: ALIF · Smart Finance · CashNow</div>
+    </div>
+
+    <div class="pc str">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+        <div class="pname">HBL Zarai Collaboration</div><span class="b b-ts">Board Agenda · 3Q26</span>
+      </div>
+      <div class="pmeta">Agriculture Value Chain · Portfolio Level · POC: Adil</div>
+      <div class="sb-row"><div class="sb on"></div><div class="sb on"></div><div class="sb on"></div><div class="sb am"></div><span class="sl" style="color:var(--acc)">Stage 3</span></div>
+      <div class="pnote">Concept paper ready. Expected on agenda at upcoming Board Guarantee Meeting</div>
+      <div class="pfi">FI Partners: HBL Zarai</div>
+    </div>
+
+    <div class="pc rev">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+        <div class="pname">Corporate Guarantees</div><span class="b b-dd">CEO Review · 4Q26</span>
+      </div>
+      <div class="pmeta">Corporate Entities · Account Level · POC: Adil</div>
+      <div class="sb-row"><div class="sb on"></div><div class="sb on"></div><div class="sb gy"></div><div class="sb"></div><span class="sl">Stage 2</span></div>
+      <div class="pnote">CEO paper under review. Intermark meeting held. PARCO meeting to be arranged by Business. <span class="b b-up">Updated</span></div>
+      <div class="pfi">Entities: TPL · Intermark · PARCO</div>
+    </div>
+
+    <div class="pc rev">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+        <div class="pname">Horticulture &amp; Agri Value Chain</div><span class="b b-dd">Research · 4Q26</span>
+      </div>
+      <div class="pmeta">Agriculture · TBD · POC: Adil</div>
+      <div class="sb-row"><div class="sb on"></div><div class="sb on"></div><div class="sb gy"></div><div class="sb"></div><span class="sl">Stage 2</span></div>
+      <div class="pnote">SWAT region visit scoped and finalised. BOK team already aligned for field engagement</div>
+      <div class="pfi">FI Partners: BOK · BOP · HBL</div>
+    </div>
+
+    <div class="pc rev">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+        <div class="pname">SECP Invoice Discounting Framework</div><span class="b b-dd">Regulatory</span>
+      </div>
+      <div class="pmeta">SME · Anchor Risk – Pari Passu · POC: Majid</div>
+      <div class="sb-row"><div class="sb on"></div><div class="sb on"></div><div class="sb gy"></div><div class="sb"></div><span class="sl">Stage 2</span></div>
+      <div class="pnote">NCGCL facilitating SECP framework. SECP soliciting NBFI &amp; FI feedback. Timeline: SECP-dependent</div>
+      <div class="pfi">FI Partners: Meezan · CashNow · Smart Finance</div>
+    </div>
+
+    <div class="pc rev">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+        <div class="pname">EXIM Bank Collaboration</div><span class="b b-init">Concept</span>
+      </div>
+      <div class="pmeta">Trade Finance · TBD · POC: Falak</div>
+      <div class="sb-row"><div class="sb on"></div><div class="sb"></div><div class="sb"></div><div class="sb"></div><span class="sl">Stage 1</span></div>
+      <div class="pnote">Draft concept paper prepared; to be shared with relevant EXIM Bank body</div>
+      <div class="pfi">FI Partners: HBL · JS Bank</div>
+    </div>
+
+    <div class="pc new">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+        <div class="pname">TPL &amp; OEM Buy Now Pay Later Guarantee</div><span class="b b-new">New · 3Q26</span>
+      </div>
+      <div class="pmeta">Consumer Finance · Joint FL (TPL) &amp; SL (NCGCL) · POC: Majid</div>
+      <div class="sb-row"><div class="sb on"></div><div class="sb am"></div><div class="sb"></div><div class="sb"></div><span class="sl" style="color:var(--acc)">Stage 2</span></div>
+      <div class="pnote">Joint guarantee structure with TPL Finance for OEM Buy Now Pay Later scheme on selected variants. Concept paper drafted; queries raised with TPL Finance team. <span class="b b-new">New Product</span></div>
+      <div class="pfi">Partners: TPL Finance · OEM Partners (TBD)</div>
+    </div>
+
+    <div class="pc new">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+        <div class="pname">Electricity Product — Power Distribution</div><span class="b b-new">New · Concept</span>
+      </div>
+      <div class="pmeta">Energy / Infrastructure · TBD · POC: Majid</div>
+      <div class="sb-row"><div class="sb on"></div><div class="sb am"></div><div class="sb"></div><div class="sb"></div><span class="sl" style="color:var(--acc)">Stage 2</span></div>
+      <div class="pnote">Discussing possible structure with "Independent System Company" to bring efficiency in power distribution. Concept paper drafted. <span class="b b-new">New Product</span></div>
+      <div class="pfi">Partners: Independent System Company (TBD)</div>
+    </div>
+
+  </div>
+
+  <div class="g2">
+    <div class="panel">
+      <div class="ex-tag">Exhibit C-2</div>
+      <div class="ptitle">Products by Business Segment</div>
+      <div class="psub">14 products across 9 segments including 2 new additions</div>
+      <div class="ch h230"><canvas id="cC2"></canvas></div>
+    </div>
+    <div class="panel">
+      <div class="ex-tag">Exhibit C-3</div>
+      <div class="ptitle">Products by Development Stage</div>
+      <div class="psub">Stage 1 = Concept · Stage 2 = Review · Stage 3 = Active · Stage 4 = Live</div>
+      <div class="ch h230"><canvas id="cC3"></canvas></div>
+    </div>
+  </div>
+</div>
+
+<hr class="div">
+
+<!-- ═══════════════════════════════ D · STRATEGIC PROJECTS ═════════════════════ -->
+<div id="projects" class="sec">
+  <div class="sec-eyebrow">Section D</div>
+  <h2 class="sec-title">Strategic Projects &amp; Collaborations</h2>
+  <p class="sec-sub">Climate finance, capital markets, multilateral partnerships · 4 active international collaborations + 7 thematic initiatives</p>
+
+  <div class="ex-tag" style="margin-bottom:.75rem">Exhibit D-1 · Active International Collaborations</div>
+  <div class="g2" style="margin-bottom:1.5rem">
+    <div class="pjc" style="border-top:3px solid var(--grn)">
+      <div class="pjn">GIZ Project – BG&amp;BE Pakistan</div>
+      <div class="pja">Climate Finance · SME · POC: Shajeea</div>
+      <div class="pjd">NCGCL participating in international collaboration to support SME carbon efficiency and upscaling. Technical assistance also to be provided to relatively new SMEs. Joint FL &amp; SL arrangement.</div>
+      <span class="b b-live">Concept Submitted — Apr 17, 2026</span>
+    </div>
+    <div class="pjc" style="border-top:3px solid var(--grn)">
+      <div class="pjn">IFC Partnership</div>
+      <div class="pja">Multi-Sector · POC: Saher</div>
+      <div class="pjd">Concept paper submitted with IFC team covering possible collaboration areas. NCGCL provided list of sectors and products where co-investment and risk-sharing can be ventured.</div>
+      <span class="b b-live">Paper Shared — Apr 20, 2026</span>
+    </div>
+    <div class="pjc" style="border-top:3px solid var(--acc)">
+      <div class="pjn">Equity Fund Guarantee Paper</div>
+      <div class="pja">Climate Finance · Portfolio Level · POC: Shajeea</div>
+      <div class="pjd">Paper prepared to support investor capital by absorbing a portion of risk to enable commercially relevant capital formation. Linked to Climate Core Asia LOIs from Pak Libya (PKR 300 Mn) and Saudi Pak (PKR 1 Bn).</div>
+      <span class="b b-review">Board Review Pending</span>
+    </div>
+    <div class="pjc" style="border-top:3px solid var(--acc)">
+      <div class="pjn">Credit Enhancer – Capital Markets (PSX)</div>
+      <div class="pja">Bond Market · Account Level · POC: Saira</div>
+      <div class="pjd">Deck prepared underlining NCGCL's role as credit enhancer and risk absorber for the PSX green and corporate bond market. Under internal review before PSX submission.</div>
+      <span class="b b-review">Internal Review → PSX Submission</span>
+    </div>
+  </div>
+
+  <div class="ex-tag" style="margin-bottom:.75rem">Exhibit D-2 · Thematic Strategic Initiatives</div>
+  <div class="proj-grid">
+    <div class="pjc"><div class="pjn">GCF Proposal – PCFGF</div><div class="pja">Climate Finance · Multilateral</div><div class="pjd">Pakistan Climate Finance Guarantee Facility targeting Green Climate Fund to mobilise blended finance for climate adaptation and mitigation priorities.</div><span class="b b-ts">In Structuring</span></div>
+    <div class="pjc"><div class="pjn">Green Sukuk – Capital Markets</div><div class="pja">Bond Market · Sukuk</div><div class="pjd">NCGCL as credit enhancer for PSX green bond and Sukuk market. Linked to Haball Sukuk deal and broader PSX credit enhancer positioning.</div><span class="b b-dd">In Review</span></div>
+    <div class="pjc"><div class="pjn">Electrification Product Suite</div><div class="pja">Energy Finance · EV &amp; Appliances</div><div class="pjd">Multi-product suite covering EVs, 2-3 wheelers (WASL Mobility), TPL OEM BNPL, and energy-efficient appliances. Research and product design phase.</div><span class="b b-ts">Product Design</span></div>
+    <div class="pjc"><div class="pjn">Hyfin – Solar Securitisation</div><div class="pja">Climate Finance · Solar</div><div class="pjd">Guarantee product enabling risk transfer from solar ESCO portfolios to capital markets, linked to NCGCL's PSX credit enhancement positioning.</div><span class="b b-pipe">Development</span></div>
+    <div class="pjc"><div class="pjn">OPM – Mitigation Action Facility</div><div class="pja">Climate · Multilateral</div><div class="pjd">GCF-linked mitigation facility supporting Pakistan's nationally determined contributions in collaboration with OPM and multilateral partners.</div><span class="b b-dd">In Progress</span></div>
+    <div class="pjc"><div class="pjn">Impact Assessment Framework</div><div class="pja">Analytics · Portfolio</div><div class="pjd">Portfolio-wide impact measurement covering credit additionality, employment, women's income, and emissions. Required for IFC, GCF and multilateral reporting.</div><span class="b b-dd">Development</span></div>
+  </div>
+</div>
+
+<hr class="div">
+
+<!-- ═══════════════════════════════ E · FINANCIAL OVERVIEW ═════════════════════ -->
+<div id="financials" class="sec">
+  <div class="sec-eyebrow">Section E</div>
+  <h2 class="sec-title">Financial Overview</h2>
+  <p class="sec-sub">Management Accounts · YTD April 2026 · PKR in Millions</p>
+
+  <div class="milestone" style="margin-bottom:1.5rem">
+    <div class="milestone-head">Corporate Milestone — First Operating Revenue Recognised</div>
+    <div class="milestone-text">YTD April 2026 represents a landmark period: NCGCL recognised its <strong>first-ever Guarantee Revenue of PKR 0.125 Mn</strong> (out of PKR 2.5 Mn upfront fee from PMIC), marking the Company's transition from a pre-revenue to a revenue-generating guarantee institution. This is the foundational step toward building a sustainable fee income stream.</div>
+  </div>
+
+  <!-- Key Financial KPIs -->
+  <div class="ex-tag">Exhibit E-1 · Key Financial Metrics — YTD April 2026</div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem">
+    <div class="kbox gn"><div class="knum">PKR 293Mn</div><div class="klbl">YTD Investment Income</div><div class="knote gn">Core revenue driver</div></div>
+    <div class="kbox am"><div class="knum">42.87%</div><div class="klbl">Net Profit Margin</div><div class="knote">23% C/I ratio ex-finance cost</div></div>
+    <div class="kbox sl"><div class="knum">7.09x</div><div class="klbl">Current Ratio</div><div class="knote">PKR 9.29Bn in investments</div></div>
+    <div class="kbox bl"><div class="knum">13.05%</div><div class="klbl">Gearing Ratio</div><div class="knote">Conservative leverage profile</div></div>
+  </div>
+
+  <!-- Ratio Analysis -->
+  <div class="ex-tag">Exhibit E-2 · Financial Ratio Analysis — 2026 vs 2025</div>
+  <div class="g2" style="margin-bottom:1.5rem">
+    <div>
+      <div class="ratio-card" style="margin-bottom:1rem">
+        <div class="ratio-title">Profitability</div>
+        <table class="tbl">
+          <thead><tr><th>Ratio</th><th style="text-align:right">YTD Apr 2026</th><th style="text-align:right">2025</th><th style="text-align:right">Change</th></tr></thead>
+          <tbody>
+            <tr><td>Net Profit Margin</td><td class="val">42.87%</td><td class="val" style="color:var(--txt3)">50.07%</td><td class="val" style="color:var(--red)">▼ 7.2pp</td></tr>
+            <tr><td>Return on Equity</td><td class="val">1.55%</td><td class="val" style="color:var(--txt3)">5.42%</td><td class="val" style="color:var(--red)">▼ 3.87pp</td></tr>
+            <tr><td>Return on Assets</td><td class="val">1.31%</td><td class="val" style="color:var(--txt3)">4.56%</td><td class="val" style="color:var(--red)">▼ 3.25pp</td></tr>
+          </tbody>
+        </table>
+        <div class="fin-highlight" style="margin-top:.75rem">The decline in profitability ratios is primarily attributable to <strong>PKR 46.98 Mn in finance costs</strong> on the short-term running finance facility — a new cost element introduced in 2026. On a like-for-like basis (excluding finance costs), the <strong>C/I ratio of 23.11%</strong> reflects highly efficient operations.</div>
+      </div>
+      <div class="ratio-card">
+        <div class="ratio-title">Efficiency</div>
+        <table class="tbl">
+          <thead><tr><th>Ratio</th><th style="text-align:right">YTD Apr 2026</th><th style="text-align:right">2025</th></tr></thead>
+          <tbody>
+            <tr><td>C/I (incl. Finance Costs)</td><td class="val">39.13%</td><td class="val" style="color:var(--txt3)">20.99%</td></tr>
+            <tr><td>C/I (excl. Finance Costs)</td><td class="val" style="color:var(--grn)">23.11%</td><td class="val" style="color:var(--txt3)">20.33%</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:11px;color:var(--txt3);margin-top:.5rem">23 paisas in admin overhead per rupee of income (excluding finance costs) reflects disciplined cost management.</p>
+      </div>
+    </div>
+    <div>
+      <div class="ratio-card" style="margin-bottom:1rem">
+        <div class="ratio-title">Liquidity</div>
+        <table class="tbl">
+          <thead><tr><th>Ratio</th><th style="text-align:right">YTD Apr 2026</th><th style="text-align:right">2025</th><th style="text-align:right">Change</th></tr></thead>
+          <tbody>
+            <tr><td>Current Ratio</td><td class="val" style="color:var(--grn)">7.09x</td><td class="val" style="color:var(--txt3)">6.75x</td><td class="val" style="color:var(--grn)">▲ 0.34x</td></tr>
+            <tr><td>Cash Ratio</td><td class="val" style="color:var(--grn)">7.07x</td><td class="val" style="color:var(--txt3)">6.73x</td><td class="val" style="color:var(--grn)">▲ 0.34x</td></tr>
+          </tbody>
+        </table>
+        <div class="fin-highlight" style="margin-top:.75rem">Immediate liquidity risk is effectively non-existent. Pure cash stands at <strong>PKR 136.8 Mn</strong> while short-term investments of <strong>PKR 9.29 Bn</strong> provide massive coverage against total current liabilities of <strong>PKR 1.33 Bn</strong>.</div>
+      </div>
+      <div class="ratio-card">
+        <div class="ratio-title">Solvency &amp; Balance Sheet</div>
+        <table class="tbl">
+          <thead><tr><th>Ratio</th><th style="text-align:right">YTD Apr 2026</th><th style="text-align:right">2025</th><th style="text-align:right">Change</th></tr></thead>
+          <tbody>
+            <tr><td>Gearing Ratio</td><td class="val">13.05%</td><td class="val" style="color:var(--txt3)">13.06%</td><td class="val" style="color:var(--grn)">Stable</td></tr>
+            <tr><td>Debt-to-Equity Ratio</td><td class="val">18.29%</td><td class="val" style="color:var(--txt3)">18.91%</td><td class="val" style="color:var(--grn)">▼ Improved</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:11px;color:var(--txt3);margin-top:.5rem">Running finance facility: PKR 1.238 Bn · Accrued interest: PKR 12.01 Mn · Leverage remains within secure thresholds.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Balance Sheet Snapshot -->
+  <div class="ex-tag">Exhibit E-3 · Balance Sheet Snapshot — YTD April 2026</div>
+  <div class="panel" style="margin-bottom:1.5rem">
+    <div class="ptitle">Key Balance Sheet Figures — PKR Mn</div>
+    <div class="psub">As at April 30, 2026 · Total asset base flat MoM (+0%) due to markup payment on short-term facility</div>
+    <div class="g2" style="gap:2rem">
+      <div>
+        <table class="tbl">
+          <thead><tr><th>Asset Component</th><th style="text-align:right">PKR Mn</th><th style="text-align:right">% of Total</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">Short-term Investments</td><td class="val" style="color:var(--grn)">9,290</td><td class="val">96.9%</td></tr>
+            <tr><td>Cash &amp; Equivalents</td><td class="val">136.8</td><td class="val">1.4%</td></tr>
+            <tr><td>Other Assets</td><td class="val">155.2</td><td class="val">1.6%</td></tr>
+            <tr style="background:var(--bg2)"><td class="strong">Total Asset Base</td><td class="val strong">9,582</td><td class="val strong">100%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <table class="tbl">
+          <thead><tr><th>Income Component</th><th style="text-align:right">April 2026</th><th style="text-align:right">YTD 2026</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">Investment Income (Mark-up)</td><td class="val" style="color:var(--grn)">69</td><td class="val" style="color:var(--grn)">293</td></tr>
+            <tr><td>Guarantee Revenue (First Ever)</td><td class="val">—</td><td class="val" style="color:var(--acc)">0.125</td></tr>
+            <tr><td>Finance Costs (Running Finance)</td><td class="val" style="color:var(--red)">(est. 12)</td><td class="val" style="color:var(--red)">(46.98)</td></tr>
+            <tr style="background:var(--bg2)"><td class="strong">Net Profit Margin</td><td class="val strong">—</td><td class="val strong">42.87%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ratio chart -->
+  <div class="g2">
+    <div class="panel">
+      <div class="ex-tag">Exhibit E-4</div>
+      <div class="ptitle">Key Ratios — 2026 vs 2025</div>
+      <div class="psub">YTD comparative · Profitability and efficiency metrics</div>
+      <div class="ch h230"><canvas id="cE4"></canvas></div>
+    </div>
+    <div class="panel">
+      <div class="ex-tag">Exhibit E-5</div>
+      <div class="ptitle">Balance Sheet Composition</div>
+      <div class="psub">Asset allocation by component · April 2026</div>
+      <div class="ch h230"><canvas id="cE5"></canvas></div>
+    </div>
+  </div>
+</div>
+
+<hr class="div">
+
+<!-- ═══════════════════════════════ F · INVESTMENT PORTFOLIO ═══════════════════ -->
+<div id="investment" class="sec">
+  <div class="sec-eyebrow">Section F</div>
+  <h2 class="sec-title">Investment Portfolio Performance</h2>
+  <p class="sec-sub">April 2026 Investment Review · Total portfolio PKR 9.58 Bn · Policy rate 11.50% effective April 27</p>
+
+  <div class="fin-highlight" style="border-left-color:var(--grn);margin-bottom:.75rem">
+    <strong>Portfolio outperformance sustained despite interest rate volatility.</strong> Notwithstanding the 100 bps policy rate hike to 11.50% on April 27 and heightened market pressure across the yield curve, NCGCL's investment portfolio delivered a positive April alpha of <strong>+23 bps</strong> against the peer fund universe average of 8.87%, and a YTD alpha of <strong>+43 bps</strong> against the peer fund universe of 9.31%. This places NCGCL among a select minority of institutions: <strong>37 out of 44 high-rated fixed income and money market funds</strong> underperformed their benchmark during April.
+  </div>
+
+  <div class="fin-highlight" style="border-left-color:var(--red);margin-bottom:1.5rem">
+    <strong>YTD yield vs benchmark (K-100).</strong> Measured against the K-100 benchmark — equivalent to <strong>9.85% YTD</strong> — NCGCL's YTD yield of <strong>9.52%</strong> trailed the benchmark by <strong>−33 bps</strong>. The variance reflects strategic sovereign allocation and capital gains timing consistent with the investment mandate, and is to be read alongside the +43 bps YTD alpha generated over the peer fund universe.
+  </div>
+
+  <!-- Performance KPI boxes -->
+  <div class="ex-tag">Exhibit F-1 · Investment Return Summary — Yield &amp; Return vs Benchmark and Peers</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem">
+    <!-- April Yield vs K-100 -->
+    <div class="perfbox" style="text-align:left">
+      <div class="perf-lbl">April 2026 — Yield vs Benchmark (K-100)</div>
+      <div style="display:flex;align-items:flex-end;gap:1.25rem;margin-top:.5rem">
+        <div>
+          <div style="font-size:10px;color:var(--txt3);letter-spacing:.06em;text-transform:uppercase">NCGCL Yield</div>
+          <div class="perf-ret">9.01%</div>
+        </div>
+        <div style="border-left:1px solid var(--bdr);padding-left:1.25rem">
+          <div style="font-size:10px;color:var(--txt3);letter-spacing:.06em;text-transform:uppercase">Benchmark (K-100)</div>
+          <div class="perf-ret" style="color:var(--txt2)">10.46%</div>
+        </div>
+      </div>
+      <div class="perf-alpha alpha-neg" style="margin-top:.6rem">Alpha: −145 bps</div>
+      <div class="alpha-note">Single-month variance driven by strategic sovereign allocation and capital gains timing; consistent with mandate</div>
+    </div>
+    <!-- YTD Yield vs K-100 -->
+    <div class="perfbox" style="text-align:left">
+      <div class="perf-lbl">YTD 2026 — Yield vs Benchmark (K-100)</div>
+      <div style="display:flex;align-items:flex-end;gap:1.25rem;margin-top:.5rem">
+        <div>
+          <div style="font-size:10px;color:var(--txt3);letter-spacing:.06em;text-transform:uppercase">NCGCL Yield</div>
+          <div class="perf-ret">9.52%</div>
+        </div>
+        <div style="border-left:1px solid var(--bdr);padding-left:1.25rem">
+          <div style="font-size:10px;color:var(--txt3);letter-spacing:.06em;text-transform:uppercase">Benchmark (K-100)</div>
+          <div class="perf-ret" style="color:var(--txt2)">9.85%</div>
+        </div>
+      </div>
+      <div class="perf-alpha alpha-neg" style="margin-top:.6rem">Alpha: −33 bps</div>
+      <div class="alpha-note">YTD variance within mandate · YTD investment income: PKR 293 Mn</div>
+    </div>
+    <!-- April Return vs Peer Funds -->
+    <div class="perfbox" style="text-align:left;border-top:3px solid var(--grn)">
+      <div class="perf-lbl">April 2026 — Return vs Peer Funds</div>
+      <div style="display:flex;align-items:flex-end;gap:1.25rem;margin-top:.5rem">
+        <div>
+          <div style="font-size:10px;color:var(--txt3);letter-spacing:.06em;text-transform:uppercase">NCGCL Return</div>
+          <div class="perf-ret" style="color:var(--grn)">9.10%</div>
+        </div>
+        <div style="border-left:1px solid var(--bdr);padding-left:1.25rem">
+          <div style="font-size:10px;color:var(--txt3);letter-spacing:.06em;text-transform:uppercase">Peer Funds Avg</div>
+          <div class="perf-ret" style="color:var(--txt2)">8.87%</div>
+        </div>
+      </div>
+      <div class="perf-alpha alpha-pos" style="margin-top:.6rem">Alpha: +23 bps ↑</div>
+      <div class="alpha-note">Outperformed peer fund universe in a hostile month — 37 of 44 high-rated FI/MM funds underperformed their benchmark</div>
+    </div>
+    <!-- YTD Return vs Peer Funds -->
+    <div class="perfbox" style="text-align:left;border-top:3px solid var(--grn)">
+      <div class="perf-lbl">YTD 2026 — Return vs Peer Funds</div>
+      <div style="display:flex;align-items:flex-end;gap:1.25rem;margin-top:.5rem">
+        <div>
+          <div style="font-size:10px;color:var(--txt3);letter-spacing:.06em;text-transform:uppercase">NCGCL Return</div>
+          <div class="perf-ret" style="color:var(--grn)">9.74%</div>
+        </div>
+        <div style="border-left:1px solid var(--bdr);padding-left:1.25rem">
+          <div style="font-size:10px;color:var(--txt3);letter-spacing:.06em;text-transform:uppercase">Peer Funds Avg</div>
+          <div class="perf-ret" style="color:var(--txt2)">9.31%</div>
+        </div>
+      </div>
+      <div class="perf-alpha alpha-pos" style="margin-top:.6rem">Alpha: +43 bps ↑</div>
+      <div class="alpha-note">Sustained YTD outperformance vs peer fund universe · Top-quartile delivery</div>
+    </div>
+  </div>
+
+  <!-- Strong-performer visual: monthly trajectory -->
+  <div class="ex-tag">Exhibit F-1B · NCGCL Strong-Performer Story — Monthly Trajectory</div>
+  <div style="margin-bottom:1.5rem">
+    <div class="panel">
+      <div class="ptitle">Monthly Yield Trajectory — NCGCL vs K-100 Benchmark</div>
+      <div class="psub">Jan–Apr 2026 · Lines show monthly yield; bars show alpha vs benchmark · NCGCL led benchmark in Jan–Feb</div>
+      <div class="ch h300"><canvas id="cF1B"></canvas></div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;margin-top:.75rem;font-size:10px;text-align:center">
+        <div style="padding:.4rem;background:#EAF5EF;border-radius:4px"><div style="color:#1a6b3c;font-weight:700">Jan +66 bps</div><div style="color:var(--txt3)">vs K-100</div></div>
+        <div style="padding:.4rem;background:#EAF5EF;border-radius:4px"><div style="color:#1a6b3c;font-weight:700">Feb +30 bps</div><div style="color:var(--txt3)">vs K-100</div></div>
+        <div style="padding:.4rem;background:#FDF3E6;border-radius:4px"><div style="color:#8B5E1A;font-weight:700">Mar −79 bps</div><div style="color:var(--txt3)">vs K-100</div></div>
+        <div style="padding:.4rem;background:#FDF3E6;border-radius:4px"><div style="color:#8B5E1A;font-weight:700">Apr −145 bps</div><div style="color:var(--txt3)">vs K-100</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="g2" style="margin-bottom:1.5rem">
+    <!-- Allocation donut -->
+    <div class="panel">
+      <div class="ex-tag">Exhibit F-2</div>
+      <div class="ptitle">Portfolio Asset Allocation</div>
+      <div class="psub">As at April 30, 2026 · Emphasis on sovereign and high-quality instruments</div>
+      <div class="ch h260"><canvas id="cF2"></canvas></div>
+    </div>
+    <!-- Performance chart -->
+    <div class="panel">
+      <div class="ex-tag">Exhibit F-3</div>
+      <div class="ptitle">Return vs Benchmark — Period Comparison</div>
+      <div class="psub">NCGCL portfolio return vs absolute benchmark and peer fund universe avg (%)</div>
+      <div class="ch h260"><canvas id="cF3"></canvas></div>
+    </div>
+  </div>
+
+  <!-- Peer comparison chart + holdings -->
+  <div class="g2" style="margin-bottom:1.5rem">
+    <div class="panel">
+      <div class="ex-tag">Exhibit F-4</div>
+      <div class="ptitle">Peer Universe Performance — April 2026</div>
+      <div class="psub">37 of 44 high-rated FI/MM funds underperformed benchmark · NCGCL above peer average</div>
+      <div class="ch h230"><canvas id="cF4"></canvas></div>
+    </div>
+    <div class="panel">
+      <div class="ex-tag">Exhibit F-5 · Notable Holdings</div>
+      <div class="ptitle">Selected Portfolio Positions</div>
+      <div class="psub">High-yield Sukuk positions delivering spread over sovereign</div>
+      <table class="tbl" style="margin-top:.5rem">
+        <thead><tr><th>Instrument</th><th>Type</th><th style="text-align:right">Amount</th><th style="text-align:right">Rate</th><th>Maturity</th></tr></thead>
+        <tbody>
+          <tr><td class="strong">MTBs (12-Month)</td><td>Gov. Security</td><td class="val">62.47% of AUM</td><td class="val" style="color:var(--grn)">12.10%</td><td>6–12 months</td></tr>
+          <tr><td class="strong">Daewoo Express Sukuk</td><td>ST Corporate Sukuk</td><td class="val">PKR 275 Mn</td><td class="val" style="color:var(--grn)">13.09%</td><td>August 2026</td></tr>
+          <tr><td class="strong">AT-Tahur (PREMA) Sukuk</td><td>Float-rate Sukuk</td><td class="val">PKR 104 Mn</td><td class="val" style="color:var(--grn)">KIBOR +130bps</td><td>~11.5 months</td></tr>
+          <tr><td>Mutual Funds</td><td>FI/MM Funds</td><td class="val">18.13% of AUM</td><td class="val">Variable</td><td>Liquid</td></tr>
+          <tr><td>Certificates of Investment</td><td>COIs</td><td class="val">13.89% of AUM</td><td class="val">Fixed</td><td>Short-term</td></tr>
+          <tr><td>Bank Placements</td><td>TDRs</td><td class="val">1.44% of AUM</td><td class="val">Fixed</td><td>Short-term</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Market context + strategy -->
+  <div class="ex-tag">Exhibit F-6 · Market Context &amp; Forward Strategy</div>
+  <div class="g2">
+    <div class="panel">
+      <div class="ptitle">April 2026 Market Context</div>
+      <div class="psub">Key macro and market developments informing portfolio positioning</div>
+      <table class="tbl" style="margin-top:.5rem">
+        <thead><tr><th>Market Event</th><th>Impact</th></tr></thead>
+        <tbody>
+          <tr><td>Policy rate hike: +100bps to 11.50% (Apr 27)</td><td style="font-size:11px">Validated prevailing market expectations; anchored short-term rates at elevated levels</td></tr>
+          <tr><td>3M–1Y yields repriced +21–83 bps</td><td style="font-size:11px">Primary auction confirmed yield elevation across belly of curve</td></tr>
+          <tr><td>PIB 2Y–3Y increased +12–25 bps</td><td style="font-size:11px">Gradual reassessment of inflation and fiscal risk in longer tenors</td></tr>
+          <tr><td>KIBOR trended upward throughout April</td><td style="font-size:11px">Reinforced tightening liquidity environment across money markets</td></tr>
+          <tr><td>PIB auction bids continued to be rejected</td><td style="font-size:11px">Government preference for short-duration borrowing confirmed; reinforces MTB overweight</td></tr>
+          <tr><td>37/44 high-rated funds underperformed</td><td style="font-size:11px">Hostile environment for peer managers; NCGCL maintained positive peer alpha</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="panel">
+      <div class="ptitle">Forward Investment Strategy</div>
+      <div class="psub">Key strategic priorities for the coming quarter</div>
+      <table class="tbl" style="margin-top:.5rem">
+        <thead><tr><th>Strategic Priority</th><th>Rationale</th></tr></thead>
+        <tbody>
+          <tr><td>Dominant allocation to sovereign MTBs (6–12M)</td><td style="font-size:11px">Capital preservation, liquidity, and elevated sovereign yields; auction bids at 12.00–12.10%</td></tr>
+          <tr><td>Selective short-term corporate Sukuk</td><td style="font-size:11px">Incremental spread over sovereigns while preserving controlled duration and liquidity</td></tr>
+          <tr><td>Opportunistic COI placements</td><td style="font-size:11px">Fixed-rate yield lock-in at attractive tenor; complements MTB liquidity profile</td></tr>
+          <tr><td>Disciplined primary market participation</td><td style="font-size:11px">Defined bid ranges; competitive yield levels aligned with return thresholds</td></tr>
+          <tr><td>Lock in rates ahead of potential easing</td><td style="font-size:11px">Prioritise short-to-medium tenors to capture elevated rates before policy reversal</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<hr class="div">
+
+<!-- ═══════════════════════════════ G · PIPELINE ANALYTICS ═════════════════════ -->
+<div id="analytics" class="sec">
+  <div class="sec-eyebrow">Section G</div>
+  <h2 class="sec-title">Pipeline Analytics</h2>
+  <p class="sec-sub">Stage concentration, institutional type breakdown and origination velocity</p>
+
+  <div class="g2" style="margin-bottom:1.5rem">
+    <div class="panel">
+      <div class="ex-tag">Exhibit G-1</div>
+      <div class="ptitle">Origination Funnel — PKR Value by Stage</div>
+      <div class="psub">Quantified deals only · Capital concentration at each stage</div>
+      <div class="ch h260"><canvas id="cG1"></canvas></div>
+    </div>
+    <div class="panel">
+      <div class="ex-tag">Exhibit G-2</div>
+      <div class="ptitle">Pipeline Institutions by Type</div>
+      <div class="psub">28+ unique institutions by category</div>
+      <div class="ch h260"><canvas id="cG2"></canvas></div>
+    </div>
+  </div>
+
+  <div class="ex-tag">Exhibit G-3 · Origination Statistics at a Glance</div>
+  <div class="stat-strip">
+    <div class="si"><div class="sv" style="color:#1a6b3c">1</div><div class="sl2">First Issuance Ready</div></div>
+    <div class="si"><div class="sv" style="color:#1a4f7a">3</div><div class="sl2">MAGFA / Legal Stage</div></div>
+    <div class="si"><div class="sv" style="color:#1a5c47">1</div><div class="sl2">IC / Approval</div></div>
+    <div class="si"><div class="sv" style="color:var(--acc)">3</div><div class="sl2">Term Sheet Stage</div></div>
+    <div class="si"><div class="sv" style="color:#555">4</div><div class="sl2">Due Diligence</div></div>
+    <div class="si"><div class="sv" style="color:var(--txt3)">16</div><div class="sl2">Initial Engagement</div></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div><strong>NCGCL</strong> · Monthly Board Update · May 2026 · Financial Data: YTD April 2026</div>
+  <div>Prepared for Board Members and Key Stakeholders</div>
+  <div>Board Confidential · AAA Rated · SBP Recognised</div>
+</div>
+
+</div><!-- end container -->
+
+<script>
+const acc='#C8923A',grn='#52B788',red='#9B2335',gy='#999',gy2='#ccc',bl='#6EA8C4',tl='#7B9E8F',gd='#C4A882';
+const pal=[grn,acc,'#888',bl,red,tl,gd,gy];
+const tt={backgroundColor:'rgba(26,26,26,0.92)',titleFont:{size:11},bodyFont:{size:11},padding:10};
+const noLeg={legend:{display:false}};
+const leg=(p='right')=>({legend:{position:p,labels:{font:{size:10},boxWidth:10,padding:8}}});
+
+// A-2 Pipeline donut
+new Chart(document.getElementById('cA2'),{type:'doughnut',data:{labels:['Credit Guarantee – FI','Credit Guarantee – Portfolio','Guarantee & Advisory','Tech / Sukuk / Innovation','STFF / Specialised','Corp / Consortium','Microfinance'],datasets:[{data:[13200,1000,1000,1000,500,187.5,500],backgroundColor:pal,borderWidth:2,borderColor:'#fff'}]},options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{...leg('right'),tooltip:{...tt,callbacks:{label:c=>` PKR ${c.raw.toLocaleString()} Mn`}}}}});
+
+// A-3 Stage bar
+new Chart(document.getElementById('cA3'),{type:'bar',data:{labels:['Initial','Due Diligence','Term Sheet','IC Approval','Legal / MAGFA','First Issuance'],datasets:[{label:'Deals',data:[16,4,3,1,3,1],backgroundColor:[gy2,'#aaa',acc,tl,bl,grn],borderRadius:4,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{...noLeg,tooltip:{...tt,callbacks:{label:c=>` ${c.raw} deals`}}},scales:{x:{grid:{display:false},ticks:{font:{size:10}}},y:{beginAtZero:true,grid:{color:'#F0F0F0'},ticks:{font:{size:10},stepSize:2}}}}});
+
+// B-1 Top deals
+new Chart(document.getElementById('cB1'),{type:'bar',data:{labels:['Bank Alfalah','JS Bank','Bank of Punjab','HBL MFB','UBL','PMIC','HBL FI','Meezan Bank','Askari Bank','Bank of Khyber','Haball','Daewoo'],datasets:[{label:'PKR Mn',data:[2000,2000,2000,1500,1500,1000,1000,1000,1000,1000,500,500],backgroundColor:[acc,acc,acc,bl,bl,grn,grn,'#aaa','#888','#888',tl,tl],borderRadius:3,borderSkipped:false}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{...noLeg,tooltip:{...tt,callbacks:{label:c=>` PKR ${c.raw.toLocaleString()} Mn`}}},scales:{x:{grid:{color:'#F0F0F0'},ticks:{font:{size:10},callback:v=>'PKR '+(v/1000).toFixed(0)+'Bn'}},y:{grid:{display:false},ticks:{font:{size:10}}}}}});
+
+// B-3 Team
+new Chart(document.getElementById('cB3'),{type:'bar',data:{labels:['Guarantee Origination (CGO)','Senior Mgmt / CEO-Led','ALM / Structured Products','Consortium / Multilateral','Research'],datasets:[{label:'PKR Mn',data:[9270,4000,1500,580,37.5],backgroundColor:[grn,acc,bl,tl,gy],borderRadius:3,borderSkipped:false}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{...noLeg,tooltip:{...tt,callbacks:{label:c=>` PKR ${c.raw.toLocaleString()} Mn`}}},scales:{x:{grid:{color:'#F0F0F0'},ticks:{font:{size:10},callback:v=>v>=1000?(v/1000).toFixed(1)+'Bn':v}},y:{grid:{display:false},ticks:{font:{size:10}}}}}});
+
+// B-4 Status pie
+new Chart(document.getElementById('cB4'),{type:'pie',data:{labels:['Initial Engagement','Due Diligence','Term Sheet','Legal / MAGFA','IC Approval','First Issuance Ready'],datasets:[{data:[16,4,3,3,1,1],backgroundColor:[gy2,'#aaa',acc,bl,tl,grn],borderWidth:2,borderColor:'#fff'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{...leg('right'),tooltip:{...tt,callbacks:{label:c=>` ${c.raw} deals`}}}}});
+
+// C-2 Products by segment
+new Chart(document.getElementById('cC2'),{type:'doughnut',data:{labels:['SME','Agriculture','Climate Finance','MSME & Agri','FinTech','Trade Finance','Energy / Power','Consumer Finance','Bond Market'],datasets:[{data:[2,3,2,1,1,1,1,1,1],backgroundColor:pal,borderWidth:2,borderColor:'#fff'}]},options:{responsive:true,maintainAspectRatio:false,cutout:'55%',plugins:{...leg('right'),tooltip:{...tt,callbacks:{label:c=>` ${c.raw} products`}}}}});
+
+// C-3 Products by stage
+new Chart(document.getElementById('cC3'),{type:'bar',data:{labels:['Stage 1\nConcept','Stage 2\nReview / New','Stage 3\nStructuring','Stage 4\nLive'],datasets:[{label:'Products',data:[1,5,3,3],backgroundColor:[gy2,'#aaa',acc,grn],borderRadius:4,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{...noLeg,tooltip:{...tt,callbacks:{label:c=>` ${c.raw} products`}}},scales:{x:{grid:{display:false},ticks:{font:{size:10}}},y:{beginAtZero:true,grid:{color:'#F0F0F0'},ticks:{font:{size:10},stepSize:1}}}}});
+
+// E-4 Ratio comparison
+new Chart(document.getElementById('cE4'),{type:'bar',data:{labels:['Net Profit\nMargin','Return on\nEquity','Return on\nAssets','C/I (ex\nFin Cost)'],datasets:[{label:'2026',data:[42.87,1.55,1.31,23.11],backgroundColor:acc,borderRadius:3},{label:'2025',data:[50.07,5.42,4.56,20.33],backgroundColor:gy2,borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:10},boxWidth:10}},tooltip:{...tt,callbacks:{label:c=>` ${c.raw}%`}}},scales:{x:{grid:{display:false},ticks:{font:{size:10}}},y:{beginAtZero:true,grid:{color:'#F0F0F0'},ticks:{font:{size:10},callback:v=>v+'%'}}}}});
+
+// E-5 Balance sheet donut
+new Chart(document.getElementById('cE5'),{type:'doughnut',data:{labels:['Short-term Investments','Cash & Equivalents','Other Assets'],datasets:[{data:[9290,136.8,155.2],backgroundColor:[grn,acc,gy],borderWidth:2,borderColor:'#fff'}]},options:{responsive:true,maintainAspectRatio:false,cutout:'60%',plugins:{...leg('right'),tooltip:{...tt,callbacks:{label:c=>` PKR ${c.raw.toLocaleString()} Mn`}}}}});
+
+// F-2 Asset allocation donut
+new Chart(document.getElementById('cF2'),{type:'doughnut',data:{labels:['Market Treasury Bills (MTBs)','Mutual Funds','Certificates of Investment','Sukuk','Bank Placements'],datasets:[{data:[62.47,18.13,13.89,4.05,1.44],backgroundColor:[grn,acc,bl,tl,gy],borderWidth:2,borderColor:'#fff'}]},options:{responsive:true,maintainAspectRatio:false,cutout:'60%',plugins:{...leg('right'),tooltip:{...tt,callbacks:{label:c=>` ${c.raw}%`}}}}});
+
+// F-3 Performance comparison
+new Chart(document.getElementById('cF3'),{type:'bar',data:{labels:['April Return\n(vs Peer Avg)', 'April Yield\n(vs K-100)','YTD Return\n(vs Peer Avg)','YTD Yield\n(vs K-100)'],datasets:[{label:'NCGCL Portfolio',data:[9.10,9.01,9.74,9.52],backgroundColor:grn,borderRadius:4},{label:'Benchmark / Peer Avg',data:[8.87,10.46,9.31,9.85],backgroundColor:gy2,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:10},boxWidth:10}},tooltip:{...tt,callbacks:{label:c=>` ${c.raw}%`}}},scales:{x:{grid:{display:false},ticks:{font:{size:10}}},y:{beginAtZero:false,min:8,grid:{color:'#F0F0F0'},ticks:{font:{size:10},callback:v=>v.toFixed(1)+'%'}}}}});
+
+// F-4 Peer comparison
+new Chart(document.getElementById('cF4'),{type:'bar',data:{labels:['Fund Avg (8.87%)','NCGCL (9.10%)'],datasets:[{label:'April 2026 Return (%)',data:[8.87,9.10],backgroundColor:[gy,grn],borderRadius:6,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{...noLeg,tooltip:{...tt,callbacks:{label:c=>` ${c.raw}%`}}},scales:{x:{grid:{display:false},ticks:{font:{size:11,weight:'600'}}},y:{beginAtZero:false,min:8.5,max:9.5,grid:{color:'#F0F0F0'},ticks:{font:{size:10},callback:v=>v.toFixed(2)+'%'}}}}});
+
+// F-1B Monthly trajectory — NCGCL vs K-100 with alpha bars
+new Chart(document.getElementById('cF1B'),{type:'bar',data:{labels:['January','February','March','April'],datasets:[
+  {type:'bar',label:'Monthly Alpha vs K-100 (bps)',data:[66,30,-79,-145],backgroundColor:ctx=>ctx.raw>=0?'rgba(82,183,136,0.35)':'rgba(155,35,53,0.25)',borderColor:ctx=>ctx.raw>=0?grn:red,borderWidth:1,borderRadius:3,yAxisID:'y1',order:2},
+  {type:'line',label:'NCGCL Yield (%)',data:[10.05,9.79,9.24,9.01],borderColor:grn,backgroundColor:grn,borderWidth:3,tension:0.3,pointRadius:5,pointBackgroundColor:grn,pointBorderColor:'#fff',pointBorderWidth:2,fill:false,yAxisID:'y',order:1},
+  {type:'line',label:'K-100 Benchmark (%)',data:[9.39,9.49,10.03,10.46],borderColor:red,backgroundColor:red,borderWidth:2,borderDash:[6,4],tension:0.3,pointRadius:4,pointBackgroundColor:red,pointBorderColor:'#fff',pointBorderWidth:1.5,fill:false,yAxisID:'y',order:1}
+]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:10},boxWidth:14,padding:8}},tooltip:{...tt,callbacks:{label:c=>c.dataset.label.includes('bps')?` ${c.dataset.label.split(' (')[0]}: ${c.raw>=0?'+':''}${c.raw} bps`:` ${c.dataset.label.split(' (')[0]}: ${c.raw}%`}}},scales:{x:{grid:{display:false},ticks:{font:{size:10}}},y:{position:'left',beginAtZero:false,min:8,max:11,grid:{color:'#F0F0F0'},ticks:{font:{size:10},callback:v=>v.toFixed(1)+'%'},title:{display:true,text:'Yield (%)',font:{size:10},color:'#666'}},y1:{position:'right',min:-200,max:200,grid:{display:false},ticks:{font:{size:10},callback:v=>(v>=0?'+':'')+v+'bps'},title:{display:true,text:'Alpha (bps)',font:{size:10},color:'#666'}}}}});
+
+// G-1 Funnel
+new Chart(document.getElementById('cG1'),{type:'bar',data:{labels:['Initial','Due Diligence','Term Sheet','IC / Approval','MAGFA / Legal','First Issuance'],datasets:[{label:'PKR Mn',data:[3537,2580,5500,2000,1270,1000],backgroundColor:[gy2,'#aaa',acc,tl,bl,grn],borderRadius:3,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{...noLeg,tooltip:{...tt,callbacks:{label:c=>` PKR ${c.raw.toLocaleString()} Mn`}}},scales:{x:{grid:{display:false},ticks:{font:{size:10}}},y:{beginAtZero:true,grid:{color:'#F0F0F0'},ticks:{font:{size:10},callback:v=>'PKR '+(v/1000).toFixed(0)+'Bn'}}}}});
+
+// G-2 Institution type
+new Chart(document.getElementById('cG2'),{type:'bar',data:{labels:['Commercial\nBanks','DFIs /\nModarabas','MFBs / MFIs','Tech /\nFinTech','Others','Multilateral'],datasets:[{label:'Institutions',data:[12,6,4,3,3,2],backgroundColor:[grn,acc,bl,'#888','#aaa',gy],borderRadius:3,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{...noLeg,tooltip:{...tt,callbacks:{label:c=>` ${c.raw} institutions`}}},scales:{x:{grid:{display:false},ticks:{font:{size:10}}},y:{beginAtZero:true,grid:{color:'#F0F0F0'},ticks:{font:{size:10},stepSize:2}}}}});
+</script>
+</body>
+</html>
