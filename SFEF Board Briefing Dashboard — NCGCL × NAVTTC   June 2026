@@ -1,1 +1,1331 @@
-content://com.whatsapp.provider.media/item/ff591cff-9e88-4414-941a-dce3e29c7960
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SFEF Board Briefing Dashboard — NCGCL × NAVTTC | June 2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+:root {
+  --white: #FFFFFF;
+  --bg: #FAFAFA;
+  --border: #E5E5E5;
+  --accent: #C8923A;
+  --accent-lt: #FDF5EC;
+  --text: #1A1A1A;
+  --mid: #666666;
+  --light: #999999;
+  --green: #52B788;
+  --green-lt: #EEF7F3;
+  --red: #9B2335;
+  --red-lt: #FDF0F2;
+  --dark: #2D2D2D;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',sans-serif;background:var(--white);color:var(--text);font-size:14px;line-height:1.6;}
+
+/* BANNER */
+.banner{background:#1A1A1A;color:var(--accent);text-align:center;padding:.45rem 1rem;font-size:10.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;}
+
+/* HEADER */
+.doc-header{border-bottom:1px solid var(--border);padding:2.5rem 0 0;}
+.hdr-inner{max-width:1240px;margin:0 auto;padding:0 2rem;}
+.hdr-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:2rem;}
+.hdr-left{}
+.fund-label{font-size:10px;font-weight:700;letter-spacing:.15em;color:var(--light);text-transform:uppercase;margin-bottom:.4rem;}
+.fund-name{font-family:Georgia,serif;font-size:30px;font-weight:400;color:var(--text);line-height:1.15;}
+.fund-sub{font-size:14px;color:var(--mid);margin-top:.4rem;}
+.hdr-right{text-align:right;font-size:12px;color:var(--light);line-height:1.9;}
+.hdr-right strong{color:var(--text);}
+.hdr-right .rating{font-family:Georgia,serif;font-size:16px;color:var(--accent);}
+.hdr-badges{display:flex;gap:.5rem;margin-top:.75rem;}
+.badge{display:inline-block;padding:.2rem .65rem;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;}
+.badge-amber{background:var(--accent-lt);color:var(--accent);}
+.badge-green{background:var(--green-lt);color:var(--green);}
+.badge-red{background:var(--red-lt);color:var(--red);}
+.badge-gray{background:var(--bg);color:var(--mid);border:1px solid var(--border);}
+
+/* TABS */
+.tab-nav{display:flex;gap:0;border-bottom:1px solid var(--border);overflow-x:auto;}
+.tab-btn{background:none;border:none;padding:.9rem 1.4rem;font-size:10.5px;font-weight:700;color:var(--light);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .18s;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;}
+.tab-btn:hover{color:var(--text);}
+.tab-btn.active{color:var(--text);border-bottom-color:var(--accent);}
+
+/* CONTAINER */
+.container{max-width:1240px;margin:0 auto;padding:0 2rem;}
+.tab-content{display:none;padding:2.5rem 0;}
+.tab-content.active{display:block;}
+
+/* SECTION LABELS */
+.sec-label{font-size:10px;font-weight:700;letter-spacing:.12em;color:var(--light);text-transform:uppercase;margin-bottom:.4rem;}
+.sec-title{font-family:Georgia,serif;font-size:22px;font-weight:400;color:var(--text);margin-bottom:1.25rem;line-height:1.2;}
+.sec-title-sm{font-family:Georgia,serif;font-size:17px;font-weight:400;color:var(--text);margin-bottom:.75rem;}
+
+/* KPI GRIDS */
+.kpi-grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;margin-bottom:2rem;}
+.kpi-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.25rem;}
+.kpi-card{background:var(--white);border:1px solid var(--border);padding:1.4rem 1.5rem;}
+.kpi-card.top-amber{border-top:3px solid var(--accent);}
+.kpi-card.top-green{border-top:3px solid var(--green);}
+.kpi-card.top-red{border-top:3px solid var(--red);}
+.kpi-card.top-dark{border-top:3px solid var(--text);}
+.kpi-num{font-family:Georgia,serif;font-size:26px;font-weight:400;color:var(--text);line-height:1;}
+.kpi-num.pos{color:var(--green);}
+.kpi-num.neg{color:var(--red);}
+.kpi-num.amb{color:var(--accent);}
+.kpi-label{font-size:10px;font-weight:700;color:var(--light);text-transform:uppercase;letter-spacing:.08em;margin-top:.5rem;}
+.kpi-sub{font-size:11.5px;color:var(--mid);margin-top:.35rem;}
+
+/* PANELS */
+.panel{background:var(--bg);border:1px solid var(--border);padding:1.5rem;margin-bottom:1.5rem;}
+.panel-title{font-family:Georgia,serif;font-size:16px;font-weight:400;color:var(--text);margin-bottom:1rem;padding-bottom:.75rem;border-bottom:1px solid var(--border);}
+
+/* GRIDS */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;}
+.g6040{display:grid;grid-template-columns:3fr 2fr;gap:1.5rem;}
+.g4060{display:grid;grid-template-columns:2fr 3fr;gap:1.5rem;}
+
+/* TABLES */
+.tbl{width:100%;border-collapse:collapse;font-size:13px;}
+.tbl th{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text);text-align:left;padding:.7rem 1rem;border-bottom:2px solid var(--border);background:var(--white);}
+.tbl th.r{text-align:right;}
+.tbl td{padding:.7rem 1rem;border-bottom:1px solid var(--border);color:var(--dark);vertical-align:top;}
+.tbl td.r{text-align:right;}
+.tbl td.num{font-family:Georgia,serif;font-size:14px;}
+.tbl td.pos{color:var(--green);font-weight:600;}
+.tbl td.neg{color:var(--red);font-weight:600;}
+.tbl td.amb{color:var(--accent);font-weight:600;}
+.tbl tr:hover td{background:var(--bg);}
+
+/* CALLOUTS */
+.callout{padding:1.2rem 1.5rem;margin-bottom:1.5rem;border-left:4px solid var(--accent);background:var(--accent-lt);}
+.callout.green{border-left-color:var(--green);background:var(--green-lt);}
+.callout.red{border-left-color:var(--red);background:var(--red-lt);}
+.callout.dark{border-left-color:var(--text);background:var(--bg);}
+.callout-lbl{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--light);margin-bottom:.4rem;}
+.callout-txt{font-size:13px;color:var(--text);line-height:1.75;}
+
+/* FLOW STEPS */
+.flow{display:flex;align-items:flex-start;gap:0;margin:1.5rem 0;}
+.flow-step{flex:1;text-align:center;position:relative;}
+.flow-step::after{content:'';position:absolute;top:1.1rem;left:50%;width:100%;height:2px;background:var(--border);z-index:0;}
+.flow-step:last-child::after{display:none;}
+.flow-dot{width:36px;height:36px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-size:15px;color:white;margin:0 auto .6rem;position:relative;z-index:1;}
+.flow-dot.green{background:var(--green);}
+.flow-dot.red{background:var(--red);}
+.flow-dot.dark{background:var(--text);}
+.flow-title{font-size:11px;font-weight:700;color:var(--text);margin-bottom:.25rem;}
+.flow-desc{font-size:10.5px;color:var(--mid);line-height:1.5;padding:0 .5rem;}
+
+/* WATERFALL / STRUCTURE */
+.wf-row{display:flex;align-items:center;gap:1rem;margin-bottom:.5rem;}
+.wf-lbl{width:220px;font-size:12.5px;color:var(--mid);text-align:right;flex-shrink:0;}
+.wf-bar{height:34px;display:flex;align-items:center;padding-left:.75rem;font-size:12px;font-weight:600;color:white;min-width:40px;}
+.wf-amt{width:130px;font-family:Georgia,serif;font-size:14px;color:var(--text);flex-shrink:0;}
+
+/* CAPITAL STACK */
+.cap-stack{display:flex;gap:0;align-items:stretch;height:160px;margin:1.25rem 0;}
+.cap-block{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:.75rem;}
+.cap-block-lbl{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.3rem;}
+.cap-block-amt{font-family:Georgia,serif;font-size:18px;}
+.cap-block-sub{font-size:10px;margin-top:.25rem;opacity:.75;}
+
+/* SIMULATOR */
+.sim-layout{display:grid;grid-template-columns:300px 1fr;gap:1.5rem;}
+.ctrl-panel{background:var(--bg);border:1px solid var(--border);padding:1.5rem;}
+.ctrl-title{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--light);margin-bottom:1rem;padding-bottom:.6rem;border-bottom:1px solid var(--border);}
+.scen-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:1.25rem;}
+.scen-btn{padding:.5rem .6rem;font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--border);background:var(--white);cursor:pointer;text-align:left;transition:all .15s;}
+.scen-btn:hover{border-color:var(--accent);}
+.scen-btn.active-s{border-color:var(--accent);background:var(--accent-lt);color:var(--accent);}
+.scen-btn span{display:block;font-size:9.5px;font-weight:400;color:var(--light);text-transform:none;letter-spacing:0;margin-top:.15rem;}
+.slider-group{margin-bottom:1.1rem;}
+.sl-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:.3rem;}
+.sl-lbl{font-size:11px;font-weight:600;color:var(--text);}
+.sl-val{font-family:Georgia,serif;font-size:16px;color:var(--accent);}
+input[type=range]{width:100%;height:3px;-webkit-appearance:none;background:var(--border);outline:none;cursor:pointer;border-radius:2px;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;background:var(--accent);border-radius:50%;cursor:pointer;}
+.sl-range{display:flex;justify-content:space-between;font-size:9.5px;color:var(--light);margin-top:.2rem;}
+.sl-divider{height:1px;background:var(--border);margin:1rem 0;}
+
+/* CHART WRAP */
+.chart-wrap{background:var(--white);border:1px solid var(--border);padding:1.25rem;}
+.chart-title{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--mid);margin-bottom:1rem;}
+.chart-box{position:relative;height:240px;}
+
+/* TX BOXES */
+.tx-box{border:1px solid var(--border);padding:1.5rem;background:var(--white);margin-bottom:1.25rem;}
+.tx-box.succ{border-top:4px solid var(--green);}
+.tx-box.dflt{border-top:4px solid var(--red);}
+.tx-hdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem;padding-bottom:.75rem;border-bottom:1px solid var(--border);}
+.tx-title{font-family:Georgia,serif;font-size:16px;color:var(--text);}
+.tx-sub{font-size:11.5px;color:var(--mid);margin-top:.25rem;}
+.tx-timeline{display:flex;gap:0;margin:1rem 0;}
+.tx-event{flex:1;text-align:center;position:relative;}
+.tx-event::after{content:'';position:absolute;top:.9rem;left:50%;width:100%;height:2px;background:var(--border);z-index:0;}
+.tx-event:last-child::after{display:none;}
+.tx-dot{width:20px;height:20px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:9px;color:white;font-weight:700;margin:0 auto .35rem;position:relative;z-index:1;}
+.tx-dot.g{background:var(--green);}
+.tx-dot.r{background:var(--red);}
+.tx-ev-lbl{font-size:9.5px;color:var(--mid);}
+.tx-ev-val{font-size:10.5px;color:var(--text);font-weight:600;}
+.tx-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:.75rem;margin-top:.75rem;}
+.tx-item{background:var(--bg);padding:.75rem;text-align:center;}
+.tx-item-val{font-family:Georgia,serif;font-size:15px;color:var(--text);}
+.tx-item-lbl{font-size:9.5px;color:var(--light);text-transform:uppercase;letter-spacing:.05em;margin-top:.2rem;}
+
+/* SCENARIO TABLE */
+.scen-tbl-wrap{overflow-x:auto;margin-top:1.5rem;}
+.scen-tbl{width:100%;border-collapse:collapse;font-size:12.5px;}
+.scen-tbl th{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:.65rem 1rem;border-bottom:2px solid var(--border);text-align:left;background:var(--bg);}
+.scen-tbl th.r{text-align:right;}
+.scen-tbl td{padding:.65rem 1rem;border-bottom:1px solid var(--border);}
+.scen-tbl td.r{text-align:right;font-family:Georgia,serif;font-size:13px;}
+.scen-tbl .row-c{background:#fff5e8;}
+.scen-tbl .row-b{background:var(--white);}
+.scen-tbl .row-f{background:#fff5e8;}
+.scen-tbl .row-s{background:#fef7f7;}
+.scen-lbl{font-weight:700;color:var(--text);}
+
+/* PAR FRAMEWORK */
+.par-stage{display:flex;gap:0;margin:1rem 0;}
+.par-block{flex:1;padding:1rem;text-align:center;border-right:1px solid var(--white);}
+.par-block:last-child{border-right:none;}
+.par-range{font-family:Georgia,serif;font-size:17px;}
+.par-action{font-size:11px;margin-top:.35rem;line-height:1.5;}
+.par-status{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-top:.3rem;}
+
+/* DECISION CHECKLIST */
+.decision-item{display:flex;align-items:flex-start;gap:1rem;padding:1rem 0;border-bottom:1px solid var(--border);}
+.decision-item:last-child{border-bottom:none;}
+.dec-num{font-family:Georgia,serif;font-size:22px;color:var(--accent);width:36px;flex-shrink:0;line-height:1.1;}
+.dec-body{}
+.dec-label{font-size:13px;font-weight:600;color:var(--text);margin-bottom:.2rem;}
+.dec-desc{font-size:12.5px;color:var(--mid);line-height:1.6;}
+.dec-placeholder{display:inline-block;background:var(--accent-lt);color:var(--accent);font-weight:700;padding:.1rem .4rem;font-size:12px;border:1px solid #e8c28a;}
+
+/* UTILITIES */
+hr.div{border:none;border-top:1px solid var(--border);margin:2rem 0;}
+p.body{font-size:13.5px;color:#3D3D3D;line-height:1.8;margin-bottom:.9rem;}
+ul.body-list{font-size:13px;color:#3D3D3D;line-height:1.8;padding-left:1.5rem;margin-bottom:.9rem;}
+strong{font-weight:600;}
+.text-amber{color:var(--accent);}
+.text-green{color:var(--green);}
+.text-red{color:var(--red);}
+.mb1{margin-bottom:.75rem;}.mb2{margin-bottom:1.5rem;}.mb3{margin-bottom:2rem;}.mt2{margin-top:1.5rem;}
+
+/* FOOTER */
+.doc-footer{border-top:1px solid var(--border);padding:1.25rem 0;margin-top:3rem;background:var(--bg);}
+.foot-inner{max-width:1240px;margin:0 auto;padding:0 2rem;display:flex;justify-content:space-between;align-items:center;font-size:10.5px;color:var(--light);}
+
+@media(max-width:900px){
+  .kpi-grid-4,.kpi-grid-3{grid-template-columns:1fr 1fr;}
+  .g2,.g3,.g6040,.g4060{grid-template-columns:1fr;}
+  .sim-layout{grid-template-columns:1fr;}
+  .flow{flex-wrap:wrap;}
+  .flow-step{min-width:45%;}
+  .par-stage{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+
+<div class="banner">Strictly Confidential &mdash; For Board Use Only &mdash; National Credit Guarantee Company Limited</div>
+
+<div class="doc-header">
+<div class="hdr-inner">
+  <div class="hdr-top">
+    <div class="hdr-left">
+      <div class="fund-label">Board Briefing Document &mdash; June 2026</div>
+      <div class="fund-name">Skills Financing &amp; Employability Fund</div>
+      <div class="fund-sub">Contribution, Fund Management &amp; Guarantee Agreement &mdash; NCGCL &times; NAVTTC</div>
+      <div class="hdr-badges mt2">
+        <span class="badge badge-amber">Returnable Capital Structure</span>
+        <span class="badge badge-green">PACRA AAA Managed</span>
+        <span class="badge badge-gray">SBP-Recognized Guarantor</span>
+        <span class="badge badge-gray">Board Approval Required</span>
+      </div>
+    </div>
+    <div class="hdr-right">
+      <div class="rating">AAA</div>
+      PACRA Credit Rating<br>
+      <strong>NCGCL</strong> &mdash; Fund Manager &amp; Guarantor<br>
+      <strong>NAVTTC</strong> &mdash; Principal Contributor<br>
+      Governing Law: <strong>Pakistan</strong><br>
+      Instrument: <strong>CFMGA</strong>
+    </div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" data-tab="t-overview">01 &nbsp; Product Overview</button>
+    <button class="tab-btn" data-tab="t-mechanics">02 &nbsp; Fund Mechanics</button>
+    <button class="tab-btn" data-tab="t-journey">03 &nbsp; Borrower Journey</button>
+    <button class="tab-btn" data-tab="t-simulator">04 &nbsp; Fund Simulator</button>
+    <button class="tab-btn" data-tab="t-parameters">05 &nbsp; Key Parameters</button>
+  </div>
+</div>
+</div>
+
+<div class="container">
+
+<!-- ===== TAB 1: OVERVIEW ===== -->
+<div id="t-overview" class="tab-content active">
+
+  <div class="sec-label">Strategic Rationale</div>
+  <div class="sec-title">Pakistan's Skills Financing Gap &mdash; and SFEF's Catalytic Response</div>
+
+  <div class="kpi-grid-4 mb2">
+    <div class="kpi-card top-amber">
+      <div class="kpi-num amb">PKR 400M</div>
+      <div class="kpi-label">Capital Base</div>
+      <div class="kpi-sub">PKR 200M NAVTTC + PKR 200M NCGCL (initial)</div>
+    </div>
+    <div class="kpi-card top-amber">
+      <div class="kpi-num">PKR 1.2B</div>
+      <div class="kpi-label">Max Guarantee Exposure</div>
+      <div class="kpi-sub">3.0&times; leverage on Capital Base</div>
+    </div>
+    <div class="kpi-card top-green">
+      <div class="kpi-num pos">6,000+</div>
+      <div class="kpi-label">Max Beneficiaries</div>
+      <div class="kpi-sub">At PKR 400K avg loan, 50% coverage</div>
+    </div>
+    <div class="kpi-card top-dark">
+      <div class="kpi-num">50%</div>
+      <div class="kpi-label">Pari Passu Coverage</div>
+      <div class="kpi-sub">NCGCL covers 50% of each eligible loan</div>
+    </div>
+  </div>
+
+  <div class="g6040">
+    <div>
+      <div class="panel">
+        <div class="panel-title">The Problem: PFIs Will Not Lend to Skills Borrowers Unaided</div>
+        <p class="body">Pakistan's formal financial sector extends virtually no unsecured credit to individuals for professional training, certification, or vocational programs. Borrowers lack collateral; PFIs lack the credit frameworks to assess skills-linked repayment capacity; and outcomes data to calibrate risk is non-existent. The result: a structural financing vacuum that forces prospective workers either into informal debt or out of high-value training programs entirely.</p>
+        <p class="body">NAVTTC identifies this gap as the single largest constraint on Pakistan's productive workforce expansion. Without financing access, NAVTTC's programmatic investments in course accreditation and placement infrastructure fail to translate into durable employment outcomes at scale.</p>
+      </div>
+      <div class="panel">
+        <div class="panel-title">The SFEF Solution: Catalytic Guarantee Capital</div>
+        <p class="body">SFEF is a ring-fenced guarantee fund, jointly capitalized by NAVTTC and NCGCL, that enables Participating Financial Institutions (PFIs) to extend credit for approved skills programs by covering 50% of each loan's credit risk. This partial guarantee structure aligns incentives: PFIs retain meaningful skin-in-the-game while the credit risk barrier is lowered sufficiently to unlock lending.</p>
+        <p class="body">NCGCL acts as Fund Manager and Guarantor — deploying its AAA-rated investment infrastructure, its Master Agreement on Guarantee Facility Arrangement (MAGFA) with PFIs, and its credit analytics capability. NAVTTC's returnable capital contribution is protected by NCGCL's matching capital and by investment income, which serves as a first-loss buffer before any principal is touched.</p>
+      </div>
+    </div>
+    <div>
+      <div class="callout mb2">
+        <div class="callout-lbl">Board Consideration</div>
+        <div class="callout-txt">NAVTTC's contribution is <strong>returnable after five years</strong>, net of any crystallized losses. Investment income accumulated over the fund's life is applied first against any claims — meaning capital is the last line of defense, not the first. At base-case assumptions, the capital base is expected to remain fully intact at end of term.</div>
+      </div>
+      <div class="panel">
+        <div class="panel-title">Structural Principals</div>
+        <table class="tbl">
+          <tr><th>Party</th><th>Role</th></tr>
+          <tr><td><strong>NAVTTC</strong></td><td>Principal Contributor. Returnable capital, statutory oversight, program eligibility</td></tr>
+          <tr><td><strong>NCGCL</strong></td><td>Fund Manager &amp; Guarantor. Matching capital, investment management, guarantee issuance via MAGFA</td></tr>
+          <tr><td><strong>PFIs</strong></td><td>Lenders. Originate, disburse, and collect loans; retain 50% credit risk; file claims against MAGFA</td></tr>
+          <tr><td><strong>Borrowers</strong></td><td>Beneficiaries. Skills seekers enrolled in NAVTTC-approved programs</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <hr class="div">
+
+  <div class="sec-label">Product Windows</div>
+  <div class="sec-title-sm">Six Financing Categories under SFEF</div>
+  <table class="tbl mb3">
+    <thead>
+      <tr>
+        <th>Window</th>
+        <th>Target Beneficiary</th>
+        <th class="r">Max Ticket</th>
+        <th class="r">NCGCL Coverage</th>
+        <th>Example Programs</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Professional Certification</strong></td>
+        <td>Employed professionals, job-seekers with existing qualification</td>
+        <td class="r num">PKR 400,000</td>
+        <td class="r">50% pari passu</td>
+        <td>AWS, SAP, CISSP, PMP, ACCA, CFA</td>
+      </tr>
+      <tr>
+        <td><strong>Overseas / Migration-Linked</strong></td>
+        <td>Workers seeking formal deployment abroad via NAVTTC-PBSA pipeline</td>
+        <td class="r num">PKR 400,000</td>
+        <td class="r">50% pari passu</td>
+        <td>Gulf trade certification, language testing, TVET for GCC</td>
+      </tr>
+      <tr>
+        <td><strong>Employer-Linked Apprenticeships</strong></td>
+        <td>Formal apprentices with employer commitment letter</td>
+        <td class="r num">PKR 200,000</td>
+        <td class="r">50% pari passu</td>
+        <td>Industrial apprenticeships, corporate TVET, hospitality</td>
+      </tr>
+      <tr>
+        <td><strong>Vocational Training</strong></td>
+        <td>Technical/trade learners at accredited institutes</td>
+        <td class="r num">PKR 150,000</td>
+        <td class="r">50% pari passu</td>
+        <td>Electrician, plumber, welder, CNC, digital design</td>
+      </tr>
+      <tr>
+        <td><strong>Tools &amp; Starter Kit</strong></td>
+        <td>Self-employed artisans, informal sector workers</td>
+        <td class="r num">PKR 100,000</td>
+        <td class="r">50% pari passu</td>
+        <td>Equipment purchase bundled with skill certification</td>
+      </tr>
+      <tr>
+        <td><strong>Provider Receivables</strong></td>
+        <td>Accredited training institutions (receivables financing)</td>
+        <td class="r num">PKR 400,000 <span style="font-size:10px;color:var(--light)">/participant</span></td>
+        <td class="r">50% pari passu</td>
+        <td>Institute bulk guarantee for enrolled cohorts</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout green">
+    <div class="callout-lbl">Key Structural Protections</div>
+    <div class="callout-txt">
+      <strong>1. Income First:</strong> All claims are absorbed from accumulated investment income before any capital is touched. &nbsp;&bull;&nbsp;
+      <strong>2. Leverage Cap:</strong> Total guarantee exposure cannot exceed 3.0&times; Capital Base; new issuances are halted if this is breached. &nbsp;&bull;&nbsp;
+      <strong>3. Pari Passu:</strong> NCGCL and NAVTTC bear losses proportionately — neither is senior to the other. &nbsp;&bull;&nbsp;
+      <strong>4. Returnable Capital:</strong> NAVTTC's contribution reverts after 5 years, net of any net crystallized losses. &nbsp;&bull;&nbsp;
+      <strong>5. No Principal Touch for Fees:</strong> Management fees are deducted from investment income only — never from capital principal.
+    </div>
+  </div>
+
+</div><!-- end tab 1 -->
+
+<!-- ===== TAB 2: FUND MECHANICS ===== -->
+<div id="t-mechanics" class="tab-content">
+
+  <div class="sec-label">Financial Architecture</div>
+  <div class="sec-title">How the Fund is Structured and How Capital Flows</div>
+
+  <!-- Capital Stack -->
+  <div class="sec-title-sm mb1">Capital Structure</div>
+  <div class="cap-stack mb2" style="border:1px solid var(--border);">
+    <div class="cap-block" style="flex:1;background:#F0F8F4;border-right:1px solid var(--border);">
+      <div class="cap-block-lbl" style="color:var(--green);">NAVTTC Contribution</div>
+      <div class="cap-block-amt" style="font-family:Georgia,serif;font-size:24px;color:var(--text);">PKR [●]M</div>
+      <div class="cap-block-sub" style="color:var(--mid);">Returnable after 5 years<br>Net of crystallized losses &amp; unpaid fees<br>Extension: mutual written consent</div>
+    </div>
+    <div class="cap-block" style="flex:1;background:#FDF5EC;border-right:1px solid var(--border);">
+      <div class="cap-block-lbl" style="color:var(--accent);">NCGCL Matching</div>
+      <div class="cap-block-amt" style="font-family:Georgia,serif;font-size:24px;color:var(--text);">Up to PKR 200M</div>
+      <div class="cap-block-sub" style="color:var(--mid);">Board-approved, initial tranche<br>Subsequent matching: case-by-case<br>Subject to PACRA AAA confirmation</div>
+    </div>
+    <div class="cap-block" style="flex:2;background:#1A1A1A;">
+      <div class="cap-block-lbl" style="color:var(--accent);">Ring-Fenced Fund Account</div>
+      <div class="cap-block-amt" style="font-family:Georgia,serif;font-size:26px;color:white;">Up to PKR 400M</div>
+      <div class="cap-block-sub" style="color:#BABABA;">"NCGCL — Skills Financing &amp; Employability Fund"<br>Separate books &amp; financial statement disclosure<br>Not a trust, company, or CIS — contractual arrangement</div>
+    </div>
+    <div class="cap-block" style="flex:2;background:var(--accent-lt);border-left:1px solid var(--border);">
+      <div class="cap-block-lbl" style="color:var(--accent);">Guarantee Portfolio (3.0× Leverage)</div>
+      <div class="cap-block-amt" style="font-family:Georgia,serif;font-size:26px;color:var(--text);">Up to PKR 1.2B</div>
+      <div class="cap-block-sub" style="color:var(--mid);">50% pari passu per loan<br>PKR 400K max per borrower<br>Underlying PFI portfolio: ≈ PKR 2.4B</div>
+    </div>
+  </div>
+
+  <div class="g2 mb2">
+    <div class="panel">
+      <div class="panel-title">Investment Management</div>
+      <p class="body" style="margin-bottom:.5rem;">Capital is invested per the NCGCL Investment Policy — the same policy that underpins NCGCL's PACRA AAA rating. Assets are deployed exclusively in high-quality, liquid instruments:</p>
+      <ul class="body-list">
+        <li>Government of Pakistan T-bills and PIBs</li>
+        <li>Sovereign-guaranteed instruments</li>
+        <li>AAA-rated corporate sukuks and term finance certificates</li>
+        <li>Short-tenor bank deposits at scheduled commercial banks</li>
+      </ul>
+      <div class="callout dark" style="margin-top:.75rem;margin-bottom:0;">
+        <div class="callout-lbl">Liquidity Priority</div>
+        <div class="callout-txt" style="font-size:12px;">The investment portfolio is managed to maintain sufficient liquidity to honor claims within the MAGFA settlement window. Liquidity takes precedence over yield maximization.</div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Income &amp; Fee Waterfall</div>
+      <div class="wf-row"><div class="wf-lbl">Gross Investment Income</div><div class="wf-bar" style="background:#1A1A1A;width:85%;">~12% p.a. on Capital Base</div><div class="wf-amt">≈ PKR 48M/yr</div></div>
+      <div class="wf-row"><div class="wf-lbl">Less: Management Fee</div><div class="wf-bar" style="background:#9B2335;width:15%;">~1.5% p.a.</div><div class="wf-amt" style="color:var(--red);">&minus; PKR 6M/yr</div></div>
+      <div class="wf-row"><div class="wf-lbl">= Net Fund Income</div><div class="wf-bar" style="background:var(--green);width:70%;">Available for claims buffer</div><div class="wf-amt" style="color:var(--green);">≈ PKR 42M/yr</div></div>
+      <div class="wf-row"><div class="wf-lbl">Less: Claims (base case)</div><div class="wf-bar" style="background:#C8923A;width:65%;">2.5× lev., 8% PAR, 40% CR</div><div class="wf-amt" style="color:var(--accent);">&minus; PKR 32M/yr</div></div>
+      <div class="wf-row"><div class="wf-lbl"><strong>Net Annual Fund Growth</strong></div><div class="wf-bar" style="background:#52B788;width:25%;"><strong>Base case</strong></div><div class="wf-amt" style="color:var(--green);font-weight:700;">≈ PKR +10M/yr</div></div>
+      <div style="margin-top:.75rem;font-size:11.5px;color:var(--mid);">* Management Fee is always deducted from Investment Income only. If Investment Income is insufficient (extreme stress), the fee accrues without penalty — no principal recourse under any circumstances.</div>
+    </div>
+  </div>
+
+  <!-- Claims Mechanics -->
+  <div class="sec-title-sm mb1">Claims Absorption Waterfall</div>
+  <div class="g3 mb3">
+    <div class="kpi-card top-green">
+      <div style="font-family:Georgia,serif;font-size:15px;color:var(--text);margin-bottom:.5rem;">Layer 1: Investment Income</div>
+      <p style="font-size:12px;color:var(--mid);line-height:1.7;">All claims are first absorbed from cumulative net investment income since Fund inception. As long as the income buffer exceeds cumulative claims, <strong>capital principal is fully protected.</strong></p>
+      <div style="margin-top:.75rem;"><span class="badge badge-green">First Loss Buffer</span></div>
+    </div>
+    <div class="kpi-card top-amber">
+      <div style="font-family:Georgia,serif;font-size:15px;color:var(--text);margin-bottom:.5rem;">Layer 2: Capital Base</div>
+      <p style="font-size:12px;color:var(--mid);line-height:1.7;">Only when cumulative claims exceed cumulative net income does the Capital Base absorb losses — pari passu between NAVTTC and NCGCL tranches proportionate to contribution.</p>
+      <div style="margin-top:.75rem;"><span class="badge badge-amber">Second Loss</span></div>
+    </div>
+    <div class="kpi-card top-dark">
+      <div style="font-family:Georgia,serif;font-size:15px;color:var(--text);margin-bottom:.5rem;">Subrogation &amp; Recovery</div>
+      <p style="font-size:12px;color:var(--mid);line-height:1.7;">Upon paying a claim, NCGCL is subrogated to the PFI's rights against the defaulting borrower. All recoveries are credited back to the Fund pro-rata, net of collection costs.</p>
+      <div style="margin-top:.75rem;"><span class="badge badge-gray">Recovery Mechanism</span></div>
+    </div>
+  </div>
+
+  <div class="sec-title-sm mb1">Key Financial Parameters</div>
+  <table class="tbl mb3">
+    <thead>
+      <tr>
+        <th>Parameter</th><th>Value</th><th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Leverage Multiple (cap)</td><td class="num">3.0&times;</td><td>Moratorium on new guarantees if breached</td></tr>
+      <tr><td>Pari Passu Coverage</td><td class="num">50%</td><td>Fixed; applies to all loan products</td></tr>
+      <tr><td>Max Ticket per Borrower</td><td class="num">PKR 400,000</td><td>Max loan amount per individual</td></tr>
+      <tr><td>Max NCGCL Exposure per Borrower</td><td class="num">PKR 200,000</td><td>50% × PKR 400K</td></tr>
+      <tr><td>NAVTTC Contribution Term</td><td class="num">5 Years</td><td>Extendable by mutual written consent (90-day notice)</td></tr>
+      <tr><td>Management Fee Source</td><td>Investment Income only</td><td>Never principal; shortfall accrues, no penalty</td></tr>
+      <tr><td>Claim Trigger</td><td>180 Days Past Due</td><td>Documented collection/recovery efforts required</td></tr>
+      <tr><td>PAR Review Trigger</td><td class="num">8% / 12.5% / 15%</td><td>Escalating governance response (see Tab 5)</td></tr>
+      <tr><td>Islamic Finance</td><td>Optionality Preserved</td><td>Sharia-compliant structures accommodated per MAGFA</td></tr>
+    </tbody>
+  </table>
+
+</div><!-- end tab 2 -->
+
+<!-- ===== TAB 3: BORROWER JOURNEY ===== -->
+<div id="t-journey" class="tab-content">
+
+  <div class="sec-label">Transaction Architecture</div>
+  <div class="sec-title">From Application to Repayment &mdash; How a Skills Loan Works</div>
+
+  <div class="panel mb3">
+    <div class="panel-title">The Guarantee Process &mdash; Eight-Step Flow</div>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-dot">1</div>
+        <div class="flow-title">Borrower Applies</div>
+        <div class="flow-desc">Skills seeker identifies an approved program and applies for financing at a PFI (e.g. NBP, MCB)</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot">2</div>
+        <div class="flow-title">PFI Assessment</div>
+        <div class="flow-desc">PFI applies the NCGCL Skills Credit Scorecard — employment history, education, program quality, employer letter</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot">3</div>
+        <div class="flow-title">Guarantee Request</div>
+        <div class="flow-desc">PFI submits loan package to NCGCL via the MAGFA workflow requesting guarantee coverage</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot">4</div>
+        <div class="flow-title">NCGCL Review</div>
+        <div class="flow-desc">NCGCL validates against Claims Eligibility Framework — program approval, borrower criteria, exposure cap</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot green">5</div>
+        <div class="flow-title">Guarantee Issued</div>
+        <div class="flow-desc">NCGCL issues guarantee (50% pari passu). SFEF exposure increases. PFI authorized to disburse.</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot green">6</div>
+        <div class="flow-title">Disbursement</div>
+        <div class="flow-desc">PFI disburses loan to borrower or directly to training institution. Program enrollment confirmed.</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot green">7a</div>
+        <div class="flow-title">Repayment</div>
+        <div class="flow-desc">Borrower completes program, secures income, repays loan. Guarantee extinguished. Capacity freed.</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot red">7b</div>
+        <div class="flow-title">Default &amp; Claim</div>
+        <div class="flow-desc">If 180+ days past due: PFI files claim. NCGCL pays 50% of outstanding principal. NCGCL subrogated.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="g2">
+    <!-- Successful transaction -->
+    <div class="tx-box succ">
+      <div class="tx-hdr">
+        <div>
+          <div class="tx-title">Transaction A &mdash; Successful Repayment</div>
+          <div class="tx-sub">AWS Solutions Architect Certification &bull; National Bank of Pakistan</div>
+        </div>
+        <span class="badge badge-green">Repaid in Full</span>
+      </div>
+
+      <div class="tx-grid">
+        <div class="tx-item">
+          <div class="tx-item-val">PKR 180,000</div>
+          <div class="tx-item-lbl">Loan Amount</div>
+        </div>
+        <div class="tx-item">
+          <div class="tx-item-val" style="color:var(--green);">PKR 90,000</div>
+          <div class="tx-item-lbl">NCGCL Guarantee</div>
+        </div>
+        <div class="tx-item">
+          <div class="tx-item-val">18 months</div>
+          <div class="tx-item-lbl">Loan Tenor</div>
+        </div>
+        <div class="tx-item">
+          <div class="tx-item-val">6 months</div>
+          <div class="tx-item-lbl">Program Duration</div>
+        </div>
+        <div class="tx-item">
+          <div class="tx-item-val" style="color:var(--accent);">PKR 2,700</div>
+          <div class="tx-item-lbl">Guarantee Fee (est.)</div>
+        </div>
+      </div>
+
+      <div class="tx-timeline mt2">
+        <div class="tx-event">
+          <div class="tx-dot">M0</div>
+          <div class="tx-ev-lbl">Guarantee Issued</div>
+          <div class="tx-ev-val">Loan Disbursed</div>
+        </div>
+        <div class="tx-event">
+          <div class="tx-dot">M6</div>
+          <div class="tx-ev-lbl">Program Complete</div>
+          <div class="tx-ev-val">AWS Certified</div>
+        </div>
+        <div class="tx-event">
+          <div class="tx-dot">M7</div>
+          <div class="tx-ev-lbl">Employment</div>
+          <div class="tx-ev-val">PKR 95K/month salary</div>
+        </div>
+        <div class="tx-event">
+          <div class="tx-dot g">M18</div>
+          <div class="tx-ev-lbl">Loan Fully Repaid</div>
+          <div class="tx-ev-val">Guarantee Extinguished</div>
+        </div>
+      </div>
+
+      <div class="callout green" style="margin-top:1rem;margin-bottom:0;">
+        <div class="callout-lbl">Fund Impact</div>
+        <div class="callout-txt" style="font-size:12px;"><strong style="color:var(--green);">+PKR 2,700</strong> guarantee fee earned &bull; <strong style="color:var(--green);">Zero claim</strong> &bull; PKR 90,000 exposure freed for re-deployment &bull; Net: positive contribution to fund income</div>
+      </div>
+    </div>
+
+    <!-- Default transaction -->
+    <div class="tx-box dflt">
+      <div class="tx-hdr">
+        <div>
+          <div class="tx-title">Transaction B &mdash; Default &amp; Claim</div>
+          <div class="tx-sub">CISCO Network Technician &bull; Khushhali Microfinance Bank</div>
+        </div>
+        <span class="badge badge-red">Claim Paid</span>
+      </div>
+
+      <div class="tx-grid">
+        <div class="tx-item">
+          <div class="tx-item-val">PKR 120,000</div>
+          <div class="tx-item-lbl">Loan Amount</div>
+        </div>
+        <div class="tx-item">
+          <div class="tx-item-val" style="color:var(--red);">PKR 60,000</div>
+          <div class="tx-item-lbl">NCGCL Guarantee</div>
+        </div>
+        <div class="tx-item">
+          <div class="tx-item-val">12 months</div>
+          <div class="tx-item-lbl">Loan Tenor</div>
+        </div>
+        <div class="tx-item">
+          <div class="tx-item-val" style="color:var(--red);">PKR 27,500</div>
+          <div class="tx-item-lbl">Claim Paid (est.)</div>
+        </div>
+        <div class="tx-item">
+          <div class="tx-item-val" style="color:var(--green);">PKR 8,250</div>
+          <div class="tx-item-lbl">Recovery (30%)</div>
+        </div>
+      </div>
+
+      <div class="tx-timeline mt2">
+        <div class="tx-event">
+          <div class="tx-dot">M0</div>
+          <div class="tx-ev-lbl">Guarantee Issued</div>
+          <div class="tx-ev-val">Loan Disbursed</div>
+        </div>
+        <div class="tx-event">
+          <div class="tx-dot">M4</div>
+          <div class="tx-ev-lbl">Program Complete</div>
+          <div class="tx-ev-val">No placement found</div>
+        </div>
+        <div class="tx-event">
+          <div class="tx-dot r">M9</div>
+          <div class="tx-ev-lbl">180+ Days Past Due</div>
+          <div class="tx-ev-val">Claim Filed by KMB</div>
+        </div>
+        <div class="tx-event">
+          <div class="tx-dot r">M10</div>
+          <div class="tx-ev-lbl">NCGCL Pays Claim</div>
+          <div class="tx-ev-val">From Income Buffer</div>
+        </div>
+        <div class="tx-event">
+          <div class="tx-dot g">M18+</div>
+          <div class="tx-ev-lbl">Subrogation Recovery</div>
+          <div class="tx-ev-val">30% recovered</div>
+        </div>
+      </div>
+
+      <div class="callout red" style="margin-top:1rem;margin-bottom:0;">
+        <div class="callout-lbl">Fund Impact</div>
+        <div class="callout-txt" style="font-size:12px;"><strong style="color:var(--red);">−PKR 27,500</strong> claim paid from Investment Income buffer &bull; <strong style="color:var(--green);">+PKR 8,250</strong> recovered via subrogation &bull; <strong>Net cost: PKR 19,250</strong> &bull; Capital base untouched (income buffer absorbs cost)</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="div">
+  <div class="callout">
+    <div class="callout-lbl">Ineligible Claims — Key Exclusions</div>
+    <div class="callout-txt">Claims shall not be honored for: (a) penal or default interest charges; (b) fraudulent or fictitious disbursements; (c) loans extended for programs not on the SFEF Eligible Program Register at time of disbursement; (d) loans to borrowers who failed the Skills Credit Scorecard and were approved in breach of underwriting criteria; (e) claims filed without documented collection and recovery attempts by the PFI.</div>
+  </div>
+
+</div><!-- end tab 3 -->
+
+<!-- ===== TAB 4: SIMULATOR ===== -->
+<div id="t-simulator" class="tab-content">
+
+  <div class="sec-label">Interactive Analysis Tool</div>
+  <div class="sec-title">Fund Performance Simulator — Dynamic Leverage &amp; Scenario Analysis</div>
+
+  <div class="sim-layout mb3">
+    <!-- CONTROLS -->
+    <div class="ctrl-panel">
+      <div class="ctrl-title">Simulation Controls</div>
+
+      <div class="ctrl-title" style="font-size:9.5px;margin-top:0;margin-bottom:.5rem;color:var(--mid);letter-spacing:0;text-transform:none;border:none;padding-bottom:0;">Quick-Set Scenarios</div>
+      <div class="scen-grid">
+        <button class="scen-btn" id="btn-conservative" onclick="setScenario('conservative')">Conservative<span>1.5× · 5% PAR · 30% CR</span></button>
+        <button class="scen-btn active-s" id="btn-base" onclick="setScenario('base')">Base Case<span>2.5× · 8% PAR · 40% CR</span></button>
+        <button class="scen-btn" id="btn-full" onclick="setScenario('full')">Full Leverage<span>3.0× · 12% PAR · 50% CR</span></button>
+        <button class="scen-btn" id="btn-stress" onclick="setScenario('stress')">Stress Test<span>3.0× · 15% PAR · 60% CR</span></button>
+      </div>
+
+      <div class="sl-divider"></div>
+      <div class="ctrl-title" style="font-size:9.5px;margin-top:0;margin-bottom:.75rem;color:var(--mid);letter-spacing:0;text-transform:none;border:none;padding-bottom:0;">Capital Inputs</div>
+
+      <div class="slider-group">
+        <div class="sl-head"><span class="sl-lbl">NAVTTC Contribution (PKR M)</span><span class="sl-val" id="dNavttc">200</span></div>
+        <input type="range" id="sNavttc" min="100" max="300" value="200" step="25" oninput="syncSlider('sNavttc','dNavttc','M');updateSim()">
+        <div class="sl-range"><span>100M</span><span>300M</span></div>
+      </div>
+
+      <div class="slider-group">
+        <div class="sl-head"><span class="sl-lbl">NCGCL Matching (PKR M)</span><span class="sl-val" id="dNcgcl">200</span></div>
+        <input type="range" id="sNcgcl" min="0" max="200" value="200" step="25" oninput="syncSlider('sNcgcl','dNcgcl','M');updateSim()">
+        <div class="sl-range"><span>0M</span><span>200M</span></div>
+      </div>
+
+      <div class="sl-divider"></div>
+      <div class="ctrl-title" style="font-size:9.5px;margin-top:0;margin-bottom:.75rem;color:var(--mid);letter-spacing:0;text-transform:none;border:none;padding-bottom:0;">Deployment Parameters</div>
+
+      <div class="slider-group">
+        <div class="sl-head"><span class="sl-lbl">Leverage Multiple</span><span class="sl-val" id="dLeverage">2.5</span></div>
+        <input type="range" id="sLeverage" min="10" max="30" value="25" step="5" oninput="document.getElementById('dLeverage').textContent=(this.value/10).toFixed(1)+'×';updateSim()">
+        <div class="sl-range"><span>1.0×</span><span>3.0×</span></div>
+      </div>
+
+      <div class="slider-group">
+        <div class="sl-head"><span class="sl-lbl">Investment Yield (% p.a.)</span><span class="sl-val" id="dYield">12</span></div>
+        <input type="range" id="sYield" min="8" max="18" value="12" step="1" oninput="syncSlider('sYield','dYield','%');updateSim()">
+        <div class="sl-range"><span>8%</span><span>18%</span></div>
+      </div>
+
+      <div class="slider-group">
+        <div class="sl-head"><span class="sl-lbl">Management Fee (% p.a.)</span><span class="sl-val" id="dFee">1.5</span></div>
+        <input type="range" id="sFee" min="5" max="30" value="15" step="5" oninput="document.getElementById('dFee').textContent=(this.value/10).toFixed(1)+'%';updateSim()">
+        <div class="sl-range"><span>0.5%</span><span>3.0%</span></div>
+      </div>
+
+      <div class="sl-divider"></div>
+      <div class="ctrl-title" style="font-size:9.5px;margin-top:0;margin-bottom:.75rem;color:var(--mid);letter-spacing:0;text-transform:none;border:none;padding-bottom:0;">Credit Risk Assumptions</div>
+
+      <div class="slider-group">
+        <div class="sl-head"><span class="sl-lbl">PAR Rate (% of portfolio)</span><span class="sl-val" id="dPar">8</span></div>
+        <input type="range" id="sPar" min="2" max="20" value="8" step="1" oninput="syncSlider('sPar','dPar','%');updateSim()">
+        <div class="sl-range"><span>2%</span><span>20%</span></div>
+      </div>
+
+      <div class="slider-group">
+        <div class="sl-head"><span class="sl-lbl">Claim Rate on PAR (%)</span><span class="sl-val" id="dCr">40</span></div>
+        <input type="range" id="sCr" min="20" max="80" value="40" step="5" oninput="syncSlider('sCr','dCr','%');updateSim()">
+        <div class="sl-range"><span>20%</span><span>80%</span></div>
+      </div>
+    </div><!-- end ctrl-panel -->
+
+    <!-- KPI OUTPUT -->
+    <div>
+      <div class="kpi-grid-3">
+        <div class="kpi-card top-dark">
+          <div class="kpi-num" id="kCapital">PKR 400M</div>
+          <div class="kpi-label">Capital Base</div>
+          <div class="kpi-sub" id="kCapSub">NAVTTC 200M + NCGCL 200M</div>
+        </div>
+        <div class="kpi-card top-amber">
+          <div class="kpi-num amb" id="kExposure">PKR 1,000M</div>
+          <div class="kpi-label">Max Guarantee Exposure</div>
+          <div class="kpi-sub" id="kExpSub">2.5× leverage</div>
+        </div>
+        <div class="kpi-card top-green">
+          <div class="kpi-num pos" id="kParticipants">5,000</div>
+          <div class="kpi-label">Max Beneficiaries</div>
+          <div class="kpi-sub">At PKR 200K avg NCGCL exposure</div>
+        </div>
+        <div class="kpi-card top-green">
+          <div class="kpi-num pos" id="kNetIncome">PKR 42M</div>
+          <div class="kpi-label">Annual Net Income</div>
+          <div class="kpi-sub" id="kNISub">After management fee</div>
+        </div>
+        <div class="kpi-card top-red">
+          <div class="kpi-num" id="kClaims">PKR 32M</div>
+          <div class="kpi-label">Est. Annual Claims</div>
+          <div class="kpi-sub" id="kClaimSub">Based on PAR &amp; claim rate</div>
+        </div>
+        <div class="kpi-card" id="kChangCard" style="border-top:3px solid var(--green);">
+          <div class="kpi-num pos" id="kChange">+PKR 10M</div>
+          <div class="kpi-label">Net Annual Fund Change</div>
+          <div class="kpi-sub" id="kChangeSub">Income minus claims</div>
+        </div>
+        <div class="kpi-card top-amber">
+          <div class="kpi-num amb" id="kBEP">8.75%</div>
+          <div class="kpi-label">Break-even PAR</div>
+          <div class="kpi-sub">PAR at which fund breaks even</div>
+        </div>
+        <div class="kpi-card" id="kBalCard" style="border-top:3px solid var(--text);">
+          <div class="kpi-num" id="kFinalBal">PKR 450M</div>
+          <div class="kpi-label">Est. Fund Balance (Y5)</div>
+          <div class="kpi-sub" id="kBalSub">After 5-year run</div>
+        </div>
+        <div class="kpi-card" id="kRetCard" style="border-top:3px solid var(--green);">
+          <div class="kpi-num pos" id="kNavttcRet">PKR 200M</div>
+          <div class="kpi-label">Est. NAVTTC Return (Y5)</div>
+          <div class="kpi-sub" id="kRetSub">Net of crystallized losses</div>
+        </div>
+      </div>
+    </div>
+  </div><!-- end sim-layout -->
+
+  <!-- CHARTS -->
+  <div class="g2 mb2">
+    <div class="chart-wrap">
+      <div class="chart-title">Fund Balance Trajectory — 20 Quarters (5 Years)</div>
+      <div class="chart-box"><canvas id="chartFund"></canvas></div>
+    </div>
+    <div class="chart-wrap">
+      <div class="chart-title">Annual Net Income vs. Claims</div>
+      <div class="chart-box"><canvas id="chartIC"></canvas></div>
+    </div>
+  </div>
+
+  <!-- SCENARIO COMPARISON -->
+  <div class="sec-title-sm mb1">Scenario Comparison — Four Leverage &amp; Risk Profiles</div>
+  <div class="callout dark mb2">
+    <div class="callout-lbl">Note</div>
+    <div class="callout-txt" style="font-size:12px;">The scenario table below is computed using the capital inputs from the sliders above (NAVTTC + NCGCL). Investment yield 12%, management fee 1.5%. All monetary amounts in PKR millions. "Y5 Capital Adequacy" = estimated fund balance at end of Year 5 as a percentage of original Capital Base.</div>
+  </div>
+  <div class="scen-tbl-wrap">
+    <table class="scen-tbl">
+      <thead>
+        <tr>
+          <th>Scenario</th>
+          <th class="r">Leverage</th>
+          <th class="r">Max Exposure</th>
+          <th class="r">Max Beneficiaries</th>
+          <th class="r">PAR Assumption</th>
+          <th class="r">Ann. Net Income</th>
+          <th class="r">Ann. Claims</th>
+          <th class="r">Net Ann. Δ</th>
+          <th class="r">Break-even PAR</th>
+          <th class="r">Y5 Capital Adequacy</th>
+          <th class="r">Est. NAVTTC Return</th>
+        </tr>
+      </thead>
+      <tbody id="scenTableBody">
+        <!-- filled by JS -->
+      </tbody>
+    </table>
+  </div>
+
+  <div class="chart-wrap mt2">
+    <div class="chart-title">Scenario Comparison — Fund Balance Over 5 Years (All Scenarios)</div>
+    <div class="chart-box" style="height:260px;"><canvas id="chartScen"></canvas></div>
+  </div>
+
+</div><!-- end tab 4 -->
+
+<!-- ===== TAB 5: KEY PARAMETERS ===== -->
+<div id="t-parameters" class="tab-content">
+
+  <div class="sec-label">Contractual Framework</div>
+  <div class="sec-title">CFMGA Key Parameters &amp; Risk Governance</div>
+
+  <div class="g2 mb2">
+    <div class="panel">
+      <div class="panel-title">Fund Constitution &amp; Structure</div>
+      <table class="tbl">
+        <tr><td><strong>Legal Instrument</strong></td><td>Contribution, Fund Management and Guarantee Agreement (CFMGA)</td></tr>
+        <tr><td><strong>Fund Name</strong></td><td>Skills Financing &amp; Employability Fund (SFEF)</td></tr>
+        <tr><td><strong>Legal Form</strong></td><td>Contractual ring-fenced arrangement (not a trust, company, or CIS)</td></tr>
+        <tr><td><strong>Principal</strong></td><td>NAVTTC (National Vocational &amp; Technical Training Commission)</td></tr>
+        <tr><td><strong>Agent / Manager</strong></td><td>NCGCL (National Credit Guarantee Company Limited)</td></tr>
+        <tr><td><strong>Fund Account</strong></td><td>"NCGCL — Skills Financing &amp; Employability Fund"</td></tr>
+        <tr><td><strong>Reporting</strong></td><td>Separately disclosed in NCGCL financial statements; quarterly reports to NAVTTC</td></tr>
+        <tr><td><strong>Governing Law</strong></td><td>Islamic Republic of Pakistan</td></tr>
+        <tr><td><strong>Dispute Resolution</strong></td><td>Senior management (30 days) → ICC Arbitration, Islamabad, 3-member panel</td></tr>
+        <tr><td><strong>Confidentiality Survival</strong></td><td>5 years post-termination</td></tr>
+      </table>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Financial Terms</div>
+      <table class="tbl">
+        <tr><td><strong>NAVTTC Contribution</strong></td><td class="amb">PKR <span class="dec-placeholder">[●]M</span> — Subject to Board Approval</td></tr>
+        <tr><td><strong>NCGCL Matching (Initial)</strong></td><td>Up to PKR 200M — Board approval condition precedent</td></tr>
+        <tr><td><strong>NAVTTC Contribution Term</strong></td><td>5 years from disbursement date</td></tr>
+        <tr><td><strong>Extension Option</strong></td><td>Mutual written consent; 90-day advance notice required</td></tr>
+        <tr><td><strong>Leverage Cap</strong></td><td>3.0× Capital Base (moratorium on new guarantees if breached)</td></tr>
+        <tr><td><strong>Coverage Ratio</strong></td><td>50% pari passu — fixed across all SFEF products</td></tr>
+        <tr><td><strong>Max Loan per Borrower</strong></td><td>PKR 400,000</td></tr>
+        <tr><td><strong>Management Fee Rate</strong></td><td class="amb"><span class="dec-placeholder">[●]%</span> p.a. on average Fund Account balance — Board Approval Required</td></tr>
+        <tr><td><strong>Management Fee Source</strong></td><td>Investment Income only; no principal recourse under any circumstances</td></tr>
+        <tr><td><strong>Guarantee Fee</strong></td><td class="amb"><span class="dec-placeholder">[●]%</span> per MAGFA — Board Approval Required</td></tr>
+        <tr><td><strong>Claim Trigger</strong></td><td>180 days past due + documented collection efforts</td></tr>
+        <tr><td><strong>Income Offset Mechanism</strong></td><td>Cumulative net income applied against cumulative claims before capital absorption</td></tr>
+        <tr><td><strong>Run-Off Period</strong></td><td>Duration of outstanding guarantees post-termination; no new issuances</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- PAR Framework -->
+  <div class="sec-title-sm mb1">Portfolio-at-Risk (PAR) Escalation Framework</div>
+  <div class="par-stage mb2">
+    <div class="par-block" style="background:var(--green-lt);">
+      <div class="par-range" style="color:var(--green);">0% &ndash; 8%</div>
+      <div class="par-status" style="color:var(--green);">Normal Operations</div>
+      <div class="par-action" style="color:var(--mid);">Standard quarterly reporting. No additional action required. Income buffer typically covers claims.</div>
+    </div>
+    <div class="par-block" style="background:var(--accent-lt);">
+      <div class="par-range" style="color:var(--accent);">&gt; 8%</div>
+      <div class="par-status" style="color:var(--accent);">Amber Trigger</div>
+      <div class="par-action" style="color:var(--mid);">Extraordinary Coordination Committee meeting. Root-cause analysis. Enhanced monitoring. PFI remediation plan required.</div>
+    </div>
+    <div class="par-block" style="background:#FFF3E0;">
+      <div class="par-range" style="color:#E06010;">&gt; 12.5%</div>
+      <div class="par-status" style="color:#E06010;">Orange Trigger</div>
+      <div class="par-action" style="color:var(--mid);">Suspension of new guarantees in affected programs. NCGCL board notification. Enhanced PFI supervision. Capital adequacy review.</div>
+    </div>
+    <div class="par-block" style="background:var(--red-lt);">
+      <div class="par-range" style="color:var(--red);">&gt; 15%</div>
+      <div class="par-status" style="color:var(--red);">Red Trigger</div>
+      <div class="par-action" style="color:var(--mid);">Full moratorium on new issuances. Joint board-level review (NCGCL + NAVTTC). Wind-down assessment. Formal termination event risk.</div>
+    </div>
+  </div>
+
+  <!-- Board Decisions -->
+  <div class="sec-title-sm mb1">Board Decisions Required — Conditions Precedent to CFMGA Effectiveness</div>
+  <div class="panel mb2">
+    <div class="decision-item">
+      <div class="dec-num">01</div>
+      <div class="dec-body">
+        <div class="dec-label">NAVTTC Contribution Quantum</div>
+        <div class="dec-desc">The Board must approve the specific PKR contribution amount from NAVTTC. Currently indicated as <span class="dec-placeholder">[●]M</span> in the CFMGA. The term sheet indicated PKR 200M. Confirmation of this quantum is a condition precedent to Agreement effectiveness. Subsequent matching tranches by NCGCL are case-by-case and require separate Board approval.</div>
+      </div>
+    </div>
+    <div class="decision-item">
+      <div class="dec-num">02</div>
+      <div class="dec-body">
+        <div class="dec-label">NCGCL Initial Matching Contribution</div>
+        <div class="dec-desc">Board approval required for NCGCL's initial matching contribution of <strong>up to PKR 200M</strong> from NCGCL's own capital. This is a material outlay of institutional capital and constitutes a capital commitment requiring Board resolution. Timing of disbursement to be coordinated with NAVTTC's contribution.</div>
+      </div>
+    </div>
+    <div class="decision-item">
+      <div class="dec-num">03</div>
+      <div class="dec-body">
+        <div class="dec-label">Management Fee Rate</div>
+        <div class="dec-desc">The annual management fee rate <span class="dec-placeholder">[●]%</span> on the average Fund Account balance is a commercial term requiring Board approval. This is an NCGCL revenue item, payable from Investment Income only. Recommended range: 1.0% – 2.0% p.a., subject to negotiation with NAVTTC. Fee review is non-retrospective and effective from next quarter post-agreement.</div>
+      </div>
+    </div>
+    <div class="decision-item">
+      <div class="dec-num">04</div>
+      <div class="dec-body">
+        <div class="dec-label">Guarantee Fee Rate</div>
+        <div class="dec-desc">The guarantee fee <span class="dec-placeholder">[●]%</span> charged to PFIs on the guaranteed amount — per Annexure A and the MAGFA — requires Board approval. This is a separate commercial term from the Management Fee and flows to NCGCL from PFIs. Recommended range: 1.5% – 3.5% on guaranteed amount, structured as an upfront or annual fee.</div>
+      </div>
+    </div>
+    <div class="decision-item">
+      <div class="dec-num">05</div>
+      <div class="dec-body">
+        <div class="dec-label">Annexure C — Product Risk Assessment Criteria</div>
+        <div class="dec-desc">No guarantee may be issued under SFEF until Annexure C is fully negotiated, executed, and attached to the CFMGA. Annexure C specifies: borrower eligibility criteria, provider accreditation standards, the Skills Credit Scorecard, underwriting parameters by product window, PAR trigger responses, claims documentation requirements, and exclusion criteria. Board approval of Annexure C, or delegation of approval authority to management, is required.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Governance -->
+  <div class="sec-title-sm mb1">Fund Governance Structure</div>
+  <div class="g3">
+    <div class="kpi-card top-dark">
+      <div class="kpi-label">Coordination Committee</div>
+      <div style="margin-top:.5rem;font-size:12.5px;color:var(--mid);line-height:1.7;">Semi-annual meetings. Advisory role only. Decisions binding only when confirmed in writing per CFMGA amendment procedure. Neither party has unilateral override authority.</div>
+    </div>
+    <div class="kpi-card top-amber">
+      <div class="kpi-label">NAVTTC Audit Rights</div>
+      <div style="margin-top:.5rem;font-size:12.5px;color:var(--mid);line-height:1.7;">15 Business Days' notice required. Audit cost borne by NAVTTC unless material breach is found, in which case costs transfer to NCGCL. Scope limited to Fund Account records.</div>
+    </div>
+    <div class="kpi-card top-green">
+      <div class="kpi-label">Reporting Obligations</div>
+      <div style="margin-top:.5rem;font-size:12.5px;color:var(--mid);line-height:1.7;">Quarterly Fund Management Reports to NAVTTC (within 15 business days of quarter-end). Annual Audited Report. Live Eligible Program Register maintained by NCGCL.</div>
+    </div>
+  </div>
+
+</div><!-- end tab 5 -->
+
+</div><!-- end container -->
+
+<div class="doc-footer">
+  <div class="foot-inner">
+    <div>Skills Financing &amp; Employability Fund (SFEF) &mdash; CFMGA &mdash; NCGCL &times; NAVTTC &mdash; June 2026</div>
+    <div>National Credit Guarantee Company Limited &bull; PACRA AAA &bull; SBP-Recognized &bull; Strictly Confidential</div>
+  </div>
+</div>
+
+<script>
+// ============================
+// TAB SWITCHING
+// ============================
+let simReady = false;
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    const id = btn.dataset.tab;
+    document.getElementById(id).classList.add('active');
+    if (id === 't-simulator' && !simReady) {
+      setTimeout(() => { initCharts(); updateSim(); simReady = true; }, 60);
+    }
+  });
+});
+
+// ============================
+// SLIDER SYNC HELPERS
+// ============================
+function syncSlider(sliderId, displayId, suffix) {
+  document.getElementById(displayId).textContent = document.getElementById(sliderId).value + suffix;
+}
+
+// ============================
+// GET PARAMS
+// ============================
+function getParams() {
+  return {
+    navttcM: +document.getElementById('sNavttc').value,
+    ncgclM:  +document.getElementById('sNcgcl').value,
+    leverage: +document.getElementById('sLeverage').value / 10,
+    yield_:  +document.getElementById('sYield').value / 100,
+    fee:     +document.getElementById('sFee').value / 100 / 10,  // sFee is ×10
+    par:     +document.getElementById('sPar').value / 100,
+    cr:      +document.getElementById('sCr').value / 100,
+  };
+}
+
+// ============================
+// SIMULATION ENGINE
+// ============================
+function runSim(p) {
+  const cap = p.navttcM + p.ncgclM;
+  const maxExp = cap * p.leverage;
+  const annGross = cap * p.yield_;
+  const annFee   = cap * p.fee;
+  const annNI    = annGross - annFee;
+  const annClaims = maxExp * p.par * p.cr;
+  const netAnn   = annNI - annClaims;
+  const bep      = (p.yield_ - p.fee) / (p.leverage * p.cr) * 100;
+  const maxPart  = Math.floor(maxExp * 1e6 / 200000);
+
+  // Quarterly sim (20Q = 5Y)
+  const qLbls = [], balArr = [], cumNIArr = [], cumCArr = [];
+  let bal = cap, cumNI = 0, cumC = 0;
+
+  for (let q = 1; q <= 20; q++) {
+    const ramp = Math.min(q / 4, 1.0);
+    const qExp = maxExp * ramp;
+    const qNI  = (bal * p.yield_) / 4 - (bal * p.fee) / 4;
+    const qC   = q >= 3 ? (qExp * p.par * p.cr) / 4 : 0;
+    bal = Math.max(0, bal + qNI - qC);
+    cumNI += qNI; cumC += qC;
+    const yr = Math.ceil(q/4), qn = ((q-1)%4)+1;
+    qLbls.push('Q'+qn+'·Y'+yr);
+    balArr.push(+bal.toFixed(1));
+    cumNIArr.push(+cumNI.toFixed(1));
+    cumCArr.push(+cumC.toFixed(1));
+  }
+
+  // Annual (5Y) income & claims
+  const annLbls = ['Year 1','Year 2','Year 3','Year 4','Year 5'];
+  const annNIArr = [], annCArr = [];
+  for (let y = 1; y <= 5; y++) {
+    annNIArr.push(+annNI.toFixed(1));
+    const cf = y === 1 ? 0.4375 : 1.0;
+    annCArr.push(+(maxExp * p.par * p.cr * cf).toFixed(1));
+  }
+
+  const finalBal = balArr[19];
+  const navttcRet = Math.min(p.navttcM, p.navttcM * (finalBal / cap));
+  const capAdeq = (finalBal / cap) * 100;
+
+  return { cap, maxExp, annGross, annFee, annNI, annClaims, netAnn, bep, maxPart,
+           finalBal, navttcRet, capAdeq,
+           qLbls, balArr, cumNIArr, cumCArr,
+           annLbls, annNIArr, annCArr };
+}
+
+// ============================
+// CHARTS
+// ============================
+let chartFund = null, chartIC = null, chartScen = null;
+
+const C = {
+  amber: '#C8923A', green: '#52B788', red: '#9B2335',
+  dark: '#1A1A1A', border: '#E5E5E5', mid: '#666666',
+  amberA: 'rgba(200,146,58,0.12)', greenA: 'rgba(82,183,136,0.12)', redA: 'rgba(155,35,53,0.12)'
+};
+
+const chartDefaults = {
+  responsive: true, maintainAspectRatio: false,
+  plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ' PKR ' + ctx.parsed.y.toFixed(1) + 'M' } } },
+  scales: {
+    x: { grid: { color: C.border }, ticks: { font: { size: 10 }, color: C.mid } },
+    y: { grid: { color: C.border }, ticks: { font: { size: 10 }, color: C.mid, callback: v => 'PKR '+v+'M' } }
+  }
+};
+
+function initCharts() {
+  const p = getParams();
+  const d = runSim(p);
+
+  // Fund Balance Chart
+  chartFund = new Chart(document.getElementById('chartFund').getContext('2d'), {
+    type: 'line',
+    data: {
+      labels: d.qLbls,
+      datasets: [
+        { label: 'Fund Balance', data: d.balArr, borderColor: C.amber, backgroundColor: C.amberA, borderWidth: 2, pointRadius: 2, fill: true, tension: 0.3 },
+        { label: 'Cumulative Net Income', data: d.cumNIArr, borderColor: C.green, backgroundColor: 'transparent', borderWidth: 1.5, borderDash: [4,3], pointRadius: 0, fill: false },
+        { label: 'Cumulative Claims', data: d.cumCArr, borderColor: C.red, backgroundColor: 'transparent', borderWidth: 1.5, borderDash: [4,3], pointRadius: 0, fill: false }
+      ]
+    },
+    options: {
+      ...chartDefaults,
+      plugins: {
+        legend: { display: true, position: 'bottom', labels: { font: { size: 10 }, boxWidth: 20, padding: 12 } },
+        tooltip: { callbacks: { label: ctx => ' ' + ctx.dataset.label + ': PKR ' + ctx.parsed.y.toFixed(1) + 'M' } }
+      }
+    }
+  });
+
+  // Income vs Claims Chart
+  chartIC = new Chart(document.getElementById('chartIC').getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: d.annLbls,
+      datasets: [
+        { label: 'Annual Net Income', data: d.annNIArr, backgroundColor: C.greenA, borderColor: C.green, borderWidth: 1.5 },
+        { label: 'Annual Claims (est.)', data: d.annCArr, backgroundColor: C.redA, borderColor: C.red, borderWidth: 1.5 }
+      ]
+    },
+    options: {
+      ...chartDefaults,
+      plugins: {
+        legend: { display: true, position: 'bottom', labels: { font: { size: 10 }, boxWidth: 20, padding: 12 } },
+        tooltip: { callbacks: { label: ctx => ' ' + ctx.dataset.label + ': PKR ' + ctx.parsed.y.toFixed(1) + 'M' } }
+      }
+    }
+  });
+
+  // Scenario Comparison Chart
+  chartScen = new Chart(document.getElementById('chartScen').getContext('2d'), {
+    type: 'line',
+    data: { labels: [], datasets: [] },
+    options: {
+      ...chartDefaults,
+      plugins: {
+        legend: { display: true, position: 'bottom', labels: { font: { size: 10 }, boxWidth: 20, padding: 12 } },
+        tooltip: { callbacks: { label: ctx => ' ' + ctx.dataset.label + ': PKR ' + ctx.parsed.y.toFixed(1) + 'M' } }
+      }
+    }
+  });
+}
+
+// ============================
+// UPDATE DISPLAY
+// ============================
+function fmt(n) { return 'PKR ' + (n >= 1000 ? (n/1000).toFixed(2) + 'B' : n.toFixed(0) + 'M'); }
+
+function updateKPIs(p, d) {
+  document.getElementById('kCapital').textContent = fmt(d.cap);
+  document.getElementById('kCapSub').textContent = 'NAVTTC ' + p.navttcM + 'M + NCGCL ' + p.ncgclM + 'M';
+  document.getElementById('kExposure').textContent = fmt(d.maxExp);
+  document.getElementById('kExpSub').textContent = p.leverage.toFixed(1) + '× leverage';
+  document.getElementById('kParticipants').textContent = d.maxPart.toLocaleString();
+  document.getElementById('kNetIncome').textContent = fmt(d.annNI);
+  document.getElementById('kNISub').textContent = 'Gross ' + fmt(d.annGross) + ' – fee ' + fmt(d.annFee);
+  document.getElementById('kClaims').textContent = fmt(d.annClaims);
+  document.getElementById('kClaimSub').textContent = p.leverage.toFixed(1) + '× × ' + (p.par*100).toFixed(0) + '% PAR × ' + (p.cr*100).toFixed(0) + '% CR';
+
+  const netEl = document.getElementById('kChange');
+  const netCard = document.getElementById('kChangCard');
+  netEl.textContent = (d.netAnn >= 0 ? '+' : '') + fmt(d.netAnn);
+  netEl.className = 'kpi-num ' + (d.netAnn >= 0 ? 'pos' : 'neg');
+  netCard.style.borderTopColor = d.netAnn >= 0 ? C.green : C.red;
+
+  document.getElementById('kBEP').textContent = d.bep.toFixed(1) + '%';
+
+  const balEl = document.getElementById('kFinalBal');
+  const balCard = document.getElementById('kBalCard');
+  balEl.textContent = fmt(d.finalBal);
+  balEl.className = 'kpi-num ' + (d.finalBal >= d.cap ? 'pos' : 'neg');
+  balCard.style.borderTopColor = d.finalBal >= d.cap ? C.green : C.red;
+  document.getElementById('kBalSub').textContent = 'Adequacy: ' + d.capAdeq.toFixed(0) + '% of original base';
+
+  const retEl = document.getElementById('kNavttcRet');
+  const retCard = document.getElementById('kRetCard');
+  retEl.textContent = fmt(d.navttcRet);
+  retEl.className = 'kpi-num ' + (d.navttcRet >= p.navttcM ? 'pos' : 'neg');
+  retCard.style.borderTopColor = d.navttcRet >= p.navttcM ? C.green : C.red;
+  document.getElementById('kRetSub').textContent = d.navttcRet >= p.navttcM ? 'Full recovery' : 'Capital impaired by ' + fmt(p.navttcM - d.navttcRet);
+}
+
+function updateCharts(d) {
+  if (!chartFund) return;
+  chartFund.data.labels = d.qLbls;
+  chartFund.data.datasets[0].data = d.balArr;
+  chartFund.data.datasets[1].data = d.cumNIArr;
+  chartFund.data.datasets[2].data = d.cumCArr;
+  chartFund.update('none');
+
+  chartIC.data.datasets[0].data = d.annNIArr;
+  chartIC.data.datasets[1].data = d.annCArr;
+  chartIC.update('none');
+}
+
+// ============================
+// SCENARIO TABLE + COMPARISON CHART
+// ============================
+const SCENARIOS = [
+  { key:'conservative', label:'Conservative',   leverage:1.5, par:5,  cr:30, rowClass:'row-b' },
+  { key:'base',         label:'Base Case',       leverage:2.5, par:8,  cr:40, rowClass:'row-b' },
+  { key:'full',         label:'Full Leverage',   leverage:3.0, par:12, cr:50, rowClass:'row-f' },
+  { key:'stress',       label:'Stress Test',     leverage:3.0, par:15, cr:60, rowClass:'row-s' },
+];
+const SCEN_COLORS = [C.green, C.amber, '#E07020', C.red];
+
+function buildScenarioTable(navttcM, ncgclM) {
+  const tbody = document.getElementById('scenTableBody');
+  tbody.innerHTML = '';
+  const scenData = [];
+
+  SCENARIOS.forEach((s, i) => {
+    const p = { navttcM, ncgclM, leverage: s.leverage, yield_: 0.12, fee: 0.015, par: s.par/100, cr: s.cr/100 };
+    const d = runSim(p);
+    scenData.push(d);
+    const isPos = d.netAnn >= 0;
+    const balOk = d.finalBal >= (navttcM + ncgclM);
+    const retOk = d.navttcRet >= navttcM;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><span class="scen-lbl" style="color:${SCEN_COLORS[i]}">${s.label}</span><br><span style="font-size:10px;color:var(--light)">${s.leverage}× · ${s.par}% PAR · ${s.cr}% CR</span></td>
+      <td class="r num">${s.leverage}×</td>
+      <td class="r num">${fmt(d.maxExp)}</td>
+      <td class="r num">${d.maxPart.toLocaleString()}</td>
+      <td class="r num">${s.par}%</td>
+      <td class="r num pos">${fmt(d.annNI)}</td>
+      <td class="r num neg">${fmt(d.annClaims)}</td>
+      <td class="r num ${isPos?'pos':'neg'}">${isPos?'+':''}${fmt(d.netAnn)}</td>
+      <td class="r num ${d.bep > s.par ? 'pos':'neg'}">${d.bep.toFixed(1)}%</td>
+      <td class="r num ${balOk?'pos':'neg'}">${d.capAdeq.toFixed(0)}%</td>
+      <td class="r num ${retOk?'pos':'neg'}">${fmt(d.navttcRet)}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  // Update scenario comparison chart
+  if (!chartScen) return;
+  // Build quarterly data for all 4 scenarios
+  const labels = SCENARIOS[0].key ? runSim({navttcM,ncgclM,leverage:SCENARIOS[0].leverage,yield_:0.12,fee:0.015,par:SCENARIOS[0].par/100,cr:SCENARIOS[0].cr/100}).qLbls : [];
+  const ql = runSim({navttcM,ncgclM,leverage:1.5,yield_:0.12,fee:0.015,par:0.05,cr:0.30}).qLbls;
+
+  chartScen.data.labels = ql;
+  chartScen.data.datasets = SCENARIOS.map((s, i) => {
+    const p = { navttcM, ncgclM, leverage: s.leverage, yield_: 0.12, fee: 0.015, par: s.par/100, cr: s.cr/100 };
+    const d = runSim(p);
+    return {
+      label: s.label,
+      data: d.balArr,
+      borderColor: SCEN_COLORS[i],
+      backgroundColor: 'transparent',
+      borderWidth: 2,
+      pointRadius: 0,
+      tension: 0.3,
+    };
+  });
+  chartScen.update('none');
+}
+
+// ============================
+// MAIN UPDATE
+// ============================
+function updateSim() {
+  const p = getParams();
+  const d = runSim(p);
+  updateKPIs(p, d);
+  updateCharts(d);
+  buildScenarioTable(p.navttcM, p.ncgclM);
+}
+
+// ============================
+// SCENARIO QUICK-SET
+// ============================
+const scenPresets = {
+  conservative: { leverage: 15, par: 5,  cr: 30, fee: 15 },
+  base:         { leverage: 25, par: 8,  cr: 40, fee: 15 },
+  full:         { leverage: 30, par: 12, cr: 50, fee: 15 },
+  stress:       { leverage: 30, par: 15, cr: 60, fee: 15 },
+};
+
+function setScenario(key) {
+  document.querySelectorAll('.scen-btn').forEach(b => b.classList.remove('active-s'));
+  document.getElementById('btn-' + key).classList.add('active-s');
+  const s = scenPresets[key];
+  document.getElementById('sLeverage').value = s.leverage;
+  document.getElementById('dLeverage').textContent = (s.leverage/10).toFixed(1) + '×';
+  document.getElementById('sPar').value = s.par;
+  document.getElementById('dPar').textContent = s.par + '%';
+  document.getElementById('sCr').value = s.cr;
+  document.getElementById('dCr').textContent = s.cr + '%';
+  document.getElementById('sFee').value = s.fee;
+  document.getElementById('dFee').textContent = (s.fee/10).toFixed(1) + '%';
+  updateSim();
+}
+
+// ============================
+// AUTO-INIT IF TAB ACTIVE
+// ============================
+document.addEventListener('DOMContentLoaded', () => {
+  // Simulator is not the default active tab, so init when clicked
+  // But if user navigates directly, we trigger on first interaction
+});
+</script>
+</body>
+</html>
+apps-fileview.texmex_20260528.00_p2
+SFEF_Board_Dashboard_June2026.html
+Displaying SFEF_Board_Dashboard_June2026.html.
