@@ -1,0 +1,1848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NCGCL Research &amp; Insights — June 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+/* ============================================
+   NCGCL BRAND TOKENS — Brand Guidelines v5 (2025)
+   Exact match to intranet index.html
+   ============================================ */
+:root {
+  --cerulean:       #035076;
+  --cerulean-deep:  #013E5C;
+  --cerulean-soft:  #11688A;
+  --green:          #39A949;
+  --white:          #FFFFFF;
+  --ink:            #0E1A24;
+  --ink-2:          #2A3540;
+  --gray-900:       #1F2A36;
+  --gray-700:       #4A5560;
+  --gray-500:       #8A95A0;
+  --gray-300:       #D9DDE2;
+  --gray-200:       #E6E9EE;
+  --gray-100:       #F2F4F7;
+  --gray-50:        #F8F9FB;
+  --rule:           #E6E9EE;
+  --hairline:       #D9DDE2;
+  --serif:          'Source Serif 4', 'Georgia', 'Times New Roman', serif;
+  --sans:           'Inter', 'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Chart colours derived from brand palette */
+  --chart-mature:   #39A949;
+  --chart-bounded:  #035076;
+  --chart-early:    #8A95A0;
+  --chart-grad:     #11688A;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body {
+  font-family: var(--sans);
+  background: var(--white);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.55;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+
+/* ============================================
+   UTILITY BAR — exact intranet match
+   ============================================ */
+.utility-bar {
+  background: var(--ink);
+  color: var(--white);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.utility-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.utility-left { display: flex; gap: 1.5rem; align-items: center; }
+.utility-left span { color: rgba(255,255,255,0.7); }
+.utility-right { display: flex; gap: 1.25rem; align-items: center; }
+.utility-right a { color: rgba(255,255,255,0.75); font-size: 12px; transition: color 0.15s; }
+.utility-right a:hover { color: var(--white); }
+.utility-divider { width: 1px; height: 14px; background: rgba(255,255,255,0.15); }
+
+/* ============================================
+   SITE HEADER — exact intranet match
+   ============================================ */
+.site-header {
+  background: var(--white);
+  border-bottom: 1px solid var(--rule);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+.nav-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.brand { display: flex; align-items: center; gap: 14px; }
+.brand-text { border-left: 1px solid var(--hairline); padding-left: 14px; }
+.brand-text .brand-1 {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gray-500);
+  font-weight: 500;
+}
+.brand-text .brand-2 {
+  font-size: 14px;
+  color: var(--cerulean);
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  margin-top: 2px;
+}
+.brand-mark {
+  width: 38px;
+  height: 38px;
+  background: var(--cerulean);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--white);
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+}
+.primary-nav { display: flex; gap: 2rem; align-items: center; }
+.primary-nav > a {
+  font-size: 14px;
+  color: var(--ink-2);
+  font-weight: 500;
+  padding: 6px 0;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s;
+  letter-spacing: -0.005em;
+}
+.primary-nav > a:hover { color: var(--cerulean); border-bottom-color: var(--cerulean); }
+
+/* ============================================
+   ANNOUNCEMENT BAR — exact intranet match
+   ============================================ */
+.announcement {
+  background: var(--gray-50);
+  border-bottom: 1px solid var(--rule);
+}
+.announcement-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 14px 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 13px;
+}
+.announcement-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  flex-shrink: 0;
+  position: relative;
+}
+.announcement-dot::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: var(--green);
+  opacity: 0.3;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.3; }
+  50% { transform: scale(1.4); opacity: 0; }
+}
+.announcement-text { color: var(--ink-2); flex-grow: 1; }
+.announcement-text strong { color: var(--cerulean); font-weight: 600; margin-right: 6px; }
+.announcement-link {
+  color: var(--cerulean);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* ============================================
+   HERO — cerulean panel, intranet palette
+   ============================================ */
+.hero {
+  background: var(--cerulean);
+  color: var(--white);
+  position: relative;
+  overflow: hidden;
+}
+.hero-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 5rem 2rem 4.5rem;
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 4rem;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+.hero-eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--green);
+  font-weight: 500;
+  margin-bottom: 1.25rem;
+}
+.hero-headline {
+  font-family: var(--serif);
+  font-size: 52px;
+  line-height: 1.05;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  color: var(--white);
+  margin-bottom: 1.5rem;
+}
+.hero-headline em { font-style: italic; color: rgba(255,255,255,0.9); }
+.hero-lede {
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 2rem;
+  font-weight: 300;
+}
+.hero-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 12px 22px;
+  transition: all 0.15s;
+  border-radius: 2px;
+}
+.btn-primary { background: var(--green); color: var(--white); }
+.btn-primary:hover { background: #2d8f3b; }
+.btn-ghost {
+  background: transparent;
+  color: rgba(255,255,255,0.85);
+  border: 1px solid rgba(255,255,255,0.3);
+}
+.btn-ghost:hover { border-color: rgba(255,255,255,0.7); color: var(--white); }
+
+/* Hero stat panel */
+.hero-stats {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.15);
+}
+.hero-stat {
+  padding: 1.5rem 1.75rem;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+.hero-stat:last-child { border-bottom: none; }
+.hero-stat-num {
+  font-family: var(--serif);
+  font-size: 36px;
+  font-weight: 400;
+  color: var(--white);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: 0.35rem;
+}
+.hero-stat-num .unit {
+  font-family: var(--sans);
+  font-size: 14px;
+  color: rgba(255,255,255,0.6);
+  font-weight: 300;
+  margin-left: 4px;
+}
+.hero-stat-num.green { color: var(--green); }
+.hero-stat-lbl {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  font-weight: 600;
+}
+
+/* ============================================
+   JUMP NAV — exact intranet match
+   ============================================ */
+.jumpnav {
+  background: var(--white);
+  border-bottom: 1px solid var(--rule);
+  position: sticky;
+  top: 76px;
+  z-index: 40;
+}
+.jumpnav-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  gap: 2rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.jumpnav-inner::-webkit-scrollbar { display: none; }
+.jumpnav a {
+  padding: 16px 0;
+  font-size: 13px;
+  color: var(--gray-700);
+  font-weight: 500;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s;
+  letter-spacing: -0.005em;
+}
+.jumpnav a:hover { color: var(--cerulean); border-bottom-color: var(--cerulean); }
+.jumpnav a.active { color: var(--cerulean); border-bottom-color: var(--cerulean); }
+
+/* ============================================
+   SHELL & SECTIONS — exact intranet match
+   ============================================ */
+.shell { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
+
+.section {
+  padding: 4rem 0 3rem;
+  border-top: 1px solid var(--rule);
+}
+.section:first-of-type { border-top: none; }
+
+.section-head {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 3rem;
+  align-items: start;
+  margin-bottom: 2.5rem;
+}
+.section-eyebrow-wrap { padding-top: 4px; }
+.section-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--green);
+  font-weight: 600;
+  padding-top: 8px;
+  border-top: 2px solid var(--cerulean);
+  display: inline-block;
+}
+.section-title {
+  font-family: var(--serif);
+  font-size: 36px;
+  line-height: 1.1;
+  font-weight: 400;
+  color: var(--cerulean);
+  letter-spacing: -0.015em;
+  margin-bottom: 0.75rem;
+}
+.section-desc {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--gray-700);
+  max-width: 720px;
+  font-weight: 300;
+}
+.section-action {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cerulean);
+  font-weight: 600;
+  align-self: center;
+  white-space: nowrap;
+}
+.section-action:hover { color: var(--green); }
+
+/* ============================================
+   GRID & CARDS — exact intranet match
+   ============================================ */
+.grid {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--rule);
+  border-left: 1px solid var(--rule);
+}
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+.card {
+  background: var(--white);
+  padding: 1.75rem 1.5rem;
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  min-height: 220px;
+  position: relative;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: transparent;
+  transition: background 0.2s;
+}
+.card:hover { background: var(--gray-50); }
+.card:hover::before { background: var(--cerulean); }
+.card.featured::before { background: var(--green); }
+
+.card-tag {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gray-500);
+  font-weight: 600;
+  margin-bottom: 0.85rem;
+}
+.card-title {
+  font-family: var(--serif);
+  font-size: 19px;
+  line-height: 1.25;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  margin-bottom: 0.65rem;
+}
+.card-desc {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--gray-700);
+  flex-grow: 1;
+  font-weight: 300;
+  margin-bottom: 1.25rem;
+}
+.card-desc strong { color: var(--ink); font-weight: 500; }
+.card-link {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cerulean);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+}
+.card:hover .card-link { color: var(--green); }
+.card-caveat {
+  font-size: 13px;
+  color: var(--gray-700);
+  background: var(--gray-50);
+  border-left: 2px solid var(--cerulean);
+  padding: 0.65rem 0.9rem;
+  margin-bottom: 1rem;
+  line-height: 1.55;
+  font-weight: 300;
+}
+.card-caveat strong { color: var(--cerulean); font-weight: 600; font-style: normal; }
+
+/* Status badge */
+.card-badge {
+  display: inline-block;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 2px;
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+}
+.badge-mature  { background: var(--green);        color: var(--white); }
+.badge-bounded { background: var(--cerulean);     color: var(--white); }
+.badge-early   { background: var(--gray-500);     color: var(--white); }
+.badge-grad    { background: var(--cerulean-soft);color: var(--white); }
+.badge-open    { background: var(--gray-200);     color: var(--gray-700); }
+
+/* ============================================
+   STAT ROW
+   ============================================ */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--rule);
+  border-left: 1px solid var(--rule);
+  margin-bottom: 0;
+}
+.stat-box {
+  background: var(--white);
+  padding: 2rem 1.75rem;
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  position: relative;
+}
+.stat-box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+}
+.stat-box.gn::before { background: var(--green); }
+.stat-box.ce::before { background: var(--cerulean); }
+.stat-box.sl::before { background: var(--gray-500); }
+.stat-box.cs::before { background: var(--cerulean-soft); }
+.stat-num {
+  font-family: var(--serif);
+  font-size: 44px;
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+  margin-top: 0.25rem;
+}
+.stat-lbl {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gray-500);
+  font-weight: 600;
+}
+.stat-note { font-size: 12px; color: var(--gray-500); margin-top: 0.35rem; font-weight: 300; }
+
+/* ============================================
+   CHART PANELS
+   ============================================ */
+.charts-grid {
+  display: grid;
+  border-left: 1px solid var(--rule);
+  border-top: 1px solid var(--rule);
+}
+.charts-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+.charts-grid.cols-1 { grid-template-columns: 1fr; }
+
+.chart-panel {
+  padding: 2rem 1.75rem;
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  background: var(--white);
+}
+.chart-eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--green);
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+.chart-title {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--cerulean);
+  margin-bottom: 0.2rem;
+  letter-spacing: -0.01em;
+}
+.chart-sub {
+  font-size: 12px;
+  color: var(--gray-500);
+  margin-bottom: 1.5rem;
+  font-weight: 300;
+  font-style: italic;
+}
+.ch { position: relative; width: 100%; }
+.h260 { height: 260px; }
+.h230 { height: 230px; }
+.h300 { height: 300px; }
+
+/* ============================================
+   FEATURE CARD (hero finding)
+   ============================================ */
+.feature {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid var(--rule);
+  margin-bottom: 0;
+  background: var(--white);
+}
+.feature-media {
+  background: var(--cerulean);
+  position: relative;
+  overflow: hidden;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.feature-media svg { width: 100%; height: 100%; display: block; position: absolute; top: 0; left: 0; }
+.feature-media-content {
+  position: relative;
+  z-index: 2;
+  padding: 2.5rem;
+  color: var(--white);
+  width: 100%;
+}
+.feature-media-content .tag {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--green);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+.feature-media-content .h {
+  font-family: var(--serif);
+  font-size: 28px;
+  line-height: 1.2;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+.feature-body {
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.feature-body .desc {
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--gray-700);
+  margin-bottom: 1.5rem;
+  font-weight: 300;
+}
+.feature-body .desc strong { color: var(--ink); font-weight: 500; }
+.feature-body .cta {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cerulean);
+  font-weight: 600;
+}
+.feature-body .cta:hover { color: var(--green); }
+
+/* ============================================
+   MAP
+   ============================================ */
+.map-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid var(--rule);
+}
+.map-stage {
+  background: var(--gray-50);
+  border-right: 1px solid var(--rule);
+  padding: 1.5rem;
+  overflow: hidden;
+}
+.map-stage svg { width: 100%; height: 100%; display: block; }
+.map-banners { padding: 1.25rem; display: flex; flex-direction: column; gap: 0.6rem; justify-content: center; }
+.map-banner {
+  display: grid;
+  grid-template-columns: 36px 1fr auto;
+  gap: 0.9rem;
+  align-items: start;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--hairline);
+  background: var(--white);
+  transition: all 0.15s;
+}
+.map-banner:hover { background: var(--gray-50); }
+.map-banner.mature { border-left-color: var(--green); }
+.map-banner.bounded { border-left-color: var(--cerulean); }
+.map-banner.early { border-left-color: var(--gray-500); }
+.mb-num {
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--cerulean);
+  background: var(--gray-100);
+  flex-shrink: 0;
+}
+.map-banner.mature .mb-num { color: var(--green); background: #EBF7EC; }
+.map-banner.early  .mb-num { color: var(--gray-500); background: var(--gray-100); }
+.mb-place { font-size: 9px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray-500); margin-bottom: 0.15rem; }
+.mb-title { font-size: 13px; font-weight: 500; color: var(--ink); line-height: 1.25; margin-bottom: 0.1rem; }
+.mb-note { font-size: 11.5px; color: var(--gray-700); line-height: 1.45; font-weight: 300; }
+.mb-badge {
+  font-size: 9px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 2px 7px; border-radius: 2px; white-space: nowrap; align-self: flex-start; margin-top: 2px;
+}
+.mb-badge.mature  { background: var(--green);        color: var(--white); }
+.mb-badge.bounded { background: var(--cerulean);     color: var(--white); }
+.mb-badge.early   { background: var(--gray-500);     color: var(--white); }
+.map-caption {
+  grid-column: 1 / -1;
+  padding: 0.85rem 1.5rem;
+  border-top: 1px solid var(--rule);
+  background: var(--gray-50);
+  font-size: 11.5px;
+  color: var(--gray-500);
+  font-style: italic;
+  font-weight: 300;
+}
+
+/* SVG map elements */
+.pk-province { font-family: var(--sans); font-style: italic; font-size: 10px; fill: #C0C8D0; letter-spacing: 0.03em; }
+.pk-city     { font-family: var(--sans); font-size: 8px; font-weight: 500; fill: #A0ADB8; letter-spacing: 0.05em; text-transform: uppercase; }
+.pk-label    { font-family: var(--sans); font-size: 9px; font-weight: 600; fill: var(--ink-2); letter-spacing: 0.03em; }
+
+/* ============================================
+   TIMELINE
+   ============================================ */
+.timeline { padding: 0.5rem 0; }
+.tl-item {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 1.25rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+.tl-item:last-child { border-bottom: none; }
+.tl-q {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--green);
+  padding-top: 2px;
+}
+.tl-q.late  { color: var(--cerulean-soft); }
+.tl-q.end   { color: var(--cerulean); }
+.tl-title   { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 0.15rem; }
+.tl-desc    { font-size: 12px; color: var(--gray-700); line-height: 1.5; font-weight: 300; }
+
+/* ============================================
+   TABLE
+   ============================================ */
+.tbl-wrap { border: 1px solid var(--rule); overflow-x: auto; }
+table.tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
+table.tbl thead th {
+  font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--gray-500); background: var(--gray-50); text-align: left;
+  padding: 0.9rem 1.25rem; border-bottom: 1px solid var(--rule); white-space: nowrap;
+}
+table.tbl tbody td { padding: 0.9rem 1.25rem; border-bottom: 1px solid var(--rule); color: var(--gray-700); vertical-align: top; font-weight: 300; }
+table.tbl tbody tr:last-child td { border-bottom: none; }
+table.tbl tbody tr:hover td { background: var(--gray-50); }
+table.tbl .strong { color: var(--ink); font-weight: 500; font-family: var(--serif); font-size: 14px; }
+table.tbl .num    { color: var(--cerulean); font-family: var(--serif); font-weight: 500; font-size: 15px; }
+.qbadge {
+  display: inline-block; font-size: 9px; font-weight: 600; letter-spacing: 0.1em;
+  padding: 3px 8px; text-transform: uppercase; border-radius: 2px;
+}
+.qbadge.q2 { background: #EBF7EC; color: #1d7a2a; }
+.qbadge.q3 { background: #E8F0F6; color: var(--cerulean); }
+.qbadge.q4 { background: var(--gray-100); color: var(--gray-700); }
+
+/* ============================================
+   WORKING HYPOTHESIS BAND
+   ============================================ */
+.hypothesis {
+  background: var(--cerulean-deep);
+  padding: 2rem 0;
+  border-top: 2px solid var(--green);
+}
+.hypothesis-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+}
+.hyp-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--green);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.hyp-text {
+  font-family: var(--serif);
+  font-size: 17px;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.55;
+  font-weight: 300;
+  flex: 1;
+}
+.hyp-text em { color: rgba(255,255,255,1); font-style: italic; }
+.hyp-link {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--green);
+  flex-shrink: 0;
+  white-space: nowrap;
+  border-bottom: 1px solid rgba(57,169,73,0.4);
+  padding-bottom: 1px;
+}
+.hyp-link:hover { color: #5fc46e; }
+
+/* ============================================
+   FOOTER — exact intranet match
+   ============================================ */
+footer {
+  background: var(--cerulean-deep);
+  color: rgba(255,255,255,0.7);
+  margin-top: 5rem;
+}
+.footer-inner { max-width: 1280px; margin: 0 auto; padding: 4rem 2rem 2rem; }
+.footer-top {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 3rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+.footer-brand-name {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--white);
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.01em;
+}
+.footer-brand .tag {
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+  font-weight: 300;
+  line-height: 1.6;
+  max-width: 280px;
+}
+.footer-col h4 {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--green);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+.footer-col a {
+  display: block;
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+  padding: 5px 0;
+  transition: color 0.15s;
+  font-weight: 300;
+}
+.footer-col a:hover { color: var(--white); }
+.footer-bottom {
+  padding-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.footer-bottom-links { display: flex; gap: 1.5rem; }
+.footer-bottom-links a { color: rgba(255,255,255,0.45); transition: color 0.15s; }
+.footer-bottom-links a:hover { color: var(--white); }
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+/* ============================================
+   RISK ARCHITECTURE BANNER
+   ============================================ */
+.risk-banner {
+  background: var(--ink);
+  margin: 0 -2rem;
+  padding: 0;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid var(--rule);
+}
+.risk-banner-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 2.5rem 2rem 2rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  flex-wrap: wrap;
+}
+.risk-banner-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--green);
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+}
+.risk-banner-title {
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--white);
+  letter-spacing: -0.01em;
+  margin-bottom: 0.6rem;
+  line-height: 1.15;
+}
+.risk-banner-desc {
+  font-size: 14px;
+  color: rgba(255,255,255,0.65);
+  font-weight: 300;
+  line-height: 1.65;
+  max-width: 780px;
+}
+.risk-banner-cta {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--green);
+  font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+  align-self: center;
+  border-bottom: 1px solid rgba(57,169,73,0.35);
+  padding-bottom: 1px;
+}
+.risk-banner-cta:hover { color: #5fc46e; border-color: rgba(57,169,73,0.7); }
+.risk-diagram {
+  width: 100%;
+  overflow-x: auto;
+}
+.risk-diagram svg {
+  display: block;
+  width: 100%;
+  min-width: 700px;
+}
+
+@media (max-width: 1024px) {
+  .primary-nav { display: none; }
+  .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .hero-stats { display: grid; grid-template-columns: repeat(2,1fr); }
+  .hero-stat { border-bottom: 1px solid rgba(255,255,255,0.12); border-right: 1px solid rgba(255,255,255,0.12); }
+  .section-head { grid-template-columns: 1fr; gap: 1rem; }
+  .grid-3, .grid-4 { grid-template-columns: repeat(2,1fr); }
+  .feature, .map-wrap { grid-template-columns: 1fr; }
+  .feature-media { min-height: 220px; }
+  .map-stage { border-right: none; border-bottom: 1px solid var(--rule); }
+  .stat-row { grid-template-columns: repeat(2,1fr); }
+  .charts-grid.cols-2 { grid-template-columns: 1fr; }
+  .footer-top { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+  .nav-inner { height: 64px; padding: 0 1.25rem; }
+  .hero-inner { padding: 3rem 1.25rem 2.5rem; }
+  .hero-headline { font-size: 34px; }
+  .shell, .jumpnav-inner { padding: 0 1.25rem; }
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .stat-row { grid-template-columns: 1fr 1fr; }
+  .map-wrap { grid-template-columns: 1fr; }
+  .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+  .footer-inner { padding: 2.5rem 1.25rem 1.5rem; }
+  .section-title { font-size: 26px; }
+  .jumpnav { top: 64px; }
+}
+</style>
+</head>
+<body>
+
+<!-- UTILITY BAR -->
+<div class="utility-bar">
+  <div class="utility-inner">
+    <div class="utility-left">
+      <span>National Credit Guarantee Company Limited</span>
+    </div>
+    <div class="utility-right">
+      <a href="https://ncgcldashboard-ux.github.io/ncgcl-intranet/" target="_blank" rel="noopener">Operational Hub</a>
+      <span class="utility-divider"></span>
+      <a href="https://drive.google.com/drive/folders/1uyWwdQOOnl_dThRDKr1KP0KwAXg6v25N?usp=sharing" target="_blank" rel="noopener">Research Update</a>
+    </div>
+  </div>
+</div>
+
+<!-- SITE HEADER -->
+<header class="site-header">
+  <div class="nav-inner">
+    <a href="https://ncgcldashboard-ux.github.io/ncgcl-intranet/" class="brand">
+  <img src="https://ncgcldashboard-ux.github.io/ncgcl-intranet/Company_Logo_transparent.png" alt="NCGCL" style="height:38px;width:auto;">
+  <div class="brand-text">
+    <div class="brand-1">Operational Hub</div>
+    <div class="brand-2">Research &amp; Insights</div>
+  </div>
+</a>
+    <nav class="primary-nav">
+      <a href="#snapshot">Snapshot</a>
+      <a href="#geography">Geography</a>
+      <a href="#mature">Mature</a>
+      <a href="#bounded">Bounded</a>
+      <a href="#early">Early-Stage</a>
+      <a href="#graduated">Graduated</a>
+      <a href="#open">Open Questions</a>
+      <a href="#deliverables">2026 Milestones</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ANNOUNCEMENT -->
+<div class="announcement">
+  <div class="announcement-inner">
+    <span class="announcement-dot"></span>
+    <span class="announcement-text"><strong>Research &amp; Insights · June 2026.</strong> Two new workstreams graduated to pipeline — ASIFF storage guarantee and NEAGAP PC-1. Sixteen active workstreams tracked across Q2–Q4.</span>
+    <a href="https://drive.google.com/drive/folders/1uyWwdQOOnl_dThRDKr1KP0KwAXg6v25N?usp=sharing" target="_blank" rel="noopener" class="announcement-link">Read Update →</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow">Research &amp; Insights · June 2026</div>
+      <h1 class="hero-headline">Where credit is binding — <em>and where it isn't.</em></h1>
+      <p class="hero-lede">A monthly stakeholder view on Pakistan's guarantee architecture, agricultural value chains, and the institutional questions shaping NCGCL's pipeline.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="https://drive.google.com/drive/folders/1uyWwdQOOnl_dThRDKr1KP0KwAXg6v25N?usp=sharing" target="_blank" rel="noopener">Read the Full Update →</a>
+        <a class="btn btn-ghost" href="#mature">Browse Findings →</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num green">16</div>
+        <div class="hero-stat-lbl">Active Workstreams</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">6</div>
+        <div class="hero-stat-lbl">Mature Positions</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">4</div>
+        <div class="hero-stat-lbl">In Product Design</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">Q2–Q4<span class="unit">2026</span></div>
+        <div class="hero-stat-lbl">Delivery Window</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JUMP NAV -->
+<div class="jumpnav">
+  <div class="jumpnav-inner">
+    <a href="#snapshot" class="active">Snapshot</a>
+    <a href="#geography">Geography</a>
+    <a href="#mature">Mature Findings</a>
+    <a href="#bounded">Bounded</a>
+    <a href="#early">Early-Stage</a>
+    <a href="#graduated">Graduated</a>
+    <a href="#open">Open Questions</a>
+    <a href="#deliverables">2026 Milestones</a>
+  </div>
+</div>
+
+<!-- WORKING HYPOTHESIS BAND -->
+<div class="hypothesis">
+  <div class="hypothesis-inner">
+    <span class="hyp-label">Working Hypothesis</span>
+    <p class="hyp-text">In Pakistan, financing constraints frequently coexist with — and are sometimes downstream of — <em>architecture constraints</em>. Logistics, settlement, custody, processing, energy, market access, regulation. Research follows where credit is binding, where it is not, and where guarantee products should wait until the underlying architecture has matured. Two more workstreams graduated this month: post-harvest storage infrastructure, and the missing-middle of the export value chain.</p>
+    <a class="hyp-link" href="https://drive.google.com/drive/folders/1uyWwdQOOnl_dThRDKr1KP0KwAXg6v25N?usp=sharing" target="_blank" rel="noopener">Read Source Paper →</a>
+  </div>
+</div>
+
+<div class="shell">
+
+  <!-- ── A · SNAPSHOT ── -->
+  <section class="section" id="snapshot">
+    <div class="section-head">
+      <div class="section-eyebrow-wrap">
+        <span class="section-eyebrow">A · Snapshot</span>
+      </div>
+      <div>
+        <h2 class="section-title">The pipeline at a glance</h2>
+        <p class="section-desc">Sixteen active workstreams classified by internal evidence standard — from defensible institutional positions through to field studies under active validation.</p>
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-box gn">
+        <div class="stat-num">6</div>
+        <div class="stat-lbl">Mature Findings</div>
+        <div class="stat-note">Defensible institutional positions</div>
+      </div>
+      <div class="stat-box ce">
+        <div class="stat-num">3</div>
+        <div class="stat-lbl">Bounded Findings</div>
+        <div class="stat-note">Direction of travel · qualified</div>
+      </div>
+      <div class="stat-box sl">
+        <div class="stat-num">3</div>
+        <div class="stat-lbl">Early-Stage Themes</div>
+        <div class="stat-note">Under internal validation</div>
+      </div>
+      <div class="stat-box cs">
+        <div class="stat-num">4</div>
+        <div class="stat-lbl">Graduated to Pipeline</div>
+        <div class="stat-note">In product or programme design</div>
+      </div>
+    </div>
+
+    <div class="charts-grid cols-2">
+      <div class="chart-panel">
+        <div class="chart-eyebrow">Exhibit A-1</div>
+        <div class="chart-title">Workstreams by Evidence Maturity</div>
+        <div class="chart-sub">16 active workstreams · classified by internal evidence standard</div>
+        <div class="ch h260"><canvas id="cA1"></canvas></div>
+      </div>
+      <div class="chart-panel">
+        <div class="chart-eyebrow">Exhibit A-2</div>
+        <div class="chart-title">Pipeline by Thematic Area</div>
+        <div class="chart-sub">Concentration reflects current institutional priority</div>
+        <div class="ch h260"><canvas id="cA2"></canvas></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── GEOGRAPHY ── -->
+  <section class="section" id="geography">
+    <div class="section-head">
+      <div class="section-eyebrow-wrap">
+        <span class="section-eyebrow">A.5 · On the Ground</span>
+      </div>
+      <div>
+        <h2 class="section-title">Geography of findings</h2>
+        <p class="section-desc">Fourteen agricultural clusters mapped across Pakistan — from Gilgit-Baltistan in the north to the Sindh south coast. Markers show workstream status (mature, bounded, early-stage). Doctrinal findings — risk architecture, catalytic first-loss, microfinance, post-harvest storage, export value-chain finance — are national in scope and not pinned to the map.</p>
+      </div>
+    </div>
+
+    <div class="map-wrap" style="grid-template-columns:1fr 1fr;min-height:700px">
+      <div class="map-stage" style="min-height:700px">
+        <svg viewBox="0 0 700 620" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%;display:block">
+          <defs>
+            <pattern id="paper" width="22" height="22" patternUnits="userSpaceOnUse">
+              <circle cx="3" cy="3" r="0.6" fill="#035076" opacity="0.08"/>
+            </pattern>
+            <radialGradient id="pulseGn" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#39A949" stop-opacity="0.28"/>
+              <stop offset="100%" stop-color="#39A949" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="pulseCe" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#035076" stop-opacity="0.28"/>
+              <stop offset="100%" stop-color="#035076" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="pulseSl" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#8A95A0" stop-opacity="0.28"/>
+              <stop offset="100%" stop-color="#8A95A0" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <rect width="700" height="620" fill="#F8F9FB"/>
+          <rect width="700" height="620" fill="url(#paper)"/>
+
+          <!-- Pakistan outline -->
+          <path d="M 533.7 31.6 C 534.6 31.6 536.2 32.4 537.3 33.4 C 538.9 34.9 539.6 34.9 541.7 33.6 C 543.6 32.5 544.5 32.5 546.3 33.6 C 547.6 34.3 549.6 35.0 550.9 35.0 C 552.4 35.0 553.4 36.0 553.8 38.1 C 555.0 43.0 556.4 44.2 558.9 42.7 C 563.6 39.8 573.2 49.9 571.9 56.9 C 571.7 58.6 571.9 60.3 572.5 60.6 C 573.2 61.1 573.0 62.7 571.7 64.6 C 569.8 68.0 570.9 71.4 574.1 71.4 C 574.8 71.4 576.3 73.0 577.4 74.9 C 579.4 78.6 582.4 79.0 588.8 76.5 C 590.0 76.0 590.7 76.3 590.7 77.2 C 590.7 79.5 596.5 85.1 598.9 85.1 C 604.0 85.1 597.2 93.3 584.3 102.5 C 581.2 104.8 576.5 109.2 573.8 112.4 C 569.3 117.6 568.5 118.1 565.5 117.5 C 562.6 116.8 561.5 117.3 558.7 120.2 C 557.0 122.2 554.6 123.8 553.5 123.9 C 552.4 123.9 550.2 124.1 548.6 124.3 C 545.1 124.8 531.4 122.1 525.3 119.7 C 518.3 117.0 509.0 121.4 505.3 129.0 L 502.5 134.2 L 505.8 136.8 C 508.1 138.7 508.9 140.1 508.6 141.7 C 507.9 144.4 511.4 148.3 514.9 149.0 C 518.8 149.7 518.2 152.0 513.5 155.1 C 508.0 158.4 507.6 160.6 511.7 164.8 C 514.9 168.2 514.8 173.4 511.5 176.2 C 507.8 179.3 513.1 188.6 518.7 188.6 C 519.8 188.6 520.3 189.6 519.9 192.3 C 519.6 196.1 522.6 198.9 527.3 198.9 C 529.3 198.9 529.7 199.9 529.4 203.5 C 529.0 206.5 533.4 209.3 538.6 209.6 C 547.7 210.0 553.7 215.5 550.7 220.5 C 549.2 222.8 541.1 225.8 539.9 224.6 C 539.5 224.2 537.5 225.4 535.4 227.1 C 533.4 228.8 530.4 231.1 528.8 232.2 C 525.4 234.6 525.2 237.2 527.6 244.3 C 528.7 247.2 528.9 249.7 528.4 250.5 C 527.8 251.2 527.0 253.7 526.5 256.1 C 525.6 261.2 527.1 263.7 530.7 263.0 C 532.1 262.8 532.5 262.9 531.5 263.3 C 528.5 264.6 524.5 268.7 520.6 274.9 C 518.5 278.2 516.3 280.7 515.7 280.3 C 515.3 280.0 512.7 282.0 509.8 284.9 C 505.5 289.3 505.0 290.2 506.3 292.2 C 507.0 293.4 507.6 295.1 507.6 296.0 C 507.6 298.1 501.3 303.5 498.8 303.5 C 493.5 303.5 489.8 307.6 487.9 315.5 C 486.3 322.1 483.8 327.4 477.2 339.5 C 476.4 341.1 473.7 343.3 471.4 344.4 C 461.6 349.4 456.0 355.1 453.7 362.3 C 452.4 366.5 450.0 370.8 447.2 373.7 C 444.7 376.5 442.8 379.8 442.8 381.3 C 442.8 384.8 436.6 387.7 429.4 387.7 C 425.8 387.7 421.6 388.9 416.8 391.2 C 408.8 394.9 407.2 394.8 405.1 389.7 C 403.0 384.1 399.6 380.8 396.8 381.6 C 392.7 382.8 387.9 388.1 384.8 395.1 C 383.1 398.9 378.5 405.4 374.7 409.6 C 368.0 417.1 367.1 419.1 366.3 428.0 C 365.9 432.7 374.3 438.7 382.1 439.2 L 387.6 439.5 L 387.6 445.8 C 387.6 449.2 387.0 453.4 386.2 455.1 C 383.9 460.1 384.5 463.3 388.9 469.1 C 393.0 474.3 393.2 474.4 398.0 473.9 L 403.0 473.3 L 403.0 479.0 C 403.0 483.5 403.8 485.8 406.9 490.6 C 409.1 493.9 410.9 497.7 410.9 498.8 C 410.9 499.9 412.3 503.5 413.8 506.6 C 416.3 511.7 416.4 512.5 414.8 514.2 C 413.0 516.2 413.2 519.7 415.4 522.5 C 416.6 523.9 416.6 524.3 415.3 524.3 C 414.3 524.3 412.4 525.5 410.9 527.1 C 407.6 530.7 401.8 531.1 401.8 527.8 C 401.8 526.7 401.1 525.1 400.2 524.4 C 398.0 522.5 387.4 526.2 385.1 529.6 C 382.8 532.9 376.0 533.2 372.0 530.1 C 368.9 527.6 354.3 527.4 351.5 529.7 C 350.5 530.5 349.5 530.4 347.9 529.3 C 344.6 527.0 342.7 529.3 342.7 535.3 L 342.7 540.3 L 336.4 540.1 C 332.3 539.9 329.6 540.3 328.2 541.5 C 320.7 547.5 318.7 548.4 316.6 546.6 C 315.2 545.3 314.2 545.2 313.5 545.9 C 309.4 550.0 298.4 539.8 298.3 531.9 C 298.3 530.2 297.0 525.8 295.6 522.1 C 294.0 518.5 292.9 514.5 293.3 513.2 C 294.2 509.8 290.4 507.8 283.7 507.8 C 279.3 507.8 278.1 507.4 278.4 506.1 C 278.6 505.2 278.8 504.4 278.9 504.4 C 279.1 504.4 279.3 501.6 279.5 498.3 C 279.9 492.9 279.6 492.2 276.9 490.4 C 275.2 489.4 273.0 487.5 272.0 486.3 C 270.2 484.0 262.2 482.9 260.1 484.6 C 258.5 485.8 248.6 488.1 244.8 488.1 C 222.8 487.9 218.0 488.3 215.4 490.5 C 214.1 491.7 213.4 493.4 213.7 494.5 C 214.1 495.6 213.5 495.3 212.4 493.8 C 211.1 492.0 209.8 491.4 208.3 491.9 C 207.0 492.3 204.9 491.6 202.9 490.4 C 195.4 485.1 176.5 486.4 176.5 492.1 C 176.5 493.1 175.7 493.4 174.6 493.1 C 168.9 491.5 164.9 491.2 163.7 492.2 C 162.8 492.9 159.0 492.8 153.5 492.1 C 146.0 491.1 144.4 491.2 141.9 492.9 C 139.6 494.4 138.6 494.5 136.8 493.3 C 135.0 492.2 134.2 492.3 132.4 493.9 C 131.2 494.9 129.4 495.8 128.4 495.8 C 127.4 495.8 125.9 496.9 125.1 498.1 C 123.1 501.3 121.8 501.0 122.1 497.3 C 122.4 495.0 121.8 493.9 120.1 493.1 C 117.5 492.0 117.5 490.9 119.3 477.6 C 119.8 474.8 120.0 472.2 119.9 471.7 C 119.8 471.4 120.4 470.4 121.3 469.7 C 122.3 468.9 123.1 466.9 123.1 465.2 C 123.1 457.5 124.5 453.5 127.9 451.3 C 130.7 449.8 131.8 449.5 133.1 450.7 C 135.0 452.1 139.0 448.2 139.0 444.6 C 139.0 440.7 146.7 437.8 159.1 437.2 C 166.9 436.9 166.9 436.9 168.6 427.3 C 169.4 422.8 170.6 418.4 171.2 417.6 C 173.7 414.3 168.7 411.5 161.6 412.3 L 155.1 413.0 L 155.3 401.9 C 155.4 388.8 154.5 376.0 153.3 374.2 C 152.9 373.5 151.5 372.9 150.2 372.9 C 149.0 372.9 146.7 371.5 145.2 369.8 C 143.4 367.5 140.2 365.9 135.3 364.5 C 126.9 362.3 118.8 354.7 116.2 346.8 C 115.3 344.2 113.7 340.7 112.6 339.3 C 111.4 337.9 109.7 334.6 108.8 332.1 C 108.0 329.6 104.6 324.2 101.4 320.2 C 98.1 316.1 96.0 312.6 96.4 312.6 C 96.9 312.6 107.8 316.3 120.7 320.8 L 144.1 328.9 L 161.7 327.1 C 177.3 325.5 180.4 325.5 187.1 327.0 C 194.7 328.6 195.0 328.5 199.6 325.8 C 205.5 322.4 213.1 321.3 219.8 322.8 C 224.3 323.8 226.5 323.3 243.7 318.1 C 264.7 311.6 269.5 308.8 266.0 304.8 C 264.1 302.7 264.1 302.3 265.7 297.4 C 267.9 291.1 268.0 288.3 266.3 285.6 C 264.3 282.3 268.6 269.1 272.1 268.3 C 273.8 267.9 276.0 265.6 277.8 262.6 C 281.7 255.9 285.9 253.4 288.8 256.0 C 294.2 260.6 309.7 258.0 309.7 252.5 C 309.7 251.4 309.1 249.9 308.3 249.2 C 305.6 246.4 306.2 244.4 309.7 244.9 C 311.6 245.3 313.3 244.8 314.2 243.8 C 315.0 242.9 316.5 242.1 317.5 242.1 C 318.5 242.1 320.6 240.6 322.2 238.7 C 324.8 235.5 325.3 235.3 328.7 236.6 C 331.6 237.8 332.9 237.7 335.3 236.4 C 338.1 234.8 338.5 235.0 342.0 239.1 C 346.8 244.9 350.3 243.9 357.0 235.3 C 361.2 229.7 361.5 228.8 360.8 224.9 C 358.8 216.3 359.7 212.3 364.5 208.1 C 367.9 205.1 368.8 203.6 368.4 201.7 C 367.9 200.0 368.5 198.5 370.0 197.2 C 372.9 194.5 372.8 192.6 369.9 190.4 C 365.6 187.6 367.9 185.2 374.9 185.2 C 379.5 185.2 382.0 184.5 386.0 182.0 C 394.4 176.6 395.3 173.8 390.1 169.4 C 389.2 168.7 388.6 167.1 389.0 166.0 C 389.3 164.5 388.2 162.8 385.4 160.6 C 375.9 153.0 377.6 146.4 388.2 149.9 C 399.8 153.8 411.8 152.5 416.7 147.0 C 419.6 143.7 420.5 137.0 418.3 135.1 C 412.8 130.5 413.8 127.4 424.6 116.9 C 431.5 110.1 435.6 102.3 433.3 100.0 C 432.3 99.0 432.3 98.2 433.5 96.5 C 434.9 94.1 434.3 89.1 432.2 86.4 C 431.6 85.6 431.4 84.7 431.8 84.4 C 433.0 83.1 428.1 75.2 424.4 72.1 L 420.6 69.0 L 427.2 63.1 C 430.7 59.8 433.7 56.5 433.7 55.7 C 433.7 54.7 434.5 54.5 436.0 54.9 C 438.4 55.7 450.4 48.5 451.6 45.7 C 453.5 40.7 504.5 34.1 507.1 38.5 C 508.1 40.1 511.7 39.8 513.3 38.0 C 514.0 37.1 515.3 36.5 516.0 36.7 C 516.8 36.9 520.2 35.5 523.6 33.4 C 527.2 31.1 530.3 30.0 531.0 30.6 C 531.5 31.1 532.8 31.6 533.7 31.6 Z"
+            fill="#FFFFFF" stroke="#035076" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+
+          <!-- Province labels -->
+          <text class="pk-province" x="175" y="360" text-anchor="middle">BALOCHISTAN</text>
+          <text class="pk-province" x="400" y="102" text-anchor="middle">KHYBER PAKHTUNKHWA</text>
+          <text class="pk-province" x="508" y="275" text-anchor="middle">PUNJAB</text>
+          <text class="pk-province" x="318" y="458" text-anchor="middle">SINDH</text>
+
+          <!-- Reference cities -->
+          <g><circle cx="448" cy="155" r="2.5" fill="#FFF" stroke="#A0ADB8" stroke-width="1.2"/><text class="pk-city" x="455" y="151">ISLAMABAD</text></g>
+          <g><circle cx="398" cy="157" r="2.5" fill="#FFF" stroke="#A0ADB8" stroke-width="1.2"/><text class="pk-city" x="392" y="152" text-anchor="end">PESHAWAR</text></g>
+          <g><circle cx="519" cy="243" r="2.5" fill="#FFF" stroke="#A0ADB8" stroke-width="1.2"/><text class="pk-city" x="525" y="239">LAHORE</text></g>
+          <g><circle cx="299" cy="514" r="2.5" fill="#FFF" stroke="#A0ADB8" stroke-width="1.2"/><text class="pk-city" x="305" y="510">KARACHI</text></g>
+          <g><circle cx="242" cy="311" r="2.5" fill="#FFF" stroke="#A0ADB8" stroke-width="1.2"/><text class="pk-city" x="248" y="307">QUETTA</text></g>
+
+          <!-- ── ORIGINAL 7 MARKERS ── -->
+
+          <!-- 1 · Sargodha — Kinnow/Guava/Mushrooms (bounded) -->
+          <g>
+            <circle cx="457" cy="214" r="11" fill="url(#pulseCe)"/>
+            <circle cx="457" cy="214" r="6.5" fill="#035076" stroke="#fff" stroke-width="1.5"/>
+            <text x="457" y="218" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" font-weight="700" fill="#fff">1</text>
+            <text class="pk-label" x="448" y="229" text-anchor="end">Sargodha</text>
+          </g>
+
+          <!-- 2 · Multan–RYK — Blackberries/Mangoes (bounded) -->
+          <g>
+            <circle cx="415" cy="328" r="11" fill="url(#pulseCe)"/>
+            <circle cx="415" cy="328" r="6.5" fill="#035076" stroke="#fff" stroke-width="1.5"/>
+            <text x="415" y="332" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" font-weight="700" fill="#fff">2</text>
+            <text class="pk-label" x="404" y="343" text-anchor="end">Multan · RYK</text>
+          </g>
+
+          <!-- 3 · Okara–Sahiwal–Kasur — Potatoes/Onions/Tomatoes (mature) -->
+          <g>
+            <circle cx="490" cy="262" r="11" fill="url(#pulseGn)"/>
+            <circle cx="490" cy="262" r="6.5" fill="#39A949" stroke="#fff" stroke-width="1.5"/>
+            <text x="490" y="266" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" font-weight="700" fill="#fff">3</text>
+            <text class="pk-label" x="500" y="259">Okara · Sahiwal</text>
+          </g>
+
+          <!-- 4 · Bhalwal/Sargodha — Kinnow/citrus (mature) — slightly separated from marker 1 -->
+          <g>
+            <circle cx="466" cy="200" r="11" fill="url(#pulseGn)"/>
+            <circle cx="466" cy="200" r="6.5" fill="#39A949" stroke="#fff" stroke-width="1.5"/>
+            <text x="466" y="204" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" font-weight="700" fill="#fff">4</text>
+            <text class="pk-label" x="476" y="197">Bhalwal</text>
+          </g>
+
+          <!-- 5 · Swat Valley — Peach & trout fieldwork (early) -->
+          <g>
+            <circle cx="422" cy="122" r="11" fill="url(#pulseSl)"/>
+            <circle cx="422" cy="122" r="6.5" fill="#8A95A0" stroke="#fff" stroke-width="1.5"/>
+            <text x="422" y="126" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" font-weight="700" fill="#fff">5</text>
+            <text class="pk-label" x="433" y="119">Swat · Malakand</text>
+          </g>
+
+          <!-- 6 · Potohar — Olives/Apples/Potatoes (bounded) -->
+          <g>
+            <circle cx="444" cy="166" r="11" fill="url(#pulseCe)"/>
+            <circle cx="444" cy="166" r="6.5" fill="#035076" stroke="#fff" stroke-width="1.5"/>
+            <text x="444" y="170" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" font-weight="700" fill="#fff">6</text>
+            <text class="pk-label" x="433" y="160" text-anchor="end">Potohar</text>
+          </g>
+
+          <!-- 7 · Wheat belts Punjab+Sindh (mature) — two paired dots -->
+          <g>
+            <circle cx="428" cy="308" r="10" fill="url(#pulseGn)"/>
+            <circle cx="428" cy="308" r="5.5" fill="#39A949" stroke="#fff" stroke-width="1.5"/>
+            <text x="428" y="312" text-anchor="middle" font-family="Inter,sans-serif" font-size="7" font-weight="700" fill="#fff">7</text>
+            <circle cx="358" cy="413" r="5.5" fill="#39A949" stroke="#fff" stroke-width="1.5"/>
+            <text x="358" y="417" text-anchor="middle" font-family="Inter,sans-serif" font-size="7" font-weight="700" fill="#fff">7</text>
+            <line x1="428" y1="308" x2="358" y2="413" stroke="#39A949" stroke-width="0.8" stroke-dasharray="2 3" opacity="0.45"/>
+            <text class="pk-label" x="388" y="362" text-anchor="middle">Wheat belts</text>
+          </g>
+
+          <!-- ── NEW MARKERS (8–17) ── -->
+
+          <!-- 8 · Sindh South Coast — Thatta/Sujawal/Badin — Onions/Tomatoes/Veg (early) -->
+          <g>
+            <circle cx="335" cy="530" r="11" fill="url(#pulseSl)"/>
+            <circle cx="335" cy="530" r="6.5" fill="#8A95A0" stroke="#fff" stroke-width="1.5"/>
+            <text x="335" y="534" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" font-weight="700" fill="#fff">8</text>
+            <text class="pk-label" x="346" y="527">Thatta · Badin</text>
+          </g>
+
+          <!-- 9 · Khairpur–Sukkur — Dates post-harvest (early) -->
+          <g>
+            <circle cx="348" cy="455" r="11" fill="url(#pulseSl)"/>
+            <circle cx="348" cy="455" r="6.5" fill="#8A95A0" stroke="#fff" stroke-width="1.5"/>
+            <text x="348" y="459" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" font-weight="700" fill="#fff">9</text>
+            <text class="pk-label" x="360" y="452">Khairpur · Sukkur</text>
+          </g>
+
+          <!-- 10 · Thal belt — Bhakkar/Layyah/Mianwali — Chickpeas/Lentils (early) -->
+          <g>
+            <circle cx="387" cy="245" r="11" fill="url(#pulseSl)"/>
+            <circle cx="387" cy="245" r="6.5" fill="#8A95A0" stroke="#fff" stroke-width="1.5"/>
+            <text x="387" y="249" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" font-weight="700" fill="#fff">10</text>
+            <text class="pk-label" x="376" y="238" text-anchor="end">Thal belt</text>
+          </g>
+
+          <!-- 11 · Punjab South / Balochistan Kalat–Khuzdar — Rapeseed/Sunflower/Spices (bounded) -->
+          <g>
+            <circle cx="398" cy="358" r="11" fill="url(#pulseCe)"/>
+            <circle cx="398" cy="358" r="6.5" fill="#035076" stroke="#fff" stroke-width="1.5"/>
+            <text x="398" y="362" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" font-weight="700" fill="#fff">11</text>
+            <!-- paired dot Balochistan -->
+            <circle cx="202" cy="398" r="5.5" fill="#035076" stroke="#fff" stroke-width="1.5"/>
+            <text x="202" y="402" text-anchor="middle" font-family="Inter,sans-serif" font-size="7" font-weight="700" fill="#fff">11</text>
+            <line x1="398" y1="358" x2="202" y2="398" stroke="#035076" stroke-width="0.8" stroke-dasharray="2 3" opacity="0.4"/>
+            <text class="pk-label" x="389" y="374" text-anchor="end">Bahawalpur · RYK</text>
+            <text class="pk-label" x="188" y="412" text-anchor="end">Khuzdar · Kalat</text>
+          </g>
+
+          <!-- 12 · Mirpurkhas–Sanghar — Mangoes early Sindh (bounded) -->
+          <g>
+            <circle cx="378" cy="488" r="11" fill="url(#pulseCe)"/>
+            <circle cx="378" cy="488" r="6.5" fill="#035076" stroke="#fff" stroke-width="1.5"/>
+            <text x="378" y="492" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" font-weight="700" fill="#fff">12</text>
+            <text class="pk-label" x="390" y="485">Mirpurkhas · Sanghar</text>
+          </g>
+
+          <!-- 13 · Gilgit-Baltistan — Hunza/Gilgit/Skardu — Cherries/Apricots (early) -->
+          <g>
+            <circle cx="508" cy="68" r="11" fill="url(#pulseSl)"/>
+            <circle cx="508" cy="68" r="6.5" fill="#8A95A0" stroke="#fff" stroke-width="1.5"/>
+            <text x="508" y="72" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" font-weight="700" fill="#fff">13</text>
+            <text class="pk-label" x="520" y="65">Gilgit-Baltistan</text>
+          </g>
+
+          <!-- 14 · Quetta–Ziarat–Pishin — Apples/Grapes/Pomegranates (bounded) -->
+          <g>
+            <circle cx="245" cy="316" r="11" fill="url(#pulseCe)"/>
+            <circle cx="245" cy="316" r="6.5" fill="#035076" stroke="#fff" stroke-width="1.5"/>
+            <text x="245" y="320" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" font-weight="700" fill="#fff">14</text>
+            <text class="pk-label" x="257" y="313">Quetta · Ziarat · Pishin</text>
+          </g>
+
+          <!-- Legend -->
+          <g transform="translate(20,584)">
+            <text font-family="Inter,sans-serif" font-size="7.5" font-weight="600" letter-spacing="1.8" fill="#A0ADB8">WORKSTREAM STATUS</text>
+            <g transform="translate(0,12)"><circle cx="5" cy="4.5" r="4" fill="#39A949"/><text x="13" y="8.5" font-family="Inter,sans-serif" font-size="8.5" fill="#4A5560">Mature</text></g>
+            <g transform="translate(62,12)"><circle cx="5" cy="4.5" r="4" fill="#035076"/><text x="13" y="8.5" font-family="Inter,sans-serif" font-size="8.5" fill="#4A5560">Bounded</text></g>
+            <g transform="translate(132,12)"><circle cx="5" cy="4.5" r="4" fill="#8A95A0"/><text x="13" y="8.5" font-family="Inter,sans-serif" font-size="8.5" fill="#4A5560">Early-stage</text></g>
+          </g>
+
+          <!-- Compass -->
+          <g transform="translate(658,36)">
+            <circle cx="0" cy="0" r="12" fill="#FFF" stroke="#E6E9EE" stroke-width="1"/>
+            <line x1="0" y1="-7" x2="0" y2="7" stroke="#0E1A24" stroke-width="1"/>
+            <polygon points="0,-7 -2,-2.5 2,-2.5" fill="#035076"/>
+            <text x="0" y="-15" text-anchor="middle" font-family="Inter,sans-serif" font-size="7.5" font-weight="600" fill="#A0ADB8">N</text>
+          </g>
+        </svg>
+      </div>
+
+      <!-- RIGHT PANEL: scrollable banners for all 14 clusters -->
+      <div class="map-banners" style="overflow-y:auto;max-height:700px;gap:0.45rem;padding:1rem">
+
+        <!-- Original 7 -->
+        <div class="map-banner mature"><div class="mb-num">1</div><div><div class="mb-place">Sargodha · Punjab</div><div class="mb-title">Kinnow, Guava, Mushrooms</div><div class="mb-note">Sargodha cluster. Citrus structural crisis + energy-resilience pilot.</div></div><span class="mb-badge mature">Mature</span></div>
+
+        <div class="map-banner bounded"><div class="mb-num">2</div><div><div class="mb-place">Multan · Rahim Yar Khan · South Punjab</div><div class="mb-title">Mangoes, Blackberries</div><div class="mb-note">Early Punjab mango + compact blackberry cluster demonstration.</div></div><span class="mb-badge bounded">Bounded</span></div>
+
+        <div class="map-banner mature"><div class="mb-num">3</div><div><div class="mb-place">Okara · Sahiwal · Kasur · Punjab</div><div class="mb-title">Potatoes, Onions, Tomatoes</div><div class="mb-note">Absorption layer failure. Cold storage, certified seed, downstream processing.</div></div><span class="mb-badge mature">Mature</span></div>
+
+        <div class="map-banner mature"><div class="mb-num">4</div><div><div class="mb-place">Bhalwal · Sargodha citrus belt</div><div class="mb-title">Kinnow &amp; citrus value chain</div><div class="mb-note">Structural crisis, not productive. Cold-chain, grading, reefer logistics.</div></div><span class="mb-badge mature">Mature</span></div>
+
+        <div class="map-banner early"><div class="mb-num">5</div><div><div class="mb-place">Swat · Malakand · KP</div><div class="mb-title">Apples, Peach &amp; Trout fieldwork</div><div class="mb-note">Field study closed 06 May 2026. Feeding Q2 bankability diagnostic.</div></div><span class="mb-badge early">Early-Stage</span></div>
+
+        <div class="map-banner bounded"><div class="mb-num">6</div><div><div class="mb-place">Potohar Plateau · Northern Punjab</div><div class="mb-title">Apples, Potatoes, Olives</div><div class="mb-note">Long-gestation orchards. Processing &amp; certification investable; plantation is not.</div></div><span class="mb-badge bounded">Bounded</span></div>
+
+        <div class="map-banner mature"><div class="mb-num">7</div><div><div class="mb-place">Punjab &amp; Sindh wheat belts</div><div class="mb-title">Wheat market transition</div><div class="mb-note">Reform without transition is market shock. Carrying capacity &amp; storage.</div></div><span class="mb-badge mature">Mature</span></div>
+
+        <!-- New 7 -->
+        <div class="map-banner early"><div class="mb-num">8</div><div><div class="mb-place">Thatta · Sujawal · Badin · Sindh South Coast</div><div class="mb-title">Onions, Tomatoes, Vegetables</div><div class="mb-note">Coastal vegetable belt. Cold-chain and aggregation infrastructure binding.</div></div><span class="mb-badge early">Early-Stage</span></div>
+
+        <div class="map-banner early"><div class="mb-num">9</div><div><div class="mb-place">Khairpur · Sukkur · Sindh</div><div class="mb-title">Dates — post-harvest</div><div class="mb-note">Processing, grading, and export certification layer. Data-light.</div></div><span class="mb-badge early">Early-Stage</span></div>
+
+        <div class="map-banner early"><div class="mb-num">10</div><div><div class="mb-place">Bhakkar · Layyah · Mianwali · Thal belt</div><div class="mb-title">Chickpeas, Lentils</div><div class="mb-note">Dryland pulse belt. Storage and market-linkage infrastructure gaps.</div></div><span class="mb-badge early">Early-Stage</span></div>
+
+        <div class="map-banner bounded"><div class="mb-num">11</div><div><div class="mb-place">Bahawalpur · RYK (Punjab) · Khuzdar · Kalat (Balochistan)</div><div class="mb-title">Rapeseed–Mustard, Sunflower, Seed Spices</div><div class="mb-note">Cross-province oilseed and spice belts. Processing capacity and crushing infrastructure binding.</div></div><span class="mb-badge bounded">Bounded</span></div>
+
+        <div class="map-banner bounded"><div class="mb-num">12</div><div><div class="mb-place">Mirpurkhas · Sanghar · Sindh</div><div class="mb-title">Mangoes — early Sindh</div><div class="mb-note">First-flush mango. Cold-chain, export certification, pack-house economics.</div></div><span class="mb-badge bounded">Bounded</span></div>
+
+        <div class="map-banner early"><div class="mb-num">13</div><div><div class="mb-place">Hunza · Gilgit · Nagar · Skardu · GB</div><div class="mb-title">Cherries, Apricots</div><div class="mb-note">High-altitude stone fruit. Logistics, processing, and road infrastructure severely binding.</div></div><span class="mb-badge early">Early-Stage</span></div>
+
+        <div class="map-banner bounded"><div class="mb-num">14</div><div><div class="mb-place">Quetta · Ziarat · Pishin · Killa Abdullah · Balochistan</div><div class="mb-title">Apples, Grapes, Pomegranates</div><div class="mb-note">High-quality fruit with cold-chain, processing, and export certification gaps.</div></div><span class="mb-badge bounded">Bounded</span></div>
+
+      </div>
+      <div class="map-caption">14 geographic clusters mapped · markers indicate field study or sector concentration · open circles mark reference cities · provincial labels are illustrative · paired markers (7, 11) connected by dashed lines. Post-harvest storage clusters (ASIFF Phase I: surplus corridors of Punjab &amp; Sindh) and the NEAGAP export value-chain corridors are programme-level and not separately pinned.</div>
+    </div>
+  </section>
+
+  <!-- ── B · MATURE FINDINGS ── -->
+  <section class="section" id="mature">
+    <div class="section-head">
+      <div class="section-eyebrow-wrap">
+        <span class="section-eyebrow">B · Featured</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:2rem;flex-wrap:wrap">
+        <div>
+          <h2 class="section-title">Mature findings</h2>
+          <p class="section-desc">Defensible institutional positions. Sufficient to inform product architecture, Board submissions, and external engagement.</p>
+        </div>
+        <a class="section-action" href="https://drive.google.com/drive/folders/1uyWwdQOOnl_dThRDKr1KP0KwAXg6v25N?usp=sharing" target="_blank" rel="noopener" style="margin-top:4px">Open Research Update →</a>
+      </div>
+    </div>
+
+    <!-- RISK ARCHITECTURE BANNER -->
+    <div class="risk-banner">
+      <div class="risk-banner-head">
+        <div>
+          <div class="risk-banner-eyebrow">Doctrine · Risk Architecture</div>
+          <h3 class="risk-banner-title">The four layers of the loss stack</h3>
+          <p class="risk-banner-desc">Effective guarantee systems position NCGCL in the guarantee layer — above the lender deductible, below unexpected loss and catastrophic tail risk. The lender retains first loss. NCGCL covers a defined window of eligible losses. Capital reserve and sovereign backstops absorb what sits above. Headline coverage ratios are a weak proxy; effective exposure is set by caps, deductibles, exclusions, recoveries, and claim discipline. NEAGAP's 10/15/75 waterfall and ASIFF's PFI-senior structure are the clearest current applications of the doctrine.</p>
+        </div>
+        <a class="risk-banner-cta" href="https://drive.google.com/drive/folders/1uyWwdQOOnl_dThRDKr1KP0KwAXg6v25N?usp=sharing" target="_blank" rel="noopener">Read full doctrine →</a>
+      </div>
+      <div class="risk-diagram">
+        <svg viewBox="0 0 1100 240" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+
+          <!-- Loss stack — top = highest severity, bottom = lowest -->
+          <!-- Reading order top-to-bottom: Catastrophic Tail → Unexpected Loss → Guarantee Layer → Lender Deductible -->
+
+          <!-- 1. Catastrophic Tail — top -->
+          <rect x="0"   y="0"   width="1100" height="56" fill="#7B1828"/>
+          <text x="20"  y="19"  font-family="Inter,sans-serif" font-size="9" font-weight="600" letter-spacing="2" fill="rgba(255,255,255,0.45)">CATASTROPHIC TAIL</text>
+          <text x="340" y="32"  font-family="Inter,sans-serif" font-size="12" font-weight="300" fill="rgba(255,255,255,0.65)">Systemic, correlated shock beyond any single institution's capacity to absorb</text>
+          <text x="1080" y="32" text-anchor="end" font-family="Inter,sans-serif" font-size="11" font-weight="500" fill="rgba(255,255,255,0.4)">Sovereign / DFI backstop</text>
+          <text x="20"  y="44"  font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#FFFFFF">Catastrophic Tail</text>
+
+          <!-- 2. Unexpected Loss -->
+          <rect x="0"   y="60"  width="1100" height="56" fill="#013E5C"/>
+          <text x="20"  y="79"  font-family="Inter,sans-serif" font-size="9" font-weight="600" letter-spacing="2" fill="rgba(255,255,255,0.45)">UNEXPECTED LOSS</text>
+          <text x="340" y="92"  font-family="Inter,sans-serif" font-size="12" font-weight="300" fill="rgba(255,255,255,0.65)">Tail risk within a credit cycle — statistically possible, not routinely expected</text>
+          <text x="1080" y="92" text-anchor="end" font-family="Inter,sans-serif" font-size="11" font-weight="500" fill="rgba(255,255,255,0.4)">Capital reserve / reinsurance</text>
+          <text x="20"  y="104" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#FFFFFF">Unexpected Loss</text>
+
+          <!-- 3. Guarantee Layer — NCGCL, highlighted with green accent -->
+          <rect x="0"   y="120" width="1100" height="60" fill="#035076"/>
+          <rect x="0"   y="120" width="4"    height="60" fill="#39A949"/>
+          <text x="20"  y="139" font-family="Inter,sans-serif" font-size="9" font-weight="600" letter-spacing="2" fill="#39A949">GUARANTEE LAYER · NCGCL</text>
+          <text x="340" y="153" font-family="Inter,sans-serif" font-size="12" font-weight="300" fill="rgba(255,255,255,0.85)">Partial credit cover for eligible losses after lender deductible — set by caps, exclusions, and claim discipline</text>
+          <text x="1080" y="153" text-anchor="end" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#39A949">NCGCL · Public guarantee capital</text>
+          <text x="20"  y="167" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#FFFFFF">Guarantee Layer</text>
+
+          <!-- 4. Lender Deductible — bottom -->
+          <rect x="0"   y="184" width="1100" height="56" fill="#11688A"/>
+          <text x="20"  y="203" font-family="Inter,sans-serif" font-size="9" font-weight="600" letter-spacing="2" fill="rgba(255,255,255,0.45)">LENDER DEDUCTIBLE</text>
+          <text x="340" y="216" font-family="Inter,sans-serif" font-size="12" font-weight="300" fill="rgba(255,255,255,0.7)">First-loss retained by the PFI — preserves underwriting discipline and skin in the game</text>
+          <text x="1080" y="216" text-anchor="end" font-family="Inter,sans-serif" font-size="11" font-weight="500" fill="rgba(255,255,255,0.45)">Partner Financial Institution</text>
+          <text x="20"  y="228" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#FFFFFF">Lender Deductible</text>
+
+          <!-- Severity axis -->
+          <text x="1090" y="14"  font-family="Inter,sans-serif" font-size="8.5" font-weight="600" letter-spacing="1.5" fill="rgba(255,255,255,0.18)" text-anchor="end">HIGHER SEVERITY ↑</text>
+          <text x="1090" y="232" font-family="Inter,sans-serif" font-size="8.5" font-weight="600" letter-spacing="1.5" fill="rgba(255,255,255,0.18)" text-anchor="end">LOWER SEVERITY ↓</text>
+
+        </svg>
+      </div>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <span class="card-badge badge-mature">Mature</span>
+        <div class="card-tag">Capital Markets · Doctrine</div>
+        <h3 class="card-title">Catalytic first-loss capital</h3>
+        <p class="card-desc">Internal: Strategy · Capital Markets · Board<br><br>A <strong>distinct instrument class from credit guarantees</strong>, with separate governance and approval pathways. Research has converged on a defensible perimeter — supporting separate framework treatment, not absorption into existing product lines.</p>
+      </div>
+      <div class="card">
+        <span class="card-badge badge-mature">Mature</span>
+        <div class="card-tag">Sector Doctrine · Microfinance</div>
+        <h3 class="card-title">Microfinance strategy</h3>
+        <p class="card-desc">Internal: Product · Origination<br><br>Prioritise <strong>second-layer or pari passu risk-sharing</strong>. Lenders retain ordinary expected loss; NCGCL shares the unexpected-loss layer in productive, data-rich, portfolio pilots — not disguised consumption smoothing.</p>
+        <div class="card-caveat"><strong>Tail-risk caveat —</strong> Pakistani microfinance has seen highly correlated stress (2008–12, COVID, 2022 floods). Insulate via product-window discipline.</div>
+      </div>
+      <div class="card">
+        <span class="card-badge badge-mature">Mature</span>
+        <div class="card-tag">Policy · Stabilisation</div>
+        <h3 class="card-title">Wheat market transition</h3>
+        <p class="card-desc">Internal: Strategy · Risk · Govt Relations<br><br><strong>Reform without transition is market shock.</strong> If the state no longer buys wheat, it must enable someone else to hold it. Sovereign-backed put options are fiscally cheap when unused, explosive when triggered — explicit fiscal sizing required.</p>
+      </div>
+      <div class="card">
+        <span class="card-badge badge-mature">Mature</span>
+        <div class="card-tag">Horticulture · Sargodha–Bhalwal</div>
+        <h3 class="card-title">Kinnow &amp; citrus value chain</h3>
+        <p class="card-desc">Internal: Product (Agriculture)<br><br>The crisis is <strong>structural, not productive</strong>. Financeable layer: credit enhancement over working-capital and term lending to cold-chain, grading/waxing, reefer logistics, and processors absorbing lower-grade fruit.</p>
+      </div>
+      <div class="card" style="border-right:1px solid var(--rule)">
+        <span class="card-badge badge-mature">Mature</span>
+        <div class="card-tag">Horticulture · Central Punjab</div>
+        <h3 class="card-title">Potato value chain</h3>
+        <p class="card-desc">Internal: Product (Agriculture) · Okara · Depalpur · Sahiwal<br><br>Biological base is strong; <strong>commercial failure is absorption</strong>. Investable points: cold storage, certified seed multiplication, processing-grade variety adoption, and downstream processing (starch, flakes, frozen).</p>
+      </div>
+    </div>
+
+    <div class="charts-grid cols-2">
+      <div class="chart-panel">
+        <div class="chart-eyebrow">Exhibit B-1</div>
+        <div class="chart-title">Internal customer distribution</div>
+        <div class="chart-sub">Functions consuming each finding</div>
+        <div class="ch h230"><canvas id="cB1"></canvas></div>
+      </div>
+      <div class="chart-panel">
+        <div class="chart-eyebrow">Exhibit B-2</div>
+        <div class="chart-title">Doctrine vs sector-specific</div>
+        <div class="chart-sub">Cross-cutting doctrine vs sectoral diagnostics</div>
+        <div class="ch h230"><canvas id="cB2"></canvas></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── C · BOUNDED FINDINGS ── -->
+  <section class="section" id="bounded">
+    <div class="section-head">
+      <div class="section-eyebrow-wrap">
+        <span class="section-eyebrow">C · Qualified</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:2rem;flex-wrap:wrap">
+        <div>
+          <h2 class="section-title">Bounded findings</h2>
+          <p class="section-desc">Diagnostic findings with useful direction of travel — but premature for product design at scale. Product implications carry explicit boundaries.</p>
+        </div>
+        <a class="section-action" href="https://drive.google.com/drive/folders/1uyWwdQOOnl_dThRDKr1KP0KwAXg6v25N?usp=sharing" target="_blank" rel="noopener" style="margin-top:4px">Blackberry Research Note →</a>
+      </div>
+    </div>
+
+    <div class="grid grid-3">
+      <div class="card">
+        <span class="card-badge badge-bounded">Bounded</span>
+        <div class="card-tag">Controlled-Environment</div>
+        <h3 class="card-title">Mushrooms</h3>
+        <p class="card-desc">Energy-Exposed · Sun Gold Farms, Sargodha<br><br>Technically feasible, <strong>commercially fragile</strong>.</p>
+        <div class="card-caveat"><strong>If pursued —</strong> narrow energy-resilience facility for integrated industrial producers. Pilot, not scale.</div>
+      </div>
+      <div class="card">
+        <span class="card-badge badge-bounded">Bounded</span>
+        <div class="card-tag">Long-Gestation Orchard</div>
+        <h3 class="card-title">Olives</h3>
+        <p class="card-desc">Processing-Adjacent<br><br><strong>Unsuitable for short-cycle crop finance.</strong> Plantation needs patient capital; processing economics nearer-term bankable.</p>
+        <div class="card-caveat"><strong>Investable layer —</strong> localised processing: extraction, food-grade storage, certification.</div>
+      </div>
+      <div class="card">
+        <span class="card-badge badge-bounded">Bounded</span>
+        <div class="card-tag">Compact High-Value</div>
+        <h3 class="card-title">Blackberries</h3>
+        <p class="card-desc">South Punjab · Multan × Sargodha<br><br>Compact opportunity. Binding constraints: <strong>cold-chain, aggregation, certification, processing</strong>. Sector data-light.</p>
+        <div class="card-caveat"><strong>Next step —</strong> small cluster demonstration with structured learning protocol. Not premature scaling.</div>
+        <a class="card-link" href="https://drive.google.com/drive/folders/1uyWwdQOOnl_dThRDKr1KP0KwAXg6v25N?usp=sharing" target="_blank" rel="noopener">Read note <span>→</span></a>
+      </div>
+    </div>
+
+    <div class="charts-grid cols-1">
+      <div class="chart-panel">
+        <div class="chart-eyebrow">Exhibit C-1</div>
+        <div class="chart-title">Binding constraint profile</div>
+        <div class="chart-sub">Where the financing layer cannot move ahead of the architecture</div>
+        <div class="ch h300"><canvas id="cC1"></canvas></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── D · EARLY-STAGE ── -->
+  <section class="section" id="early">
+    <div class="section-head">
+      <div class="section-eyebrow-wrap">
+        <span class="section-eyebrow">D · Tracking</span>
+      </div>
+      <div>
+        <h2 class="section-title">Early-stage themes</h2>
+        <p class="section-desc">Areas tracked to map the opportunity landscape. Evidence base not yet sufficient for execution-ready product architecture.</p>
+      </div>
+    </div>
+
+    <div class="grid grid-3">
+      <div class="card">
+        <span class="card-badge badge-early">Early-Stage</span>
+        <div class="card-tag">Seasonal Working Capital</div>
+        <h3 class="card-title">Eid-ul-Adha livestock dealer finance</h3>
+        <p class="card-desc">Pre-Eid mandis · cash-heavy · fast-turning<br><br><strong>Largely outside formal finance.</strong> Documentation, repayment capture, and digital rails require validation before product conclusions.</p>
+      </div>
+      <div class="card">
+        <span class="card-badge badge-early">Early-Stage</span>
+        <div class="card-tag">Policy Friction</div>
+        <h3 class="card-title">Labour regulation &amp; SME formalisation</h3>
+        <p class="card-desc">SME documentation · firm growth thresholds<br><br>How labour-law thresholds affect firm growth and formal credit access. <strong>Currently a policy theme</strong> — not yet a product workstream.</p>
+      </div>
+      <div class="card featured">
+        <span class="card-badge badge-early">Field Study Closed</span>
+        <div class="card-tag">30 Apr – 06 May 2026</div>
+        <h3 class="card-title">Swat peach &amp; trout fieldwork</h3>
+        <p class="card-desc">Horticulture Value Chain Project · Fifth Cluster<br><br>Fieldwork complete. Findings now feeding the <strong>Q2 2026 bankability diagnostic</strong>, due for release next quarter.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── E · GRADUATED ── -->
+  <section class="section" id="graduated">
+    <div class="section-head">
+      <div class="section-eyebrow-wrap">
+        <span class="section-eyebrow">E · In Product Design</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:2rem;flex-wrap:wrap">
+        <div>
+          <h2 class="section-title">Graduated to pipeline</h2>
+          <p class="section-desc">Workstreams that originated in research and have transitioned into product or programme design. Two new additions this month: a commercial storage-infrastructure facility structured with IFC, and a five-year PSDP-funded export finance guarantee program.</p>
+        </div>
+        <a class="section-action" href="https://drive.google.com/drive/folders/1uyWwdQOOnl_dThRDKr1KP0KwAXg6v25N?usp=sharing" target="_blank" rel="noopener" style="margin-top:4px">HBL Zarai Concept Paper →</a>
+      </div>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <span class="card-badge badge-grad">Pilot Architecture</span>
+        <div class="card-tag">5.1 · HBL Zarai · Bundled Execution</div>
+        <h3 class="card-title">Portfolio risk-sharing for deferred trade-credit receivables</h3>
+        <p class="card-desc">Custody-Based Recovery · Controlled Sandbox<br><br>Credit cover is the <strong>enabling layer inside a bundled execution model</strong> — inputs, agronomy, mechanisation, procurement, off-take, in-kind settlement, custody-based recovery. Cover applies to <strong>eligible crystallised net losses after recoveries</strong>; weak origination, custody failure, and side-selling are excluded.</p>
+        <a class="card-link" href="https://drive.google.com/drive/folders/1uyWwdQOOnl_dThRDKr1KP0KwAXg6v25N?usp=sharing" target="_blank" rel="noopener">Open concept paper <span>→</span></a>
+      </div>
+      <div class="card">
+        <span class="card-badge badge-grad">Programme Architecture</span>
+        <div class="card-tag">5.2 · Sector-Window Discipline</div>
+        <h3 class="card-title">SME export finance, agro-processing &amp; agri-adjacent value chains</h3>
+        <p class="card-desc">Anti-Drift Guardrails · Eligibility &amp; Calibration<br><br>Underfinanced commercial layer — processors, aggregators, storage, logistics, value-chain platforms, export-oriented SMEs. Consultation on <strong>sector windows, eligibility, and product calibration</strong> underway.</p>
+      </div>
+      <div class="card">
+        <span class="card-badge badge-grad">Concept Paper · IFC</span>
+        <div class="card-tag">5.3 · ASIFF · Post-Procurement Architecture</div>
+        <h3 class="card-title">Agricultural Storage Infrastructure Finance Facility</h3>
+        <p class="card-desc">Prepared for IFC Structuring &amp; Investment Teams · Phase I Anchor 1.0 MMT<br><br>Liquidity and infrastructure are <strong>distinct constraints</strong>: WLPSF addresses smallholder harvest-window liquidity; ASIFF addresses the commercial storage and inventory-financing gap facing millers, processors, exporters, and traders. Phase I: <strong>~67 standard warehouses, Rs 20.16 Bn PFI senior debt</strong>, 60% LTV, 7-year tenor, 1.25× target DSCR. NCGCL positioned as principal guarantor and single national wheat-credit guarantee counterparty. Siting principle: concentration over coverage, aligned with IFC's SECP–PMEX eWHR advisory work.</p>
+        <div class="card-caveat"><strong>Investment thesis —</strong> storage is inventory management, not price arbitrage; near-import-parity production costs remove the seasonal carry trade.</div>
+        <a class="card-link" href="https://drive.google.com/drive/folders/1uyWwdQOOnl_dThRDKr1KP0KwAXg6v25N?usp=sharing" target="_blank" rel="noopener">Open concept paper <span>→</span></a>
+      </div>
+      <div class="card">
+        <span class="card-badge badge-grad">Programme Brief · PC-1 Submission</span>
+        <div class="card-tag">5.4 · NEAGAP · Revised June 2026</div>
+        <h3 class="card-title">National Export-Oriented Agricultural Finance Guarantee Programme</h3>
+        <p class="card-desc">Sponsoring Ministry: MNFS&amp;R · Executing Partner: NCGCL<br><br>A partial credit guarantee window inside NCGCL, not a lending or subsidy vehicle. <strong>PKR 1 Bn public risk capital (first loss, 12.5%)</strong> matched by <strong>PKR 1 Bn NCGCL second-loss capital (12.5%)</strong> — each leveraged 3× — generates <strong>PKR 6 Bn guarantee capacity</strong> at 25% coverage per facility. PFI retains the residual <strong>75%</strong>, preserving origination and monitoring discipline. Targets <strong>PKR 24 Bn</strong> in mobilised bank financing (<strong>PKR 34 Bn</strong> total catalytic capital, ~70:30) for the missing middle beyond the farm gate — aggregation, cold chain, processing, grading, logistics.</p>
+        <div class="card-caveat"><strong>Revision note —</strong> the June summary brief resizes the March PC-1 draft: public risk capital now PKR 1 Bn (was PKR 4,000M PSDP), loss-sharing 12.5/12.5/75 (was 10/15/75), and catalytic multiples restated as 12× private financing and 17× total capital mobilised per rupee of risk capital. Portfolio discipline: core window ≥70%, first-mover ≤30%, catalytic sub-limit ≤10%, single-PFI cap ≤15%, ticket band PKR 25–150M. Target: 160–200 enterprises financed, ≥15,000 jobs supported over the five-year window. NCGCL second-loss participation remains subject to shareholder approval.</div>
+        <a class="card-link" href="https://drive.google.com/drive/folders/1uyWwdQOOnl_dThRDKr1KP0KwAXg6v25N?usp=sharing" target="_blank" rel="noopener">Open programme brief <span>→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── F · OPEN QUESTIONS ── -->
+  <section class="section" id="open">
+    <div class="section-head">
+      <div class="section-eyebrow-wrap">
+        <span class="section-eyebrow">F · For Reflection</span>
+      </div>
+      <div>
+        <h2 class="section-title">Open questions</h2>
+        <p class="section-desc">Surfaced by the research pipeline. For continued stakeholder reflection — not items requiring formal direction at this stage.</p>
+      </div>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <span class="card-badge badge-open">Open</span>
+        <div class="card-tag">Q1 · Instrument Class · Governance</div>
+        <h3 class="card-title">Catalytic first-loss — perimeter &amp; insulation</h3>
+        <p class="card-desc">As the framework develops, the <strong>perimeter, eligibility, and approval architecture</strong> warrant continued reflection — particularly on insulating the instrument from absorption into the standard guarantee product set.</p>
+      </div>
+      <div class="card">
+        <span class="card-badge badge-open">Open</span>
+        <div class="card-tag">Q2 · Carrying Capacity · Floor Credibility</div>
+        <h3 class="card-title">Wheat transition — NCGCL's optimal role</h3>
+        <p class="card-desc">Credit enhancement over private carrying capacity is the natural starting point. Whether <strong>complementary risk-bearing structures</strong> could materially strengthen private absorption warrants reflection.</p>
+      </div>
+      <div class="card">
+        <span class="card-badge badge-open">Open</span>
+        <div class="card-tag">Q3 · Sequencing · Two Facilities, One Counterparty</div>
+        <h3 class="card-title">ASIFF and WLPSF — coordination as NCGCL's single-counterparty role scales</h3>
+        <p class="card-desc">NCGCL sits as principal guarantor across both the smallholder liquidity facility and the commercial storage facility. How exposure, governance, and reporting are kept <strong>distinct across two structurally different instruments</strong> sharing one guarantor warrants continued reflection.</p>
+      </div>
+      <div class="card">
+        <span class="card-badge badge-open">Open</span>
+        <div class="card-tag">Q4 · Pilot Discipline · Shareholder Governance</div>
+        <h3 class="card-title">NEAGAP — scaling discipline once public risk capital is confirmed</h3>
+        <p class="card-desc">The June revision resizes the ask to PKR 1 Bn public + PKR 1 Bn NCGCL second-loss, down from the March PSDP-funded draft. NCGCL's second-loss participation remains <strong>subject to shareholder approval</strong> — the sequencing between ministry confirmation and NCGCL board sign-off, and how the resized ask affects the PKR 24 Bn mobilisation target, warrant reflection.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── G · DELIVERABLES ── -->
+  <section class="section" id="deliverables">
+    <div class="section-head">
+      <div class="section-eyebrow-wrap">
+        <span class="section-eyebrow">G · The Year Ahead</span>
+      </div>
+      <div>
+        <h2 class="section-title">2026 deliverables &amp; milestones</h2>
+        <p class="section-desc">Seven workstream milestones scheduled across Q2 through Q4 2026.</p>
+      </div>
+    </div>
+
+    <div class="charts-grid cols-2">
+      <div class="chart-panel">
+        <div class="chart-eyebrow">Exhibit G-1</div>
+        <div class="chart-title">Deliverables timeline</div>
+        <div class="chart-sub">Workstream-level milestones · Q2 through Q4</div>
+        <div class="timeline" style="margin-top:0.75rem">
+          <div class="tl-item"><div><div class="tl-q">Q2 2026</div></div><div><div class="tl-title">Swat Cluster — Peach &amp; Trout</div><div class="tl-desc">Field study report and bankability diagnostic</div></div></div>
+          <div class="tl-item"><div><div class="tl-q">Q2 2026</div></div><div><div class="tl-title">Farm Credit Receivables Pilot</div><div class="tl-desc">Operational preconditions · launch readiness memo</div></div></div>
+          <div class="tl-item"><div><div class="tl-q">Q2 2026</div></div><div><div class="tl-title">ASIFF — IFC Structuring Review</div><div class="tl-desc">Term sheet finalisation with IFC structuring &amp; investment teams</div></div></div>
+          <div class="tl-item"><div><div class="tl-q late">Q3 2026</div></div><div><div class="tl-title">Catalytic First-Loss Capital</div><div class="tl-desc">Framework finalisation · Board approval pathway</div></div></div>
+          <div class="tl-item"><div><div class="tl-q late">Q3 — Q4</div></div><div><div class="tl-title">Export Finance &amp; Agro-Processing</div><div class="tl-desc">Sector-window architecture · approval-pathway memo</div></div></div>
+          <div class="tl-item"><div><div class="tl-q late">Q3 2026</div></div><div><div class="tl-title">NEAGAP — Programme Brief Approval</div><div class="tl-desc">Ministry review of revised PKR 1 Bn ask · shareholder approval pathway</div></div></div>
+          <div class="tl-item"><div><div class="tl-q end">Q4 2026</div></div><div><div class="tl-title">Wheat Market Transition</div><div class="tl-desc">Liquidity-and-stabilisation mechanism design note</div></div></div>
+        </div>
+      </div>
+      <div class="chart-panel">
+        <div class="chart-eyebrow">Exhibit G-2</div>
+        <div class="chart-title">Distribution by quarter</div>
+        <div class="chart-sub">Seven milestones across Q2–Q4 2026</div>
+        <div class="ch h300"><canvas id="cG1"></canvas></div>
+      </div>
+    </div>
+
+    <div class="tbl-wrap" style="border-top:none">
+      <table class="tbl">
+        <thead>
+          <tr><th style="width:40px">#</th><th>Workstream</th><th>Deliverable</th><th>Milestone</th><th>Internal Customer</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="num">1</td><td class="strong">Swat Cluster (Peach, Trout)</td><td>Field study · bankability diagnostic</td><td><span class="qbadge q2">Q2 2026</span></td><td>Product (Agri)</td></tr>
+          <tr><td class="num">2</td><td class="strong">Farm Credit Receivables Pilot</td><td>Preconditions · launch readiness</td><td><span class="qbadge q2">Q2 2026</span></td><td>Product · Origination · Risk</td></tr>
+          <tr><td class="num">3</td><td class="strong">ASIFF (IFC)</td><td>Term sheet finalisation</td><td><span class="qbadge q2">Q2 2026</span></td><td>Product · Capital Markets · IFC</td></tr>
+          <tr><td class="num">4</td><td class="strong">Catalytic First-Loss Capital</td><td>Framework · Board pathway</td><td><span class="qbadge q3">Q3 2026</span></td><td>Strategy · Cap. Markets · Board</td></tr>
+          <tr><td class="num">5</td><td class="strong">Export Finance &amp; Agro-Processing</td><td>Sector-window · approval memo</td><td><span class="qbadge q3">Q3–Q4 2026</span></td><td>Product · Origination · Strategy</td></tr>
+          <tr><td class="num">6</td><td class="strong">NEAGAP (Programme Brief)</td><td>Ministry review · shareholder approval</td><td><span class="qbadge q3">Q3 2026</span></td><td>Strategy · Govt Relations · Board</td></tr>
+          <tr><td class="num">7</td><td class="strong">Wheat Market Transition</td><td>Liquidity · stabilisation note</td><td><span class="qbadge q4">Q4 2026</span></td><td>Strategy · Risk · Govt Relations</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</div><!-- /shell -->
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-brand-name">NCGCL Research &amp; Insights</div>
+        <p class="tag">National Credit Guarantee Company Limited — enabling catalytic finance for SME, agriculture, and climate growth across Pakistan. June 2026 Edition · Board Confidential.</p>
+      </div>
+      <div class="footer-col">
+        <h4>This Document</h4>
+        <a href="#snapshot">Research Snapshot</a>
+        <a href="#geography">Geography</a>
+        <a href="#mature">Mature Findings</a>
+        <a href="#bounded">Bounded Findings</a>
+        <a href="#graduated">Graduated to Pipeline</a>
+        <a href="#deliverables">2026 Milestones</a>
+      </div>
+      <div class="footer-col">
+        <h4>Source Documents</h4>
+        <a href="https://drive.google.com/drive/folders/1uyWwdQOOnl_dThRDKr1KP0KwAXg6v25N?usp=sharing" target="_blank" rel="noopener">Research Monthly Update</a>
+        <a href="https://drive.google.com/drive/folders/1uyWwdQOOnl_dThRDKr1KP0KwAXg6v25N?usp=sharing" target="_blank" rel="noopener">HBL Zarai Concept Paper</a>
+        <a href="https://drive.google.com/drive/folders/1uyWwdQOOnl_dThRDKr1KP0KwAXg6v25N?usp=sharing" target="_blank" rel="noopener">Blackberry Research Note</a>
+        <a href="https://drive.google.com/drive/folders/1uyWwdQOOnl_dThRDKr1KP0KwAXg6v25N?usp=sharing" target="_blank" rel="noopener">ASIFF Concept Paper (IFC)</a>
+        <a href="https://drive.google.com/drive/folders/1uyWwdQOOnl_dThRDKr1KP0KwAXg6v25N?usp=sharing" target="_blank" rel="noopener">NEAGAP PC-1 Presentation</a>
+      </div>
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <a href="https://ncgcldashboard-ux.github.io/ncgcl-intranet/" target="_blank" rel="noopener">Operational Hub</a>
+        <a href="https://ncgcldashboard-ux.github.io/ncgcl-intranet/#policies" target="_blank" rel="noopener">Policy Repository</a>
+        <a href="https://ncgcldashboard-ux.github.io/ncgcl-intranet/#board" target="_blank" rel="noopener">Board &amp; Committees</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 National Credit Guarantee Company Limited · AAA Rated · SBP Regulated</div>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">Accessibility</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const ce='#035076', ceDp='#013E5C', ceSf='#11688A';
+const gn='#39A949', ink='#0E1A24', ink2='#2A3540';
+const g7='#4A5560', g5='#8A95A0', g3='#D9DDE2', g1='#F2F4F7';
+
+Chart.defaults.font.family="'Inter','Helvetica Neue',sans-serif";
+Chart.defaults.font.size=11;
+Chart.defaults.color=g7;
+Chart.defaults.borderColor=g3;
+
+const tt={
+  backgroundColor:'rgba(14,26,36,0.96)',
+  titleColor:'#fff',bodyColor:'rgba(255,255,255,0.8)',
+  titleFont:{size:11,weight:'600'},bodyFont:{size:11,weight:'300'},
+  padding:12,borderColor:'rgba(255,255,255,0.1)',borderWidth:1,cornerRadius:2
+};
+const noLeg={legend:{display:false}};
+const leg=(p='right')=>({legend:{position:p,labels:{font:{size:10,weight:'500'},boxWidth:8,padding:10,color:g7}}});
+
+// A-1 Workstreams by maturity
+new Chart(document.getElementById('cA1'),{
+  type:'doughnut',
+  data:{labels:['Mature','Bounded','Early-Stage','Graduated'],
+    datasets:[{data:[6,3,3,4],backgroundColor:[gn,ce,g5,ceSf],borderWidth:3,borderColor:'#fff'}]},
+  options:{responsive:true,maintainAspectRatio:false,cutout:'66%',
+    plugins:{...leg('right'),tooltip:{...tt,callbacks:{label:c=>` ${c.raw} workstreams`}}}}
+});
+
+// A-2 Pipeline by thematic area
+new Chart(document.getElementById('cA2'),{
+  type:'bar',
+  data:{labels:['Agri & Horticultural Value Chains','Guarantee Architecture & Doctrine','Structured Agriculture Finance','Post-Harvest Storage & Export Finance','Wheat Market Stabilisation'],
+    datasets:[{label:'Workstreams',data:[6,3,1,2,2],backgroundColor:[gn,ce,ceSf,ceSf,g5],borderRadius:0,barThickness:22}]},
+  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+    plugins:{...noLeg,tooltip:{...tt,callbacks:{label:c=>` ${c.raw} workstreams`}}},
+    scales:{x:{grid:{color:g3,drawBorder:false},ticks:{stepSize:1}},
+            y:{grid:{display:false,drawBorder:false},ticks:{font:{size:11,weight:'500'},color:ink2}}}}
+});
+
+// B-1 Internal customer
+new Chart(document.getElementById('cB1'),{
+  type:'bar',
+  data:{labels:['Product','Strategy','Origination','Risk','Capital Markets','Board','Govt Relations'],
+    datasets:[{data:[4,3,2,1,1,1,1],backgroundColor:ce,borderRadius:0,barThickness:16}]},
+  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+    plugins:{...noLeg,tooltip:{...tt,callbacks:{label:c=>` ${c.raw} findings`}}},
+    scales:{x:{grid:{color:g3,drawBorder:false},ticks:{stepSize:1}},
+            y:{grid:{display:false,drawBorder:false},ticks:{font:{size:10}}}}}
+});
+
+// B-2 Doctrine vs sector
+new Chart(document.getElementById('cB2'),{
+  type:'doughnut',
+  data:{labels:['Cross-Cutting Doctrine','Sector-Specific'],
+    datasets:[{data:[3,3],backgroundColor:[ce,gn],borderWidth:3,borderColor:'#fff'}]},
+  options:{responsive:true,maintainAspectRatio:false,cutout:'66%',
+    plugins:{...leg('right'),tooltip:{...tt,callbacks:{label:c=>` ${c.raw} findings`}}}}
+});
+
+// C-1 Constraint profile
+new Chart(document.getElementById('cC1'),{
+  type:'bar',
+  data:{labels:['Mushrooms','Olives','Blackberries'],
+    datasets:[
+      {label:'Energy / CEA Dependency',data:[5,1,1],backgroundColor:'#9B2335',stack:'a',barThickness:60},
+      {label:'Processing / Cold-Chain Gap',data:[2,4,4],backgroundColor:ce,stack:'a',barThickness:60},
+      {label:'Aggregation / Certification',data:[1,2,4],backgroundColor:ceSf,stack:'a',barThickness:60},
+      {label:'Plantation / Long-Gestation',data:[0,4,1],backgroundColor:gn,stack:'a',barThickness:60}
+    ]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{position:'top',align:'start',labels:{font:{size:10,weight:'500'},boxWidth:8,padding:10,color:g7}},
+      tooltip:{...tt,callbacks:{label:c=>` ${c.dataset.label}: ${c.raw}/5`}}},
+    scales:{x:{stacked:true,grid:{display:false,drawBorder:false},ticks:{font:{size:12,weight:'600'},color:ink}},
+            y:{stacked:true,beginAtZero:true,grid:{color:g3,drawBorder:false},
+               title:{display:true,text:'Composite constraint severity (indicative)',font:{size:10,style:'italic'},color:g5}}}}
+});
+
+// G-1 Deliverables by quarter
+new Chart(document.getElementById('cG1'),{
+  type:'bar',
+  data:{labels:['Q2 2026','Q3 2026','Q3–Q4 2026','Q4 2026'],
+    datasets:[{data:[3,2,1,1],backgroundColor:[gn,ce,ceSf,g5],borderRadius:0,barThickness:44}]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{...noLeg,tooltip:{...tt,callbacks:{label:c=>` ${c.raw} deliverables`}}},
+    scales:{x:{grid:{display:false,drawBorder:false},ticks:{font:{size:11,weight:'600'},color:ink}},
+            y:{beginAtZero:true,grid:{color:g3,drawBorder:false},ticks:{stepSize:1}}}}
+});
+
+// Jump nav active state on scroll
+const sections=document.querySelectorAll('.section[id]');
+const jumpLinks=document.querySelectorAll('.jumpnav a');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const id=e.target.id;
+      jumpLinks.forEach(l=>{
+        const active=l.getAttribute('href')==='#'+id;
+        l.style.color=active?'var(--cerulean)':'';
+        l.style.borderBottomColor=active?'var(--cerulean)':'transparent';
+      });
+    }
+  });
+},{rootMargin:'-30% 0px -60% 0px'});
+sections.forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>
