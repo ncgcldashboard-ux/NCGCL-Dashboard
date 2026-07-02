@@ -1,0 +1,1699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NCGCL Monthly Board Update — July 2026 (Data as at June 30, 2026)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+<style>
+/* ── NCGCL Design System — Color Tokens ─────────────────────────────── */
+:root{
+  --ncgcl-blue:#0C688D; --ncgcl-green:#39A935;
+  --petrol-900:#042B3B; --petrol-800:#004C66; --petrol-700:#035076;
+  --petrol-600:#0C688D; --petrol-500:#12678A; --petrol-400:#007AA0;
+  --petrol-300:#4FA0BC; --petrol-200:#A7C7D6; --petrol-100:#E3EEF3;
+  --green-800:#1F6A1D; --green-700:#2B8129; --green-600:#39A935;
+  --green-500:#4EA72E; --green-400:#5AB060; --green-300:#8CD872; --green-100:#E6F4E2;
+  --ink-900:#061626; --ink-800:#0E2841; --ink-700:#1E293B; --ink-600:#33424F;
+  --slate-500:#5B6B7A; --slate-400:#7F7F7F; --slate-300:#AEAEAE;
+  --slate-200:#C8D6E0; --slate-150:#E2E8F0; --slate-100:#EEF1F4; --slate-50:#F6F8FA;
+  --paper:#FFFFFF;
+  --risk-high:#C00000; --risk-med:#BF9000; --risk-low:#2B8129;
+  --status-positive:#2B8129; --status-negative:#C00000; --status-neutral:#5B6B7A;
+  --color-primary:#0C688D; --color-primary-hover:#0A5876; --color-primary-press:#084A63;
+  --color-accent:#39A935; --color-accent-hover:#2F9A2B;
+  --text-strong:#0E2841; --text-body:#1F2E3A; --text-muted:#7F7F7F;
+  --text-faint:#AEAEAE; --text-on-dark:#FFFFFF; --text-on-dark-muted:#B9CFDA;
+  --text-link:#007AA0;
+  --surface-page:#FFFFFF; --surface-canvas:#F6F8FA; --surface-card:#FFFFFF;
+  --surface-muted:#EEF1F4; --surface-dark:#004C66; --surface-darker:#042B3B;
+  --surface-accent-soft:#E6F4E2; --surface-primary-soft:#E3EEF3;
+  --border-subtle:#C8D6E0; --border-strong:#9FB5C4; --border-on-dark:rgba(255,255,255,0.16);
+  --font-sans:"Figtree","Google Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --text-display:3.815rem; --text-h1:3.052rem; --text-h2:2.441rem;
+  --text-h3:1.953rem; --text-h4:1.563rem; --text-h5:1.25rem;
+  --text-lg:1.125rem; --text-base:1rem; --text-sm:0.875rem;
+  --text-xs:0.75rem; --text-2xs:0.6875rem;
+  --weight-light:300; --weight-regular:400; --weight-medium:500;
+  --weight-semibold:600; --weight-bold:700; --weight-extrabold:800;
+  --leading-tight:1.08; --leading-snug:1.22; --leading-normal:1.5; --leading-relaxed:1.65;
+  --tracking-tighter:-0.03em; --tracking-tight:-0.015em;
+  --tracking-wide:0.04em; --tracking-eyebrow:0.14em;
+  --space-1:0.25rem; --space-2:0.5rem; --space-3:0.75rem; --space-4:1rem;
+  --space-5:1.5rem; --space-6:2rem; --space-7:2.5rem; --space-8:3rem;
+  --space-9:4rem; --space-10:5rem;
+  --radius-xs:3px; --radius-sm:5px; --radius-md:8px;
+  --radius-lg:12px; --radius-xl:16px; --radius-pill:999px;
+  --border-hair:1px; --border-thin:1.5px; --border-thick:2px; --border-accent:3px;
+  --shadow-xs:0 1px 2px rgba(6,22,38,0.06);
+  --shadow-sm:0 1px 3px rgba(6,22,38,0.08),0 1px 2px rgba(6,22,38,0.04);
+  --shadow-md:0 4px 12px rgba(6,22,38,0.08),0 2px 4px rgba(6,22,38,0.05);
+  --shadow-lg:0 12px 28px rgba(6,22,38,0.12),0 4px 8px rgba(6,22,38,0.06);
+  --ease-standard:cubic-bezier(0.2,0,0.2,1);
+  --duration-fast:120ms; --duration-base:200ms; --duration-slow:320ms;
+}
+
+/* ── Reset & Base ─────────────────────────────────────────────────────── */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{
+  font-family:var(--font-sans);
+  background:var(--surface-canvas);
+  color:var(--text-body);
+  line-height:var(--leading-normal);
+  font-size:14px;
+}
+a{color:var(--text-link);text-decoration:none}
+img{display:block;max-width:100%;height:auto}
+svg.icon{flex-shrink:0}
+
+/* ── Layout ───────────────────────────────────────────────────────────── */
+.page-wrap{max-width:1160px;margin:0 auto;padding:0 var(--space-6)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-5)}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--space-5)}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-4)}
+.g5{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--space-4)}
+
+/* ── Topbar (brand chrome) ────────────────────────────────────────────── */
+.topbar{
+  background:var(--surface-darker);
+  border-bottom:var(--border-accent) solid var(--color-accent);
+  position:sticky;top:0;z-index:100;
+}
+.topbar-inner{
+  max-width:1160px;margin:0 auto;
+  padding:var(--space-3) var(--space-6);
+  display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);
+  flex-wrap:wrap;
+}
+.topbar-brand{display:flex;align-items:center;gap:var(--space-3)}
+.topbar-mark{
+  width:32px;height:32px;border-radius:var(--radius-sm);
+  background:#fff;display:flex;align-items:center;justify-content:center;
+  overflow:hidden;flex-shrink:0;padding:3px;
+}
+.topbar-mark img{width:100%;height:100%;object-fit:contain}
+.topbar-name{
+  font-family:var(--font-sans);font-size:var(--text-sm);
+  font-weight:var(--weight-bold);color:var(--text-on-dark);
+  letter-spacing:-0.01em;line-height:1.2;
+}
+.topbar-name span{
+  display:block;font-size:var(--text-2xs);font-weight:var(--weight-medium);
+  color:var(--text-on-dark-muted);letter-spacing:var(--tracking-eyebrow);
+  text-transform:uppercase;margin-top:2px;
+}
+.topbar-chips{display:flex;gap:var(--space-2);flex-wrap:wrap;align-items:center}
+.chip{
+  font-family:var(--font-sans);font-size:var(--text-2xs);
+  font-weight:var(--weight-semibold);letter-spacing:var(--tracking-wide);
+  text-transform:uppercase;padding:3px 10px;border-radius:var(--radius-sm);
+  white-space:nowrap;
+}
+.chip-rating{background:var(--paper);color:var(--petrol-800)}
+.chip-outline{background:transparent;border:1px solid var(--border-on-dark);color:var(--text-on-dark-muted)}
+
+/* ── Page Header ──────────────────────────────────────────────────────── */
+.page-hdr{
+  background:var(--surface-darker);
+  padding:var(--space-8) 0 var(--space-7);
+  position:relative;overflow:hidden;
+}
+.page-hdr::before{
+  content:'';position:absolute;right:-120px;top:-120px;
+  width:500px;height:500px;border-radius:50%;
+  border:1px solid rgba(255,255,255,0.06);
+}
+.page-hdr::after{
+  content:'';position:absolute;right:80px;bottom:-200px;
+  width:340px;height:340px;border-radius:50%;
+  border:1px solid rgba(255,255,255,0.04);
+}
+.page-hdr-inner{position:relative;z-index:1}
+.hdr-eyebrow{
+  font-family:var(--font-sans);font-size:var(--text-2xs);
+  font-weight:var(--weight-semibold);letter-spacing:var(--tracking-eyebrow);
+  text-transform:uppercase;color:var(--green-300);margin-bottom:var(--space-3);
+  display:flex;align-items:center;gap:var(--space-2);
+}
+.hdr-title{
+  font-family:var(--font-sans);font-size:2.2rem;font-weight:var(--weight-extrabold);
+  color:var(--text-on-dark);line-height:var(--leading-snug);
+  letter-spacing:var(--tracking-tight);margin-bottom:var(--space-3);max-width:28ch;
+}
+.hdr-sub{
+  font-size:var(--text-sm);color:var(--text-on-dark-muted);
+  margin-bottom:var(--space-6);max-width:56ch;line-height:var(--leading-relaxed);
+}
+.hdr-kpi-row{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:var(--space-4);
+  padding-top:var(--space-5);border-top:1px solid var(--border-on-dark);
+}
+.hdr-kpi{}
+.hdr-kpi-val{
+  font-family:var(--font-mono);font-size:1.15rem;font-weight:var(--weight-semibold);
+  color:var(--text-on-dark);line-height:1;letter-spacing:-0.01em;margin-bottom:4px;
+}
+.hdr-kpi-lbl{
+  font-family:var(--font-sans);font-size:var(--text-2xs);
+  font-weight:var(--weight-semibold);letter-spacing:var(--tracking-eyebrow);
+  text-transform:uppercase;color:var(--text-on-dark-muted);
+}
+
+/* ── Jump Nav ─────────────────────────────────────────────────────────── */
+.jnav{
+  background:var(--surface-card);
+  border-bottom:1px solid var(--border-subtle);
+  position:sticky;top:51px;z-index:90;
+  box-shadow:var(--shadow-sm);
+}
+.jnav-inner{
+  max-width:1160px;margin:0 auto;
+  padding:0 var(--space-6);
+  display:flex;gap:0;overflow-x:auto;
+}
+.jnav a{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:var(--font-sans);font-size:var(--text-2xs);
+  font-weight:var(--weight-bold);letter-spacing:var(--tracking-wide);
+  text-transform:uppercase;color:var(--text-muted);text-decoration:none;
+  padding:var(--space-3) var(--space-4);border-bottom:2px solid transparent;
+  margin-bottom:-1px;white-space:nowrap;
+  transition:color var(--duration-base) var(--ease-standard),
+             border-color var(--duration-base) var(--ease-standard);
+}
+.jnav a:hover,.jnav a.active{color:var(--color-primary);border-bottom-color:var(--color-primary)}
+.jnav a i,.jnav a svg{width:13px;height:13px;stroke-width:2.25}
+
+/* ── Section structure ────────────────────────────────────────────────── */
+.sec{padding:var(--space-8) 0 var(--space-6);}
+.sec+.sec{border-top:1px solid var(--border-subtle)}
+.sec-ey{
+  font-family:var(--font-sans);font-size:var(--text-2xs);
+  font-weight:var(--weight-bold);letter-spacing:var(--tracking-eyebrow);
+  text-transform:uppercase;color:var(--color-primary);margin-bottom:var(--space-2);
+  display:flex;align-items:center;gap:6px;
+}
+.sec-ey i,.sec-ey svg{width:14px;height:14px;stroke-width:2.25;color:var(--color-primary)}
+.sec-title{
+  font-family:var(--font-sans);font-size:1.5rem;font-weight:var(--weight-extrabold);
+  color:var(--text-strong);letter-spacing:var(--tracking-tight);
+  line-height:var(--leading-snug);margin-bottom:var(--space-2);
+}
+.sec-sub{
+  font-size:var(--text-sm);color:var(--text-muted);
+  margin-bottom:var(--space-5);line-height:var(--leading-normal);
+}
+.ex{
+  font-family:var(--font-sans);font-size:var(--text-2xs);
+  font-weight:var(--weight-bold);letter-spacing:var(--tracking-eyebrow);
+  text-transform:uppercase;color:var(--color-primary);margin-bottom:var(--space-2);
+}
+
+/* ── Cards / Panels ───────────────────────────────────────────────────── */
+.card{
+  background:var(--surface-card);border:var(--border-hair) solid var(--border-subtle);
+  border-radius:var(--radius-lg);padding:var(--space-5);
+  box-shadow:var(--shadow-sm);
+}
+.card-title{
+  font-family:var(--font-sans);font-size:var(--text-sm);font-weight:var(--weight-bold);
+  color:var(--text-strong);margin-bottom:4px;letter-spacing:-0.005em;
+}
+.card-sub{font-size:var(--text-xs);color:var(--text-muted);margin-bottom:var(--space-4)}
+
+/* ── KPI / Stat blocks ────────────────────────────────────────────────── */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-4);margin-bottom:var(--space-6)}
+.kbox{
+  background:var(--surface-card);border:var(--border-hair) solid var(--border-subtle);
+  border-radius:var(--radius-lg);padding:var(--space-4) var(--space-5);
+  border-top:var(--border-accent) solid var(--border-subtle);
+  box-shadow:var(--shadow-sm);
+}
+.kbox.primary{border-top-color:var(--color-primary)}
+.kbox.accent{border-top-color:var(--color-accent)}
+.kbox.high{border-top-color:var(--risk-high)}
+.kbox.med{border-top-color:var(--risk-med)}
+.kbox.neutral{border-top-color:var(--slate-400)}
+.kbox.teal{border-top-color:var(--petrol-300)}
+.knum{
+  font-family:var(--font-mono);font-size:1.5rem;font-weight:var(--weight-semibold);
+  color:var(--text-strong);line-height:1;letter-spacing:-0.01em;
+}
+.klbl{
+  font-family:var(--font-sans);font-size:var(--text-2xs);
+  font-weight:var(--weight-semibold);letter-spacing:var(--tracking-eyebrow);
+  text-transform:uppercase;color:var(--text-body);margin-top:var(--space-2);
+}
+.knote{font-size:var(--text-xs);margin-top:var(--space-1);font-weight:var(--weight-medium)}
+.knote.primary{color:var(--color-primary)}
+.knote.accent{color:var(--color-accent)}
+.knote.high{color:var(--risk-high)}
+.knote.neutral{color:var(--slate-500)}
+.knote.pos{color:var(--status-positive)}
+
+/* StatBlock left-rule variant */
+.stat-block{
+  padding-left:var(--space-4);
+  border-left:var(--border-accent) solid var(--color-primary);
+}
+.stat-block.green{border-left-color:var(--color-accent)}
+.stat-block-val{
+  font-family:var(--font-mono);font-size:var(--text-h4);font-weight:var(--weight-semibold);
+  color:var(--text-strong);line-height:1;letter-spacing:-0.01em;
+}
+.stat-block-lbl{
+  font-size:var(--text-sm);font-weight:var(--weight-semibold);
+  color:var(--text-body);margin-top:6px;
+}
+.stat-block-cap{font-size:var(--text-xs);color:var(--text-muted);margin-top:3px;line-height:1.4}
+
+/* ── Badges ───────────────────────────────────────────────────────────── */
+.badge{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:3px 10px;border-radius:var(--radius-sm);
+  font-family:var(--font-sans);font-size:var(--text-2xs);
+  font-weight:var(--weight-semibold);letter-spacing:var(--tracking-wide);
+  text-transform:uppercase;line-height:1;white-space:nowrap;
+}
+.badge-primary{background:var(--surface-primary-soft);color:var(--petrol-700)}
+.badge-accent{background:var(--surface-accent-soft);color:var(--green-800)}
+.badge-high{background:#FBE8E8;color:var(--risk-high)}
+.badge-med{background:#FBF1DA;color:#8A6800}
+.badge-neutral{background:var(--surface-muted);color:var(--ink-700);border:1px solid var(--border-subtle)}
+.badge-star{background:#FFF9E6;color:#7a5f00;border:1px solid #f0d060}
+.badge-purple{background:#F3EEF8;color:#5a3a8c}
+
+/* Inline badges (used within table cells — preserved classes) */
+.b{display:inline-flex;align-items:center;padding:2px 8px;border-radius:var(--radius-sm);font-size:var(--text-2xs);font-weight:var(--weight-semibold);white-space:nowrap;letter-spacing:var(--tracking-wide);text-transform:uppercase}
+.b-star{background:#FFF9E6;color:#7a5f00;border:1px solid #f0d060}
+.b-live{background:var(--surface-accent-soft);color:var(--green-800)}
+.b-exec{background:var(--surface-primary-soft);color:var(--petrol-700)}
+.b-magfa{background:var(--surface-primary-soft);color:var(--petrol-700)}
+.b-ic{background:#E3F3EE;color:#1a5c47}
+.b-ts{background:#FBF1DA;color:#8A6800}
+.b-dd{background:var(--surface-muted);color:var(--ink-700);border:1px solid var(--border-subtle)}
+.b-init{background:var(--surface-muted);color:var(--text-muted);border:1px solid var(--border-subtle)}
+.b-pipe{background:#F3EEF8;color:#5a3a8c}
+.b-new{background:#FBE8E8;color:var(--risk-high)}
+.b-up{background:var(--surface-primary-soft);color:var(--petrol-700)}
+.b-dn{background:#FBE8E8;color:var(--risk-high)}
+.b-review{background:#FBF1DA;color:#8A6800}
+
+/* ── Milestone / Callout ──────────────────────────────────────────────── */
+.callout{
+  border-radius:var(--radius-md);padding:var(--space-4) var(--space-5);
+  margin-bottom:var(--space-4);
+  border-left:var(--border-accent) solid var(--color-primary);
+  background:var(--surface-primary-soft);
+}
+.callout.accent{
+  border-left-color:var(--color-accent);
+  background:var(--surface-accent-soft);
+}
+.callout.high{border-left-color:var(--risk-high);background:#FBE8E8}
+.callout.neutral{border-left-color:var(--slate-400);background:var(--surface-muted)}
+.callout-head{
+  font-family:var(--font-sans);font-size:var(--text-2xs);
+  font-weight:var(--weight-bold);letter-spacing:var(--tracking-eyebrow);
+  text-transform:uppercase;color:var(--petrol-700);margin-bottom:var(--space-2);
+  display:flex;align-items:center;gap:6px;
+}
+.callout.accent .callout-head{color:var(--green-800)}
+.callout-body{font-size:var(--text-sm);color:var(--text-body);line-height:var(--leading-relaxed)}
+.callout-body strong{font-weight:var(--weight-bold);color:var(--text-strong)}
+
+/* ── Highlight bar ────────────────────────────────────────────────────── */
+.finhlt{
+  background:var(--surface-muted);border:var(--border-hair) solid var(--border-subtle);
+  border-left:var(--border-accent) solid var(--color-primary);
+  border-radius:0 var(--radius-md) var(--radius-md) 0;
+  padding:var(--space-4) var(--space-5);font-size:var(--text-sm);
+  color:var(--text-body);margin:var(--space-4) 0;line-height:var(--leading-relaxed);
+}
+.finhlt strong{font-weight:var(--weight-bold);color:var(--text-strong)}
+.finhlt.accent{border-left-color:var(--color-accent)}
+
+/* ── Tables ───────────────────────────────────────────────────────────── */
+.tbl{width:100%;border-collapse:collapse;font-size:12px}
+.tbl th{
+  font-family:var(--font-sans);font-size:var(--text-2xs);
+  font-weight:var(--weight-bold);letter-spacing:var(--tracking-eyebrow);
+  text-transform:uppercase;color:var(--text-muted);
+  padding:var(--space-2) var(--space-3);
+  border-bottom:2px solid var(--border-subtle);
+  background:var(--surface-muted);text-align:left;white-space:nowrap;
+}
+.tbl td{
+  padding:var(--space-2) var(--space-3);
+  border-bottom:var(--border-hair) solid var(--border-subtle);
+  color:var(--text-body);vertical-align:middle;
+}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tbody tr:hover td{background:var(--surface-muted)}
+.tbl .mono{font-family:var(--font-mono);font-size:10px;color:var(--text-muted)}
+.tbl .val{
+  font-family:var(--font-mono);font-size:12px;
+  text-align:right;white-space:nowrap;color:var(--text-body);
+}
+.tbl .na{color:var(--text-faint);font-style:italic;text-align:right}
+.tbl .str{font-weight:var(--weight-bold);color:var(--text-strong)}
+.tbl .pos{color:var(--status-positive)}
+.tbl .neg{color:var(--status-negative)}
+.tbl tr.row-total td{background:var(--surface-accent-soft)!important;font-weight:var(--weight-bold)}
+.tbl tr.row-sub td{background:var(--surface-muted)}
+
+/* ── Ratio / Finance cards ────────────────────────────────────────────── */
+.ratio-card{
+  background:var(--surface-card);border:var(--border-hair) solid var(--border-subtle);
+  border-radius:var(--radius-lg);padding:var(--space-5);box-shadow:var(--shadow-sm);
+}
+.rc-title{
+  font-family:var(--font-sans);font-size:var(--text-sm);font-weight:var(--weight-bold);
+  color:var(--text-strong);margin-bottom:var(--space-4);
+  border-bottom:var(--border-hair) solid var(--border-subtle);padding-bottom:var(--space-3);
+}
+
+/* ── Product cards ────────────────────────────────────────────────────── */
+.prod-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);margin-bottom:var(--space-5)}
+.pc{
+  background:var(--surface-card);
+  border:var(--border-hair) solid var(--border-subtle);
+  border-radius:var(--radius-lg);padding:var(--space-4);
+  border-left:var(--border-accent) solid var(--border-subtle);
+  box-shadow:var(--shadow-sm);
+}
+.pc.live{border-left-color:var(--color-accent)}
+.pc.str{border-left-color:var(--color-primary)}
+.pc.rev{border-left-color:var(--slate-400)}
+.pc.con{border-left-color:var(--border-subtle)}
+.pc.new{border-left-color:var(--risk-high)}
+.pname{
+  font-family:var(--font-sans);font-size:var(--text-sm);
+  font-weight:var(--weight-bold);color:var(--text-strong);margin-bottom:3px;
+}
+.pmeta{font-size:var(--text-2xs);color:var(--text-muted);margin-bottom:var(--space-2);
+  font-weight:var(--weight-medium);letter-spacing:0.02em}
+.pnote{
+  font-size:var(--text-xs);color:var(--text-body);
+  background:var(--surface-muted);padding:var(--space-2) var(--space-3);
+  border-radius:var(--radius-sm);line-height:var(--leading-relaxed);
+}
+.pfi{
+  font-size:var(--text-2xs);color:var(--color-primary);
+  margin-top:var(--space-2);font-weight:var(--weight-semibold);
+  letter-spacing:0.01em;
+}
+.sb-row{display:flex;gap:3px;margin:var(--space-2) 0;align-items:center}
+.sb{height:4px;flex:1;border-radius:var(--radius-pill);background:var(--slate-150)}
+.sb.on{background:var(--color-accent)}
+.sb.am{background:var(--color-primary)}
+.sb.gy{background:var(--slate-300)}
+.sl{font-size:10px;font-weight:var(--weight-semibold);margin-left:6px;color:var(--text-muted)}
+
+/* ── Project cards ────────────────────────────────────────────────────── */
+.proj-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--space-4);margin-bottom:var(--space-5)}
+.pjc{
+  background:var(--surface-card);border:var(--border-hair) solid var(--border-subtle);
+  border-radius:var(--radius-lg);padding:var(--space-4);box-shadow:var(--shadow-sm);
+}
+.pjn{
+  font-family:var(--font-sans);font-size:var(--text-sm);
+  font-weight:var(--weight-bold);color:var(--text-strong);margin-bottom:3px;
+}
+.pja{
+  font-size:var(--text-2xs);color:var(--text-muted);text-transform:uppercase;
+  letter-spacing:var(--tracking-eyebrow);margin-bottom:var(--space-3);
+  font-weight:var(--weight-semibold);
+}
+.pjd{font-size:var(--text-xs);color:var(--text-body);line-height:var(--leading-relaxed);margin-bottom:var(--space-3)}
+
+/* ── Performance boxes ────────────────────────────────────────────────── */
+.perf-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-4);margin-bottom:var(--space-5)}
+.perfbox{
+  background:var(--surface-card);border:var(--border-hair) solid var(--border-subtle);
+  border-radius:var(--radius-lg);padding:var(--space-5);text-align:center;
+  box-shadow:var(--shadow-sm);border-top:var(--border-accent) solid var(--border-subtle);
+}
+.perfbox.accent{border-top-color:var(--color-accent)}
+.perfbox.primary{border-top-color:var(--color-primary)}
+.perfbox.neutral{border-top-color:var(--slate-300)}
+.perf-lbl{
+  font-size:var(--text-2xs);font-weight:var(--weight-bold);
+  letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;
+  color:var(--text-muted);margin-bottom:var(--space-3);
+}
+.perf-ret{
+  font-family:var(--font-mono);font-size:1.6rem;font-weight:var(--weight-semibold);
+  color:var(--text-strong);line-height:1;
+}
+.perf-bm{font-size:var(--text-xs);color:var(--text-muted);margin-top:var(--space-2)}
+.perf-alpha{font-size:var(--text-sm);font-weight:var(--weight-bold);margin-top:var(--space-2)}
+.ap{color:var(--status-positive)}
+.an{color:var(--status-negative)}
+.anote{font-size:var(--text-2xs);color:var(--text-muted);margin-top:3px}
+
+/* ── Analytics stat strip ─────────────────────────────────────────────── */
+.stat-strip{
+  display:grid;grid-template-columns:repeat(6,1fr);gap:var(--space-4);
+  padding:var(--space-5);background:var(--surface-muted);
+  border:var(--border-hair) solid var(--border-subtle);border-radius:var(--radius-lg);
+}
+.si .sv{
+  font-family:var(--font-mono);font-size:1.3rem;font-weight:var(--weight-semibold);
+  color:var(--text-strong);line-height:1;
+}
+.si .sl2{
+  font-size:var(--text-2xs);color:var(--text-muted);text-transform:uppercase;
+  letter-spacing:var(--tracking-eyebrow);margin-top:5px;font-weight:var(--weight-semibold);
+}
+
+/* ── Chart wrappers ───────────────────────────────────────────────────── */
+.ch{position:relative;width:100%}
+.h180{height:180px}.h210{height:210px}.h240{height:240px}
+.h260{height:260px}.h300{height:300px}
+
+/* ── Footer ───────────────────────────────────────────────────────────── */
+.page-footer{
+  background:var(--surface-darker);
+  border-top:var(--border-accent) solid var(--color-accent);
+  padding:var(--space-6) 0;margin-top:var(--space-6);
+}
+.footer-inner{
+  max-width:1160px;margin:0 auto;padding:0 var(--space-6);
+  display:grid;grid-template-columns:auto 1fr auto;
+  gap:var(--space-6);align-items:center;
+}
+.footer-logo img{height:44px;width:auto;opacity:0.95}
+.footer-meta{}
+.footer-line1{
+  font-family:var(--font-sans);font-size:var(--text-xs);
+  font-weight:var(--weight-semibold);color:var(--text-on-dark);
+}
+.footer-line2{
+  font-family:var(--font-sans);font-size:var(--text-2xs);
+  color:var(--text-on-dark-muted);margin-top:3px;letter-spacing:0.01em;
+}
+.footer-chips{display:flex;gap:var(--space-2);flex-wrap:wrap}
+
+/* ── Responsive ───────────────────────────────────────────────────────── */
+@media(max-width:900px){
+  .g2,.g3,.g4,.g5,.kpi-grid,.prod-grid,.proj-grid,.perf-grid,.stat-strip,.hdr-kpi-row{
+    grid-template-columns:1fr;
+  }
+  .footer-inner{grid-template-columns:1fr}
+  .hdr-title{font-size:1.6rem}
+  .topbar-chips .chip:not(.chip-rating){display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-brand">
+      <div class="topbar-mark">
+        <img src="data:image/png;base64,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" alt="NCGCL Falcon Mark" width="26" height="26">
+      </div>
+      <div class="topbar-name">
+        NCGCL
+        <span>National Credit Guarantee Company Limited</span>
+      </div>
+    </div>
+    <div class="topbar-chips">
+      <span class="chip chip-rating">AAA / A1+ &middot; PACRA</span>
+      <span class="chip chip-outline">Shariah Compliant</span>
+      <span class="chip chip-outline">SBP Enlisted</span>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE HEADER -->
+<div class="page-hdr">
+  <div class="page-wrap page-hdr-inner">
+    <div class="hdr-eyebrow">
+      <i data-lucide="building-2"></i>
+      Monthly Board Update &middot; July 2026
+    </div>
+    <h1 class="hdr-title">Pipeline, Product &amp; Financial Performance</h1>
+    <p class="hdr-sub">Comprehensive update for Board Members and Key Stakeholders &middot; Reflects data as at June 30, 2026</p>
+    <div class="hdr-kpi-row">
+      <div class="hdr-kpi">
+        <div class="hdr-kpi-val">PKR 19.3Bn</div>
+        <div class="hdr-kpi-lbl">Deal Pipeline (+5.3% MoM)</div>
+      </div>
+      <div class="hdr-kpi">
+        <div class="hdr-kpi-val">2nd Issuer Live</div>
+        <div class="hdr-kpi-lbl">HBL FI Issues to AGAHE &amp; RCDP</div>
+      </div>
+      <div class="hdr-kpi">
+        <div class="hdr-kpi-val">PKR 462.7Mn</div>
+        <div class="hdr-kpi-lbl">YTD Investment Income</div>
+      </div>
+      <div class="hdr-kpi">
+        <div class="hdr-kpi-val">+59 bps</div>
+        <div class="hdr-kpi-lbl">YTD Alpha vs Peer Avg</div>
+      </div>
+      <div class="hdr-kpi">
+        <div class="hdr-kpi-val">AAA / A1+ Renewed</div>
+        <div class="hdr-kpi-lbl">PACRA Rating &middot; Board Confidential</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- JUMP NAV -->
+<nav class="jnav" aria-label="Section navigation">
+  <div class="jnav-inner">
+    <a href="#snap"><i data-lucide="layout-grid"></i>A &middot; Snapshot</a>
+    <a href="#deals"><i data-lucide="git-branch"></i>B &middot; Deal Pipeline</a>
+    <a href="#products"><i data-lucide="layers"></i>C &middot; Products</a>
+    <a href="#projects"><i data-lucide="handshake"></i>D &middot; Projects</a>
+    <a href="#fin"><i data-lucide="landmark"></i>E &middot; Financials</a>
+    <a href="#inv"><i data-lucide="trending-up"></i>F &middot; Investment</a>
+    <a href="#analytics"><i data-lucide="bar-chart-3"></i>G &middot; Analytics</a>
+    <a href="#hr"><i data-lucide="users"></i>H &middot; HR Metrics</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+
+<!-- ══════════════════ A · SNAPSHOT ══════════════════ -->
+<div id="snap" class="sec">
+  <div class="sec-ey"><i data-lucide="layout-grid"></i>Section A</div>
+  <h2 class="sec-title">Executive Snapshot</h2>
+  <p class="sec-sub">Portfolio metrics as at June 30, 2026 · Financial data YTD June 2026</p>
+
+  <div class="callout" style="margin-bottom:.75rem">
+    <div class="callout-head"><i data-lucide="award"></i> Milestone — Second Institution Begins Issuance · HBL FI</div>
+    <div class="callout-body">Following May's first-ever guarantee to Kashf Foundation under PMIC, <strong>HBL FI has now issued guarantees to AGAHE and RCDP</strong> — the second institution to activate under its executed MAGFA, with further disbursements expected in July. NCGCL now has active exposure across two guarantee-issuing relationships (PMIC and HBL FI). Total guarantee revenue recognised YTD: <strong>PKR 487,785</strong> (accrued fee income plus amortised PMIC upfront fee).</div>
+  </div>
+  <div class="callout accent" style="margin-bottom:.75rem">
+    <div class="callout-head"><i data-lucide="landmark"></i> Milestone — PKR 1 Bn Budgetary Allocation Secured in Budget 2026-27</div>
+    <div class="callout-body">The Government of Pakistan's <strong>Budget 2026-27</strong> has allocated <strong>PKR 1 Bn</strong> specifically for NCGCL to extend credit guarantees to <strong>export-oriented SMEs</strong>. This formalises fiscal-level recognition of NCGCL's mandate and provides a dedicated capital base to scale guarantee coverage in support of Pakistan's export sector — a significant validation of the Company's catalytic finance model at the national policy level.</div>
+  </div>
+  <div class="callout" style="margin-bottom:.75rem">
+    <div class="callout-head"><i data-lucide="shield-check"></i> Milestone — AAA / A1+ Credit Rating Renewed by PACRA</div>
+    <div class="callout-body">PACRA has <strong>renewed NCGCL's long-term rating of AAA and short-term rating of A1+</strong>, reaffirming the Company's highest-tier credit standing. The renewal underpins NCGCL's capacity to issue guarantees at scale and reinforces counterparty confidence across the FI, DFI and multilateral partner base.</div>
+  </div>
+  <div class="callout accent" style="margin-bottom:1.5rem">
+    <div class="callout-head"><i data-lucide="trending-up"></i> Pipeline Milestone — PKR 19.3 Bn · +5.3% MoM Growth</div>
+    <div class="callout-body">Total quantified pipeline grew to <strong>PKR 19.3 Bn</strong> this month (33 active engagements, up from 31), driven by three newly quantified deals — <strong>Raqami (PKR 200 Mn)</strong>, <strong>NAVTTC (PKR 200 Mn)</strong> and <strong>Taleem (PKR 45 Mn)</strong> — alongside continued advancement at Bank of Khyber (MoU signed, term sheet shared) and Bank of Punjab (in-principle approval, FI on-lending list finalised).</div>
+  </div>
+
+  <div class="ex">Exhibit A-1 · Headline Portfolio Metrics</div>
+  <div class="kpi-grid">
+    <div class="kbox am"><div class="knum">PKR 19.3Bn</div><div class="klbl">Quantified Pipeline Value</div><div class="knote am">↑ +5.3% MoM · 33 active deals</div></div>
+    <div class="kbox gn"><div class="knum">PKR 9.69Bn</div><div class="klbl">Total Asset Base</div><div class="knote gn">↑ +0.64% MoM · PKR 9.18Bn deployed</div></div>
+    <div class="kbox rd"><div class="knum">+14 bps</div><div class="klbl">MTD Alpha vs Peer Universe</div><div class="knote rd">NCGCL 10.99% vs peer avg 10.85%</div></div>
+    <div class="kbox sl"><div class="knum">PKR 462.7Mn</div><div class="klbl">YTD Investment Income</div><div class="knote am">+ PKR 0.49Mn guarantee revenue YTD</div></div>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="ex">Exhibit A-2</div>
+      <div class="card-title">Pipeline Value by Product Category</div>
+      <div class="card-sub">Quantified PKR pipeline · 22 confirmed deals · PKR 19.3 Bn total</div>
+      <div class="ch h260"><canvas id="cA2"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="ex">Exhibit A-3</div>
+      <div class="card-title">Deal Stage Distribution</div>
+      <div class="card-sub">33 active engagements · Two institutions now issuing guarantees</div>
+      <div class="ch h260"><canvas id="cA3"></canvas></div>
+    </div>
+  </div>
+</div>
+
+<hr class="dv">
+
+<!-- ══════════════════ B · DEAL PIPELINE ══════════════════ -->
+<div id="deals" class="sec">
+  <div class="sec-ey"><i data-lucide="git-branch"></i>Section B</div>
+  <h2 class="sec-title">Guarantee Deal Pipeline</h2>
+  <p class="sec-sub">21-stage origination framework · MAGFA as master guarantee agreement · Status reflects first week July 2026</p>
+
+  <div class="card" style="margin-bottom:1.5rem">
+    <div class="ex">Exhibit B-1</div>
+    <div class="card-title">Top Deals by Guarantee Value</div>
+    <div class="card-sub">PKR Mn · BAFL remains largest at PKR 4,000 Mn · Colour by stage</div>
+    <div class="ch h300"><canvas id="cB1"></canvas></div>
+  </div>
+
+  <div class="card" style="margin-bottom:1.5rem">
+    <div class="ex">Exhibit B-2</div>
+    <div class="card-title">Active Deal Tracker — All Engagements</div>
+    <div class="card-sub">Updated as at July 2026 · <span class="b b-up">Updated</span> denotes change from prior period · <span class="b b-star"><i data-lucide="award"></i> Milestone</span> denotes major development</div>
+    <div style="overflow-x:auto">
+    <table class="tbl">
+      <thead><tr><th>Deal ID</th><th>Institution</th><th>Product Type</th><th>Amount</th><th>Stage</th><th>Latest Status</th></tr></thead>
+      <tbody>
+        <tr style="background:#FFFBF0"><td class="mono">GUA-2025-001</td><td class="str">PMIC</td><td>Credit Guarantee – FI</td><td class="val">PKR 1,000 Mn</td><td><span class="b b-star"><i data-lucide="award"></i> First Guarantee Issued</span></td><td style="font-size:11px"><strong>Kashf Foundation: PKR 250 Mn guarantee active.</strong> Fee received. Follow-up maintained for additional issuance; PMIC awaiting SECP per-party limit increase, with further disbursements expected early July. <span class="b b-up">Updated</span></td></tr>
+        <tr style="background:#FFFBF0"><td class="mono">GUA-2025-005</td><td class="str">HBL FI</td><td>Credit Guarantee – FI</td><td class="val">PKR 1,000 Mn</td><td><span class="b b-star"><i data-lucide="award"></i> Guarantees Issued</span></td><td style="font-size:11px"><strong>Second institution live: guarantees issued to AGAHE and RCDP.</strong> Further disbursements expected in July. System access confirmed. <span class="b b-up">Updated</span></td></tr>
+        <tr><td class="mono">GUA-2025-003</td><td class="str">BIPL</td><td>Credit Guarantee – FI</td><td class="val">PKR 200 Mn</td><td><span class="b b-exec">MAGFA Executed</span></td><td style="font-size:11px">Executed agreement received. System demo to BIPL to be held in July. <span class="b b-up">Updated</span></td></tr>
+        <tr><td class="mono">GUA-2025-004</td><td class="str">Bank Alfalah (BAFL)</td><td>Credit Guarantee – FI</td><td class="val">PKR 4,000 Mn</td><td><span class="b b-ts">Term Sheet</span></td><td style="font-size:11px">Meeting held with BAFL's Digital Bank team pre-Eid; Risk queries addressed. Performance data submitted — most products still in discussion phase. Further lending data requested. <span class="b b-up">Updated</span></td></tr>
+        <tr><td class="mono">GUA-2025-002</td><td class="str">HBL MFB</td><td>Credit Guarantee – FI</td><td class="val">PKR 1,000 Mn</td><td><span class="b b-ts">Term Sheet</span></td><td style="font-size:11px">HBL MFB has proposed a new arrangement to NCGCL, currently under finalisation. <span class="b b-up">Updated</span></td></tr>
+        <tr><td class="mono">GUA-2026-031</td><td class="str">Bank of Punjab</td><td>Credit Guarantee – FI</td><td class="val">PKR 2,000 Mn</td><td><span class="b b-ts">Term Sheet</span></td><td style="font-size:11px">In-principle approval held for NCGCL as guarantee partner; firm approval expected in July. FI on-lending list finalised. MoU to be signed post firm approval. <span class="b b-up">Updated</span></td></tr>
+        <tr><td class="mono">GUA-2026-030</td><td class="str">Bank of Khyber</td><td>Credit Guarantee – Portfolio</td><td class="val">PKR 1,000 Mn</td><td><span class="b b-ts">Term Sheet</span></td><td style="font-size:11px">MoU signed. Meeting held with SME, Agri, Commercial and Product heads. Term sheet and data request shared (PMYBL second loss, Trout pilot, gender-lending pilot). <span class="b b-up">Updated</span></td></tr>
+        <tr><td class="mono">GUA-2025-006</td><td class="str">JS Bank (JSBL)</td><td>Credit Guarantee – FI</td><td class="val">PKR 2,000 Mn</td><td><span class="b b-ic">IC Approval</span></td><td style="font-size:11px">NCGCL guarantee-partner approval arranged; FI team now securing approval for individual MFI/MFB/DFI on-lending from their internal chain. CEO-level discussion held. <span class="b b-up">Updated</span></td></tr>
+        <tr><td class="mono">GUA-2026-026</td><td class="str">Askari Bank</td><td>Guarantee &amp; IB Advisory</td><td class="val">PKR 1,000 Mn</td><td><span class="b b-ic">Risk Onboarding</span></td><td style="font-size:11px">In-depth discussion held; in-principle approval held for onboarding NCGCL as guarantee-issuing entity via Risk. Firm approval awaited. <span class="b b-up">Updated</span></td></tr>
+        <tr><td class="mono">GUA-2025-012b</td><td class="str">Pak Oman</td><td>Credit Guarantee – Portfolio</td><td class="val">PKR 1,000 Mn</td><td><span class="b b-dd">SLA Finalisation</span></td><td style="font-size:11px">Approval to be presented once structure is finalised — pari passu SME/Agri coverage plus an on-lending sub-limit for SAFCO; SAFCO coverage to be finalised post June 2026 management accounts. <span class="b b-up">Updated</span></td></tr>
+        <tr><td class="mono">GUA-2025-008</td><td class="str">UBL</td><td>Credit Guarantee – FI</td><td class="val">PKR 1,500 Mn</td><td><span class="b b-dd">Due Diligence</span></td><td style="font-size:11px">CEO intervention requested to approach Chief Strategy Officer.</td></tr>
+        <tr><td class="mono">GUA-2025-013</td><td class="str">Pak China</td><td>Credit Guarantee – Portfolio</td><td class="na">TBD</td><td><span class="b b-dd">MoU Signed</span></td><td style="font-size:11px">MoU signed off. Met the CIBG Team; prospective transaction in hand requiring guarantee intervention — details awaited. <span class="b b-up">Updated</span></td></tr>
+        <tr><td class="mono">GUA-2025-012</td><td class="str">Allied Bank (ABL)</td><td>Credit Guarantee – Portfolio</td><td class="na">TBD</td><td><span class="b b-dd">Meeting Completed</span></td><td style="font-size:11px">Meeting held with RCH. Credit line and future transactions requiring guarantee discussed.</td></tr>
+        <tr><td class="mono">GUA-2025-000</td><td class="str">UNIDO</td><td>Consortium Guarantee</td><td class="val">PKR 80 Mn</td><td><span class="b b-dd">Phase 2 Submitted</span></td><td style="font-size:11px">Phase 2 proposal submitted on UNIDO's portal; UNIDO Pakistan liaising with HQ. Engagement with additional FIs initiated; PMN arranging sessions for prospective MFIs/MFBs. Term sheet to be shared with JS Bank for SME lending. <span class="b b-up">Updated</span></td></tr>
+        <tr><td class="mono">GUA-2025-011</td><td class="str">Haball</td><td>Credit Guarantee – Tech</td><td class="val">PKR 500 Mn</td><td><span class="b b-init">Due Diligence</span></td><td style="font-size:11px">System demo to the NCGCL team to be scheduled by Haball.</td></tr>
+        <tr><td class="mono">GUA-2026-028</td><td class="str">WASL Mobility Modaraba</td><td>2-3 Wheeler Pilot</td><td class="na">TBD</td><td><span class="b b-dd">Preliminary DD</span></td><td style="font-size:11px">Portfolio, Sukuk and Treasury credit-line guarantees discussed; NDA signed. WASL is arranging funding from PMIC/Karandaaz and will approach commercial banks for limits post-disbursement, seeking NCGCL support. <span class="b b-up">Updated</span></td></tr>
+        <tr><td class="mono">GUA-2025-007</td><td class="str">Meezan Bank (MEBL)</td><td>Credit Guarantee – FI</td><td class="val">PKR 1,000 Mn</td><td><span class="b b-init">Initial Engagement</span></td><td style="font-size:11px">Joint proposal to be submitted to MEBL by Haball, with NCGCL as guarantee partner. <span class="b b-up">Updated</span></td></tr>
+        <tr><td class="mono">GUA-2025-020</td><td class="str">Halan Microfinance</td><td>Microfinance Guarantee</td><td class="val">PKR 1,000 Mn</td><td><span class="b b-pipe">Reassessment</span></td><td style="font-size:11px">JS Bank's FI team facilitating a discussion between NCGCL, Halan and their IB team on structure and modalities. <span class="b b-up">Updated</span></td></tr>
+        <tr><td class="mono">SUK-2026-021</td><td class="str">Haball – Sukuk</td><td>Sukuk</td><td class="val">PKR 500 Mn</td><td><span class="b b-init">Structuring</span></td><td style="font-size:11px">Structure discussed. Guarantee arrangements with MEBL and Al Baraka to be finalised before proceeding. <span class="b b-up">Updated</span></td></tr>
+        <tr><td class="mono">GUA-2026-029</td><td class="str">Climate Core Asia</td><td>Equity Guarantee</td><td class="na">TBD</td><td><span class="b b-init">LOI Received</span></td><td style="font-size:11px">Firm LOIs received from Pak Libya (PKR 300 Mn) and Saudi Pak (PKR 1 Bn). Licensing to finalise in 2–3 weeks; Climate Core has sent NCGCL a proposal detailing guarantee coverage and pricing. <span class="b b-up">Updated</span></td></tr>
+        <tr style="background:#FFFBF0"><td class="mono">GUA-2026-032</td><td class="str">Raqami</td><td>Digital Lending Guarantee</td><td class="val" style="color:var(--status-positive)">PKR 200 Mn</td><td><span class="b b-new">New · Initial Engagement</span></td><td style="font-size:11px">Digital bank finalising internal credit-policy approval, expected August 2026; vehicle and SME financing programmes to follow, where NCGCL may enter as guarantee partner. <span class="b b-new">New Deal</span></td></tr>
+        <tr style="background:#FFFBF0"><td class="mono">GUA-2026-034</td><td class="str">NAVTTC</td><td>Fund / Credit Guarantee</td><td class="val" style="color:var(--status-positive)">PKR 200 Mn</td><td><span class="b b-new">New · MoU Drafting</span></td><td style="font-size:11px">MoU to be executed early; SAP-training pilot to be carefully designed thereafter. NAVTTC holds surplus liquidity — structure options under review. NCGCL to charge an advisory fee. <span class="b b-new">New Deal</span></td></tr>
+        <tr style="background:#FFFBF0"><td class="mono">GUA-2026-033</td><td class="str">Taleem</td><td>Microfinance Guarantee</td><td class="val" style="color:var(--status-positive)">PKR 45 Mn</td><td><span class="b b-new">New · Initial Engagement</span></td><td style="font-size:11px">Arrangement with HBL under reconsideration; Taleem is also exploring a relationship with Bank Alfalah. <span class="b b-new">New Deal</span></td></tr>
+        <tr><td class="mono">GUA-2025-021</td><td class="str">Pak Kuwait</td><td>Credit Guarantee – Portfolio</td><td class="na">TBD</td><td><span class="b b-init">Initial Engagement</span></td><td style="font-size:11px">2nd meeting pending. Supply chain product with Haball under consideration.</td></tr>
+        <tr><td class="mono">GUA-2025-014</td><td class="str">Pak Brunei</td><td>Credit Guarantee – Portfolio</td><td class="na">TBD</td><td><span class="b b-init">Initial Engagement</span></td><td style="font-size:11px">No satisfactory updates on credit lines.</td></tr>
+        <tr><td class="mono">GUA-2026-027</td><td class="str">Pak Libya</td><td>Guarantee &amp; IB Advisory</td><td class="na">TBD</td><td><span class="b b-pipe">Pending</span></td><td style="font-size:11px">CEO to speak directly with the MD.</td></tr>
+        <tr><td class="mono">GUA-2026-024</td><td class="str">PFSL</td><td>TBD</td><td class="na">TBD</td><td><span class="b b-init">NDA Signed</span></td><td style="font-size:11px">NDA signed; PFSL to revert with their requirement. <span class="b b-new">New Deal</span></td></tr>
+        <tr><td class="mono">GUA-2026-025</td><td class="str">Neem Financial Services</td><td>Earned Wage Access</td><td class="na">TBD</td><td><span class="b b-pipe">On Hold</span></td><td style="font-size:11px">Company needs to stabilise before a guarantee discussion — minimum eligibility requirement not yet met. <span class="b b-new">New Deal</span></td></tr>
+        <tr><td class="mono">GUA-2025-010b</td><td class="str">HBL Zarai</td><td>Credit Guarantee – Corp</td><td class="val">PKR 37.5 Mn</td><td><span class="b b-live">Board Approval Pending</span></td><td style="font-size:11px">Committee recommendation arranged; board approval awaited. Legal agreement being vetted by external counsel. <span class="b b-up">Updated</span></td></tr>
+        <tr><td class="mono">GUA-2025-010</td><td class="str">NRSP</td><td>Credit Guarantee – Corp</td><td class="na">TBD</td><td><span class="b b-magfa">Structuring</span></td><td style="font-size:11px">HBL–NRSP NOC arrangement finalised. NRSP to discuss replacing partial cash margin with an NCGCL guarantee, convening stakeholders if required.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p style="font-size:11px;color:var(--text-muted);margin-top:.75rem">Additionally tracked: Al Habib, HMB (meetings to be aligned with SME/Agri Heads), Al Baraka (info packet shared; GH meeting scheduled for July post half-year close), Faysal (intro pack shared; meeting scheduled post half-year close), BEVL (concerns registered via SEDF — limited traction), Cash Now / Commercial Paper (funding source not confirmed), Daewoo (stalled — financial model awaited), Pantera (declined)</p>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="ex">Exhibit B-3</div>
+      <div class="card-title">Pipeline by Origination Team</div>
+      <div class="card-sub">PKR Mn · Quantified deals by originating function</div>
+      <div class="ch h240"><canvas id="cB3"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="ex">Exhibit B-4</div>
+      <div class="card-title">Deal Status Distribution</div>
+      <div class="card-sub">Deal count · 33 active engagements by stage</div>
+      <div class="ch h240"><canvas id="cB4"></canvas></div>
+    </div>
+  </div>
+</div>
+
+<hr class="dv">
+
+<!-- ══════════════════ C · PRODUCTS ══════════════════ -->
+<div id="products" class="sec">
+  <div class="sec-ey"><i data-lucide="layers"></i>Section C</div>
+  <h2 class="sec-title">Product Pipeline Status</h2>
+  <p class="sec-sub">17 core products · 3 new additions this period · Women Guarantee Programme graduates to Live · FI onboarding continues across the live suite</p>
+
+  <div class="ex" style="margin-bottom:.6rem">Exhibit C-1 · Product Development Stage Tracker — Updated July 2026</div>
+  <div style="display:flex;gap:1.25rem;flex-wrap:wrap;font-size:11px;color:var(--text-muted);margin-bottom:.85rem">
+    <span style="color:#1a6b3c">● Live / In-Placed</span><span style="color:var(--color-primary)">● Structuring / Active</span><span style="color:#555">● Review / Board</span><span style="color:#aaa">● Concept</span><span style="color:var(--status-negative)">● New This Period</span>
+  </div>
+
+  <div class="prod-grid">
+
+    <div class="pc live">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+        <div class="pname">HBL Zarai Collaboration</div><span class="b b-live">In-Placed · 3Q26</span>
+      </div>
+      <div class="pmeta">Agriculture Value Chain · Portfolio Level · POC: Adil</div>
+      <div class="sb-row"><div class="sb on"></div><div class="sb on"></div><div class="sb on"></div><div class="sb on"></div><span class="sl" style="color:#1a6b3c">Stage 4</span></div>
+      <div class="pnote">Approved by the Guarantee Committee; to be presented at the next board meeting. External legal counsel is drafting the agreements. <span class="b b-up">Updated</span></div>
+      <div class="pfi">FI Partners: HBL Zarai</div>
+    </div>
+
+    <div class="pc live">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+        <div class="pname">SME Guarantee Programme</div><span class="b b-live">Live · 3Q26</span>
+      </div>
+      <div class="pmeta">SME · Account &amp; FL/SL · POC: Majid</div>
+      <div class="sb-row"><div class="sb on"></div><div class="sb on"></div><div class="sb on"></div><div class="sb on"></div><span class="sl" style="color:#1a6b3c">Stage 4</span></div>
+      <div class="pnote">In-placed · FI discussions and onboarding continuing</div>
+      <div class="pfi">FI Partners: Meezan · BOP · BOK · JS Bank · Bank Alfalah</div>
+    </div>
+
+    <div class="pc live">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+        <div class="pname">Agriculture Guarantee Structure</div><span class="b b-live">Live · 3Q26</span>
+      </div>
+      <div class="pmeta">Agriculture · Joint FL &amp; SL · POC: Majid</div>
+      <div class="sb-row"><div class="sb on"></div><div class="sb on"></div><div class="sb on"></div><div class="sb on"></div><span class="sl" style="color:#1a6b3c">Stage 4</span></div>
+      <div class="pnote">In-placed · FI discussions and onboarding continuing</div>
+      <div class="pfi">FI Partners: BOP · BIPL · BOK</div>
+    </div>
+
+    <div class="pc live">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+        <div class="pname">Microfinance On-Lending Guarantee</div><span class="b b-live">Live · 3Q26</span>
+      </div>
+      <div class="pmeta">Microenterprises · Joint FL &amp; SL · POC: Majid</div>
+      <div class="sb-row"><div class="sb on"></div><div class="sb on"></div><div class="sb on"></div><div class="sb on"></div><span class="sl" style="color:#1a6b3c">Stage 4</span></div>
+      <div class="pnote">In-placed · MFI on-lending arrangements in active development</div>
+      <div class="pfi">FI Partners: PMIC · Pak Brunei · JS Bank · BOP FI · HBL FI · Askari FI</div>
+    </div>
+
+    <div class="pc live">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+        <div class="pname">Women Guarantee Programme</div><span class="b b-live">In-Placed · Graduated ↑</span>
+      </div>
+      <div class="pmeta">Women Finance · UNIDO Phase II linkage · POC: Majid</div>
+      <div class="sb-row"><div class="sb on"></div><div class="sb on"></div><div class="sb on"></div><div class="sb on"></div><span class="sl" style="color:#1a6b3c">Stage 4</span></div>
+      <div class="pnote">Graduated from concept to in-placed. Pilot being finalised with Bank of Khyber (PKR 200 Mn). <span class="b b-up">Updated</span></div>
+      <div class="pfi">FI Partners: ASA Pakistan · Kashf Foundation · Halan Microfinance</div>
+    </div>
+
+    <div class="pc str">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+        <div class="pname">Digital Lending Guarantee</div><span class="b b-ts">Structuring · 3Q26</span>
+      </div>
+      <div class="pmeta">MSME &amp; Agri · Pari Passu · POC: Majid</div>
+      <div class="sb-row"><div class="sb on"></div><div class="sb on"></div><div class="sb on"></div><div class="sb am"></div><span class="sl" style="color:var(--color-primary)">Stage 3</span></div>
+      <div class="pnote">Term sheet at closure with Bank Alfalah. Covers Embedded, COD, POS, Merchant financing.</div>
+      <div class="pfi">FI Partners: Bank Alfalah · UBL</div>
+    </div>
+
+    <div class="pc str">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+        <div class="pname">Digital Banks Guarantee (Raqami)</div><span class="b b-ts">Structuring · TBD</span>
+      </div>
+      <div class="pmeta">Digital Lending · TBD · POC: Majid</div>
+      <div class="sb-row"><div class="sb on"></div><div class="sb on"></div><div class="sb am"></div><div class="sb"></div><span class="sl" style="color:var(--color-primary)">Stage 3</span></div>
+      <div class="pnote">Met Raqami CRO. Post credit-policy approval (expected Aug 2026), Raqami to revert with Supply Chain and Auto Financing (EV &amp; hybrid variant) programmes. Linked to Deal GUA-2026-032. <span class="b b-up">Updated</span></div>
+      <div class="pfi">Partners: Raqami Digital Bank</div>
+    </div>
+
+    <div class="pc str">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+        <div class="pname">TPL &amp; OEM Buy Now Pay Later</div><span class="b b-ts">Structuring · 3Q26</span>
+      </div>
+      <div class="pmeta">Consumer Finance · Joint FL (TPL) &amp; SL (NCGCL) · POC: Majid</div>
+      <div class="sb-row"><div class="sb on"></div><div class="sb on"></div><div class="sb on"></div><div class="sb am"></div><span class="sl" style="color:var(--color-primary)">Stage 3</span></div>
+      <div class="pnote">Draft concept note shared. Follow-up maintained; TPL team to revert by July. TPL = First Loss; NCGCL = Second Loss. <span class="b b-up">Updated</span></div>
+      <div class="pfi">Partners: TPL Finance · OEM Partners (TBD)</div>
+    </div>
+
+    <div class="pc str">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+        <div class="pname">NAVTTC Vocational Training Guarantee</div><span class="b b-ts">Structuring · TBD</span>
+      </div>
+      <div class="pmeta">Education Finance · Pari Passu · POC: Adil</div>
+      <div class="sb-row"><div class="sb on"></div><div class="sb on"></div><div class="sb am"></div><div class="sb"></div><span class="sl" style="color:var(--color-primary)">Stage 3</span></div>
+      <div class="pnote">Confidence-building meeting held with NAVTTC leadership; focus is efficiency and fraud reduction rather than urgent deployment (surplus liquidity available). Multiple structures under consideration (100% NAVTTC counter-guarantee, partial NCGCL cover with markup subsidy, or Skill Development Bond underwriting). Recommendation: execute MoU early, then design a careful SAP-training pilot; NCGCL to charge an advisory fee. Linked to Deal GUA-2026-034 (PKR 200 Mn). <span class="b b-up">Updated</span></div>
+      <div class="pfi">Partners: NAVTTC · Agahe · Taleem</div>
+    </div>
+
+    <div class="pc rev">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+        <div class="pname">Corporate Guarantees</div><span class="b b-dd">CEO Review · 4Q26</span>
+      </div>
+      <div class="pmeta">Corporate Entities · Account Level · POC: Adil</div>
+      <div class="sb-row"><div class="sb on"></div><div class="sb on"></div><div class="sb gy"></div><div class="sb"></div><span class="sl">Stage 2</span></div>
+      <div class="pnote">CEO's paper being reviewed and aligned. Initial discussions with Bayer (ag-inputs) on liquidity-enhancing coverage for a distressed distributor portfolio; Bayer meeting to be arranged in Karachi in the second week of July 2026. <span class="b b-up">Updated</span></div>
+      <div class="pfi">Entities: TPL · Bayer · PARCO</div>
+    </div>
+
+    <div class="pc rev">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+        <div class="pname">Horticulture &amp; Agri Value Chain</div><span class="b b-dd">Field Visits · 4Q26</span>
+      </div>
+      <div class="pmeta">Agriculture · TBD · POC: Adil</div>
+      <div class="sb-row"><div class="sb on"></div><div class="sb on"></div><div class="sb gy"></div><div class="sb"></div><span class="sl">Stage 2</span></div>
+      <div class="pnote">5 field visits concluded (bananas, cherries, potatoes, citrus, peaches). Next: Climate Resilient Trout Farm pilot to be discussed with the Bank of Khyber team — term sheet and data request already shared (see Deal GUA-2026-030). <span class="b b-up">Updated</span></div>
+      <div class="pfi">FI Partners: BOK · BOP</div>
+    </div>
+
+    <div class="pc rev">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+        <div class="pname">SECP Invoice Discounting Framework</div><span class="b b-dd">Regulatory</span>
+      </div>
+      <div class="pmeta">SME · Anchor Risk – Pari Passu · POC: Majid</div>
+      <div class="sb-row"><div class="sb on"></div><div class="sb on"></div><div class="sb gy"></div><div class="sb"></div><span class="sl">Stage 2</span></div>
+      <div class="pnote">SECP soliciting NBFI &amp; FI feedback. Timeline dependent on SECP process.</div>
+      <div class="pfi">FI Partners: Meezan · CashNow · Smart Finance</div>
+    </div>
+
+    <div class="pc rev">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+        <div class="pname">ISMO Electricity Product</div><span class="b b-dd">Term Sheet Expected</span>
+      </div>
+      <div class="pmeta">Energy / Power · TBD · POC: Majid</div>
+      <div class="sb-row"><div class="sb on"></div><div class="sb on"></div><div class="sb gy"></div><div class="sb"></div><span class="sl">Stage 2</span></div>
+      <div class="pnote">Product paper shared with relevant stakeholders; term sheet expected from them this week. <span class="b b-up">Updated</span></div>
+      <div class="pfi">Partners: N/A</div>
+    </div>
+
+    <div class="pc new">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+        <div class="pname">World Bank – Agri Connect</div><span class="b b-ts">Concept · TBD</span>
+      </div>
+      <div class="pmeta">Agriculture · Warehouse Infrastructure · POC: Adil</div>
+      <div class="sb-row"><div class="sb on"></div><div class="sb am"></div><div class="sb"></div><div class="sb"></div><span class="sl" style="color:var(--status-negative)">Stage 1</span></div>
+      <div class="pnote">Concept paper validated. CEO meeting arranged to progress the warehouse-infrastructure financing opportunity for government-nominated wheat procurement entities. <span class="b b-up">Updated</span></div>
+      <div class="pfi">Partners: World Bank · Government-nominated entities (TBD)</div>
+    </div>
+
+    <div class="pc new">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+        <div class="pname">Gender Bond — Consortium</div><span class="b b-new">New · 3Q26</span>
+      </div>
+      <div class="pmeta">Bond Market · Guarantee-Backed Bond (TFC) · POC: Saira</div>
+      <div class="sb-row"><div class="sb on"></div><div class="sb am"></div><div class="sb"></div><div class="sb"></div><span class="sl" style="color:var(--status-negative)">Stage 1</span></div>
+      <div class="pnote">Under discussion. PMN to arrange a session of prospective MFIs and MFBs for NCGCL to present the structure. <span class="b b-new">New Product</span></div>
+      <div class="pfi">Partners: TBD (via PMN)</div>
+    </div>
+
+    <div class="pc new">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+        <div class="pname">EXIM Bank Collaboration</div><span class="b b-new">New · TBD</span>
+      </div>
+      <div class="pmeta">Trade Finance · TBD · POC: Falak</div>
+      <div class="sb-row"><div class="sb on"></div><div class="sb am"></div><div class="sb"></div><div class="sb"></div><span class="sl" style="color:var(--status-negative)">Stage 1</span></div>
+      <div class="pnote">Exploring possible collaboration with EXIM Bank for trade-related products. Meeting scheduled with EXIM representatives to evaluate synergies. <span class="b b-new">New Product</span></div>
+      <div class="pfi">Partners: EXIM Bank</div>
+    </div>
+
+    <div class="pc new">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+        <div class="pname">LUMS 3-Wheeler Electrification (MAF)</div><span class="b b-new">New · 4Q26</span>
+      </div>
+      <div class="pmeta">Energy / EV · Portfolio · POC: Ammar</div>
+      <div class="sb-row"><div class="sb on"></div><div class="sb am"></div><div class="sb"></div><div class="sb"></div><span class="sl" style="color:var(--status-negative)">Stage 1</span></div>
+      <div class="pnote">Joint collaboration between LUMS, FIs, MAF and NCGCL to structure SME lending for 3-wheeler electrification; MAF to provide a EUR 3 Mn grant. Pilot already underway in Multan, with expansion planned to Lahore and Faisalabad. Draft MoU and concept paper shared with LUMS. Distinct from the WASL Mobility Modaraba deal (GUA-2026-028), tracked separately in Section B. <span class="b b-new">New Product</span></div>
+      <div class="pfi">FI Partners: HBL · Meezan</div>
+    </div>
+
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="ex">Exhibit C-2</div>
+      <div class="card-title">Products by Business Segment</div>
+      <div class="card-sub">17 products across 11 segments · 3 new additions this period</div>
+      <div class="ch h240"><canvas id="cC2"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="ex">Exhibit C-3</div>
+      <div class="card-title">Products by Development Stage</div>
+      <div class="card-sub">Stage 4 count up to 5 following Women Guarantee Programme graduation</div>
+      <div class="ch h240"><canvas id="cC3"></canvas></div>
+    </div>
+  </div>
+</div>
+
+<hr class="dv">
+
+<!-- ══════════════════ D · PROJECTS ══════════════════ -->
+<div id="projects" class="sec">
+  <div class="sec-ey"><i data-lucide="handshake"></i>Section D</div>
+  <h2 class="sec-title">Strategic Projects &amp; Collaborations</h2>
+  <p class="sec-sub">4 active international collaborations · Climate finance, capital markets, EV, multilateral partnerships</p>
+
+  <div class="ex" style="margin-bottom:.6rem">Exhibit D-1 · Active International Collaborations</div>
+  <div class="g2" style="margin-bottom:1.5rem">
+    <div class="pjc" style="border-top:var(--border-accent) solid var(--color-accent)">
+      <div class="pjn">GIZ Project – BG&amp;BE Pakistan</div><div class="pja">Climate Finance · SME · POC: Shajeea</div>
+      <div class="pjd">Concept paper submitted Apr 17, 2026. SME carbon-efficiency upscaling plus technical assistance for new SMEs. Joint FL &amp; SL arrangement.</div>
+      <span class="b b-live">Concept Submitted — Apr 17, 2026</span>
+    </div>
+    <div class="pjc" style="border-top:var(--border-accent) solid var(--color-accent)">
+      <div class="pjn">IFC Partnership</div><div class="pja">Multi-Sector · POC: Saher</div>
+      <div class="pjd">Concept paper shared with the IFC team Apr 20, 2026. NCGCL has provided a list of sectors and products for co-investment and risk-sharing.</div>
+      <span class="b b-live">Paper Shared — Apr 20, 2026</span>
+    </div>
+    <div class="pjc" style="border-top:var(--border-accent) solid var(--color-primary)">
+      <div class="pjn">Equity Fund Guarantee Paper</div><div class="pja">Climate Finance · Portfolio Level · POC: Shajeea</div>
+      <div class="pjd">Paper to support investor capital by absorbing a portion of risk investors are unwilling to bear, enabling commercially relevant capital formation. LOIs received from Pak Libya (PKR 300 Mn) and Saudi Pak (PKR 1 Bn); Climate Core Asia licensing to finalise in 2–3 weeks. Concept paper to be shared with NCGCL Board for feedback. <span class="b b-up">Updated</span></div>
+      <span class="b b-review">Board Review Pending</span>
+    </div>
+    <div class="pjc" style="border-top:var(--border-accent) solid var(--color-primary)">
+      <div class="pjn">Credit Enhancer – Capital Markets (PSX)</div><div class="pja">Bond Market · Account Level · POC: Saira</div>
+      <div class="pjd">Deck prepared for PSX review, framing NCGCL as "credit enhancer" and "risk absorber." Currently under internal review ahead of submission to the PSX team.</div>
+      <span class="b b-live">Submitted to PSX · Under Review</span>
+    </div>
+  </div>
+
+  <div class="ex" style="margin-bottom:.6rem">Exhibit D-2 · Thematic Strategic Initiatives</div>
+  <div class="proj-grid">
+    <div class="pjc"><div class="pjn">GCF Proposal – PCFGF</div><div class="pja">Climate Finance · Multilateral</div><div class="pjd">Pakistan Climate Finance Guarantee Facility targeting GCF to mobilise blended finance for climate adaptation and mitigation.</div><span class="b b-ts">In Structuring</span></div>
+    <div class="pjc"><div class="pjn">Green Sukuk – Capital Markets</div><div class="pja">Bond Market · Sukuk</div><div class="pjd">NCGCL as credit enhancer for the PSX green and corporate Sukuk market. Linked to the Haball Sukuk deal and the PSX credit-enhancer positioning.</div><span class="b b-dd">In Review</span></div>
+    <div class="pjc"><div class="pjn">Electrification Product Suite</div><div class="pja">Energy Finance · EV &amp; Appliances</div><div class="pjd">Multi-product suite covering EVs, 2-3 wheelers (WASL Mobility Modaraba; and now LUMS 3-Wheeler Electrification with MAF grant funding), TPL OEM BNPL, and appliances. ISMO electricity paper shared. <span class="b b-up">Updated</span></div><span class="b b-ts">Product Design</span></div>
+    <div class="pjc"><div class="pjn">OPM – Mitigation Action Facility</div><div class="pja">Climate · Multilateral</div><div class="pjd">GCF-linked mitigation facility supporting Pakistan's NDCs in collaboration with OPM and multilateral partners.</div><span class="b b-dd">In Progress</span></div>
+    <div class="pjc"><div class="pjn">Hyfin – Solar Securitisation</div><div class="pja">Climate Finance · Solar</div><div class="pjd">Guarantee enabling risk transfer from solar ESCO portfolios to capital markets, linked to PSX credit enhancement.</div><span class="b b-pipe">Development</span></div>
+    <div class="pjc"><div class="pjn">Impact Assessment Framework</div><div class="pja">Analytics · Portfolio</div><div class="pjd">Portfolio-wide impact measurement: credit additionality, employment, women's income, emissions. Required for IFC, GCF reporting.</div><span class="b b-dd">Development</span></div>
+  </div>
+</div>
+
+<hr class="dv">
+
+<!-- ══════════════════ E · FINANCIALS ══════════════════ -->
+<div id="fin" class="sec">
+  <div class="sec-ey"><i data-lucide="landmark"></i>Section E</div>
+  <h2 class="sec-title">Financial Overview</h2>
+  <p class="sec-sub">Management Accounts · YTD June 30, 2026 · PKR in Millions · Budget vs Actual comparison across P&amp;L, Admin Expenses, Income &amp; Capex</p>
+
+  <div class="ex">Exhibit E-1 · YTD Headline Financials</div>
+  <div class="kpi-grid">
+    <div class="kbox gn"><div class="knum">PKR 462.7Mn</div><div class="klbl">YTD Other Income</div><div class="knote gn">+7% vs prorated 2025</div></div>
+    <div class="kbox am"><div class="knum">PKR 162.0Mn</div><div class="klbl">YTD Net Profit</div><div class="knote am">34.98% net profit margin</div></div>
+    <div class="kbox gn"><div class="knum">PKR 31.5Mn</div><div class="klbl">Admin Cost Saving</div><div class="knote gn">21.9% under prorated budget</div></div>
+    <div class="kbox sl"><div class="knum">PKR 79.2Mn</div><div class="klbl">Capex Under Budget</div><div class="knote am">60% utilisation vs full-year budget</div></div>
+  </div>
+
+  <div class="callout" style="margin-bottom:1.25rem">
+    <div class="callout-head">Guarantee Revenue Grows to PKR 487,785 — Two Institutions Now Contributing</div>
+    <div class="callout-body">With HBL FI's guarantees to AGAHE and RCDP now active alongside the PMIC/Kashf Foundation guarantee, the Company recognised total guarantee revenue of <strong>PKR 487,785 YTD</strong> — comprising accrued fee income on active guarantees plus the amortised portion of the PMIC upfront fee. This is the first period with guarantee income contributed by more than one issuing relationship.</div>
+  </div>
+
+  <div class="finhlt" style="margin-bottom:1.5rem">
+    <strong>Lower prevailing interest rates account for the YTD profit decline.</strong> YTD net profit of PKR 162.0 Mn is down 25% against prorated 2025 (PKR 216.2 Mn). This is attributable to lower interest rates prevailing during the year, which have compressed portfolio yields relative to 2025's higher-rate environment. Admin spend remains well under budget (21.9% favourable), and other income remains ahead of plan in absolute terms (+7% vs prorated 2025).
+  </div>
+
+  <!-- E-2: P&L Summary -->
+  <div class="ex">Exhibit E-2 · Profit &amp; Loss — YTD June 2026 vs Prorated Prior Year (PKR Mn)</div>
+  <div class="card" style="margin-bottom:1.5rem">
+    <div class="card-title">Income Statement Summary</div>
+    <div class="card-sub">Comparison: YTD June 2026 Actual vs 6-month prorated FY2025 and Full Year 2025</div>
+    <div style="overflow-x:auto">
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th style="text-align:right">% of Other Income 2026</th>
+          <th style="text-align:right">YTD June 2026</th>
+          <th style="text-align:right">% of Other Income 2025</th>
+          <th style="text-align:right">Prorated 2025</th>
+          <th style="text-align:right">Full Year 2025</th>
+          <th style="text-align:right">Variance</th>
+          <th style="text-align:right">% Var</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Guarantee revenue</td>
+          <td class="val">0%</td>
+          <td class="val" style="color:var(--status-positive)">0.5</td>
+          <td class="val">0%</td>
+          <td class="val" style="color:var(--text-muted)">—</td>
+          <td class="val" style="color:var(--text-muted)">—</td>
+          <td class="val" style="color:var(--status-positive)">0.5</td>
+          <td class="val" style="color:var(--status-positive)">N/A</td>
+        </tr>
+        <tr>
+          <td>Administrative expenses</td>
+          <td class="val">24%</td>
+          <td class="val" style="color:var(--status-negative)">(112.6)</td>
+          <td class="val">20%</td>
+          <td class="val" style="color:var(--text-muted)">(87.8)</td>
+          <td class="val" style="color:var(--text-muted)">(175.6)</td>
+          <td class="val" style="color:var(--status-negative)">(24.8)</td>
+          <td class="val" style="color:var(--status-negative)">28%</td>
+        </tr>
+        <tr>
+          <td>Finance cost</td>
+          <td class="val">16%</td>
+          <td class="val" style="color:var(--status-negative)">(72.6)</td>
+          <td class="val">1%</td>
+          <td class="val" style="color:var(--text-muted)">(2.9)</td>
+          <td class="val" style="color:var(--text-muted)">(5.7)</td>
+          <td class="val" style="color:var(--status-negative)">(69.7)</td>
+          <td class="val" style="color:var(--status-negative)">2,443%</td>
+        </tr>
+        <tr>
+          <td>Other income</td>
+          <td class="val">100%</td>
+          <td class="val" style="color:var(--status-positive)">462.7</td>
+          <td class="val">100%</td>
+          <td class="val" style="color:var(--text-muted)">431.7</td>
+          <td class="val" style="color:var(--text-muted)">863.5</td>
+          <td class="val" style="color:var(--status-positive)">31.0</td>
+          <td class="val" style="color:var(--status-positive)">7%</td>
+        </tr>
+        <tr style="background:var(--surface-muted)">
+          <td class="str">Profit before income tax</td>
+          <td class="val str">60%</td>
+          <td class="val str">278.0</td>
+          <td class="val str">79%</td>
+          <td class="val str" style="color:var(--text-muted)">341.1</td>
+          <td class="val str" style="color:var(--text-muted)">682.2</td>
+          <td class="val str" style="color:var(--status-negative)">(63.1)</td>
+          <td class="val str" style="color:var(--status-negative)">-19%</td>
+        </tr>
+        <tr>
+          <td>Taxation</td>
+          <td class="val">25%</td>
+          <td class="val">(116.0)</td>
+          <td class="val">29%</td>
+          <td class="val" style="color:var(--text-muted)">(124.9)</td>
+          <td class="val" style="color:var(--text-muted)">(249.9)</td>
+          <td class="val" style="color:var(--status-positive)">9.0</td>
+          <td class="val" style="color:var(--status-positive)">-7%</td>
+        </tr>
+        <tr class="row-total">
+          <td class="str">Profit for the year</td>
+          <td class="val str">35%</td>
+          <td class="val str" style="color:var(--status-positive)">162.0</td>
+          <td class="val str">50%</td>
+          <td class="val str" style="color:var(--text-muted)">216.2</td>
+          <td class="val str" style="color:var(--text-muted)">432.4</td>
+          <td class="val str" style="color:var(--status-negative)">(54.2)</td>
+          <td class="val str" style="color:var(--status-negative)">-25%</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="finhlt" style="margin-top:.75rem">Admin expense growth vs 2025 run-rate (+28% vs prorated) reflects deliberate capacity investment (ISB office, new hires, IT systems) and remains well inside the annual budget envelope. The YTD profit decline is attributable to lower interest rates prevailing during the year compressing portfolio yields relative to 2025's higher-rate environment. Other income remains <strong>+7% ahead of the prorated prior year</strong> in absolute terms.</div>
+  </div>
+
+  <!-- E-3: Admin Budget vs Actual -->
+  <div class="ex">Exhibit E-3 · Administrative Expenses — Budget vs Actual (PKR Mn)</div>
+  <div class="card" style="margin-bottom:1.5rem">
+    <div class="card-title">Admin Expense Detail — Actual vs Prorated Budget vs Annual Budget</div>
+    <div class="card-sub">YTD June 2026 · Total admin PKR 112.62 Mn actual vs PKR 144.15 Mn prorated budget — <strong style="color:var(--status-positive)">PKR 31.53 Mn (21.9%) under prorated budget</strong></div>
+    <div style="overflow-x:auto">
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th style="text-align:right">Actual</th>
+          <th style="text-align:right">Prorated Budget</th>
+          <th style="text-align:right">Variance</th>
+          <th style="text-align:right">Annual Budget</th>
+          <th style="text-align:right">Remaining Headroom</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Salaries, wages and benefits</td><td class="val">62.32</td><td class="val" style="color:var(--text-muted)">69.93</td><td class="val" style="color:var(--status-positive)">7.61</td><td class="val" style="color:var(--text-muted)">139.86</td><td class="val" style="color:var(--status-positive)">77.54</td></tr>
+        <tr><td>Travel and lodging</td><td class="val">6.99</td><td class="val" style="color:var(--text-muted)">7.07</td><td class="val" style="color:var(--status-positive)">0.07</td><td class="val" style="color:var(--text-muted)">14.14</td><td class="val" style="color:var(--status-positive)">7.14</td></tr>
+        <tr><td>Professional and legal charges</td><td class="val">6.28</td><td class="val" style="color:var(--text-muted)">8.19</td><td class="val" style="color:var(--status-positive)">1.91</td><td class="val" style="color:var(--text-muted)">16.37</td><td class="val" style="color:var(--status-positive)">10.09</td></tr>
+        <tr><td>Depreciation — property &amp; equipment</td><td class="val">2.31</td><td class="val" style="color:var(--text-muted)">18.54</td><td class="val" style="color:var(--status-positive)">16.23</td><td class="val" style="color:var(--text-muted)">37.08</td><td class="val" style="color:var(--status-positive)">34.77</td></tr>
+        <tr><td>Depreciation — right of use assets</td><td class="val">8.79</td><td class="val" style="color:var(--text-muted)">—</td><td class="val" style="color:var(--status-negative)">(8.79)</td><td class="val" style="color:var(--text-muted)">—</td><td class="val" style="color:var(--status-negative)">(8.79)</td></tr>
+        <tr><td>Amortization</td><td class="val">0.08</td><td class="val" style="color:var(--text-muted)">—</td><td class="val" style="color:var(--status-negative)">(0.08)</td><td class="val" style="color:var(--text-muted)">—</td><td class="val" style="color:var(--status-negative)">(0.08)</td></tr>
+        <tr><td>Utilities</td><td class="val">5.20</td><td class="val" style="color:var(--text-muted)">8.24</td><td class="val" style="color:var(--status-positive)">3.04</td><td class="val" style="color:var(--text-muted)">16.49</td><td class="val" style="color:var(--status-positive)">11.28</td></tr>
+        <tr><td>Fee and subscriptions</td><td class="val">2.32</td><td class="val" style="color:var(--text-muted)">2.59</td><td class="val" style="color:var(--status-positive)">0.27</td><td class="val" style="color:var(--text-muted)">5.18</td><td class="val" style="color:var(--status-positive)">2.86</td></tr>
+        <tr><td>Board meetings and conferences</td><td class="val">4.53</td><td class="val" style="color:var(--text-muted)">6.68</td><td class="val" style="color:var(--status-positive)">2.15</td><td class="val" style="color:var(--text-muted)">13.36</td><td class="val" style="color:var(--status-positive)">8.83</td></tr>
+        <tr><td>Management fee to parent company</td><td class="val">3.27</td><td class="val" style="color:var(--text-muted)">3.60</td><td class="val" style="color:var(--status-positive)">0.33</td><td class="val" style="color:var(--text-muted)">3.60</td><td class="val" style="color:var(--status-positive)">0.33</td></tr>
+        <tr><td>Auditor's remuneration</td><td class="val">1.30</td><td class="val" style="color:var(--text-muted)">1.60</td><td class="val" style="color:var(--status-positive)">0.30</td><td class="val" style="color:var(--text-muted)">3.20</td><td class="val" style="color:var(--status-positive)">1.90</td></tr>
+        <tr><td>Marketing, advertisement &amp; publicity</td><td class="val" style="color:var(--status-negative)">1.78</td><td class="val" style="color:var(--text-muted)">0.60</td><td class="val" style="color:var(--status-negative)">(1.18)</td><td class="val" style="color:var(--text-muted)">1.20</td><td class="val" style="color:var(--status-negative)">(0.58)</td></tr>
+        <tr><td>Printing &amp; stationary</td><td class="val">0.16</td><td class="val" style="color:var(--text-muted)">0.30</td><td class="val" style="color:var(--status-positive)">0.14</td><td class="val" style="color:var(--text-muted)">0.60</td><td class="val" style="color:var(--status-positive)">0.44</td></tr>
+        <tr><td>Rent expense</td><td class="val">2.31</td><td class="val" style="color:var(--text-muted)">8.04</td><td class="val" style="color:var(--status-positive)">5.73</td><td class="val" style="color:var(--text-muted)">16.09</td><td class="val" style="color:var(--status-positive)">13.78</td></tr>
+        <tr><td>Brokerage &amp; commission</td><td class="val na">—</td><td class="val" style="color:var(--text-muted)">0.60</td><td class="val" style="color:var(--status-positive)">0.60</td><td class="val" style="color:var(--text-muted)">1.20</td><td class="val" style="color:var(--status-positive)">1.20</td></tr>
+        <tr><td>Insurance expense</td><td class="val">2.58</td><td class="val" style="color:var(--text-muted)">6.10</td><td class="val" style="color:var(--status-positive)">3.53</td><td class="val" style="color:var(--text-muted)">12.20</td><td class="val" style="color:var(--status-positive)">9.63</td></tr>
+        <tr><td>Postage &amp; courier</td><td class="val">0.05</td><td class="val" style="color:var(--text-muted)">0.30</td><td class="val" style="color:var(--status-positive)">0.25</td><td class="val" style="color:var(--text-muted)">0.60</td><td class="val" style="color:var(--status-positive)">0.55</td></tr>
+        <tr><td>Maintenance expense</td><td class="val" style="color:var(--status-negative)">1.37</td><td class="val" style="color:var(--text-muted)">0.89</td><td class="val" style="color:var(--status-negative)">(0.48)</td><td class="val" style="color:var(--text-muted)">1.77</td><td class="val" style="color:var(--status-positive)">0.40</td></tr>
+        <tr><td style="color:var(--status-negative)">Office supplies <span class="b b-new" style="margin-left:4px">New Line</span></td><td class="val" style="color:var(--status-negative)">0.95</td><td class="val" style="color:var(--text-muted)">—</td><td class="val" style="color:var(--status-negative)">(0.95)</td><td class="val" style="color:var(--text-muted)">—</td><td class="val" style="color:var(--status-negative)">(0.95)</td></tr>
+        <tr><td>Other expenses</td><td class="val">0.02</td><td class="val" style="color:var(--text-muted)">—</td><td class="val" style="color:var(--status-negative)">(0.02)</td><td class="val" style="color:var(--text-muted)">—</td><td class="val" style="color:var(--status-negative)">(0.02)</td></tr>
+        <tr><td style="color:var(--text-muted);font-style:italic">Other budgeted — not yet expensed</td><td class="val na">—</td><td class="val" style="color:var(--text-muted)">0.89</td><td class="val" style="color:var(--status-positive)">0.89</td><td class="val" style="color:var(--text-muted)">1.77</td><td class="val" style="color:var(--status-positive)">1.77</td></tr>
+        <tr class="row-total">
+          <td class="str">Total</td>
+          <td class="val str" style="color:var(--status-positive)">112.62</td>
+          <td class="val str" style="color:var(--text-muted)">144.15</td>
+          <td class="val str" style="color:var(--status-positive)">31.53</td>
+          <td class="val str" style="color:var(--text-muted)">284.71</td>
+          <td class="val str" style="color:var(--status-positive)">172.09</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <p style="font-size:10px;color:var(--text-muted);margin-top:.6rem">Red variance = over budget. Green variance = under budget. Major underspend drivers: (1) Depreciation on property (PKR 16.2 Mn favourable — assets not yet fully capitalised from CWIP); (2) Rent expense (PKR 5.7 Mn favourable — ISB office not yet fully operational); (3) Insurance (PKR 3.5 Mn favourable — timing). Marketing (over budget from the outset) and maintenance show continued minor overruns. A new, previously unbudgeted <strong>Office supplies</strong> line (PKR 0.95 Mn YTD) appears for the first time this period. Annual budget figures are carried forward unchanged from the FY2026 approved budget.</p>
+  </div>
+
+  <!-- E-5: Capex Budget vs Actual -->
+  <div class="ex">Exhibit E-4 · Capex — Budget vs Actual (PKR Mn) · YTD June 2026</div>
+  <div class="g2" style="margin-bottom:1.5rem">
+    <div class="card">
+      <div class="card-title">Capital Expenditure — Budget vs Actual</div>
+      <div class="card-sub">YTD June 2026 · Total capex PKR 119.28 Mn vs annual budget PKR 198.52 Mn · 60% utilisation</div>
+      <table class="tbl">
+        <thead>
+          <tr><th>Description</th><th style="text-align:right">Actual</th><th style="text-align:right">Annual Budget</th><th style="text-align:right">Variance (Remaining)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Laptops</td><td class="val">0.92</td><td class="val" style="color:var(--text-muted)">5.00</td><td class="val" style="color:var(--status-positive)">4.08</td></tr>
+          <tr><td>Furniture, Fixtures &amp; Civil Works</td><td class="val" style="color:var(--status-positive)">76.75</td><td class="val" style="color:var(--text-muted)">80.62</td><td class="val" style="color:var(--status-positive)">3.87</td></tr>
+          <tr><td>VRF (HVAC)</td><td class="val">7.50</td><td class="val" style="color:var(--text-muted)">11.52</td><td class="val" style="color:var(--status-positive)">4.02</td></tr>
+          <tr><td>Multimedia Equipment</td><td class="val">2.99</td><td class="val" style="color:var(--text-muted)">10.36</td><td class="val" style="color:var(--status-positive)">7.37</td></tr>
+          <tr><td>Automobile <span class="b b-up" style="margin-left:4px">Updated</span></td><td class="val" style="color:var(--status-negative)">31.12</td><td class="val" style="color:var(--text-muted)">88.52</td><td class="val" style="color:var(--status-positive)">57.39</td></tr>
+          <tr><td>Other Fixed Assets</td><td class="val na">—</td><td class="val" style="color:var(--text-muted)">2.50</td><td class="val" style="color:var(--status-positive)">2.50</td></tr>
+          <tr class="row-total">
+            <td class="str">Total</td>
+            <td class="val str">119.28</td>
+            <td class="val str" style="color:var(--text-muted)">198.52</td>
+            <td class="val str" style="color:var(--status-positive)">79.24</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="font-size:10px;color:var(--text-muted);margin-top:.5rem">Capex utilisation nearly doubled month-on-month as the Furniture/Civil Works fit-out advanced (PKR 76.75 Mn, up from PKR 52.16 Mn in May) and the first vehicle procurements landed (PKR 31.12 Mn — company vehicles pending delivery, currently held as an advance to suppliers on the balance sheet). PKR 79.2 Mn of capex budget remains undeployed, chiefly further Automobile spend (PKR 57.4 Mn headroom) and Multimedia Equipment (PKR 7.4 Mn).</p>
+    </div>
+    <div class="card">
+      <div class="ex">Exhibit E-5</div>
+      <div class="card-title">Capex Utilisation — Actual vs Budget</div>
+      <div class="card-sub">PKR Mn · Annual budget vs YTD actual by category</div>
+      <div class="ch h240"><canvas id="cE6"></canvas></div>
+    </div>
+  </div>
+
+  <!-- E-6: Balance Sheet + Ratios -->
+  <div class="ex">Exhibit E-6 · Balance Sheet &amp; Key Ratios — YTD June 2026 vs FY 2025 (PKR Mn)</div>
+  <div class="g2" style="margin-bottom:1.5rem">
+    <div>
+      <div class="ratio-card" style="margin-bottom:1rem">
+        <div class="rc-title">Balance Sheet — Key Figures</div>
+        <table class="tbl">
+          <thead><tr><th>Component</th><th style="text-align:right">June 2026</th><th style="text-align:right">FY 2025</th></tr></thead>
+          <tbody>
+            <tr><td class="str">Short-term Investments</td><td class="val" style="color:var(--status-positive)">9,184</td><td class="val" style="color:var(--text-muted)">7,298</td></tr>
+            <tr><td>Cash &amp; Bank Balances</td><td class="val" style="color:var(--status-negative)">285</td><td class="val" style="color:var(--text-muted)">2,056</td></tr>
+            <tr><td>Non-Current Assets (excl. ROU)</td><td class="val">102</td><td class="val" style="color:var(--text-muted)">9</td></tr>
+            <tr><td>Right of Use Asset</td><td class="val">83</td><td class="val" style="color:var(--text-muted)">91</td></tr>
+            <tr><td>Other Current Assets</td><td class="val">34</td><td class="val" style="color:var(--text-muted)">31</td></tr>
+            <tr style="background:var(--surface-muted)"><td class="str">Total Assets</td><td class="val str">9,689</td><td class="val" style="color:var(--text-muted)">9,484</td></tr>
+            <tr><td>Issued &amp; Paid-up Capital</td><td class="val">7,348</td><td class="val" style="color:var(--text-muted)">7,348</td></tr>
+            <tr><td>Retained Earnings</td><td class="val" style="color:var(--status-positive)">789</td><td class="val" style="color:var(--text-muted)">627</td></tr>
+            <tr style="background:var(--surface-muted)"><td class="str">Total Equity</td><td class="val str">8,137</td><td class="val" style="color:var(--text-muted)">7,975</td></tr>
+            <tr><td>Lease Liabilities (NC + C)</td><td class="val">89</td><td class="val" style="color:var(--text-muted)">91</td></tr>
+            <tr><td>Financial Guarantee Liability</td><td class="val" style="color:var(--status-positive)">3</td><td class="val" style="color:var(--text-muted)">—</td></tr>
+            <tr><td>Deferred Taxation</td><td class="val">101</td><td class="val" style="color:var(--text-muted)">48</td></tr>
+            <tr><td>Short-term Borrowing</td><td class="val">1,274</td><td class="val" style="color:var(--text-muted)">1,239</td></tr>
+            <tr><td>Other Current Liabilities</td><td class="val">86</td><td class="val" style="color:var(--text-muted)">131</td></tr>
+            <tr style="background:var(--surface-muted)"><td class="str">Total Liabilities</td><td class="val str">1,551</td><td class="val" style="color:var(--text-muted)">1,509</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="ratio-card">
+        <div class="rc-title">Profitability &amp; Efficiency</div>
+        <table class="tbl">
+          <thead><tr><th>Ratio</th><th style="text-align:right">YTD June 2026</th><th style="text-align:right">FY 2025</th></tr></thead>
+          <tbody>
+            <tr><td>Net Profit Margin</td><td class="val">34.98%</td><td class="val" style="color:var(--text-muted)">50.07%</td></tr>
+            <tr><td>Return on Equity <span style="color:var(--text-faint);font-weight:400">(annualised)</span></td><td class="val">1.99% <span style="color:var(--text-muted);font-size:10px">(≈3.98% ann.)</span></td><td class="val" style="color:var(--text-muted)">5.42%</td></tr>
+            <tr><td>Return on Assets <span style="color:var(--text-faint);font-weight:400">(annualised)</span></td><td class="val">1.67% <span style="color:var(--text-muted);font-size:10px">(≈3.34% ann.)</span></td><td class="val" style="color:var(--text-muted)">4.56%</td></tr>
+            <tr><td>C/I (excl. Finance Costs)</td><td class="val" style="color:var(--status-positive)">24.34%</td><td class="val" style="color:var(--text-muted)">20.33%</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:10px;color:var(--text-muted);margin-top:.5rem">ROE and ROA are YTD (6-month) actuals against a point-in-time balance sheet; the FY2025 comparator is a full 12-month figure. The bracketed annualised figure (YTD × 2) gives a like-for-like run-rate comparison.</p>
+      </div>
+    </div>
+    <div>
+      <div class="ratio-card" style="margin-bottom:1rem">
+        <div class="rc-title">Liquidity &amp; Solvency</div>
+        <table class="tbl">
+          <thead><tr><th>Ratio</th><th style="text-align:right">June 2026</th><th style="text-align:right">FY 2025</th><th style="text-align:right">Change</th></tr></thead>
+          <tbody>
+            <tr><td>Current Ratio</td><td class="val" style="color:var(--status-positive)">6.89x</td><td class="val" style="color:var(--text-muted)">6.75x</td><td class="val" style="color:var(--status-positive)">↑ Improved</td></tr>
+            <tr><td>Cash Ratio</td><td class="val" style="color:var(--status-positive)">6.86x</td><td class="val" style="color:var(--text-muted)">6.73x</td><td class="val" style="color:var(--status-positive)">↑ Improved</td></tr>
+            <tr><td>Debt-to-Equity</td><td class="val">19.06%</td><td class="val" style="color:var(--text-muted)">18.91%</td><td class="val">Broadly Stable</td></tr>
+            <tr><td>Gearing Ratio</td><td class="val">13.15%</td><td class="val" style="color:var(--text-muted)">13.06%</td><td class="val">Stable</td></tr>
+          </tbody>
+        </table>
+        <div class="finhlt accent" style="margin-top:.75rem">PKR 9.18 Bn investments + PKR 285 Mn cash cover PKR 1.38 Bn current liabilities by <strong>6.9x</strong>. Financial Guarantee Liability grew to PKR 2.3 Mn, reflecting the PMIC upfront-fee unwind and the newly active HBL FI guarantees.</div>
+      </div>
+      <div class="card">
+        <div class="ex">Exhibit E-7</div>
+        <div class="card-title">Balance Sheet Composition — June 2026</div>
+        <div class="card-sub">Assets by category · Total PKR 9,689 Mn</div>
+        <div class="ch h210"><canvas id="cE4"></canvas></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="ex">Exhibit E-8</div>
+      <div class="card-title">P&amp;L — YTD Actual vs Prorated 2025</div>
+      <div class="card-sub">PKR Mn · Key income and cost lines</div>
+      <div class="ch h240"><canvas id="cE3"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="ex">Exhibit E-9</div>
+      <div class="card-title">Other Income Composition — 2026 vs 2025</div>
+      <div class="card-sub">T-Bills &amp; TDRs now dominate vs savings accounts in 2025</div>
+      <div class="ch h240"><canvas id="cE10"></canvas></div>
+    </div>
+  </div>
+</div>
+
+<hr class="dv">
+
+<!-- ══════════════════ F · INVESTMENT ══════════════════ -->
+<div id="inv" class="sec">
+  <div class="sec-ey"><i data-lucide="trending-up"></i>Section F</div>
+  <h2 class="sec-title">Investment Portfolio Performance</h2>
+  <p class="sec-sub">June 2026 Investment Review · Total portfolio PKR 9.69 Bn · Fixed income markets reverse May's selloff; yields ease broadly</p>
+
+  <div class="finhlt accent" style="margin-bottom:1.5rem">
+    <strong>Rates reversed lower; NCGCL sustained YTD outperformance despite a narrower monthly spread.</strong> Fixed income markets rallied in June as easing Middle East geopolitical tensions, softer oil prices, and improving liquidity pulled yields lower across the curve — the mirror image of May's selloff. NCGCL's weighted average portfolio yield stood at <strong>11.35%</strong> against a benchmark of <strong>11.07%</strong> (+28 bps), while the adjusted monthly return of <strong>10.99%</strong> beat the peer fund average of <strong>10.85%</strong> by <strong>+14 bps</strong> — a narrower margin than May's +94 bps, reflecting how broadly the whole market rallied together. On a YTD basis the picture strengthened further: NCGCL's YTD return of <strong>9.92%</strong> now outperforms the peer average of <strong>9.33%</strong> by <strong>+59 bps</strong> (up from +27 bps in May), and YTD portfolio yield of 9.92% beats the average benchmark of 9.40% by <strong>+52 bps</strong>.
+  </div>
+
+  <div class="ex">Exhibit F-1 · Investment Performance Summary — June 2026</div>
+  <div class="perf-grid" style="margin-bottom:1.5rem">
+    <div class="perfbox" style="border-top:var(--border-accent) solid var(--color-accent)">
+      <div class="perf-lbl">MTD vs Peer Universe</div>
+      <div class="perf-ret" style="color:var(--status-positive)">10.99%</div>
+      <div class="perf-bm">Peer Fund Universe Avg: 10.85%</div>
+      <div class="perf-alpha ap">Alpha: +14 bps ↑</div>
+      <div class="anote">Continued outperformance; narrower spread as market rallied broadly</div>
+    </div>
+    <div class="perfbox" style="border-top:var(--border-accent) solid var(--color-accent)">
+      <div class="perf-lbl">YTD vs Peer Universe</div>
+      <div class="perf-ret" style="color:var(--status-positive)">9.92%</div>
+      <div class="perf-bm">Peer Fund Universe Avg YTD: 9.33%</div>
+      <div class="perf-alpha ap">Alpha: +59 bps ↑</div>
+      <div class="anote">YTD alpha more than doubled vs May's +27 bps</div>
+    </div>
+    <div class="perfbox" style="border-top:var(--border-accent) solid var(--color-primary)">
+      <div class="perf-lbl">Portfolio Yield vs Benchmark</div>
+      <div class="perf-ret" style="color:var(--status-positive)">11.35%</div>
+      <div class="perf-bm">Benchmark (3M KIBOR −100bps): 11.07%</div>
+      <div class="perf-alpha ap">+28 bps above benchmark ↑</div>
+      <div class="anote">Second consecutive month above absolute benchmark</div>
+    </div>
+    <div class="perfbox" style="border-top:var(--border-accent) solid var(--color-accent)">
+      <div class="perf-lbl">YTD Yield vs Benchmark Avg</div>
+      <div class="perf-ret" style="color:var(--status-positive)">9.92%</div>
+      <div class="perf-bm">Avg Benchmark YTD: 9.40%</div>
+      <div class="perf-alpha ap">+52 bps ↑</div>
+      <div class="anote">Gap fully closed and now sustained through June</div>
+    </div>
+  </div>
+
+  <div class="g2" style="margin-bottom:1.5rem">
+    <div class="card">
+      <div class="ex">Exhibit F-2</div>
+      <div class="card-title">Portfolio Asset Allocation — June 2026</div>
+      <div class="card-sub">MTBs remain the anchor allocation · PKR 9.69 Bn total asset base</div>
+      <div class="ch h260"><canvas id="cF2"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="ex">Exhibit F-3</div>
+      <div class="card-title">Return vs Benchmark &amp; Peer Universe</div>
+      <div class="card-sub">MTD and YTD · NCGCL vs peer average and absolute benchmark (%)</div>
+      <div class="ch h260"><canvas id="cF3"></canvas></div>
+    </div>
+  </div>
+
+  <div class="g2" style="margin-bottom:1.5rem">
+    <div class="card">
+      <div class="ex">Exhibit F-4</div>
+      <div class="card-title">Asset Base Growth — Jan–June 2026</div>
+      <div class="card-sub">PKR 9,689 Mn (Jun) vs PKR 9,627 Mn (May) · +0.64% MoM · +2.16% since January</div>
+      <div class="ch h240"><canvas id="cF4"></canvas></div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin-top:.9rem;padding-top:.9rem;border-top:1px solid var(--border-subtle)">
+        <div style="text-align:center">
+          <div style="font-size:15px;font-weight:700;color:var(--status-positive)">+2.16%</div>
+          <div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.03em">YTD Change (Jan → Jun)</div>
+        </div>
+        <div style="text-align:center;border-left:1px solid var(--border-subtle);border-right:1px solid var(--border-subtle)">
+          <div style="font-size:15px;font-weight:700;color:var(--status-positive)">+1.40%</div>
+          <div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.03em">Quarter Change (Mar → Jun)</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:15px;font-weight:700;color:var(--status-positive)">+0.64%</div>
+          <div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.03em">MTD Change (May → Jun)</div>
+        </div>
+      </div>
+      <p style="font-size:9px;color:var(--text-faint);margin-top:.6rem">March 2026 closing position is an interpolated estimate pending confirmation against the audited March management accounts; Jan (FY2025 closing), May and June figures are sourced directly from management accounts.</p>
+    </div>
+    <div class="card">
+      <div class="ex">Exhibit F-5 · Key Holdings</div>
+      <div class="card-title">Notable Portfolio Positions</div>
+      <div class="card-sub">As at June 30, 2026 · Asset allocation shown in Exhibit F-2 · MTB transaction detail in Exhibit F-6</div>
+      <table class="tbl" style="margin-top:.5rem">
+        <thead><tr><th>Instrument</th><th style="text-align:right">Amount</th><th style="text-align:right">Rate / Yield</th><th>Maturity</th></tr></thead>
+        <tbody>
+          <tr><td class="str">Daewoo Express Sukuk</td><td class="val">PKR 275 Mn</td><td class="val" style="color:var(--status-positive)">13.09%</td><td>24 Aug 2026</td></tr>
+          <tr><td class="str">At-Tahur (PREMA) Sukuk</td><td class="val">PKR 104 Mn</td><td class="val" style="color:var(--status-positive)">3MK + 130 bps</td><td>29 Mar 2027</td></tr>
+          <tr style="background:#FFFBF0"><td class="str">Liberty Daharki Power (LDPL) Sukuk</td><td class="val" style="color:var(--status-positive)">PKR 250 Mn</td><td class="val" style="color:var(--status-positive)">13.61% (6MK+125bps)</td><td>16 Dec 2026</td></tr>
+          <tr><td>Mutual Funds</td><td class="val" style="color:var(--text-muted)">0% — Remains fully redeployed</td><td class="val" style="color:var(--text-muted)">—</td><td>—</td></tr>
+        </tbody>
+      </table>
+      <div class="finhlt" style="margin-top:.75rem"><strong>New holding this period:</strong> Liberty Daharki Power (LDPL) Sukuk — PKR 250 Mn, a Musharakah-based privately placed instrument financing the issuer's working capital, structured with a bullet repayment of principal and profit at maturity. Running finance facility unchanged at PKR 1.238 Bn.</div>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="ex">Exhibit F-6 · June 2026 Market Context</div>
+      <div class="card-title">PKRV Curve &amp; MTB Auction Outcomes</div>
+      <div class="card-sub">Broad-based rally across the curve · Reversal of May's selloff</div>
+      <table class="tbl" style="margin-top:.5rem">
+        <thead><tr><th>Tenor / Event</th><th style="text-align:right">Level</th><th style="text-align:right">Change</th></tr></thead>
+        <tbody>
+          <tr><td>3-Month PKRV</td><td class="val">11.61%</td><td class="val" style="color:var(--status-positive)">−32 bps</td></tr>
+          <tr><td>6-Month PKRV</td><td class="val">11.63%</td><td class="val" style="color:var(--status-positive)">−75 bps</td></tr>
+          <tr><td>9-Month PKRV</td><td class="val">—</td><td class="val" style="color:var(--status-positive)">−86 bps</td></tr>
+          <tr><td>12-Month PKRV</td><td class="val">—</td><td class="val" style="color:var(--status-positive)">−91 bps</td></tr>
+          <tr><td>5-Year PKRV</td><td class="val">11.78%</td><td class="val" style="color:var(--status-positive)">−58 bps</td></tr>
+          <tr><td>10-Year PKRV</td><td class="val">12.19%</td><td class="val" style="color:var(--status-positive)">−56 bps</td></tr>
+          <tr><td>MTB 12M cut-off (23 Jun)</td><td class="val">11.84%</td><td class="val" style="color:var(--status-positive)">−115 bps</td></tr>
+          <tr><td style="color:var(--status-positive)">3-Month KIBOR (mid → end June)</td><td class="val" style="color:var(--status-positive)">12.40% → 11.80%</td><td class="val" style="color:var(--status-positive)">Easing</td></tr>
+          <tr><td style="color:var(--status-positive)">NCGCL secondary 3M MTB adds ✓</td><td class="val" style="color:var(--status-positive)">~11.68%</td><td class="val" style="color:var(--status-positive)">Executed</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:10px;color:var(--text-muted);margin-top:.5rem">23 June T-Bill auction: bids totalled ~PKR 3.1 Tn against a PKR 1.2 Tn target. 1-month cut-off fell 39 bps to 11.80%; 3- and 6-month tenors declined 75 and 74 bps to 11.75%. SBP held the policy rate at 11.50% in June, citing elevated inflation, moderating activity and manageable external pressures.</p>
+    </div>
+    <div class="card">
+      <div class="ex">Exhibit F-7 · Forward Investment Strategy</div>
+      <div class="card-title">Portfolio Priorities — H2 2026</div>
+      <div class="card-sub">Governing principles: capital preservation, liquidity adequacy, disciplined yield optimisation</div>
+      <table class="tbl" style="margin-top:.5rem">
+        <thead><tr><th>Strategic Priority</th><th>Rationale</th></tr></thead>
+        <tbody>
+          <tr><td>Core sovereign allocation via MTBs</td><td style="font-size:11px">Continues to anchor liquidity and capital preservation across the short-to-medium tenor spectrum</td></tr>
+          <tr><td>Opportunistic secondary-market MTB adds</td><td style="font-size:11px">June additions at ~11.68% locked in attractive sovereign yields without primary-auction participation</td></tr>
+          <tr><td>Selective credit exposure — corporate sukuk</td><td style="font-size:11px">LDPL addition continues the strategy of earning a spread over sovereigns within a prudent, liquid risk profile</td></tr>
+          <tr><td>Disciplined primary market participation</td><td style="font-size:11px">Active engagement in auctions, pursuing allocations at competitive levels aligned with return objectives</td></tr>
+          <tr><td>Controlled duration management</td><td style="font-size:11px">Market view: rates have likely peaked, but extension remains conditional on a credible, data-backed inflection signal</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<hr class="dv">
+
+<!-- ══════════════════ G · ANALYTICS ══════════════════ -->
+<div id="analytics" class="sec">
+  <div class="sec-ey"><i data-lucide="bar-chart-3"></i>Section G</div>
+  <h2 class="sec-title">Pipeline Analytics</h2>
+  <p class="sec-sub">Stage concentration, institutional breakdown and origination velocity · PKR 19.3 Bn quantified pipeline</p>
+
+  <div class="g2" style="margin-bottom:1.5rem">
+    <div class="card">
+      <div class="ex">Exhibit G-1</div>
+      <div class="card-title">Origination Funnel — PKR Value by Stage</div>
+      <div class="card-sub">Quantified deals only · BAFL at PKR 4 Bn remains the largest term-sheet-stage deal</div>
+      <div class="ch h260"><canvas id="cG1"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="ex">Exhibit G-2</div>
+      <div class="card-title">Pipeline Institutions by Type</div>
+      <div class="card-sub">30+ unique institutions across all deal categories</div>
+      <div class="ch h260"><canvas id="cG2"></canvas></div>
+    </div>
+  </div>
+
+</div>
+
+<hr class="dv">
+
+<!-- ══════════════════ H · HR METRICS ══════════════════ -->
+<div id="hr" class="sec">
+  <div class="sec-ey"><i data-lucide="users"></i>Section H</div>
+  <h2 class="sec-title">HR Metrics</h2>
+  <p class="sec-sub">FY2026 · All values auto-calculated from Inputs sheet · Green = on/above benchmark · Amber = within 5pp · Red = below benchmark</p>
+
+  <!-- H-1: Budget & Payroll KPIs -->
+  <div class="ex">Exhibit H-1 · Budget &amp; Payroll</div>
+  <div class="kpi-grid" style="margin-bottom:1.75rem">
+    <div class="kbox am">
+      <div class="knum">42.3%</div>
+      <div class="klbl">HR Budget Utilisation Rate</div>
+      <div class="knote am">YTD Actual ÷ YTD Approved</div>
+    </div>
+    <div class="kbox sl">
+      <div class="knum">PKR 88.3Mn</div>
+      <div class="klbl">YTD Budget Variance</div>
+      <div class="knote am">Approved − Actual Spend</div>
+    </div>
+    <div class="kbox bl">
+      <div class="knum">PKR 62.3Mn</div>
+      <div class="klbl">Annualised Payroll Run-Rate</div>
+      <div class="knote am">Monthly Payroll × 12 · Budget: PKR 128.5Mn</div>
+    </div>
+    <div class="kbox gn">
+      <div class="knum">40.7%</div>
+      <div class="klbl">Run-Rate vs Payroll Budget</div>
+      <div class="knote gn">Annualised Run-Rate ÷ Annual Budget</div>
+    </div>
+  </div>
+
+  <!-- H-2: Headcount KPIs -->
+  <div class="ex">Exhibit H-2 · Headcount</div>
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;margin-bottom:1.75rem">
+    <div class="kbox rd">
+      <div class="knum">16</div>
+      <div class="klbl">Actual Headcount (YE)</div>
+      <div class="knote rd">↓ from 17 in May · vs 33 sanctioned</div>
+    </div>
+    <div class="kbox rd">
+      <div class="knum">17</div>
+      <div class="klbl">Vacant Positions</div>
+      <div class="knote rd">Sanctioned − Actual Filled</div>
+    </div>
+    <div class="kbox rd">
+      <div class="knum">51.5%</div>
+      <div class="klbl">Vacancy Rate</div>
+      <div class="knote rd">Vacancies ÷ Sanctioned Positions</div>
+    </div>
+    <div class="kbox sl">
+      <div class="knum">PKR 413K</div>
+      <div class="klbl">Monthly Cost per FTE</div>
+      <div class="knote am">Total Comp+Ben ÷ Avg Headcount</div>
+    </div>
+    <div class="kbox bl">
+      <div class="knum">PKR 4.95Mn</div>
+      <div class="klbl">Annualised Cost per FTE</div>
+      <div class="knote am">Monthly Cost per FTE × 12</div>
+    </div>
+  </div>
+
+  <!-- H-3: Attrition & Hiring KPIs -->
+  <div class="ex">Exhibit H-3 · Attrition &amp; Hiring</div>
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;margin-bottom:1.75rem">
+    <div class="kbox am">
+      <div class="knum">12.90%</div>
+      <div class="klbl">Voluntary Attrition Rate (YTD)</div>
+      <div class="knote am">↑ from 6.23% in May · above 12% sector benchmark</div>
+    </div>
+    <div class="kbox am">
+      <div class="knum">12.90%</div>
+      <div class="klbl">Annualised Attrition Rate</div>
+      <div class="knote am">12-month rolling rate</div>
+    </div>
+    <div class="kbox am">
+      <div class="knum">2</div>
+      <div class="klbl">YTD Voluntary Separations</div>
+      <div class="knote am">One additional departure in June</div>
+    </div>
+    <div class="kbox am">
+      <div class="knum">80%</div>
+      <div class="klbl">Offer Acceptance Rate (YTD)</div>
+      <div class="knote am">↓ from 100% · one offer declined in June</div>
+    </div>
+    <div class="kbox am">
+      <div class="knum">5</div>
+      <div class="klbl">Offers Extended (YTD)</div>
+      <div class="knote am">Total offers made to candidates</div>
+    </div>
+  </div>
+
+  <!-- H-4 & H-5: Charts -->
+  <div class="g2" style="margin-bottom:1.5rem">
+    <div class="card">
+      <div class="ex">Exhibit H-4</div>
+      <div class="card-title">Headcount — Actual vs Sanctioned</div>
+      <div class="card-sub">FY2026 YTD · 16 filled of 33 sanctioned positions · 51.5% vacancy rate</div>
+      <div class="ch h240"><canvas id="cH4"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="ex">Exhibit H-5</div>
+      <div class="card-title">Budget Utilisation — HR Spend vs Approved Budget</div>
+      <div class="card-sub">YTD · Payroll run-rate PKR 62.3 Mn vs PKR 128.5 Mn annual budget</div>
+      <div class="ch h240"><canvas id="cH5"></canvas></div>
+    </div>
+  </div>
+
+  <!-- H-6: HR Summary Table -->
+  <div class="ex">Exhibit H-6 · HR Metrics Summary Table</div>
+  <div class="card" style="margin-bottom:2rem">
+    <div class="card-title">Key HR Indicators — FY2026 YTD</div>
+    <div class="card-sub">Categorised across Budget, Headcount and Attrition dimensions</div>
+    <div style="overflow-x:auto">
+    <table class="tbl">
+      <thead>
+        <tr><th>Category</th><th>Metric</th><th style="text-align:right">Value</th><th>Basis</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td rowspan="4" style="font-weight:700;color:var(--text-strong);vertical-align:top;padding-top:.75rem">Budget &amp; Payroll</td><td>HR Budget Utilisation Rate</td><td class="val">42.3%</td><td style="font-size:11px;color:var(--text-muted)">YTD Actual ÷ YTD Approved</td><td><span class="b b-ts">Monitoring</span></td></tr>
+        <tr><td>YTD Budget Variance</td><td class="val" style="color:var(--status-positive)">PKR 88.3 Mn</td><td style="font-size:11px;color:var(--text-muted)">Approved − Actual Spend</td><td><span class="b b-live">Favourable</span></td></tr>
+        <tr><td>Annualised Payroll Run-Rate</td><td class="val">PKR 62.3 Mn</td><td style="font-size:11px;color:var(--text-muted)">Monthly Payroll × 12 · Budget: PKR 128.5 Mn</td><td><span class="b b-live">Under Budget</span></td></tr>
+        <tr><td>Run-Rate vs Payroll Budget</td><td class="val" style="color:var(--status-positive)">40.7%</td><td style="font-size:11px;color:var(--text-muted)">Annualised Run-Rate ÷ Annual Budget</td><td><span class="b b-live">Favourable</span></td></tr>
+        <tr style="background:var(--surface-muted)"><td rowspan="5" style="font-weight:700;color:var(--text-strong);vertical-align:top;padding-top:.75rem">Headcount</td><td>Actual Headcount (YE)</td><td class="val">16</td><td style="font-size:11px;color:var(--text-muted)">Closing vs 33 sanctioned · down 1 vs May</td><td><span class="b b-dd">Building</span></td></tr>
+        <tr style="background:var(--surface-muted)"><td>Vacant Positions</td><td class="val" style="color:var(--status-negative)">17</td><td style="font-size:11px;color:var(--text-muted)">Sanctioned − Actual Filled</td><td><span class="b b-ts">Hiring Active</span></td></tr>
+        <tr style="background:var(--surface-muted)"><td>Vacancy Rate</td><td class="val" style="color:var(--status-negative)">51.5%</td><td style="font-size:11px;color:var(--text-muted)">Vacancies ÷ Sanctioned Positions</td><td><span class="b b-ts">Active Recruitment</span></td></tr>
+        <tr style="background:var(--surface-muted)"><td>Monthly Cost per FTE</td><td class="val">PKR 413K</td><td style="font-size:11px;color:var(--text-muted)">Total Comp+Ben ÷ Avg Headcount</td><td><span class="b b-dd">Tracking</span></td></tr>
+        <tr style="background:var(--surface-muted)"><td>Annualised Cost per FTE</td><td class="val">PKR 4.95 Mn</td><td style="font-size:11px;color:var(--text-muted)">Monthly Cost per FTE × 12</td><td><span class="b b-dd">Tracking</span></td></tr>
+        <tr><td rowspan="5" style="font-weight:700;color:var(--text-strong);vertical-align:top;padding-top:.75rem">Attrition &amp; Hiring</td><td>Voluntary Attrition Rate (YTD)</td><td class="val" style="color:#8A6800">12.90%</td><td style="font-size:11px;color:var(--text-muted)">YTD Vol. Seps ÷ Avg Headcount</td><td><span class="b b-review">Monitor</span></td></tr>
+        <tr><td>Annualised Attrition Rate</td><td class="val" style="color:#8A6800">12.90%</td><td style="font-size:11px;color:var(--text-muted)">12-month rolling rate</td><td><span class="b b-review">At Sector Benchmark</span></td></tr>
+        <tr><td>YTD Voluntary Separations</td><td class="val">2</td><td style="font-size:11px;color:var(--text-muted)">Headcount lost voluntarily</td><td><span class="b b-review">+1 in June</span></td></tr>
+        <tr><td>Offer Acceptance Rate (YTD)</td><td class="val" style="color:#8A6800">80%</td><td style="font-size:11px;color:var(--text-muted)">Accepted ÷ Extended</td><td><span class="b b-review">Above 75% Benchmark</span></td></tr>
+        <tr><td>Offers Extended (YTD)</td><td class="val">5</td><td style="font-size:11px;color:var(--text-muted)">Total offers made to candidates</td><td><span class="b b-ts">Recruitment Active</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <!-- H-7: Employee Engagement -->
+  <div class="ex">Exhibit H-7 · Employee Engagement — People Pulse Survey</div>
+  <p class="sec-sub" style="margin-bottom:1rem">Comparative pulse check: February 2026 vs June 2026 · 14 respondents · 100% response rate · New this period</p>
+
+  <div class="callout accent" style="margin-bottom:1.5rem">
+    <div class="callout-head"><i data-lucide="trending-up"></i> Headline Finding — eNPS Surges from 22.2 to 50.0</div>
+    <div class="callout-body">eNPS moved from <strong>22.2 to 50.0</strong>, a 27.8-point gain in one quarter. Every one of the 17 previously tracked dimensions improved. The three transparency dimensions that clustered lowest in February — Leadership Communication, Information Flow, and Role Clarity — each moved by +0.65 to +0.79. Detractors fell to zero. NCGCL has made a measurable transition from a culturally strong but operationally unclear institution to one that is both mission-driven and directionally coherent.</div>
+  </div>
+
+  <div class="kpi-grid" style="margin-bottom:1.75rem">
+    <div class="kbox gn"><div class="knum">50.0</div><div class="klbl">eNPS Score (June)</div><div class="knote gn">↑ +27.8 pts vs 22.2 in Feb</div></div>
+    <div class="kbox gn"><div class="knum">4.48</div><div class="klbl">Avg Engagement (18 dimensions)</div><div class="knote gn">↑ +0.42 vs Feb</div></div>
+    <div class="kbox gn"><div class="knum">4.43</div><div class="klbl">Direction Sentiment</div><div class="knote gn">↑ +0.43 vs Feb · confidence in strategy</div></div>
+    <div class="kbox am"><div class="knum">0%</div><div class="klbl">Detractors (0–6 score)</div><div class="knote gn">↓ from 20% in Feb · zero detractors</div></div>
+  </div>
+
+  <div class="g2" style="margin-bottom:1.5rem">
+    <div class="card">
+      <div class="card-title">NPS Composition — Feb vs June 2026</div>
+      <div class="card-sub">Promoters (9–10) · Passives (7–8) · Detractors (0–6), as % of respondents</div>
+      <table class="tbl" style="margin-top:.5rem">
+        <thead><tr><th>Segment</th><th style="text-align:right">Feb 2026</th><th style="text-align:right">Jun 2026</th><th style="text-align:right">Change</th></tr></thead>
+        <tbody>
+          <tr><td class="str">Promoters (9–10)</td><td class="val">60% (6)</td><td class="val" style="color:var(--status-positive)">50% (7)</td><td class="val" style="color:var(--status-positive)">+1 head, −10pp share</td></tr>
+          <tr><td>Passives (7–8)</td><td class="val">20% (2)</td><td class="val" style="color:var(--status-positive)">50% (7)</td><td class="val" style="color:var(--status-positive)">↑ +30pp</td></tr>
+          <tr><td>Detractors (0–6)</td><td class="val">20% (2)</td><td class="val" style="color:var(--status-positive)">0% (0)</td><td class="val" style="color:var(--status-positive)">↑ −20pp — zero</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:10px;color:var(--text-muted);margin-top:.6rem">All former detractors converted. The next conversion opportunity is passive → promoter, which requires resolving the matrix workload gap and conflict resolution speed.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Respondent Profile — June 2026</div>
+      <div class="card-sub">n=14 · 100% response rate</div>
+      <table class="tbl" style="margin-top:.5rem">
+        <thead><tr><th>Dimension</th><th>Breakdown</th></tr></thead>
+        <tbody>
+          <tr><td class="str">Tenure</td><td style="font-size:11px">&lt; 6 months: 5 · 6 months–1 year: 3 · 1–2 years: 6</td></tr>
+          <tr><td class="str">Department</td><td style="font-size:11px">Guarantees: 7 · Operations: 5 · Risk &amp; Investments: 2</td></tr>
+          <tr><td class="str">Work Mode</td><td style="font-size:11px">In-office: 9 (100% of Islamabad respondents) · Hybrid: 5</td></tr>
+        </tbody>
+      </table>
+      <div class="finhlt accent" style="margin-top:.75rem">Composite pulse score (annual average across all 4 quarters, 8-dimension model): <strong>4.26 / 5.00</strong> vs a 3.80 benchmark — <strong>+0.46 above benchmark</strong>.</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:1.5rem">
+    <div class="card-title">Forward Agenda — Next 90 Days</div>
+    <div class="card-sub">Priority interventions identified from the survey</div>
+    <table class="tbl" style="margin-top:.5rem">
+      <thead><tr><th>Priority</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td><span class="b b-dn">High · Immediate</span></td><td style="font-size:11px">Conflict Resolution Speed — structured escalation protocol and weekly cross-functional clearing session chaired by a senior leader</td></tr>
+        <tr><td><span class="b b-dn">High · Immediate</span></td><td style="font-size:11px">Matrix Resourcing — 1–2 dedicated FTEs per function to relieve Guarantees/Operations workload overload</td></tr>
+        <tr><td><span class="b b-review">Med · 30–60 Days</span></td><td style="font-size:11px">SOP &amp; Policy Formalisation — build and socialise an SOP library covering approvals, escalations, decision rights, reporting cadences</td></tr>
+        <tr><td><span class="b b-review">Med · 30–60 Days</span></td><td style="font-size:11px">Cross-Office Engagement (Karachi–Islamabad) — quarterly inter-office event and a shared visibility dashboard</td></tr>
+        <tr><td><span class="b b-init">Low · 60–90 Days</span></td><td style="font-size:11px">Structured Learning &amp; Development programme</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:10px;color:var(--text-muted);margin-top:.6rem">The transparency deficit is resolved. The next frontier is operational excellence and human infrastructure — before further headcount scaling erodes the informal trust currently holding the organisation together.</p>
+  </div>
+</div>
+
+</div><!-- /page-wrap -->
+
+<!-- FOOTER -->
+<footer class="page-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMEAAACMCAYAAADFhM0uAAA/7ElEQVR42u1deXicVdX/nXvv+86aLixlRwRcSLUC2SM4yad84AKfghPbKiKCFAp+7CgoTgf9UJYWULaiiGxtmSm4KyrajkKTZhEBGzdQWYQuQGmTycy87733fH/MTBpKgaTZS+7z5Hmgybxz3nvP7+znXGAkVzwlASC6YPG3o+fc+Ovoqf+357Z/Z8LUmlqDXQyKrYopADjq3qNmvv9HdT9tWFF9c5Gd4nIkv0qMKOGV6wgAmOBQMHwMguE10TMXn4R0iwGIyyCZWlPrjWVpXILAmeaMrk/VHGfcwiNOhfoYE/YZje8To/FQInoUXt4COJQCoZWRhdfdMvOMb01HusUgkVAAprTC1Nrhiq2KqXRL2lTeWBltSNd8RwXkL4noMJ0zlkBtALBxz400cUHQPZsBwDI9DTYC1mou9BnhBM/0VbA9esY1H0AyqQEwEgkxdeRTq7wSCQgwKNOc0Y2pmoYZ+0QfURF1jskZa7XV7LOw1q4FgFmbZvHEBUE6bgFAWNNlvcJWCKEAEpzPahLinVDO6ujC667BKYkgkklb0gpTa0r6q2QSFgQ0rqy9AoIeIUlz/K2+BoFIkDIFa0k6zwFAel16AoMAxABT720XvQiiJ0g5ANiCSLHvW1gNckMXRSMzM+HTr61CMqnBTFNa4a0q/iESiYQo2v5V7224vy4jQ/JyNgyTN5aIFAAWkkDgjbZgNwIAFmEigwBAbJEsweGfEAJgKhJMEAAR53o1SVUrXLUmctZ1F4CIp7TCW1D6J2IKSdhkMmkb0jX/K6Rskw4d7ff4uuhWkgAAZmZyBZjwWPvJ7VuRgABNdBA09SuFf4BoR16zYj9vYI0rAsHF0YXXr5p22pWHIpnUiKckeCqUuksvBsVTcZlJZnTVnVUHNt5f+6AKqxtgENZ92pSk/6s+QYJAoEcAINYUG3GeHXkQlJxjkPk9+/7rfAdJAMy5rCblNJlAZG30zCWnI91iQFOh1F11lUOf6Za0qU/VfjZYITuEK471e3zNlpmIXnvuBIAZYP4HAGD1yNM18iCoXMcAoEj8G9r3IEgAO1RfBCLFhZwh2N0oEPxudOH1qdDnr9p3Wyh1SivsKtI/liiGPhvumjPr/Str73FC4k62mKV7S9Kfdhw2JyZp8hYAngKApkVNdqTJGwUmYwKId/tiYprnV/wdQu0Fqxk7tI3KH2EGyFAwpFh766HNwt6lF/6wJD5kMdk2tSar9E+3pA0AvD9VdQxL+T0ZlAf6Pb4hkHg95i8tKxQJ4/OzgVz4nZlTM/mybpjYmgDEiMfly99JbgXocZKOBdMbMzERgaA432fA2Jsc94HoWUtun37KdTOmEmyTdlE58VW1tCrcmK65CY76NQEH+j2+JiL5JgAAM1tyhAXwbObUTD6RgBhpAIwSCAAgXlaDt0ApAYIA483VGJGE0cy+ZykQ+ryJoD181pL/7k+wxeNTvsJkWCVmzTRndMOKmg8E9pRrZVgttAXLVrPdgfO7Qy0AgIQrBIA7iu5mfFQE4ehJ10RCIJm00QWLL4VyrgRbwGiDHTk/OxYDGo6rwAxYe11vj74c91ycRSKhSqCYWhNwxVbFVKY5o6uWVjmB3eVlIHyNJAmTN3qQzA+2bIQjpHAFdFYvbpvXeRESEEjCTi4QAEA8LpFOm4ozrz3BSvd7Qso9uZDTGORmlLUHhSKCvdzjVvOpfbdd8Mf+5FoyaafYbgJJ/0VgELhmWc1sx6Xvy7Cs1T2amZnLcf83l32sVVgpq+2L7GFh69z29EC/YvKBoKgRFJJJHTjrmwc7FPouucH/4lzWAkwgGtz3M2tyAorZemCT7L35gisHPnuKA8dZ+idiKpPMaABoTNeeD4krhBRRndODlv5gMIOtM82RJm8e8Xvyn+845fG/jzYAxgYEABBPuEgnPSQSIrJp+hUk1Fdgh2weWZAQFAiCtbeKfXNu9rYLn5jSCuO4GBRPx0W6JW0al1cdgoC8RbryGNNnYK01NMizHWj+mIJdsuXPvZd2J7u9Q284NPDkuU8WRvs1xqZmJ530yt+XvfmCr5LRJ4DEBgqEJBiDk+REAmDmfE6TdJpJyYejZy05A8mkRTJpEZsquxjLNTDx1biy5nNwZbtwxDF+7xskvl7P/IkoCaKX/Lye2xpvv3BP7GkBYCwAMBaagABw9IxrjzIQ+dxtF3SWfxH83NcPUOFpt5PjHsP5vqGaRwZCSnICYL/wC2PtGbmlF/6nmFOI22Ih39QaLekfWxQrlj3cXbVPICyvF65osQUL61tDYrCafZv5o/v0H2zBP23tp//0j/Kv69J1c8gzM9s+3ZnBKOQGxggExaTZ9HOvm6Hz9llynCjY3Gi0/VZu6YX/KTvO0T0avknKvZiNHqp5xAAsBcKStf8CWJ/be8uF6ZKYmkqwjZL0L9vnDStqjiWHbpcBsZ/fqweT+Hod88fcuOXP2Qu7k90eADTcNWcWIoGLiOk8UuQgz4c/Mrf9sdH0DUZTExTRu/DGaNQU/gYp9yXHBfv+BoJd3LNV34x7Ls4CQHTBkk+ylLcIpfYYUvSorBWkkqQUrK+/q5D70pZbLt1ccprNaEqQt9Ci2KqYzDRndOzGyqi3V+SbQolzYBnGt4N3fgdGf3z7CrT94ppPdd4DALE7YkFdkTudBb4sXbmf6dNgRp+1YvbaeWv/PVlDpFSK4FBkw7QnSDmV8D0PUrnkBMC6sI6Bb2RvOm8FAExbuPhQw/J24QY+UDSPUCq/HqRWICprhaesrxf23XbBr0vfL6ac5mGZPwJUZL7a5bVHqwBukQE5W/doLpU0D/KMwAxmp8IROm9adYG/0DG/Y11Rq9R+nBQvkkH5PlOwYJ89ERCuLdgnWud2vK//CZPSJyiZJZEzF98v3NCJ7OU0mCUAC8eVJCRY+7807Cdyt1zcAQDRM5csJuVcwNYMzTwqgkFDuQqwzOBvZjc+8w2kr8shllDITIVSh7rKoc/+xJfA5UQkTcEMTfoPMH+sZ5au+WTHmQBwVKquyhInyKXjwYDJGUNEgsFWRZQ0fTrd+qnOltEOk45udKg0fYLAHSAqYpmIQCTh+5a9nCHlfFiS0xpZeP13Q6ffsH/vrRdcCK3/h4hepEBQAuwPHtKkoH0LY1io4GXRPQ9qC33hmhpkpjrYhrQSEEhAZJIZ3ZiqOdzdQ2ZkSC5in4UpGDtk8yeiJEnaYvN67ppPdpzZuOyIfRtX1t5kJbeJgDje5Kw1eWNJ9NcTMQkCGC8BI99YP7YgWF2WBPgX2AI0oDS62Gkm2csZWCOF456uAvRo9KzFX+u59fyfiN6X32GNeZjC0xwwbMkRHoxuEwDKfc1zpBv4Q/Ss6y6d6mAbvPRHEhZJ2MZ07fnk0BqpqGH7jq9BmT/Mxp3uKOtzV2Gzee+als77GlI1F1LQeVSG5ELWrIqNNBCvem6ph4DBfxqLdx5dEMwqNtiQ4hfYGoB32GomAYDzfYbZ7EFuKBlZeH23ic78YPamh5tsLpskNyCgHALz4FUikWK/YGF0gJzAldGzb/ht5Kyr5yCZ1EgkxJRWeG3os9zxVXfnEYc1PlD7ExEUS6zPIV00U4Zk/pBD5EQd6ffpb645aW21M01UNT5Q8ycZlteyxawSqLCjfAIxSVOwDIFHgZGfLjG2PgEzgYgjZ14zCxBPEokKsHn93oJS2BPKleQ4YM/7JQwuYs7vQ07oB+S4+3Oud2h+QlGkWAqEJBvdA2su6b3lglunQqk7Dn3Wp2o/KySulwEx0+/Rhmjwoc8yAJwKJU3BvmgK9jS48i9K4hrh0P9YzTB588bhVAaTImLfviwrgoc+/LGHN4NBI91XPHYgKL4VAcSRBYs7yXGroD0DQL6JVLIgZnJDEmzB1l6j/cIPpRO4SCjnRPbyxZa7oQHSQAhJbgjW9+43fVvPz//g8mff0gm2AWUPdcvq9pIBXCMDdLLJWVg9hMTXAG5SEQmTt7+yOfN1GVXNbPgK4QrSWW0GaU5Z4QphCvavbXM7Dpv85hAAxNOi5Bz/maQEeBCIHuAvsF9gcoMXKyfwAFnbbv3C1RCqZ8ghMyIJa5nzWSOUc5KKTmuPnHn9/LfqiMhX9/vWfEIF0SkDdLLfqw0b5iEDQMCSQ726zy5hax8SEbVMBsTXWTOVWijlYPwJZmaSBALWA0CCR99sHX0nsRQhAtHLQ5e2JX+hr8dAqr0pEPwW8tl2ht1IQla8advma4FAACQX+gyk2ls46t7o2dcfA3/zxb23tbxYMo8sdu0EG8VTRelfe3ftNBWiq0lhARuG32OGLv3L6l6Q4ILdwoxGp8Kpt56B94pvSJAc4jOZBDEEOgBg9erVAsCo5nlGXxPMLjrHzNQGtrRTzfNEElYz57OGVKCWhDwEtqhdd44NSh1sXt6SCnwOzu6tFQuv/0jJP9h1R0SWOr7SLWnTsLzmg04Uj8iQWGAK1rJmu5MAKPqyPoOU2E+FZb3f61vr7YQ22WYJEAw/MTDCOLlB0BK3ACjr+7+0Xn4TpENgtjvDuQBJ9j1b1ADDlYdEoNKISPChLOXPo2dff0P/iMhdzDyKp+ISSdjKRKXbuLL2ChEUDwH0Hr/H11Tkg+HxAgGsmU3e2qE606/yBxxBOquzMOb3ACiDjJ38ICja2wLf/1KPYL6EAkGB4hQWs5ObLXZaA+wYDIq1tvA8Syrwv9Hobr+vWHDVO5BuMbtKeXY5+lN37+HvmDEnukqG5OXWs3aoia9BSfCd5ClmNkzMKqIkLF/S+plHn46n4qNWLzTG0aHySRRbLaNnXnsZlHsFEUn2CmbEmXpY0RLW5AYVW7MR+cKJvbdf8shkD6OWAdBwZ/URIip+Rq7YV2e1HlHmH16EipnZypCUBMDk9eWtc7u+MRYdZWOoCUornTZIJETvrRddCa2b2dq1FIxIkBxaEmxURQIp9vKaiGYhFPhx+PSrDy+NfJmUPkKCEyLdkjY1y2veSVHxa0iaUABgy4YkyKlQEpYfNXl7XOvcrm+U6R4rOsbW7s1kGPGU9O46/d/eEQfe6WC3jSSogdxgGMY3xZTCOM8XIhIwxpB0IkT4mFP9oXv9qNeHpiZCJjN5okYMakIT5epyFY7Bb4UjDhzKxIdRl/5gq6JKsuWtVvNXNj63ecHjp//5b/FUXN78npvHtOp37CVcusUgHpe47TY/e/N5N/rWVrPvLyM3JKGUKLVb8jgDQbJf0OQG9ydLdyCZtOiePamGf8XTcZGkpJVb7M0yot6t+yYGAJhZF0sqlLQFs9Lk/erWT3YsfvLcJwtjaQKNj0+wo++OJWS5xDl69vWfAPM15AQP4UJfyXEmOc4SS1MwpGwhOy9768UrkEpJtEx8/6DfEV5R9xEnTD/XOa0J4wsAZrZERCqqyOTN02xxaWu8ffkAesctPzO+TPZ0xiKREHjXfOXdes66yBHNd1pmgpD15AQUtG+KMYfxcpyZShnuJrf6Q3f6l3whC0BMaLOIQd3pbhxz2pyw78ifE2g6m9Kgy3F0fFVYSTDAvv22KATmrZnb2lHVWeW8sM8L6D6ne1ybniakiq84c3E9C/VNUqqJtT/05pqR9d4MBSOS830repdeNG+iR4vKE+AaltdcrqarK/yt/riZQeVmGhmUMAXzMDxctmZe+x8m2p6Nd0KIACCy4JqmQMOH9/Paf/UsAHidv37O66i72z3SXQ9JR5IbnA6tLcA85lqBSEBrTcHwHOeIpr/5d53xBBIJhUxmwrVsxlNx+YuP/sLWzq6tVA7dbTwrqZiUGdM942IylJ0KJdnyJtb20sKL9ovtn+v8V/lv3r+itn7/T+47+7nZz/8LmfH1AcdPE5TKrMMLr95bWPkClANY+xCDv5+V4gF859wCAIRO/9b+yg0sglSnFdWpp0GQY0o7w0JJgrXPO8abvXlzVy9SKQuaWJWnZV+gfnn1g05UHev3ajOMUoid5H82MiAVSYL1bcrL20s7P935TwCoWlrlBHej41mKM2FxDEmC8fP7t7U89p/RbKSf2OZQMf4uIhump4TrfgK2WA9njf4LQdxDnrey53sX/R0Awmded6wQdCW5wSO50AewHVvHmdlQMCxtLvuD7G0XnzpcJzmRgFg94OqhzOqMHQ4T9CfF7quaJ0POsrF2hpnZkCCpKhR0n1lHxl62pqXzJwBw1Mrqgw3LOBF/hhS9BwBIEHTO/MJ/xX78Y2d8zCRp/IYhjD8Ikkk7beHiQy3EE2CWYCsgHUmOC5vPbYVU9wqYu3tuOr8VAKJnXfcVEBKkAg4X+ixAg59KMfzt0uQGFOf7Tuq97eIHhuwfMCi2OiYzTRmzwyaRBEQMMZFZ9Dq/f4PnxtNx8XTh6YgM8J+FEvsb33DJFBp9x7fUGG8L1mfiK1tP6lgEAA3p6iMgxBdgeZ4KqxnWszAFa0jCCCmIta1d09Lxp/EKjU4cx7g0VDey4JorRDB6OeezGsXDsxCkyA2BvTwz4feCxeKeW879aeS0/9sLbvgW4QY/AeOD/YIBCTkGB26hFMGa/0TC5t0bor05JBfxG5aIlxtX1qV5oKSvT1W9V5D8ELn0Tjb2MbZqdesnW/86ULIDQDqetm8GiP6Q6PLqq9xpziX+Vn9MzCC2bGRAShEQMH3mQfj+aWvmP/r8+39cd4z17MUgNKuQUqbPwBqriUgws3UqHOVv1Te1zes4Z7wBMEGiQ0xILKKZL4QqfOn8BULtDa25JN0ZDAOCIicAkADrwj+IxW3k6e9rh2uEkNdSIPwezveVavJG+ZW2mUVLs7ddfObrjHOheCouAGDgAden6vcTws4H4WOwfLQMSSpO4WDonNFE+BUT/RKQ6daTWjcOjPjM2jSLdxRLLzPR+1fUvo9ddLJhgsXoOsNcNERVVMHPmqcAXGTC+J2Tw+ct40zpincBgMmZYnIM/VMkLEkitvwSQ76rbV3bK+Vx7lMh0vJ8ojMWf0YEg3ezl9ve3meALRgE5QhyAmAv/zIItzPwGzCaSdAZMHYm2NAYFOQZcgLSevn/zi696Ddl+hOcEN3pbhrI+DWpmr0dIWJs7SkgNKiwmsHawuQtmFn3x6CIpAzJoq2c15uI8VsIsVzknT88/OmHN/cDIhFTGWQsFoHjaYh/bq4SXWd06fr7qjMqrI4uXYMqRxEADAkmQVsAfB8+fg6HjgHzaTIsZ9m8hfGMBVC+k4AGag6nQkndqz/fOrfzjomgBSYOCAYAIXrGtasoGGriQm7HuYHixR0WUpRMpRzDmHsYqBaOexj7vh11H4FhSSlia/8l3VeqDq38WbZrQacum0X1qfoQpDlOgk6wFsfLoNgdDNiChTW2PLpE7iCyYsGAcIQUgeIrmLz5Dwn80Pr84wPE21ftiGnqUlUXuGF3sd8z+mYQA1Y6QljPdDPQLhwxX4aka/oMrC6aPNhBOQ4zGxmUwuTtn9r+0lEdnx2niQAAYCzaK4cISitxkTCmDYLodS5+LW6yNcy5XgsiScHIyfALYO2VRriP8hIQMJ6mUPTgwtbdE10Lus6PJZqUN6fhCGL/M2BzglDiIJIEzlmUmsxBIPEGiSsqXWYH1sxaawsAwhH7yaA8h8ie8x/z9F8bU9UrWPB92opXJGSUYM4QSlys+7QhMfrvToCwngU5olIFZaXOavhbfEP0hu/W/3FmewGSsEhhwjQtTayMcb9ZdO1tIhT5Auezg8wUsylKn9E1g4iKNRRsJKyVTAREpm8wBx+x6nrheEcLJeuES7CehfGsBWAH2MPDib4YAkkRECQcgs4aC0YPgyMqrJTJjYNALUWFtjd5Xs+BdqY50t/qL2+b1zl/ophBExMEpbr90Ppp+0hB60CiAkaPY+3Qdo6AdkFkEQj3YNoe/8H0WU8jPH2TDcxUwniA7vUNqCjSMToVupbBlkCKBIGZizX5RBO3FbQ4R4gBbGXIw1tPan2mqBQxYTLuE2vzMhkGmqS+/7ItTtUxOREIfRjat2Ni4ryZrCDGzL2exj6HPIZ939WFmXv/C26ol6XrCN1rNljf9KmwrGANGkWfhEqx//4LcWnc9+ZNMWBUREmTM99s+1T7T2KIqaebn55QtVcTsYCOEI8LVFZSdH3Fo+QEZrP27HgBloih/QAOOKwdex/yRxjtwhoJtmRUWEnj2Rs9L5gUoT52LJLCFWfrPjOxpfPYLSscIuPxsxUzZ1Q2rmnMJRclxz0k+loXbyIKD8SBZFIT6EsTxRTSXgBsJbQfAJhYuCR1zq5/9pkDL+n6dObFjhM7XnrliewFJmeeE46QgxoytosvZmbhCILFeb859jfZ7tndNNEAMFFBUOo+S8mepRf+wnr5+8kNyvHqQ2YmSOVh/T/fi/X/ei+cQB942+gkPW0rTCndQ93o1iD4RMBEPOwxBoBRESV1r/5N2/yOH040Z3jigwAAKtcxwOQG1AWs/SyEHNXL2950o6TGc3+pxYvPHAYnkCfrwagw7T9t9tNfBRGDwI2zay+XAfn2UmRIvB6otv0P7bIYIEFkPWuEovMBoDKenrBCYWKfQn9d0bVfF8HIVwcfMh0lKw0EaxQOnL0Gexz4V+hCgGVIkMnbR8EgFRKHm4LhHe1rsXIckKoAowNgBqTyYbQz0Sqyh79TpZCo3uovbZ3XeeZE1gITHwQAIZEgvLBvMCp6/wKpDhhQVzSOQHDwtvc8jN0P+Ct0IWhlqBihMXljt4/WMBeTBNLxwFZgy4v7Y/2ThwMADnzPIwhP3wTtBUsZjl0CDJYUAYZfFPDf88F1//NSEkmMV6/AYNbEj2DMOlvg7lM8p+q/Nwk3eNL4hkyLFhkJi1c2HAQnkEN09/Vk8sqyYR4IAC5dyywdDyQstmw6EM92N2DDP98H3wvCL4Tx8vOHQEiNit3WF9uZWUyUMWTD0QLF+8YK+sI1n3r091gE+fSpT0/o4QSTY8vjKYlU3EbPWvw7ct+grmgcTKP9D2vDXgetg+8FX7WpwvGAkuTf9HQlel7aB8wE5Xgo20tsBaxRmLH3v7HfuzoQCG+F9gOT1zxiGBEQwuTtusDe4SOamppskpI80VXc5Ihlz4ZAS4tVR37wCSJxWomHaPxAXNYIjC0bD4RUGtP2eB5CWAipQYLR89L+eO4vdXjhycPh5aIQyoeUpuQYl34IENKgb+seeGXD2xCMbEV4+ktgKyelVmAwy4AUzDz/4Y+ueWrW7FmiO9094a/PnRwg6O5mxFPSv3vB886R//V2EYgcCe2NcyZ5ABA2HYB870wAjL4te+L5v1dj/ZOHo5CdDuV4EMKWIkG0w+dI6cMYFy8/fwiMH0TFbhsglQ9r1aTRCuUyab9X39v2qc7FE90ZnnzmUDFSJAAgsiG6B0j+lUjMgNGYEMk0YhjffbU5pLxSvwwN+hkAYLwgwtM34cDZj3Bk5kYyfrBkfU1gMJTqgxicNUSV7Se1/yeRACUnsDM8+TQBUKwrmnW28O86ozdYdYyhQOi/J0ZdUVmaG4gBP0O31op/L5UPLx/F5hcOJSKL6G7rAWLwBNYKzMW5oiZnrljb0vHzeCoubz6n204W1ppssYhiXRHiiO7+TBepwBzWBTvu4xpH+iWJwUwwfgDT93oaBxzWhkC4B9p3JxwQGGylI8h69t8s1Oxj48cWkph49UFvtCbbyPFiXVG6xVimyyDELplyLZtQys1jy8YD8Le2j2Hz+oOg3HxRK0ykTDODyREEiC+1tbTlutMTsz5o1zCH+p3kdNFJvusLf3cO/6/3ikB4NrRvMMFLinfezNKwxsHmFw6Gl4+iYrf1kI4Ha8c/08zMRoWV1Dn9q7a5HZdNJmd4MmuC4qpcxwAgJX2ZtedBiJKW2BW1ggCRgVA+Nj1zGP7RcRyyr8yCcnOlPxg3rcAkAPYZgujLk3mPJ6ctXbrso3DnF15yjvygEsGKZmjPn7TvM0Sn+eUXDgUBHN1tA5GwYCvHPKfAln13huvorP5269zOH0xWLTAZHeNX055KCbS0mMiCa34oItM/zn09plSvsGtewQoUQ6VM0H4A0/d8FgdUtiIY2VLKNI++QiwP23VnuNLf6j+0BdmPdqPbIA47WcvHJ7tjWSywA0R044xvQcgLiag8tFdhF15EFkYHIJ089n9XO+++/9/JGhfWilHzFZhZy4BUIMB6fOv06MvnPfiRJwtg0GTun9gVoivld+DIgmuaSDrXkxN4Hxf6GMy8K2sFIoa1EtZI7L7fP3i/d3WScnMwOgAiO5LMv+2WmZx+jC1d0NrS/rtSdIgmewPRrsAgxQOIp2R26cWre+VTdVzIXwupQE5ATJibMUdFMhOIDJTj4aXn3kl/X/tR9L68N5yRcpoZzJaNCklBDlmTs9c6PeH61pb235VmpdKu0EG3a8XZB0yJjpxx7QfJca8ipaq4kHsLaAULY4ph070Pfpz3evvjRMSlfxu6Viher0pSRRRswaxhgy+viRdvmZnMTvCuD4LyO5UvBIwn3Io9Z3ydSV5ERIL9gi6VYO+afY0DneY9nuMDZrdSMPoKtDcEp7l8x1hUSetxH8Ne4T4eXpxJZnTpKiiDXSwcvcs2uQ7UCtEzrj0KjnMtOYG64vRqa3d5rVBymvd7ZyfvccDfyBoFa+UbOs3b7hgTMJ59UHv4cvvc9sdAQPy+XUv6vzVAUH6/eEog3WJw3BcD0YMPuQSgS0nKEHv5cpaZdk0gMKwVsMbB7vv+g/d7dwdUIEdmR/VHxZGK7ESVMAX7Iixftibe8d1d0fR5K4KgpBXiEuniQYbOWFItHXkTKaeWvfzYX/s0xjEDouLMpGBkCx/4nkdQscfzZHy36DQTg5m1cIQSSsD45sd+gS/o/HTnP5EoBU0mSTn0cNZbY0pad3exozGRUHrJZc95Rxx4p0szsyD5flKuC6OLwxMnfYfvjmRcMdOs/RC9/J9DyWqHK3ZfT0L41lrJToUj2bfPGebPtX2yY9HzDzy/OZaIqaeTT5vxvlVyCgSjsTKly8OXLDFex68eUTXH/hzMh4lg+GAYTWDeZQvxSBQv2+x5aT/0vry3iey5VQaiebIF3NS3xZvf+ek/diU4ITLI0NPJp81biS0Ib821LYIUi6mK2Z84l5m/Ro47jQt5DWK562kFAGBDAtLQDLjqxa53VP3yqx2fzTz4VrH9p0Cwo1W8PZMBcOT0b80mN3gjOW7TLucrMDMIltyQZK1zRN7VPTdVfwNo1vFUXA7mcsApEOz6YFBIFi/fiyxccj6RuIKkE+VCrnj5B01ircCsIR1FSoF97zfM+oLsrRf/+a0u/adA8HpaYdEiBhFXnH7tO9kR11Mg9GEu5AFrxnnO0U4xvwUIFAwLNt7TBP5qz43n3QMAr3Pj5hQIptYOtMLZS84GyyuEUruxlzPgSaEVGAxDjquK1+zZ7xl4l/fdfMn68sQOJJN26qCnQPDmWqHELIGzvnmwQ8EbSLkfY+0Bxk7cMm1mAxKSAiGwLvyJGRdlbz7vtyjaPv0Z9Kk1BYLBrwFmQ3jhdZ8TREtIuTO50DextALDgpjJDUvWfg7gK3olXYfvnFsoj7Dc5UZfT4FgfLTCtDOuPsQodbWQ7olsNGD0+PsKDA2lFEkF63s/BvFXsjdfsG5K+k+BYOTXwDLtsxZ/hkhdS8rZiwt9FsDY37DJbEFEFAgT+94zbPWl2VsvXDaAVgtMXRk1BYLR0ArdswnpFhP6/FX7ioB7g1DOJ8dWKzCDYckNSjbGMtvvkTFf6b3tohcRT0lUruMpx3cKBGMBhv4IUvSsxXGQvJ4cd9+ir0Cjd4Urs4EQktwQ2C+0keYLem47v3XK9JkCwXhFYggtaYF0i4mcdv1e5OI6cpx5bDSgPQMSI6cVBjq+xuuFxdd7uzcvKTYOpSTScTuxJ/ZOgeCt4yssWNJCUlxFTuAgzmdt6Q4CMUwAaEhVzPhqnWaY5DbHd1uJ+NSaAsHE0goBuoqkPIWtAbTeubzCqxzf/DNs7Zeyt164AsBUxncKBBN4DWDO6FmL4xDqalLOQZzP2dJui8Fwf9HxDUg2BgDfJAqvfG3r7cmXpzK+UyCYdFohesa1e7BUVwqlvlDUCr4GkRqc45tvJ+2f13PbJVOO7xQIJr+vUHHWko8yiW+TGzyYc73Fi+wGNu9wsYWRgiHBvtdDQLJn0yPXI502U47vFAgmu1ogxEu+wpnXzCJSl4PobBKC2PdM/20cypUkBNia5WRssufW8/+G8oUkU47vFAh2Na0wbeHi41g4SyDkYeXL/1jrf4D5K723nJeecnynQPCW0AqInx8KzzrwA8LwAUK4z4W25v6w4Z6Ls1MZ36n1FtEKcfm62mJqTWmCt9S+x1MClesI3bN5yvGdAsHovFcCFJ8df837Tcim8gTEDmldl+YJOfxqstH7ZswSS8QUmor/M2vTLB6VxusERKwpJkbt+QDAoNjqmMRqIJPM6MH8bVNTk03SONjfDIqn42Ljnhsp05zRb3pGq8aR1qHTi9iqmBrps46n4nLjnhtfA7zB0DN0TZCAmExoTnBCAEkkaQDNDHH0j6r3MwVxKByqsL5hGQCMj62BMP0t87GO9dsf8JhMXShJ0O2/qz5Vvx9Zcwg5YkaZVjaiF0r9bc3H1zw/8LziqTGi9Q3obVx2xL5GuQdLid2sb1gqBcumzwj6W/tJ7c9tz7zplvSE7m2ghvtqvgRgugxKMn3modZ5Hb+NJWLqTaXpYPYwkRDJZNLWr6j+kDPNOUb3+M+0fqrzppE6oMSiBMrS8ej7q/YxLD4OQjUbrgPo7SQpTJKKSBcE1gyrzVaA/ggHGQnx04c/sbarSCtEchFG5xLq7YD2oVTV9CzJjwA4mi3XE+EdJChKagCthmF92wvGo1D0eybxk7YT29rLz8Mi0KgJq+3orU/V7yaFOY6B91uDhoH0AgAJAluG9WyWGd3CERki/PyRT6xdPVzhWuahuuXVJzohVasL2icmUboexPeEXdLV0rVlODfmUMOK6qwzww2DGTpn8jqrm9tP/mPbSAChNM9eN9xXc1Xk7eFLev/Z91Tb3I5DR0I1lg+oLl1XJ8DnE+FYGRQzmAHrFfdaOAKg4jWjVlsQEcghqKiCUATvZQ/W4CEh6OpHTlr7m+2fPVJqvJ/W5XWHSYfPhEBcKLEPCcAWLFCiC0ARqP6OaPXBllcz4drWk9p/Phq0vobeB+oOk9aeDSAuXDmLBGAK2+2tYVivRK8q0esK+Ft82ILtYIlrWk9sXwmAd4beMh82Lq9aHtg3PNff4oMEgSRg8hb5rfptXad0PTMcC0YxYZPf4+/Hho1wRFBF1U/qlh3xocz8zOMjtclElPW2+BqMl4f7rFgiptItaV23vO4g6fJVALcIV8DmLfxeXRCOCAhHwBTMJtOnf0GCuljTP8nBBvgMBkL+Zu/d1qCeJFoCM90P+b36Q40ra1Z6Pl+Qbkk/WwbvSNHa+L13VWD6tK+D+EwZFAGTt9BZ4wmXXKEErGc2GB+/kJL+aH3+Nymsh88AU7Dwsv8uYq4hgXnODLfJ5ExT48qan8O356Zb0k+NFK0D6a1KVU0PCHkFLJ8pg8o1eQOd1R5JcmVQwuRNj/b1r0jhYdJ4jg0/SyQsMzv+Zu9dlvk9JOgz7gynxnqcary/NuMX+KJ0S7pzZ+m1hK3+Vl/rPq0JJCGY2CInhRy2NlTEUFQs6pLWs0aG5J7SVT9uXHbE+9Mt6eeRgkQLhgUEZhZEpGiYA4BLoNR1y6s/pVy+QQTlXrpHs/a0IUHCiToBUzBPsGdvgFA/bY23bnydR/0BwHdrU7Xf8DZ754LoiyqiPomsbmhYXnNKpjnz2+EyV/nztSuOrIer7pBB+W7dq6F7jQ+CdCqka/LmMdZ2iROwv8ic0PXi6zzqYQC3vz9VdaW/xV8I4DwVcT6qs7qmIVX7+Uxz5ucjAYTy3tbfU/V+EvJOGZaH6B4Nv9fXAOBUKFfn7fPs2+uU4fv+MK/z2dd5VCsANNzfcLW3xXwe4MuciIoBelXDiur/zTRn7tgZegkkaVvxoSQiAnhERt+86iEkSJq80SqsDjLAL993x/tij8Uf2zIRnOWyVqpfXv01FVVJW7Dwe3wNhhRKKAjA5M2iV2zvN7tbur2BEYVZm2a9ylYs/1u6Jf0vAOc1pGse8vvMXdKV+1lhf1G/rObkTHMmtbPMFUsUP1e/oubTwqXbSVDA3+prAEIo4YAA02cXFTbbK7sWdPmDpPUZAF+uX1n9kN+nl0mHZlnDP6lfXnVGpjlz+3CAEFsVU+nmtK6/r6ZFOHQXUZFeAkkSJGRQCpMztyGnLn/ks0XB8kb0YjWQOSmzEcC36lNVv9N9vEIo+XYo+n79ito9M82Zq0dSg40kCBgMEJHSWW1UhZoTsoGVVbdVfbgLXWY8r+osH1LDfdUXqaiT1Flfg4uWISkCBPrY4JTWlvaV/YCJp22a3sSUS0BU7VslW+MdP6tPVX/CAj8DEJUBWtGwvOalTHPmt0M1Cfu11bLqz8iAuIs1w3jGlGglEPpMwc5bO7/zJ2BQ7PmYyizKmEHRenyVbKvufKjh7uqP2rD4DYDpKqS+V7/syJczzZkf7oz5Gk/FZbo5reuXHdkiA+I+9pmNMZaIFASMdIXUOXtB26c6ruvXcE2DoJdBVbdVqbaWrvbG5VXHWOC3ROJtKiyualhW/WKmOfP9iQIEUSIYpEhAFNmcBEndo7UTlR90dxPfQxI2tjomwWOfXIun4jLTnNH1y2pOURF1jZ/1NWzp8j0JSwrMeT6xtaV9ZWWq0gWjGNIbDGCTsF0LuvyqziqnraUzwwVzKhGBGRABWta4vOqQdEva9N/aMkhtVbe8qkkF5V2sma2xTEQCEgYSeVvgk9bO7/xJZarSBZVyGoOltbrLr1pa5bSe3NlhCzwXgLaarQjKH9Qtq5uTbkmbBA++nbNMb+3yI48WQXUv+9aW6WViI10pTdac0/ap9uuqllY5SEBkmgdJL4G7FhTpXTOv6ynu4ziDe41njAiI79XeU9Wcac7o0lWw4w4CJofAmp9ki15SxGAwCVK6R/tOVH22fkX1DZnmjI6tjo0pwYlEQqRb0qZu5eHvEC7davLGkiUJAjGzlUEpTcGc1/rpjl9VdVY53S3d3s5oq37mmt+10hTMt4UriBmzWIgH3nfH+2ZgEfhNBUAConJdmmseqNldSLECAPUzlGWrQkrZPnNe2/yOB/tp3YnYeT9o53c8aH17lQgIAUMVQtkHjkodvmcSg6C1n95KrnmgZnep5DICKWu4TK9xIo7UOX1L6/zOm6o6q5yuBV3+zpjEZSC0ntzZYfPmYhWU0lq2KiiWNy6vOiQdT9vBCplRAwEDRoUlAPyUJObJkCQI2KJxBMfb6msn6vxv/YraSzLNxWs8x4q47tndBABk1HdEQAStz1wCgFERJU1Wr26b2/Wd2KqY6qruGpZa7TqjS8dTcSlC7ldNwfxbRRVI0qxAJLAvACQWvTFjxWfHKZmElQV7tYqovUzBaCKSzGxUVEnd6z/Y9umupVVLq5yu6qIfsNO0VnXpWCKmAntFvmFypltNUyQUzTRWHQQCEosSbwqCIr1JKwr8LRVR+5fpBWBlQAqd1U9CqAvjqbjsqhrm3i4o0ts2v+tWndWr3OmOJCmiVop3gMA7KsEYc3OIDYMF9miNd/zM3+IvUmElIaABgJikzmmtQnRV7fLqk8cKCGVV3bCi5lgVUsfqrDYkSAJgIhLWs54U9iIAZedseP5KSYOs+fiaHmv5ctZ2ud/DR7S3tHcDQPINpGCZ1sZUTYMMqs/5RVpVP62+9aw0XwKAg2d2DT/AQOBZs2dxpjmTZ8tfZstp2+cf2Tq3swMMJN+kFDvBKGrY5XWHCYc+p3u1Le0tmJmFKwhMX2tracttXLdxJHxBnjW76EALFpeZgv2l7dPVbS0dD/abrxPBMSbLBgmItvmdycYV1bs5053/9bb4mogUDKTxrHUC4s76u2o2ZZozD462U5Nel2YwiFdwoqSVyuFWqyJK6qxevWbuH7tGMmGUbkkbMGgtdd4D4J7+7OwgmcAavsQJkzAF1iAq0hpWUmd129p5jz6OBER6mOHmV9EKUNvczp8C+OlQaO1OxwlIg8hcokKO8ntK51zUAlJn9V82VWx+AAmITDIzkvTikbntawF8pGySgca/REds73xVpirdNX/pPN/b6v/IqXAUM2sQiC3AFiwqKF1zb01DpjmjY4nR0QgJLoZkGx6onk2uqDV5A9puxCGR+AEYtKOiqmFrBAYhATEopkoUpWp9qn4/knSs6TP8KloZICm+AwbFF4242udSoQeVGIoH8QlKt6RN3bK6vUjgBNNnmNCvBawICDDzfU9+5MlCrCkmMPI1P9v2d4LUqL3GIQkdHGIACPRF5uk+3aYiSjGzJoKw2oKYok6QHqi7t+4dmeToePerV8dKZhpOVUEpmbksjZgESd2n88rah0HgzOrMyG8koVgSPAimKjEKYHVchVXIWjYo9U2SIKlzukDaXwMCpxeleVRoLdM7GDMzHRcAIIU5SoWd3ayxFqWSJSKSuk9rFvZnAKipqWl0mHQI9I4LCKI/jTIAZE7N5HUvPmE9+08ZlIoNGxIkTMEYUrS3CPAvG+5qmDWUEOJg14DNP5wNo8RUYGYrAwLEeOwPczufYx7FIrJBrnKyiIiOZub+ulxmttIVIKJ1x/zthPWYALQCpWQWAAtqLkn5MjCtUIJY8/oDkX8CACcp+ZZo9FGvF5Mu2drra++qPVFFeLVwxHSrrSVJ0uSMVmF1iGH94zl3zfnQ4089nhsx9cagJCVtfao+BKvfzppB28aeMykBkG0FgZtWxRQwvsmWdEvaxlbFlLch+27WDEL/KBUmRwB5055MJm2sKaYyQ6W1VM05JD/qTc4g05QxRcyigbWlbQIGxaIWHy+m491+WZu9dUFQcmRKzu9jdcurPiED8rckCTDgUlZZO9Oc+ghjOZI4IZ6KyzSnhx9JKIYi2c/5ezoB2o8Nlx2+bQ6oxbMTYvdKPkPfpr49FOgg1q+llQU2DcdsSGMEIycleo9KHb6nYT7Uvgq0zKWy8/UgcIIhkvQWBwFQ7NopAWF1w7Kqz8iIWmYKVsNCkiDl9/jaqXCOr19Rc1e6Jf3Z2KqYynDGDAcIiUUJJJNJBEJiNxA5bHk7tgIIPCGa0uPpuEgjbRzC/lAUZvNaWgHkdpZZa+6s2d2ZTnNMzjBv91zJYpuGkMQyKMnm9UtrWjr+9GYOvQa7xHBe9RcEpqJe2AgAqxfFBJCxb3kQbAeE5XXLqw52p7nf0Fntg+EQlYAwzTm54b6a5zLNmctiq3ZC7b8qfNddPuwQSaISY71aQIqJJaG0sRVOQIENM7bv1jPQOwsucu1RgRnhH2mnWEP/qnCsx6U7ugFrGTJIMH3IAGhKAJR8A1PGkcpqkN0OeEXSLTy8xdag7M0yENbO6/o/3ePfoqLKYWbdH1Ho1b6Kqkvrl1Wfl2nO6KqlVc7OElS5Ll1yNLHV+nZHknXiSRIpegY68NuZNEMOI1fGK4sPk3jJ2+I94W/Vj/lb9BPlH2+Lv07nTcEWrNV5a6zHvs4ZC0LfYJ5f6PMkwGI7OovRS6IIAJSTW1OaYDuHquQsL2y4r2Z/p8I5vj/JYqF0VmtVoa6rW1b94tr5nfeUgDDkjUyW0Zm3L1tH5Ei+rpkx7isdT1sAML54VgibJUmR19BKCA95D0oto2tbuh4GMGf738dWxYKFjX1PkaJ9odmW+jUEb8/Yr7NMwO0RlnpJITTQBONik9ve/U72lCbYgZNWyuJGC4V5Oqe7VFgptmxAIFhIUzBGheTtdcuqjula0OXj3zsxl78Y3aC9AwdvZMI/SRF4IJgYYKbDAACrx3n3Som1A9WBLwJFWl9lizNAjH1GjNaSYdjb0yt2mt4ERFdL1xYQ/1W4Agy2JY1ObBgMnjUgnEtTINgBgyYA+s1nH896OXu89e0/ZaiUzCIQayY27KqgvL9uWVVd5tRMfmfKr8sTFQh4ttjMzeVYvLC+BcD1sVXFOvzx3sDYolipbIP/IhzBzFy2tYu0EjVWpirdkSo/GDa9peQegX5HkrblCRjElkGMPY65e054m58wBYIdqOpiDqHr5K4XrDEfh8VWoYQAwxKRsNpaEFVIV/y48QdVhxQzmkNrgysndIjwUClFwP2M5VkmSe/Obcq9sxjKS4xGGS4NGrxN5VCo+DWY+z9HRGR9CyZ+ZxTR/YCiFB7vA+/vBBP4A2umfh4oCjErAnJWbyhQP9QcxZD2dgLsw7BAAJRyCImYamvpesLk7adKDSPFPgQiYfLGkCP2omnyZ3PumhMBqHco1/yWSyF0gVI6q/1y9WjJdTMqpISA+S8waPXq1aOxoQwqTkcYjK9U2sof6j5dFggMgNiyUSElJfPxA6XwuPoxxRlAlM0V2kxO/1u6koBigo2ZrXAFWcMfBYFHvC6rvLelZOx4NGmNGAiAYkdU1dJicwfn7edlUEoINqWGHGn6jBFB+e5IIJBm5j3YWPBgndvSJrWf3P4cM34sQ5LYlswMBrGxgKFTQOBM04jGsgkJiMpUpXvE947Yd1DVqSWwtLW0vQxguQxLYhRrnfrtbOYzBoJ7nBfHVsXk4599PMuEe0RAUNmEI5A0OQMh6DNH/eyomZnVGTuijMqg4244NFCzvOadg+7+m8ggAIpdQ7FVMdU6r/Nuk/WvUBFH9TOAIOn3aCsc+jCYvqj7zM4luYS8wnrWkiyaRUQkdc5YGZZHNqyo/ThK5tmI2MurYhJJ2AoTuji6T+DPDenqs2vvrp1WYoTXZYbKdZUMBhkSV5m83iocQSVtIEzeGBWSlXWp6hOQhB3LpqQ30V5kHLpeZ/WWfu1FIOtboyJqT92bP7O/rXZk9laBwFtnTT8uUCEfq19ZfUVNqmbv/mrdyQoCYFsOoXVuV0L3+Lc7FY4C4BclC4T12QIYct4g3ZI2JQn7hPHsbSqqJNsSwIpJHQHB1zZ+r7ECAIZrZ5Z7meuWHTFHuvJS6/FMGVA3SsceWIqqvO5BJZNJG0/HRXtL+79MAZerkJRAqSkJxdCjAC1u/FFjxaxNs3jczYCi9hIdJ3a8BIuvy7AUA7SX0DltSdGlDSuPeFuxD3h4o3KQgMg0ZUzNnTW7sxLftgUbDEwPXC401yIJO0q+x9iBoCxZ4qm4bJ3b+QWd1b8cmEwrfcdOqb10PG0TCQgZci/RvfpfMiQVMxuIkoSNyENshX9DuiVtYk2xnZYo8RSK41wW14eEo5YDCJMi+Flzaevczj/HU3H5ZoVp6Za0jaficu38jm97W/3fqQrlsGUNQcLkjVURdSgXvCXplrSpuq1KjXf4sUzv/uKg6/VW/2EnqhTbUu+IZpaurIBVdwBAZXwYTn1pGDMIUGF8XzjiQOEKeC8V7lw7v/MnozFFb1xAAAJXFnMI6Mt6802f/mN/DmGYz+2eHac1H1/TYyHibDkrlJClsm7p92qtQvLU+lT118pdbkM1jWKrYirdAhO7421Bepu5X0hRKQOSTM78dO28jm8NGCj7phZvel2akYAwBWoxOfNnp0IpWPhFWn0tw+r0+lT1pV0Luvx4Ki6GMhli4MrlcyNxbpxel+Z0S9r6jPmmYJ8tCRlNgqTOaiNDsrkhVXtvkmB3xpQrC49Mc0Y3pGq+K11xAhiwOfNHV0TOQQKinHCc/CBAfw8uPXbqY6/A18dbz/y7P4cwPIll4qm4XNuytsv02ThJ8mRASmbWBFImb4wTUsnGdM13Yj+IBcotkvFUXJakF+3IQYun4jLBCZFpzuiaO2r29iv2elA64sOkCDqv17pZ77NIQJQyp4PTZCVt0XFKx0u2t3CcyZvH1LSiViQmaXLGqKC6siFdk0y3pE053DwEKUvxVFx2x2fnsC0fUX4npu3rgQZBb4IT1Dmv81lT8D8Gw8+rsFJsSkDo01pF5PzGlbUPVN1btUdZ0MQSMfUGtjwlGKIs4auWVoUb76+7S7jiNGaALT9t+7wTMi2Z3v5g9DCWsUYkGCLWBJHgof4kBBIQI+ukUX8fwvMNy6pPJIHVQokKq60ZDuDKIdnMZzK/rL2n6jgVVnc6EXWA36sNCORntXEqnHN8kattXFmXXENrfzGwBDmeisuN6zYSmkp3MFDalH/fmK79HwhcIxS9A4JgPftbWcjHM6c+8cpO9Uhs68X4T913644Fme86Fc7xps/AasumzxgVlV9rXFlbS8wXpePpdWVglu9XmDV7FpfLFuKz49Q/ha5IN2pX1L5PODStVLAHABoCAWaODll4UbJM7+M1y2uaXbL3OdOdw/2tvgVAfo+vnaj6RIDw3oZU9ZXeZr4nsyDjl961X/MOmJRniiXYaTSma4+GwDXCoToAsL5d53t8YsfnHvvPSJlBAiJbGstvM0MX3QAARSjF93lkrgvqZ9j5mUdr766KOxH1IAkadvax3MqZbkmvqrq7qi4QlkudCud461uYgrH+Vt+TQVkLws8b0jVtAH0XZNa4u0efTDen9YB3RlWqanpQqlpr+QKSdJwICNiCBfv2ZueJ9nMzSejhNAmlW9ImkUiI5BeSGwCc0JiuPZ8kL3LCzjSd1fB7dUEG5XGs8YHGdM0PDMTStbT28R1V36aR7v/vo++v2kcLNZ8Mf5UtImzZCCmUDMmA1awFsGY42jbdkv575Y2VR8/YK3K9DMrTiAgmZ9jv0Z5wxaEyqL4f2N1c1Jiqud2QeEi/rJ9Mt6RfVbQXuyMWNDPz77OePZfBcRVUig3D+PZ+uSH3hY6FT2zeKQBwiU+L11pxGf7CEUfWpes2WLZCkBjSeTkAPGZN9Suqnw/uEdin8KJ3T+vcjpNH6m6C8jSK+nurPquizp1smU3BPNY2t/OI4UZxyhvYkK6NE/FXRUDOISKYvIHV1sqAFCQIpmB8MD/JwFNgvEBAgYkOIOBIFZEHiICEyRlYn7uY7VdaP9nxq34VPxIx7AH3CNTdW/cOFebz2eAUGZJh61mwZZQmaGsw/gBGB4j+TOAnhc8bfEgpXHsgMyqJ+EgwfUyF5R5sGBAEIsDkzVaQWGF9vbRtbtcfhzUucwDw61dUf0i6dCmE+K/S5GwYzxrhCCkcAZMzDOZ/g+ivYN7AwFYi2g/g9wpXvlNVKNi8hSnof8DgyjUtHT8o7cmQJkyU+bFhRfUP3JmBU/wtHkiVhCoBELSzZwNRDH68ogh4RhcMAcUOqJEqoR3Qh3BX/fLq/QN7Bv7PejYwEpqmzKit1J6uWlr1o9Ae8oPGmpMZXCcccQgEwJYhA9IhRYeRpMNIFnuomFE8nJzeYHLmD0LiTufx8IP9moZG8FaVIjOW5/L/A8DChpUNV+mc/TgRn8ia5zDxDBmQSgZEMyQ1l+f9s2IoAcigA1G6u0D3Geg+4xHhKQa6IcRKUvr3az7+6PP9oBsOeJOwAy7oeAjAQ40P1DSYnP0cBD4gpHi3UMULRGRQEEl6OynxdhIAyeL4SvYt/B69xX/FbyXCcmx2frjm9DU9A4TLkKR1mR+Z8aIumBeshUeeVdvt8c4cDrOGIGA9Nf6osaIn26MiTiTf1tKWw8guiq2KFWeJpmqWgnnftk91Hj9SD99erc65a04kEg4cBcYHwbwnmGaCsTcTSzC2QNDzQtBmgB+Fcn498CqkUQ/V7eDqo9pU7dulpCYwHwFjpzNjdxK0JxgKDM3Em8H0MsC9QmKrUPLvVts/Tovs/sSDH3mwMJD2yniakyM4w6c81LjMZMf94tDAlr6ZdWB8EMB+MLwbE+1FzAEQ9YD4eSJ6hQR1G+P/qq3l0Se3l+bDoac+VR/KZXOBwF4Ba3pNv/iXBbnToDcBQ4GtAfv/0XtY/ecD6GcAAAAASUVORK5CYII=" alt="NCGCL" style="height:40px;width:auto;opacity:0.95">
+    </div>
+    <div class="footer-meta">
+      <div class="footer-line1">NCGCL &middot; Monthly Board Update &middot; July 2026 &middot; Financial Data: YTD June 30, 2026</div>
+      <div class="footer-line2">Prepared for Board Members and Key Stakeholders &middot; National Credit Guarantee Company Limited</div>
+    </div>
+    <div class="footer-chips">
+      <span class="chip chip-rating">Board Confidential</span>
+      <span class="chip chip-outline">AAA Rated</span>
+      <span class="chip chip-outline">SBP Recognised</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+
+if(window.lucide){window.lucide.createIcons();}
+Chart.defaults.font.family="'Figtree',system-ui,sans-serif";
+Chart.defaults.font.size=11;Chart.defaults.color='#1F2E3A';
+Chart.defaults.borderColor='#C8D6E0';
+const acc='#0C688D',grn='#39A935',red='#C00000',gy='#7F7F7F',g2='#C8D6E0',bl='#4FA0BC',tl='#2B8129',gd='#BF9000';
+const pal=[grn,acc,bl,'#5B6B7A',gd,tl,'#007AA0',gy,'#1F6A1D'];
+const tt={backgroundColor:'rgba(4,43,59,0.96)',titleColor:'#fff',bodyColor:'#B9CFDA',titleFont:{size:11,weight:'600'},bodyFont:{size:11},padding:12,borderColor:'#0C688D',borderWidth:1,cornerRadius:6};
+const noL={legend:{display:false}};
+const leg=(p='right')=>({legend:{position:p,labels:{font:{size:10,family:"'Figtree',sans-serif"},color:'#1F2E3A',boxWidth:10,padding:8}}});
+
+// A-2 donut
+new Chart(document.getElementById('cA2'),{type:'doughnut',data:{labels:['Credit Guarantee – FI','Credit Guarantee – Portfolio','Guarantee & Advisory','Tech / Sukuk','Corp / Consortium','Microfinance','Digital Lending','Education Finance'],datasets:[{data:[13700,2000,1000,1000,117.5,1045,200,200],backgroundColor:pal,borderWidth:2,borderColor:'#ffffff'}]},options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{...leg('right'),tooltip:{...tt,callbacks:{label:c=>` PKR ${c.raw.toLocaleString()} Mn`}}}}});
+
+// A-3 stage bar
+new Chart(document.getElementById('cA3'),{type:'bar',data:{labels:['First Issuance','MAGFA / Exec.','IC / Onboarding','Term Sheet','Due Diligence','Initial Engage.'],datasets:[{label:'Deals',data:[2,2,2,5,8,11],backgroundColor:[grn,bl,tl,acc,'#aaa',g2],borderRadius:4,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{...noL,tooltip:{...tt,callbacks:{label:c=>` ${c.raw} deals`}}},scales:{x:{grid:{display:false},ticks:{font:{size:10}}},y:{beginAtZero:true,grid:{color:'#E2E8F0'},ticks:{font:{size:10},stepSize:2}}}}});
+
+// B-1 top deals
+new Chart(document.getElementById('cB1'),{type:'bar',data:{labels:['BAFL','JS Bank','Bank of Punjab','UBL','HBL FI','PMIC','HBL MFB','Askari','Bank of Khyber','Pak Oman','Meezan Bank','Halan Microfinance'],datasets:[{label:'PKR Mn',data:[4000,2000,2000,1500,1000,1000,1000,1000,1000,1000,1000,1000],backgroundColor:[acc,acc,acc,bl,grn,grn,bl,tl,'#888','#888','#aaa','#aaa'],borderRadius:3,borderSkipped:false}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{...noL,tooltip:{...tt,callbacks:{label:c=>` PKR ${c.raw.toLocaleString()} Mn`}}},scales:{x:{min:0,max:4000,ticks:{stepSize:500,font:{size:10},callback:v=>{if(v>=1000){const b=v/1000;return (Number.isInteger(b)?b.toFixed(0):b.toFixed(1))+'Bn';}return v+'Mn';}},grid:{color:'#E2E8F0'}},y:{grid:{display:false},ticks:{font:{size:10}}}}}});
+
+// B-3 team
+new Chart(document.getElementById('cB3'),{type:'bar',data:{labels:['Guarantee Origination (CGO)','Senior Mgmt / CEO-Led','ALM / Structured Products','Consortium / Multilateral','Research'],datasets:[{label:'PKR Mn',data:[11840,5160,1631,594,37.5],backgroundColor:[grn,acc,bl,tl,gy],borderRadius:3,borderSkipped:false}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{...noL,tooltip:{...tt,callbacks:{label:c=>` PKR ${c.raw.toLocaleString()} Mn`}}},scales:{x:{grid:{color:'#E2E8F0'},ticks:{font:{size:10},callback:v=>v>=1000?(v/1000).toFixed(1)+'Bn':v}},y:{grid:{display:false},ticks:{font:{size:10}}}}}});
+
+// B-4 status pie
+new Chart(document.getElementById('cB4'),{type:'pie',data:{labels:['Initial Engagement','Due Diligence','Term Sheet','MAGFA / Executed','IC / Onboarding','First Guarantee Issued'],datasets:[{data:[11,8,5,2,2,2],backgroundColor:[g2,'#aaa',acc,bl,tl,grn],borderWidth:2,borderColor:'#ffffff'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{...leg('right'),tooltip:{...tt,callbacks:{label:c=>` ${c.raw} deals`}}}}});
+
+// C-2 segment donut
+new Chart(document.getElementById('cC2'),{type:'doughnut',data:{labels:['Agriculture','SME','Digital Lending','Energy / Power','Microfinance','Women Finance','Consumer Finance','Education Finance','Corporate','Bond Market','Trade Finance'],datasets:[{data:[4,2,2,2,1,1,1,1,1,1,1],backgroundColor:pal,borderWidth:2,borderColor:'#ffffff'}]},options:{responsive:true,maintainAspectRatio:false,cutout:'55%',plugins:{...leg('right'),tooltip:{...tt,callbacks:{label:c=>` ${c.raw} products`}}}}});
+
+// C-3 stage bar
+new Chart(document.getElementById('cC3'),{type:'bar',data:{labels:['Stage 1\nConcept','Stage 2\nReview/New','Stage 3\nStructuring','Stage 4\nLive'],datasets:[{label:'Products',data:[4,4,4,5],backgroundColor:[g2,'#aaa',acc,grn],borderRadius:4,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{...noL,tooltip:{...tt,callbacks:{label:c=>` ${c.raw} products`}}},scales:{x:{grid:{display:false},ticks:{font:{size:10}}},y:{beginAtZero:true,grid:{color:'#E2E8F0'},ticks:{font:{size:10},stepSize:1}}}}});
+
+// E-3 P&L grouped bar
+new Chart(document.getElementById('cE3'),{type:'bar',data:{labels:['Inv. Income','Admin Exp','Finance Cost','Net Profit'],datasets:[{label:'YTD June 2026',data:[462.70,112.62,72.60,162.01],backgroundColor:acc,borderRadius:3},{label:'Prorated 2025',data:[431.70,87.80,2.90,216.20],backgroundColor:g2,borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:10},boxWidth:10}},tooltip:{...tt,callbacks:{label:c=>` PKR ${c.raw.toFixed(1)} Mn`}}},scales:{x:{grid:{display:false},ticks:{font:{size:10}}},y:{beginAtZero:true,grid:{color:'#E2E8F0'},ticks:{font:{size:10},callback:v=>'PKR '+v+'Mn'}}}}});
+
+// E-4 balance sheet donut
+new Chart(document.getElementById('cE4'),{type:'doughnut',data:{labels:['Short-term Investments','Cash & Bank Balances','CWIP (Office Fit-outs)','Other Assets'],datasets:[{data:[9184.4,285.4,19.7,199.2],backgroundColor:[grn,acc,bl,gy],borderWidth:2,borderColor:'#ffffff'}]},options:{responsive:true,maintainAspectRatio:false,cutout:'60%',plugins:{...leg('right'),tooltip:{...tt,callbacks:{label:c=>` PKR ${c.raw.toLocaleString()} Mn`}}}}});
+
+// E-6 Capex budget vs actual
+new Chart(document.getElementById('cE6'),{type:'bar',data:{labels:['Laptops','Furniture &\nCivil Works','VRF / HVAC','Multimedia\nEquip.','Automobile','Other Fixed\nAssets'],datasets:[{label:'Actual',data:[0.92,76.75,7.50,2.99,31.12,0],backgroundColor:grn,borderRadius:3},{label:'Annual Budget',data:[5.00,80.62,11.52,10.36,88.52,2.50],backgroundColor:g2,borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:10},boxWidth:10}},tooltip:{...tt,callbacks:{label:c=>` PKR ${c.raw.toFixed(2)} Mn`}}},scales:{x:{grid:{display:false},ticks:{font:{size:9}}},y:{beginAtZero:true,grid:{color:'#E2E8F0'},ticks:{font:{size:10},callback:v=>'PKR '+v+'Mn'}}}}});
+
+// E-10 Other income composition 2026 vs 2025
+new Chart(document.getElementById('cE10'),{type:'bar',data:{labels:['Savings\nAccounts','T-Bills','TDRs','Mutual\nFunds'],datasets:[{label:'YTD June 2026',data:[63.85,261.2,84.9,52.5],backgroundColor:acc,borderRadius:3},{label:'Prorated 2025',data:[311.2,54.7,2.7,63.1],backgroundColor:g2,borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:10},boxWidth:10}},tooltip:{...tt,callbacks:{label:c=>` PKR ${c.raw.toFixed(1)} Mn`}}},scales:{x:{grid:{display:false},ticks:{font:{size:10}}},y:{beginAtZero:true,grid:{color:'#E2E8F0'},ticks:{font:{size:10},callback:v=>'PKR '+v+'Mn'}}}}});
+
+// F-2 asset allocation
+new Chart(document.getElementById('cF2'),{type:'doughnut',data:{labels:['Market Treasury Bills (76%)','Certificates of Investment (14%)','Corporate Sukuk (7%)','Bank Placements (3%)'],datasets:[{data:[76,14,7,3],backgroundColor:[grn,acc,tl,bl],borderWidth:2,borderColor:'#ffffff'}]},options:{responsive:true,maintainAspectRatio:false,cutout:'60%',plugins:{...leg('right'),tooltip:{...tt,callbacks:{label:c=>` ${c.raw}%`}}}}});
+
+// F-3 performance comparison
+new Chart(document.getElementById('cF3'),{type:'bar',data:{labels:['MTD Return\nvs Peer Avg','MTD Yield\nvs Benchmark','YTD Return\nvs Peer Avg','YTD Yield\nvs Benchmark'],datasets:[{label:'NCGCL',data:[10.99,11.35,9.92,9.92],backgroundColor:grn,borderRadius:4},{label:'Benchmark / Peer Avg',data:[10.85,11.07,9.33,9.40],backgroundColor:g2,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:10},boxWidth:10}},tooltip:{...tt,callbacks:{label:c=>` ${c.raw}%`}}},scales:{x:{grid:{display:false},ticks:{font:{size:10}}},y:{beginAtZero:false,min:8.5,grid:{color:'#E2E8F0'},ticks:{font:{size:10},callback:v=>v.toFixed(1)+'%'}}}}});
+
+// F-4 peer comparison
+new Chart(document.getElementById('cF4'),{type:'bar',data:{labels:['Jan 2026\n(Opening)','Mar 2026\n(est.)','May 2026','June 2026'],datasets:[{type:'bar',label:'Asset Base (PKR Mn)',data:[9484,9555,9627,9689],backgroundColor:[g2,g2,bl,grn],borderRadius:6,borderSkipped:false,order:2},{type:'line',label:'Trend',data:[9484,9555,9627,9689],borderColor:acc,backgroundColor:acc,borderWidth:2,pointRadius:4,pointBackgroundColor:acc,pointBorderColor:'#ffffff',pointBorderWidth:1.5,tension:0.3,fill:false,order:1}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...tt,callbacks:{label:c=>` PKR ${c.raw.toLocaleString()} Mn`}}},scales:{x:{grid:{display:false},ticks:{font:{size:10,weight:'600'}}},y:{beginAtZero:false,min:9300,max:9800,grid:{color:'#E2E8F0'},ticks:{font:{size:10},callback:v=>'PKR '+v.toLocaleString()+'Mn'}}}}});
+
+// G-1 funnel
+new Chart(document.getElementById('cG1'),{type:'bar',data:{labels:['Initial','Due Diligence','Term Sheet','IC / Onboard.','MAGFA / Exec.','First Issuance'],datasets:[{label:'PKR Mn',data:[1745,3117.5,8200,3000,200,2000],backgroundColor:[g2,'#aaa',acc,tl,bl,grn],borderRadius:3,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{...noL,tooltip:{...tt,callbacks:{label:c=>` PKR ${c.raw.toLocaleString()} Mn`}}},scales:{x:{grid:{display:false},ticks:{font:{size:10}}},y:{beginAtZero:true,grid:{color:'#E2E8F0'},ticks:{font:{size:10},callback:v=>{if(v>=1000){const b=v/1000;return 'PKR '+(Number.isInteger(b)?b.toFixed(0):b.toFixed(1))+'Bn';}return 'PKR '+v+'Mn';}}}}}});
+
+// G-2 institution type
+new Chart(document.getElementById('cG2'),{type:'bar',data:{labels:['Commercial\nBanks','DFIs /\nModarabas','MFBs / MFIs','Tech /\nFinTech','Others','Multilateral'],datasets:[{label:'Institutions',data:[14,7,7,5,4,3],backgroundColor:[grn,acc,bl,'#888','#aaa',gy],borderRadius:3,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{...noL,tooltip:{...tt,callbacks:{label:c=>` ${c.raw} institutions`}}},scales:{x:{grid:{display:false},ticks:{font:{size:10}}},y:{beginAtZero:true,grid:{color:'#E2E8F0'},ticks:{font:{size:10},stepSize:2}}}}});
+
+// H-4 Headcount actual vs sanctioned
+new Chart(document.getElementById('cH4'),{type:'bar',data:{labels:['Sanctioned Positions','Filled Positions','Vacant Positions'],datasets:[{label:'Headcount',data:[33,16,17],backgroundColor:[g2,grn,gd],borderRadius:4,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{...noL,tooltip:{...tt,callbacks:{label:c=>` ${c.raw} positions`}}},scales:{x:{grid:{display:false},ticks:{font:{size:10}}},y:{beginAtZero:true,grid:{color:'#E2E8F0'},ticks:{font:{size:10},stepSize:5}}}}});
+
+// H-5 Budget utilisation
+new Chart(document.getElementById('cH5'),{type:'bar',data:{labels:['Annual Payroll Budget','Annualised Payroll Run-Rate','YTD Actual Total HR Spend'],datasets:[{label:'PKR Mn',data:[128.5,62.3,64.9],backgroundColor:[g2,acc,grn],borderRadius:4,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{...noL,tooltip:{...tt,callbacks:{label:c=>` PKR ${c.raw.toFixed(1)} Mn`}}},scales:{x:{grid:{display:false},ticks:{font:{size:10}}},y:{beginAtZero:true,grid:{color:'#E2E8F0'},ticks:{font:{size:10},callback:v=>'PKR '+v+'Mn'}}}}});
+
+const _nl=document.querySelectorAll('.jnav a');
+const _se=Array.from(_nl).map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+const _spy=()=>{const sy=window.scrollY+130;let ai=0;_se.forEach((e,i)=>{if(e&&e.offsetTop<=sy)ai=i;});_nl.forEach((a,i)=>a.classList.toggle('active',i===ai));};
+window.addEventListener('scroll',_spy,{passive:true});_spy();
+</script>
+</body>
+</html>
