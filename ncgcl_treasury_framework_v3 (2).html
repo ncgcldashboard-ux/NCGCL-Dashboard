@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NCGCL Treasury Decision Framework — Risk Capital Pool</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+:root{
+  --brand:#035076; --brand-dark:#023a56; --brand-light:#e6eef3;
+  --green:#39a949; --green-light:#eaf6ec;
+  --grey:#BABABA; --grey-light:#f4f4f4; --grey-dark:#8a8a8a;
+  --white:#ffffff; --ink:#1c1c1c; --muted:#6b6b6b;
+  --pass:#39a949; --fail:#a33; --pend:#8a6d1a;
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--white);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.5;}
+.wrap{max-width:1200px;margin:0 auto;padding:clamp(18px,4vw,40px);}
+.data{font-family:'Inter',monospace;font-variant-numeric:tabular-nums;}
+h1,h2,h3,h4{font-family:'Newsreader',serif;}
+
+.header{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;
+  border-bottom:3px solid var(--brand);padding-bottom:18px;margin-bottom:28px;}
+.header h1{margin:0;font-size:1.75rem;font-weight:700;letter-spacing:-0.4px;color:var(--brand-dark);}
+.header p{margin:6px 0 0;font-size:0.8rem;color:var(--muted);font-family:'Inter',sans-serif;max-width:640px;}
+.header-badge{background:var(--brand);color:#fff;border-radius:8px;
+  padding:10px 16px;font-size:0.7rem;font-weight:700;text-align:right;
+  line-height:1.6;white-space:nowrap;}
+
+.assumption-banner{background:var(--brand-light);border:1px solid var(--brand);border-radius:8px;
+  padding:10px 14px;font-size:0.76rem;color:var(--brand-dark);margin-bottom:14px;}
+.assumption-banner b{color:var(--brand);}
+
+.jump-nav{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px;}
+.jump-nav a{font-size:0.66rem;font-weight:700;color:var(--brand);background:var(--white);
+  border:1px solid var(--grey);border-radius:16px;padding:6px 13px;text-decoration:none;
+  text-transform:uppercase;letter-spacing:0.3px;white-space:nowrap;transition:background 0.15s,color 0.15s;}
+.jump-nav a:hover{background:var(--brand);color:#fff;border-color:var(--brand);}
+
+.kpi-strip{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:32px;}
+.kpi{background:var(--white);border:1px solid var(--grey);border-radius:10px;padding:16px 12px;text-align:center;
+  box-shadow:0 1px 3px rgba(3,80,118,0.06);}
+.kpi-val{font-weight:800;font-size:1.4rem;color:var(--brand-dark);font-family:'Newsreader',serif;}
+.kpi-label{font-size:0.62rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);margin-top:4px;font-weight:600;}
+.kpi-sub{font-size:0.62rem;color:var(--green);font-weight:700;margin-top:3px;}
+.kpi-sub.neg{color:var(--fail);}
+
+h2.sec{font-size:1.15rem;font-weight:700;color:var(--brand-dark);border-bottom:2px solid var(--grey);
+  padding-bottom:8px;margin:44px 0 18px;letter-spacing:-0.2px;}
+h2.sec span{font-size:0.63rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;
+  margin-left:8px;font-family:'Inter',sans-serif;}
+
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.card{background:var(--white);border:1px solid var(--grey);border-radius:12px;padding:18px;
+  box-shadow:0 1px 4px rgba(3,80,118,0.05);}
+.card-title{font-weight:700;font-size:0.92rem;margin-bottom:3px;font-family:'Newsreader',serif;color:var(--brand-dark);}
+.card-sub{font-size:0.66rem;color:var(--muted);margin-bottom:12px;}
+.ch{height:250px;position:relative;}
+
+.insight{background:var(--brand-light);border-left:4px solid var(--brand);border-radius:8px;
+  padding:14px 16px;margin:16px 0;font-size:0.82rem;line-height:1.6;}
+.insight b{color:var(--brand-dark);}
+.insight.positive{background:var(--green-light);border-left-color:var(--green);}
+.insight.positive b{color:var(--green);}
+
+table{width:100%;border-collapse:collapse;font-size:0.8rem;}
+th{background:var(--brand-dark);color:#fff;text-align:left;padding:9px 12px;font-weight:700;font-size:0.66rem;
+  text-transform:uppercase;letter-spacing:0.4px;}
+td{padding:9px 12px;border-bottom:1px solid var(--grey);}
+tr:nth-child(even) td{background:var(--grey-light);}
+.pass{color:var(--pass);font-weight:700;}
+.fail{color:var(--fail);font-weight:700;}
+.pend{color:var(--pend);font-weight:700;}
+.tbl-wrap{overflow-x:auto;border-radius:8px;}
+
+.strategy-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:16px;}
+.strat-card{border:1px solid var(--grey);border-radius:10px;padding:16px;background:var(--white);
+  box-shadow:0 1px 3px rgba(3,80,118,0.04);}
+.strat-card h4{margin:0 0 8px;font-size:0.88rem;color:var(--brand-dark);}
+.strat-card .tag{display:inline-block;font-size:0.58rem;font-weight:700;padding:3px 9px;border-radius:12px;
+  text-transform:uppercase;letter-spacing:0.4px;margin-bottom:10px;font-family:'Inter',sans-serif;}
+.tag.core{background:var(--brand);color:#fff;}
+.tag.tactical{background:var(--green);color:#fff;}
+.tag.watch{background:var(--brand-light);color:var(--brand-dark);}
+.strat-card p{font-size:0.78rem;line-height:1.55;margin:0;color:#333;}
+
+.decision-box{background:var(--brand-dark);color:#fff;border-radius:12px;padding:22px 24px;margin-top:26px;}
+.decision-box .lbl{font-size:0.66rem;text-transform:uppercase;letter-spacing:0.9px;color:var(--grey);font-weight:700;}
+.decision-box p{margin:8px 0 0;font-size:0.88rem;line-height:1.6;}
+
+.footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--grey);
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:0.65rem;color:var(--muted);}
+.footer .brand-txt{color:var(--brand);font-weight:700;}
+
+.pvbp-bar-track{background:var(--grey-light);border-radius:8px;height:16px;overflow:hidden;border:1px solid var(--grey);}
+.pvbp-bar-fill{background:var(--green);height:100%;border-radius:8px 0 0 8px;}
+
+@media (max-width:768px){
+  .kpi-strip{grid-template-columns:repeat(3,1fr);}
+  .g2{grid-template-columns:1fr;}
+  .strategy-grid{grid-template-columns:1fr;}
+  .header{grid-template-columns:1fr;text-align:left;}
+  .header-badge{text-align:left;}
+}
+@media (max-width:480px){
+  .kpi-strip{grid-template-columns:repeat(2,1fr);}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <div>
+      <h1>Treasury Decision Framework</h1>
+      <p>Risk Capital / Equity Pool · Rate view, position, borrowing &amp; leverage, trade strategy · Sources: NCGCL Investment Dashboard workbook (WoW Positions, PKRV Rates, SPI tabs), SBP, PBS</p>
+    </div>
+    <div class="header-badge">SNAPSHOT · 12 Jul 2026<br>Cadence: Fri PM · CEO Sign-off<br>Risk Capital Pool</div>
+  </div>
+
+  <div class="jump-nav">
+    <a href="#s1">1. Rate View</a><a href="#s2">2. SPI &amp; Inflation</a><a href="#s3">3. Position &amp; Alpha</a><a href="#s4">4. Leverage</a><a href="#s5">5. Relative Value</a><a href="#s6">6. PVBP vs IPS</a><a href="#s7">7. Trading Ideas</a><a href="#s8">8. Alpha Optimization</a><a href="#s9">9. Risk Limits</a><a href="#s10">10. Cadence</a>
+  </div>
+
+  <!-- KPI STRIP -->
+  <div class="kpi-strip">
+    <div class="kpi"><div class="kpi-val">11.50%</div><div class="kpi-label">SBP Policy Rate</div><div class="kpi-sub">Held · 15 Jun 2026 MPC</div></div>
+    <div class="kpi"><div class="kpi-val">11.1%</div><div class="kpi-label">CPI YoY (Jun 2026)</div><div class="kpi-sub">PBS, pulled live each run</div></div>
+    <div class="kpi"><div class="kpi-val">10.33%</div><div class="kpi-label">Benchmark (3MK&minus;1%)</div><div class="kpi-sub">Alpha reference rate</div></div>
+    <div class="kpi"><div class="kpi-val">11.24%</div><div class="kpi-label">PKRV 3M</div><div class="kpi-sub">10 Jul 2026</div></div>
+    <div class="kpi"><div class="kpi-val">11.34%</div><div class="kpi-label">PKRV 1Y</div><div class="kpi-sub">10 Jul 2026</div></div>
+    <div class="kpi"><div class="kpi-val">41bp</div><div class="kpi-label">Weekly Alpha (net)</div><div class="kpi-sub">Adj. Return 10.74% vs 10.33%</div></div>
+  </div>
+
+  <!-- RATE VIEW -->
+  <h2 class="sec" id="s1">1. Rate View &amp; Yield Curve <span>PKRV Rates tab, workbook</span></h2>
+  <div class="g2">
+    <div class="card">
+      <div class="card-title">Current PKRV Curve (1W–10Y)</div>
+      <div class="card-sub">Secondary market mid rate · 10 Jul 2026</div>
+      <div class="ch"><canvas id="curveChart"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Yield Trend — 3M / 1Y / 5Y</div>
+      <div class="card-sub">Weekly PKRV mid, 19 Mar–10 Jul 2026</div>
+      <div class="ch"><canvas id="trendChart"></canvas></div>
+    </div>
+  </div>
+  <div class="insight">
+    <b>Reading the curve:</b> Every eligible tenor (1W&ndash;5Y) sits inside a tight 11.24%&ndash;11.40% band as of 10 Jul 2026, essentially flat with a mild hump at 9M&ndash;1Y (11.33&ndash;11.34%) and a slight upward slope from 3Y (11.29%) into 5Y (11.40%). The 3M&ndash;5Y trend chart shows the curve peaked in mid-May/mid-June (5Y touched ~12.85% on 14 May, 1Y touched 12.84% on 11 Jun) before compressing sharply through late June into July, consistent with PBS CPI easing to 11.1% YoY in June 2026 from 11.7% in May. <b>CPI is pulled live from PBS at the start of each cadence run, not hardcoded</b> — confirm this figure is still current before relying on the "easing" narrative. <b>IPS constraint:</b> Section 3.2(a) caps any single instrument's tenor at 3 years — the 4Y+ curve points are shown for market context only and are not part of this pool's eligible universe.
+  </div>
+
+  <!-- SPI & INFLATION -->
+  <h2 class="sec" id="s2">2. SPI &amp; Inflation Trend <span>Weekly Sensitive Price Indicator, PBS</span></h2>
+  <div class="g2">
+    <div class="card">
+      <div class="card-title">Combined SPI — YoY % Change</div>
+      <div class="card-sub">Weekly, 19 Mar–18 Jun 2026</div>
+      <div class="ch"><canvas id="spiChart"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">SPI Levels</div>
+      <div class="card-sub">Combined vs. lowest-expenditure-group index</div>
+      <div class="tbl-wrap">
+      <table>
+        <tr><th>Week Ended</th><th>Combined SPI</th><th>YoY %</th><th>Lowest Grp</th><th>YoY %</th></tr>
+        <tr><td>19-Mar-26</td><td class="data">345.45</td><td class="data">8.08%</td><td class="data">329.39</td><td class="data">6.80%</td></tr>
+        <tr><td>30-Apr-26</td><td class="data">354.23</td><td class="data">14.52%</td><td class="data">332.16</td><td class="data">11.49%</td></tr>
+        <tr><td>28-May-26</td><td class="data">357.54</td><td class="data">15.41%</td><td class="data">335.56</td><td class="data">12.54%</td></tr>
+        <tr><td>18-Jun-26</td><td class="data">357.76</td><td class="data">15.28%</td><td class="data">339.41</td><td class="data">13.30%</td></tr>
+      </table>
+      </div>
+    </div>
+  </div>
+  <div class="insight">
+    <b>SPI vs. CPI divergence worth flagging:</b> The weekly Combined SPI's YoY reading has been running well <i>above</i> the headline monthly CPI print (15.28% YoY as of 18 Jun vs. CPI's 11.1% YoY in June) and continued to climb through the period even as the PKRV curve compressed. SPI is a narrower, essential-goods-weighted basket surveyed weekly, so it tends to lead or overshoot CPI on food/fuel-driven inflation swings — it's a useful early-warning cross-check on the rate view in Section 1, not a contradiction of it, but the gap is wide enough to watch before leaning too hard on the "inflation is cooling" narrative from CPI alone.
+  </div>
+
+  <!-- CURRENT PORTFOLIO -->
+  <h2 class="sec" id="s3">3. Current Investment Position <span>WoW Positions tab, instrument-level ledger</span></h2>
+  <div class="g2">
+    <div class="card">
+      <div class="card-title">Portfolio Concentration</div>
+      <div class="card-sub">% of gross investment portfolio (PKR 9,455.4mn mkt value)</div>
+      <div class="ch"><canvas id="portfolioChart"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Position by Instrument (PKR)</div>
+      <div class="card-sub">Market value, current week · concentration</div>
+      <div class="tbl-wrap">
+      <table>
+        <tr><th>Instrument</th><th>Market Value</th><th>Conc.</th></tr>
+        <tr><td>MTBs (1Y label)</td><td class="data">5,507.8mn</td><td class="data">58.27%</td></tr>
+        <tr><td>MTBs (3M label)</td><td class="data">1,531.0mn</td><td class="data">16.19%</td></tr>
+        <tr><td>COI</td><td class="data">1,328.6mn</td><td class="data">14.05%</td></tr>
+        <tr><td>DAEWOO – STS</td><td class="data">288.5mn</td><td class="data">3.05%</td></tr>
+        <tr><td>LIBERTY – STS</td><td class="data">252.4mn</td><td class="data">2.67%</td></tr>
+        <tr><td>Faysal Bank</td><td class="data">248.7mn</td><td class="data">2.64%</td></tr>
+        <tr><td>MTBs (6M label)</td><td class="data">191.2mn</td><td class="data">2.02%</td></tr>
+        <tr><td>PREMA – STS</td><td class="data">107.3mn</td><td class="data">1.13%</td></tr>
+        <tr><td>Samba Bank</td><td class="data">0.0mn</td><td class="data">0.00%</td></tr>
+        <tr><td><b>Gross Portfolio</b></td><td class="data"><b>9,455.4mn</b></td><td class="data"><b>100%</b></td></tr>
+      </table>
+      </div>
+    </div>
+  </div>
+  <div class="insight">
+    <b>Portfolio read:</b> Sovereign T-Bills (all labels combined) are <b>76.48%</b> of the book, weighted-average portfolio rate is <b>11.29%</b>, weighted-average remaining maturity is <b>~111 days</b> (well inside the 360-day cap). <b>Corrected &lt;3-month bucket:</b> bucketing by actual remaining days (not issuance label) puts <b>39.36%</b> of the book inside 90 days — comfortably clearing the 20% IPS floor. This includes one "MTBs (1Y)"-labelled tranche with only 25 days left to run (23.17% of the book on its own), which the label-based view was missing entirely. COI at 14.05% remains close to the 15% AAA DFI cap (or over the 10% AA+ cap, pending rating confirmation).
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">Alpha Generation — By Instrument</div>
+    <div class="card-sub">Contribution to portfolio alpha vs. confirmed benchmark (10.33%), bps</div>
+    <div class="g2" style="margin-top:10px;">
+      <div class="ch" style="height:220px;"><canvas id="alphaChart"></canvas></div>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>Instrument</th><th>Avg Rate</th><th>Alpha/unit</th><th>Contribution</th></tr>
+          <tr><td>MTBs (1Y label)</td><td class="data">10.92%</td><td class="data">+59bp</td><td class="data">34.5bp</td></tr>
+          <tr><td>MTBs (3M label)</td><td class="data">11.90%</td><td class="data">+157bp</td><td class="data">25.5bp</td></tr>
+          <tr><td>COI</td><td class="data">11.00%</td><td class="data">+67bp</td><td class="data">9.4bp</td></tr>
+          <tr><td>LIBERTY-STS</td><td class="data">13.61%</td><td class="data">+328bp</td><td class="data">8.8bp</td></tr>
+          <tr><td>DAEWOO-STS</td><td class="data">13.09%</td><td class="data">+276bp</td><td class="data">8.4bp</td></tr>
+          <tr><td>MTBs (6M label)</td><td class="data">12.50%</td><td class="data">+217bp</td><td class="data">4.4bp</td></tr>
+          <tr><td>PREMA-STS</td><td class="data">12.69%</td><td class="data">+236bp</td><td class="data">2.7bp</td></tr>
+          <tr><td>Faysal Bank</td><td class="data">11.25%</td><td class="data">+92bp</td><td class="data">2.4bp</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- BORROWING & LEVERAGE -->
+  <h2 class="sec" id="s4">4. Borrowing &amp; Leverage Position <span>Pak Oman facility, secured via COI · figures carried over, not refreshed this cycle</span></h2>
+  <div class="g2">
+    <div class="card">
+      <div class="card-title">Pak Oman Facility (Liability)</div>
+      <div class="card-sub">Short-term financing facility</div>
+      <div class="tbl-wrap">
+      <table>
+        <tr><td>Facility amount (drawdown)</td><td class="data">PKR 1,238.0mn</td></tr>
+        <tr><td>Drawdown date</td><td class="data">29 Dec 2025</td></tr>
+        <tr><td>Rate structure</td><td class="data">3M KIBOR (offer) &minus; 0.05%, quarterly reset</td></tr>
+        <tr><td>Rate, last confirmed</td><td class="data">11.71%</td></tr>
+        <tr><td>Total liabilities (incl. accrued)</td><td class="data">PKR 1,238.72mn</td></tr>
+      </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">COI (Linked Asset)</div>
+      <div class="card-sub">Secures the Pak Oman facility, per CEO</div>
+      <div class="tbl-wrap">
+      <table>
+        <tr><td>Placement amount</td><td class="data">PKR 1,300.0mn</td></tr>
+        <tr><td>Current rate</td><td class="data">11.00%</td></tr>
+        <tr><td>Placed / matures</td><td class="data">30 Apr 2026 / 31 Jul 2026 (19 days)</td></tr>
+        <tr><td>Current market value</td><td class="data">PKR 1,328.6mn</td></tr>
+        <tr><td>Concentration</td><td class="data">14.05% of gross portfolio</td></tr>
+      </table>
+      </div>
+    </div>
+  </div>
+  <div class="insight">
+    <b>Unchanged this cycle:</b> pre-tax carry on the Pak Oman/COI pair was last confirmed at <b>&minus;71bp</b> (11.71% cost vs. 11.00% COI yield), positive post-tax (+1.66%) on the differential tax shield. <b>COI matures in 19 days (31 Jul 2026)</b> — the rollover decision is still live. No new Credit Line or Leverage tab data was supplied this update, so leverage ratio (last known 15.2% of NAV) and the single-lender concentration point are carried forward unchanged. The IPS still has no documented borrowing, leverage-ratio, or lender-concentration policy — flagged as an open governance item, not a trading call.
+  </div>
+
+  <!-- RELATIVE VALUE -->
+  <h2 class="sec" id="s5">5. Relative Value <span>Risk Capital Pool · GoP Universe · &le;3Y IPS tenor cap applies</span></h2>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Instrument</th><th>PKRV (10 Jul)</th><th>vs Policy Rate</th><th>Comment</th></tr>
+    <tr><td>3M</td><td class="data">11.24%</td><td class="data">&minus;26bps</td><td>Short end now the cheapest point on the curve after the June/July compression</td></tr>
+    <tr><td>6M</td><td class="data">11.30%</td><td class="data">&minus;20bps</td><td>Best liquidity-buffer carry available right now</td></tr>
+    <tr><td>1Y</td><td class="data">11.34%</td><td class="data">&minus;16bps</td><td>Already the largest single bucket by label (58.27%)</td></tr>
+    <tr><td>3Y — max eligible tenor</td><td class="data">11.29%</td><td class="data">&minus;21bps</td><td>Curve inversion vs 1Y (11.29% &lt; 11.34%) — no term premium for extending duration within the IPS-eligible band</td></tr>
+  </table>
+  </div>
+  <p style="font-size:0.68rem;color:var(--muted);margin-top:6px;">4Y/5Y+ PKRV points shown in Section 1 for market context only — IPS Section 3.2(a) caps eligible tenor at 3 years.</p>
+
+  <!-- PVBP vs IPS -->
+  <h2 class="sec" id="s6">6. PVBP &amp; Duration vs. IPS <span>Section 3.2(e) — PVBP &le;3bp of portfolio per 1bp move</span></h2>
+  <div class="g2">
+    <div class="card">
+      <div class="card-title">Portfolio PVBP vs. IPS Limit</div>
+      <div class="card-sub">Value change per 1bp parallel rate move</div>
+      <table style="margin-bottom:10px;">
+        <tr><td>Current portfolio PVBP</td><td class="data"><b>PKR 258,312</b></td></tr>
+        <tr><td>As % of portfolio value</td><td class="data"><b>0.273bp</b> per 1bp move</td></tr>
+        <tr><td>IPS limit (3bp of portfolio)</td><td class="data">PKR 2,836,629 (3.00bp)</td></tr>
+        <tr><td>Headroom used</td><td class="data pass">9.1% of limit</td></tr>
+      </table>
+      <div class="pvbp-bar-track"><div class="pvbp-bar-fill" style="width:9.1%"></div></div>
+      <p style="font-size:0.65rem;color:var(--muted);margin-top:6px;">Comfortably inside limit — nearly 91% of the IPS's PVBP allowance is unused capacity.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">PVBP Contribution by Instrument</div>
+      <div class="card-sub">PKR per 1bp move</div>
+      <div class="tbl-wrap">
+      <table>
+        <tr><th>Instrument (largest 6)</th><th>PVBP (PKR)</th><th>Mod. Duration</th></tr>
+        <tr><td>MTBs (1Y, 221d rem.)</td><td class="data">68,439</td><td class="data">0.55</td></tr>
+        <tr><td>MTBs (1Y, 291d, tranche A)</td><td class="data">26,041</td><td class="data">0.71</td></tr>
+        <tr><td>MTBs (1Y, 291d, tranche B)</td><td class="data">25,999</td><td class="data">0.71</td></tr>
+        <tr><td>MTBs (1Y, 235d, tranche A)</td><td class="data">27,257</td><td class="data">0.58</td></tr>
+        <tr><td>MTBs (1Y, 235d, tranche B)</td><td class="data">27,255</td><td class="data">0.58</td></tr>
+        <tr><td>MTBs (1Y, 25d rem.)</td><td class="data">13,533</td><td class="data">0.06</td></tr>
+      </table>
+      </div>
+    </div>
+  </div>
+  <div class="insight">
+    <b>Duration read:</b> Weighted-average modified duration is <b>~0.27 years (~99 days)</b>, and the sub-90-day tranches carry negligible PVBP by design (13,533 down to under 1,000 PKR/bp) — the portfolio's PVBP is dominated by the mid-maturity "1Y-labelled" tranches sitting 220&ndash;290 days out, not by anything short-dated. There is substantial unused PVBP headroom (~91% of the IPS limit) — durably below the 3bp cap even after this cycle's <30-day tranches are excluded, meaning modest duration extension within the 3Y IPS cap would not by itself breach the PVBP limit if a term-premium case emerges later.
+  </div>
+
+  <!-- TRADING IDEAS -->
+  <h2 class="sec" id="s7">7. Trading Ideas — Week of 12 Jul 2026 <span>v3 · corrected-compliance basis · CEO sign-off required</span></h2>
+  <div class="strategy-grid">
+    <div class="strat-card">
+      <span class="tag core">Recommendation 1 — Concentration Management</span>
+      <h4>Manage the COI position ahead of the 31 July maturity</h4>
+      <p>The COI placement represents 14.05% of the portfolio, approaching the 15% ceiling applicable to AAA-rated DFI placements (or in excess of the 10% ceiling should the counterparty be rated AA+). It is recommended that, at the 31 July rollover, management either (a) confirm the counterparty's credit rating to validate continued placement at the current size, or (b) redirect a portion of the proceeds into STS or bank placements to maintain compliance irrespective of the rating outcome.</p>
+    </div>
+    <div class="strat-card">
+      <span class="tag tactical">Recommendation 2 — Yield Enhancement</span>
+      <h4>Expand STS allocation within available headroom</h4>
+      <p>Short-Term Sukuk placements (Liberty, Daewoo, Prema) currently generate a materially higher rate premium than sovereign and DFI holdings. Combined non-sovereign exposure stands at approximately 20.9% against a 30% ceiling, representing approximately 9 percentage points of unused capacity. It is recommended that management pursue incremental STS allocation, subject to confirmation of issuer credit ratings and sector/issue-size concentration limits.</p>
+    </div>
+    <div class="strat-card">
+      <span class="tag watch">Recommendation 3 — Forward Planning</span>
+      <h4>Plan the reinvestment of maturing legacy positions</h4>
+      <p>Four MTB tranches totalling approximately PKR 2,585.7mn are locked at rates of 10.55%–10.75% through February–March 2027, reflecting yields contracted prior to the current rate environment. It is recommended that these maturities be reinvested at prevailing market rates in shorter tenors, rather than defaulting to a further one-year commitment.</p>
+    </div>
+  </div>
+  <div class="insight">
+    <b>Basis for recommendations:</b> Recommendation 1 addresses an active compliance consideration ahead of a near-term maturity. Recommendation 2 is an opportunity to deploy existing headroom toward higher-yielding instruments, subject to the stated data gating conditions. Recommendation 3 is a forward-looking planning item requiring no immediate action.
+  </div>
+
+  <h3 style="font-size:0.95rem;color:var(--brand-dark);margin:26px 0 4px;">Rate Scenario Simulations</h3>
+  <p style="font-size:0.72rem;color:var(--muted);margin:0 0 12px;">Standing component of this framework — refreshed each cycle against the then-current portfolio structure, duration profile, and PVBP.</p>
+  <div class="strategy-grid">
+    <div class="strat-card">
+      <span class="tag tactical">Yields &minus;50bps</span>
+      <h4>Moderate duration extension</h4>
+      <p>Prioritize locking in 6M–1Y T-Bill paper at upcoming auctions ahead of the anticipated decline, rather than rolling into further 3M paper. The portfolio's current PVBP utilization (approximately 9% of the IPS limit) leaves ample room to extend within the 3Y eligible band without approaching the PVBP ceiling. Existing fixed-rate STS placements become comparatively more attractive as reinvestment rates fall.</p>
+    </div>
+    <div class="strat-card">
+      <span class="tag core">Yields &minus;100bps</span>
+      <h4>Prioritize locking in duration</h4>
+      <p>A larger decline strengthens the case for extending toward the 3-year eligible maximum on any available headroom, and for pre-funding upcoming maturities into longer tenors before reinvestment rates fall further. A decline of this magnitude would also reduce the cost of the floating-rate Pak Oman facility, easing the negative carry on the COI pairing without requiring corrective action.</p>
+    </div>
+    <div class="strat-card">
+      <span class="tag watch">Yields +50bps</span>
+      <h4>Maintain short duration bias</h4>
+      <p>Continue rolling maturing proceeds into short-dated T-Bills (3M/6M) at upcoming auctions to capture the higher rate environment, rather than locking into 1-year paper. This reinforces the existing recommendation to avoid repeating the low-rate legacy 1-year locks. Rising yields would also increase the cost of the floating-rate Pak Oman facility, warranting closer monitoring of the COI pairing's carry position.</p>
+    </div>
+    <div class="strat-card">
+      <span class="tag watch">Yields +100bps</span>
+      <h4>Maximize reinvestment velocity</h4>
+      <p>Favor the shortest available tenors (overnight to 1-month) to preserve the ability to reprice into materially higher yields as they become available, and defer any STS or fixed-rate allocation until new placements can be made at the higher prevailing rate. A move of this magnitude would meaningfully worsen the Pak Oman facility's floating-rate cost, making a review of that pairing — and, if feasible, a partial reduction of the facility — a priority rather than a monitoring item.</p>
+    </div>
+  </div>
+
+  <!-- ALPHA OPTIMIZATION -->
+  <h2 class="sec" id="s8">8. Alpha Optimization &amp; Reallocation <span>Maximizing alpha within IPS constraints</span></h2>
+  <div class="strategy-grid">
+    <div class="strat-card">
+      <span class="tag core">Lever 1 — Gated on data</span>
+      <h4>Grow STS allocation toward the 30% ceiling</h4>
+      <p>STS placements yield a materially higher rate premium than COI or MTB (1Y) holdings. Illustratively, reallocating 5 percentage points of the portfolio from COI/1Y T-Bills into AA+-rated STS paper at current rates could contribute an estimated 10–15bp of incremental gross yield. This estimate is directional and contingent on ratings and sector-concentration data becoming available.</p>
+    </div>
+    <div class="strat-card">
+      <span class="tag tactical">Lever 2 — Diversification</span>
+      <h4>Activate Samba Bank capacity</h4>
+      <p>Samba Bank currently sits at 0% against a permitted 2–80% band. Subject to availability, redirecting a portion of upcoming maturities into this counterparty at rates comparable to Faysal Bank (approximately 11.1–11.25%) would represent a modest, low-risk yield improvement while reducing single-counterparty concentration.</p>
+    </div>
+    <div class="strat-card">
+      <span class="tag watch">Lever 3 — Forward-looking</span>
+      <h4>Reassess tenor selection on legacy maturities</h4>
+      <p>Approximately PKR 2,585.7mn is committed at 10.55–10.75% through February–March 2027. On maturity, it is recommended that management evaluate the prevailing rate view before committing to a further full one-year tenor.</p>
+    </div>
+  </div>
+
+  <!-- RISK LIMITS -->
+  <h2 class="sec" id="s9">9. Risk Limit Checklist <span>NCGCL IPS (June 2025) — Sections 3, 3.2, 3.3, 3.4, 5 · corrected this cycle</span></h2>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Limit (IPS clause)</th><th>Band</th><th>Current</th><th>Status</th></tr>
+    <tr><td>T-Bills &lt;3-mths, <b>by remaining maturity</b></td><td class="data">20%&ndash;95%, AAA</td><td class="data">39.36%</td><td class="pass">PASS — corrected from a prior 16.19% label-based miscalculation</td></tr>
+    <tr><td>T-Bills 3&ndash;12mths, by remaining maturity</td><td class="data">0%&ndash;90%, AAA</td><td class="data">37.12%</td><td class="pass">PASS</td></tr>
+    <tr><td>Total sovereign T-Bills</td><td class="data">&mdash;</td><td class="data">76.48%</td><td class="pass">PASS — consistent across both bucketing methods</td></tr>
+    <tr><td>DFI Placement AAA (Section 3.3(b))</td><td class="data">0%&ndash;15%</td><td class="data">COI 14.05%</td><td class="pend">WATCH — 93.7% of cap if AAA</td></tr>
+    <tr><td>DFI Placement AA+ (Section 3.3(b))</td><td class="data">0%&ndash;10%</td><td class="data">COI 14.05%</td><td class="fail">FAIL if AA+ — 4.05pp over</td></tr>
+    <tr><td>Commercial Paper / Corp Sukuk, min AA+</td><td class="data">Up to 30% combined</td><td class="data">STS 6.85%</td><td class="pend">PENDING — issuer ratings not confirmed</td></tr>
+    <tr><td>Max single instrument tenor (Section 3.2(a))</td><td class="data">&le;3 years</td><td class="data">All &le;1Y</td><td class="pass">PASS</td></tr>
+    <tr><td>Average portfolio duration (Section 3.2(a))</td><td class="data">&le;360 days</td><td class="data">~111 days</td><td class="pass">PASS</td></tr>
+    <tr><td>PVBP target (Section 3.2(e))</td><td class="data">&le;3bp of portfolio per 1bp move</td><td class="data">0.273bp (PKR 258,312/1bp)</td><td class="pass">PASS — 9.1% of limit used</td></tr>
+    <tr><td>Sector diversification, excl. sovereign/bank</td><td class="data">&le;20% per sector</td><td class="data">Unknown</td><td class="pend">PENDING — STS sector data needed</td></tr>
+    <tr><td>Single instrument exposure</td><td class="data">&le;10% of issue, &le;20% of non-sov/bank FI</td><td class="data">Unknown</td><td class="pend">PENDING — issue sizes needed</td></tr>
+  </table>
+  </div>
+
+  <!-- CADENCE -->
+  <h2 class="sec" id="s10">10. Weekly Cadence &amp; Governance <span>Anchor: Friday PM · CEO sign-off</span></h2>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Stage</th><th>What happens</th><th>Owner / Trigger</th></tr>
+    <tr><td>1. Capture</td><td>Pull SBP policy rate/MPC tone, PBS CPI &amp; SPI, PKRV curve, current position from WoW Positions, Credit Line, and Leverage tabs</td><td>Run each Friday PM on request</td></tr>
+    <tr><td>2. Validate</td><td>Reconcile this week's position vs. last week's — flag new placements, maturities, rate resets. Bucket &lt;3M/3&ndash;12M by remaining days, not issuance label.</td><td>Same session</td></tr>
+    <tr><td>3. Analyze</td><td>Relative value vs. PKRV, concentration vs. IPS limits, PVBP vs. IPS, net carry vs. borrowing cost, curve/rate-view and SPI/CPI cross-check</td><td>Same session</td></tr>
+    <tr><td>4. Update dashboard</td><td>Refresh KPIs, curve/trend/SPI charts, portfolio and PVBP exhibits, limit-compliance table, trading ideas</td><td>Same session</td></tr>
+    <tr><td>5. Decide</td><td>Trading ideas with explicit "Decision Required" line, routed for approval</td><td><b>CEO sign-off</b> — sole approver</td></tr>
+  </table>
+  </div>
+
+  <div class="decision-box">
+    <div class="lbl">Decision Required — CEO</div>
+    <ul style="margin:10px 0 0;padding-left:20px;font-size:0.88rem;line-height:1.65;">
+      <li>Note the corrected &lt;3-month T-Bill compliance position (39.36% against a 20% floor); no further action is required.</li>
+      <li>Approve management's approach to the 31 July COI maturity: either confirmation of the counterparty's credit rating to support continued placement at the current size, or partial redirection into STS/bank placements to maintain compliance.</li>
+      <li>Approve exploration of incremental STS allocation into the approximately 9 percentage points of unused non-sovereign headroom, subject to ratings and sector/issue-size data.</li>
+      <li>Request updated Credit Line and Leverage tab data to enable refresh of the borrowing and leverage figures in Section 4.</li>
+    </ul>
+    <p style="margin:12px 0 0;font-size:0.72rem;opacity:0.8;">This analysis is analytical support for NCGCL's internal treasury decision-making, not investment advice to any third party.</p>
+  </div>
+
+  <div class="footer">
+    <div><strong>NCGCL · Treasury Decision Framework</strong> · Week of 12 Jul 2026 · Next cadence: Fri PM</div>
+    <div>Sources: NCGCL Investment Dashboard workbook — WoW Positions, PKRV Rates, SPI tabs (as of 12 Jul 2026); SBP MPC statements; PBS SPI &amp; CPI</div>
+    <div class="brand-txt">Prepared for NCGCL — Internal Use · CEO Sign-off Required</div>
+  </div>
+
+</div>
+
+<script>
+const chartDefaults = {
+  responsive:true, maintainAspectRatio:false,
+  plugins:{legend:{position:'top',labels:{font:{size:10,family:'Inter'},boxWidth:12}},
+    tooltip:{backgroundColor:'rgba(3,80,118,0.95)'}},
+  scales:{x:{grid:{display:false},ticks:{font:{size:9,family:'Inter'}}},
+    y:{grid:{color:'#f0f0f0'},ticks:{font:{size:9,family:'Inter'}}}}
+};
+
+new Chart(document.getElementById('curveChart'), {
+  type:'line',
+  data:{
+    labels:['1W','2W','1M','2M','3M','4M','6M','9M','1Y','2Y','3Y','4Y','5Y','6Y','7Y','8Y','9Y','10Y'],
+    datasets:[{
+      label:'PKRV mid (%)',
+      data:[11.50,11.49,11.49,11.39,11.24,11.28,11.30,11.33,11.34,11.32,11.29,11.37,11.40,11.51,11.60,11.70,11.81,11.91],
+      borderColor:'#035076', backgroundColor:'rgba(3,80,118,0.10)',
+      borderWidth:2.5, pointRadius:3, pointBackgroundColor:'#035076', fill:true, tension:0.3
+    },{
+      label:'SBP Policy Rate',
+      data:Array(18).fill(11.5),
+      borderColor:'#BABABA', borderDash:[5,4], borderWidth:1.5, pointRadius:0
+    }]
+  },
+  options:{...chartDefaults, scales:{...chartDefaults.scales,
+    y:{...chartDefaults.scales.y, min:11.0, max:12.1}}}
+});
+
+new Chart(document.getElementById('trendChart'), {
+  type:'line',
+  data:{
+    labels:["19-Mar","27-Mar","03-Apr","10-Apr","17-Apr","24-Apr","30-Apr","07-May","14-May","21-May","29-May","05-Jun","12-Jun","19-Jun","24-Jun","30-Jun","07-Jul","10-Jul"],
+    datasets:[
+      {label:'3M', data:[11.16,11.24,11.32,11.12,11.03,11.07,11.69,11.71,11.98,12.15,11.94,11.99,12.23,11.72,11.62,11.60,11.46,11.24], borderColor:'#035076', borderWidth:2, pointRadius:0, tension:0.25},
+      {label:'1Y', data:[11.63,11.88,11.74,11.74,11.71,11.63,12.04,11.99,12.45,12.76,12.52,12.58,12.69,11.87,11.64,11.60,11.10,11.34], borderColor:'#8a8a8a', borderWidth:2, pointRadius:0, tension:0.25},
+      {label:'5Y', data:[12.05,12.47,12.58,12.10,12.01,12.21,12.85,12.46,12.85,12.83,12.37,12.54,12.51,11.94,11.75,11.80,11.33,11.40], borderColor:'#BABABA', borderWidth:2, pointRadius:0, tension:0.25}
+    ]
+  },
+  options:chartDefaults
+});
+
+new Chart(document.getElementById('spiChart'), {
+  type:'line',
+  data:{
+    labels:["19-Mar","26-Mar","02-Apr","09-Apr","16-Apr","23-Apr","30-Apr","07-May","14-May","21-May","28-May","04-Jun","11-Jun","18-Jun"],
+    datasets:[
+      {label:'Combined SPI YoY %', data:[8.08,9.34,11.34,12.15,12.16,13.98,14.52,15.16,14.52,14.47,15.41,14.75,15.06,15.28], borderColor:'#035076', backgroundColor:'rgba(3,80,118,0.10)', borderWidth:2.5, pointRadius:3, fill:true, tension:0.3},
+      {label:'Lowest Group SPI YoY %', data:[6.80,7.77,8.45,9.33,9.82,11.38,11.49,12.14,11.56,11.79,12.54,12.59,12.63,13.30], borderColor:'#BABABA', borderWidth:2, pointRadius:3, tension:0.3}
+    ]
+  },
+  options:chartDefaults
+});
+
+new Chart(document.getElementById('alphaChart'), {
+  type:'bar',
+  data:{
+    labels:['MTBs (1Y lbl)','MTBs (3M lbl)','COI','LIBERTY-STS','DAEWOO-STS','MTBs (6M lbl)','PREMA-STS','Faysal Bank'],
+    datasets:[{
+      label:'Contribution to Alpha (bps)',
+      data:[34.5,25.5,9.4,8.8,8.4,4.4,2.7,2.4],
+      backgroundColor:['#035076','#035076','#8a8a8a','#BABABA','#BABABA','#035076','#BABABA','#8a8a8a'],
+      borderRadius:4, borderSkipped:false
+    }]
+  },
+  options:{
+    indexAxis:'y', responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{display:false},
+      tooltip:{backgroundColor:'rgba(3,80,118,0.95)',callbacks:{label:(c)=>` ${c.parsed.x}bp contribution`}}},
+    scales:{x:{grid:{color:'#f0f0f0'},ticks:{font:{size:9,family:'Inter'}},title:{display:true,text:'bps',font:{size:9,family:'Inter'}}},
+      y:{grid:{display:false},ticks:{font:{size:9,family:'Inter'}}}}
+  }
+});
+
+new Chart(document.getElementById('portfolioChart'), {
+  type:'doughnut',
+  data:{
+    labels:['MTBs (1Y lbl)','MTBs (3M lbl)','COI','DAEWOO-STS','Faysal Bank','LIBERTY-STS','MTBs (6M lbl)','PREMA-STS','Samba Bank'],
+    datasets:[{
+      data:[58.27,16.19,14.05,3.05,2.64,2.67,2.02,1.13,0.00],
+      backgroundColor:['#035076','#0d6a9c','#8a8a8a','#BABABA','#5a7c8f','#3d7fa3','#a8c4d4','#d0d0d0','#e8e8e8'],
+      borderColor:'#ffffff', borderWidth:2
+    }]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false, cutout:'55%',
+    plugins:{legend:{position:'right',labels:{font:{size:9,family:'Inter'},boxWidth:10}},
+      tooltip:{backgroundColor:'rgba(3,80,118,0.95)',callbacks:{label:(c)=>` ${c.label}: ${c.parsed}%`}}}
+  }
+});
+</script>
+</body>
+</html>
