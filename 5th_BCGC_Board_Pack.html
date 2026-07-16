@@ -738,19 +738,20 @@ img{max-width:100%;height:auto;border-radius:6px}
 </div>
 <div class="card">
 <div class="card-label" style="margin-bottom:6px;">Exposure by Repayment Structure</div>
-<div class="deal-table-wrapper">
-<table class="deal-table">
-<thead><tr><th>Structure</th><th>Exposure Share</th><th>NPL Ratio</th><th>Accounts</th></tr></thead>
-<tbody>
-<tr><td>Bullet</td><td class="amount">22.7%</td><td class="amount">66.4%</td><td class="amount">32,396</td></tr>
-<tr><td>Non-Bullet (Instalment/Other)</td><td class="amount">77.3%</td><td class="amount">5.2%</td><td class="amount">42,093</td></tr>
-</tbody>
-</table>
+<div class="legend-row" style="margin-top:0;"><span class="legend-dot" style="background:var(--blue);"></span><span class="legend-label" style="font-size:11px;color:var(--txt2);">Exposure share</span><span class="legend-dot" style="background:var(--red);margin-left:10px;"></span><span class="legend-label" style="font-size:11px;color:var(--txt2);">NPL ratio</span></div>
+<div style="margin-top:12px;">
+<div style="display:flex;justify-content:space-between;font-size:12px;color:var(--txt);font-weight:700;"><span>Bullet <span class="meta-small" style="font-weight:400;">32,396 accts</span></span><span style="font-family:var(--font-mono);">22.7% exposure</span></div>
+<div class="bar"><div class="bar-fill" style="width:22.7%;background:var(--blue);"></div></div>
+<div style="display:flex;justify-content:flex-end;font-size:11px;color:var(--red);font-weight:700;margin-top:3px;">66.4% NPL</div>
+<div class="bar" style="margin-top:2px;"><div class="bar-fill" style="width:66.4%;background:var(--red);"></div></div>
+
+<div style="display:flex;justify-content:space-between;font-size:12px;color:var(--txt);font-weight:700;margin-top:16px;"><span>Non-Bullet <span class="meta-small" style="font-weight:400;">(Instalment/Other) · 42,093 accts</span></span><span style="font-family:var(--font-mono);">77.3% exposure</span></div>
+<div class="bar"><div class="bar-fill" style="width:77.3%;background:var(--blue);"></div></div>
+<div style="display:flex;justify-content:flex-end;font-size:11px;color:var(--red);font-weight:700;margin-top:3px;">5.2% NPL</div>
+<div class="bar" style="margin-top:2px;"><div class="bar-fill" style="width:5.2%;background:var(--red);"></div></div>
 </div>
 <div class="mini-note">Bullet-structured loans carry over 12x the NPL rate of non-bullet facilities despite being under a quarter of exposure — a clear underwriting-structure risk driver.</div>
 </div>
-</div>
-
 <div class="card">
 <div class="card-label" style="margin-bottom:6px;">Exposure by Province</div>
 <div class="deal-table-wrapper">
