@@ -1,0 +1,1820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NCGCL Integrated Credit Risk Model and IFRS 9 Framework | Policy Note for Board Approval</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --petrol: #0C688D;
+  --deep-petrol: #004C66;
+  --ink: #0E2841;
+  --green: #39A935;
+  --dark-green: #2B8129;
+  --border: #C8D6E0;
+  --surface: #F6F8FA;
+  --surface-alt: #EEF3F7;
+  --red: #C00000;
+  --amber: #BF8000;
+  --amber-bg: #FFF8EC;
+  --red-bg: #FFF0F0;
+  --green-bg: #F0FBF0;
+  --muted: #5A7080;
+  --text: #1B2B38;
+  --subtext: #4A6070;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #fff;
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.65;
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
+/* ===== LAYOUT ===== */
+.doc-wrapper { max-width: 960px; margin: 0 auto; padding: 0 32px 60px; }
+.page-break { page-break-before: always; padding-top: 40px; }
+
+/* ===== HEADER ===== */
+.doc-header {
+  background: var(--deep-petrol);
+  color: #fff;
+  padding: 0;
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 32px;
+}
+.doc-header .brand { font-size: 13px; font-weight: 600; letter-spacing: 0.04em; }
+.doc-header .status-pill {
+  background: var(--amber); color: #fff;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+  padding: 3px 10px; border-radius: 2px; text-transform: uppercase;
+}
+
+/* ===== COVER ===== */
+.cover-page {
+  min-height: 80vh;
+  border-bottom: 3px solid var(--border);
+  padding: 60px 0 50px;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.cover-eyebrow {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--petrol);
+  margin-bottom: 18px;
+}
+.cover-title {
+  font-family: Georgia, serif;
+  font-size: 36px; font-weight: 400; line-height: 1.2;
+  color: var(--ink); margin-bottom: 12px;
+}
+.cover-subtitle {
+  font-size: 17px; color: var(--subtext); margin-bottom: 40px; font-weight: 400;
+}
+.cover-rule { width: 60px; height: 3px; background: var(--petrol); margin-bottom: 36px; }
+.cover-meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 40px; }
+.cover-meta-item { padding: 12px 16px; border: 1px solid var(--border); border-left: 3px solid var(--petrol); background: var(--surface); }
+.cover-meta-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.cover-meta-value { font-size: 13px; font-weight: 600; color: var(--ink); margin-top: 2px; }
+.cover-warning {
+  background: var(--amber-bg); border: 1px solid #F0D08C; border-left: 4px solid var(--amber);
+  padding: 14px 18px; border-radius: 4px; font-size: 12px; color: #6B4800;
+}
+.cover-warning strong { color: var(--amber); }
+
+/* ===== TOC ===== */
+.toc-page { padding: 48px 0 40px; border-bottom: 1px solid var(--border); }
+.toc-title { font-family: Georgia, serif; font-size: 22px; font-weight: 400; color: var(--ink); margin-bottom: 28px; padding-bottom: 12px; border-bottom: 2px solid var(--petrol); }
+.toc-section { margin-bottom: 6px; }
+.toc-section a { text-decoration: none; color: var(--text); font-size: 13px; display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px dotted var(--border); }
+.toc-section a:hover { color: var(--petrol); }
+.toc-part { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--petrol); margin: 16px 0 6px; }
+.toc-annex a { color: var(--muted); }
+
+/* ===== SECTIONS ===== */
+.section { padding: 48px 0 36px; border-bottom: 1px solid var(--border); }
+.section:last-child { border-bottom: none; }
+.section-eyebrow {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--petrol); margin-bottom: 8px;
+}
+.section-title {
+  font-family: Georgia, serif; font-size: 26px; font-weight: 400;
+  color: var(--ink); margin-bottom: 6px; line-height: 1.2;
+}
+.section-intro { font-size: 14.5px; color: var(--subtext); margin-bottom: 24px; font-weight: 400; }
+.section-rule { width: 40px; height: 2px; background: var(--green); margin-bottom: 28px; }
+.h2 { font-family: Georgia, serif; font-size: 18px; font-weight: 400; color: var(--ink); margin: 28px 0 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+.h3 { font-size: 13px; font-weight: 700; color: var(--petrol); margin: 20px 0 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+p { margin-bottom: 14px; font-size: 14px; line-height: 1.7; color: var(--text); }
+p strong { color: var(--ink); }
+
+/* ===== EXHIBITS ===== */
+.exhibit {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 6px; padding: 24px; margin: 24px 0;
+  overflow-x: auto;
+}
+.exhibit-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 4px;
+}
+.exhibit-title { font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 16px; }
+.exhibit-note { font-size: 11px; color: var(--muted); margin-top: 12px; font-style: italic; }
+
+/* ===== TABLES ===== */
+.data-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.data-table thead th {
+  background: var(--deep-petrol); color: #fff;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.05em;
+  padding: 9px 10px; text-align: left; white-space: nowrap;
+}
+.data-table thead th.num { text-align: right; }
+.data-table tbody tr:nth-child(even) { background: var(--surface); }
+.data-table tbody tr:hover { background: var(--surface-alt); }
+.data-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.data-table td.num { text-align: right; font-family: 'IBM Plex Mono', monospace; font-size: 12px; }
+.data-table td.label { font-weight: 600; color: var(--ink); }
+.data-table td.muted { color: var(--muted); font-size: 12px; }
+.data-table tfoot td { font-weight: 700; background: var(--surface-alt); color: var(--ink); border-top: 2px solid var(--border); }
+
+/* ===== BADGES ===== */
+.badge {
+  display: inline-block; font-size: 10px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 2px 7px; border-radius: 2px;
+}
+.badge-green { background: var(--green-bg); color: var(--dark-green); border: 1px solid #B8E8B8; }
+.badge-amber { background: var(--amber-bg); color: var(--amber); border: 1px solid #F0D08C; }
+.badge-red { background: var(--red-bg); color: var(--red); border: 1px solid #F0B8B8; }
+.badge-petrol { background: #E6F2F8; color: var(--petrol); border: 1px solid #B8D8E8; }
+.badge-prov { background: #F0E8FF; color: #6040B0; border: 1px solid #D0B8F8; }
+
+/* ===== FORMULA BOXES ===== */
+.formula-box {
+  background: var(--ink); color: #E8F4FF;
+  border-radius: 6px; padding: 18px 22px; margin: 16px 0;
+  font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; line-height: 1.9;
+  overflow-x: auto;
+}
+.formula-box .formula-comment { color: #7AADC8; font-size: 11px; }
+.formula-box .formula-var { color: #7EFFA0; }
+.formula-box .formula-op { color: #FFD080; }
+.formula-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+
+/* ===== CALLOUT BOXES ===== */
+.callout {
+  padding: 16px 20px; border-radius: 4px; margin: 20px 0;
+  border: 1px solid; font-size: 13.5px; line-height: 1.6;
+}
+.callout-blue { background: #EBF5FB; border-color: #B0D0E8; color: #0A4060; border-left: 4px solid var(--petrol); }
+.callout-amber { background: var(--amber-bg); border-color: #F0D08C; color: #6B4800; border-left: 4px solid var(--amber); }
+.callout-green { background: var(--green-bg); border-color: #B8E8B8; color: #1A5010; border-left: 4px solid var(--green); }
+.callout-red { background: var(--red-bg); border-color: #F0B8B8; color: #800000; border-left: 4px solid var(--red); }
+.callout strong { font-weight: 700; }
+
+/* ===== KPI CARDS ===== */
+.kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 24px 0; }
+.kpi-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 24px 0; }
+.kpi-card { background: #fff; border: 1px solid var(--border); border-top: 3px solid var(--petrol); border-radius: 4px; padding: 18px; }
+.kpi-card.green { border-top-color: var(--green); }
+.kpi-card.amber { border-top-color: var(--amber); }
+.kpi-card.red { border-top-color: var(--red); }
+.kpi-num { font-family: 'IBM Plex Mono', monospace; font-size: 26px; font-weight: 600; color: var(--ink); line-height: 1; margin-bottom: 4px; }
+.kpi-label { font-size: 11px; color: var(--muted); font-weight: 600; letter-spacing: 0.04em; }
+.kpi-sub { font-size: 11px; color: var(--subtext); margin-top: 4px; }
+
+/* ===== RISK GRID ===== */
+.risk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+
+/* ===== SVG CHARTS ===== */
+.chart-wrap { margin: 16px 0; overflow-x: auto; }
+svg text { font-family: 'IBM Plex Mono', monospace; }
+
+/* ===== ANNEX SECTION ===== */
+.annex-header {
+  background: var(--ink); color: #fff;
+  padding: 28px 0 22px; margin-bottom: 30px; border-radius: 6px;
+  padding-left: 28px;
+}
+.annex-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; color: #7AADC8; text-transform: uppercase; margin-bottom: 8px; }
+.annex-title { font-family: Georgia, serif; font-size: 22px; font-weight: 400; color: #fff; }
+
+/* ===== PRINT ===== */
+@media print {
+  .doc-header { position: static; }
+  .page-break { page-break-before: always; }
+  body { font-size: 12px; }
+  .doc-wrapper { padding: 0 20px; }
+  .kpi-num { font-size: 20px; }
+  .section-title { font-size: 20px; }
+  .cover-title { font-size: 28px; }
+}
+</style>
+</head>
+<body>
+
+<!-- STICKY HEADER -->
+<div class="doc-header">
+  <div class="brand">NCGCL &nbsp;|&nbsp; Integrated Credit Risk Model &amp; IFRS 9 Framework</div>
+  <div class="status-pill">Board Confidential &mdash; Provisional</div>
+</div>
+
+<div class="doc-wrapper">
+
+<!-- ===== COVER PAGE ===== -->
+<div class="cover-page">
+  <div class="cover-eyebrow">National Credit Guarantee Company Limited</div>
+  <div class="cover-title">Integrated Credit Risk Model<br>and IFRS 9 Framework</div>
+  <div class="cover-subtitle">Policy Note for Board Approval</div>
+  <div class="cover-rule"></div>
+  <div class="cover-meta-grid">
+    <div class="cover-meta-item">
+      <div class="cover-meta-label">Submitted to</div>
+      <div class="cover-meta-value">Board of Directors, NCGCL</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="cover-meta-label">Document Date</div>
+      <div class="cover-meta-value">19 July 2026</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="cover-meta-label">Reporting Date</div>
+      <div class="cover-meta-value">30 June 2026</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="cover-meta-label">Model Version</div>
+      <div class="cover-meta-value">NCGCL-FLPD-2026.06-v0.1-Provisional</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="cover-meta-label">Technical Approval</div>
+      <div class="cover-meta-value">Management Risk Committee</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="cover-meta-label">Scenario Approval Required</div>
+      <div class="cover-meta-value">Board of Directors</div>
+    </div>
+  </div>
+  <div class="cover-warning">
+    <strong>PROVISIONAL DOCUMENT:</strong> Macroeconomic scenarios and scenario weights are proposed and pending Board approval. The forward-looking ECL module operates in calibration and demonstration mode only. Production financial-statement ECL is disabled pending independent validation and Board-approved scenarios. This document does not constitute approval by PwC, KPMG or any independent validator.
+  </div>
+</div>
+
+
+<!-- ===== TABLE OF CONTENTS ===== -->
+<div class="toc-page">
+  <div class="toc-title">Table of Contents</div>
+  <div class="toc-part">Main Report</div>
+  <div class="toc-section"><a href="#es">Executive Summary</a></div>
+  <div class="toc-section"><a href="#s1">1. NCGCL and the Financial Guarantee Business</a></div>
+  <div class="toc-section"><a href="#s2">2. The FI Risk Scoring Framework</a></div>
+  <div class="toc-section"><a href="#s3">3. Institutional Probability of Default Estimation</a></div>
+  <div class="toc-section"><a href="#s4">4. Sectoral Probability of Default Estimation</a></div>
+  <div class="toc-section"><a href="#s5">5. Composite (Blended) Probability of Default</a></div>
+  <div class="toc-section"><a href="#s6">6. Guarantee Structures and Risk Profiles</a></div>
+  <div class="toc-section"><a href="#s7">7. Expected Credit Loss Calculation</a></div>
+  <div class="toc-section"><a href="#s8">8. Economic Capital and Capital Adequacy</a></div>
+  <div class="toc-section"><a href="#s9">9. Notional Leverage versus Risk Capital</a></div>
+  <div class="toc-section"><a href="#s10">10. Forward-Looking Probability of Default Calibration</a></div>
+  <div class="toc-section"><a href="#s11">11. Macroeconomic Factors and the Conditional PD Model</a></div>
+  <div class="toc-section"><a href="#s12">12. The Integrated Risk Architecture</a></div>
+  <div class="toc-section"><a href="#s13">13. Governance, Data Quality and Production Readiness</a></div>
+  <div class="toc-part">Annexures</div>
+  <div class="toc-section toc-annex"><a href="#annex-a">Annexure A: Financial Institution PD Register</a></div>
+  <div class="toc-section toc-annex"><a href="#annex-b">Annexure B: Sector and Segment PD Register</a></div>
+  <div class="toc-section toc-annex"><a href="#annex-c">Annexure C: Statistical Model Specification, Validation and Sensitivity Evidence</a></div>
+</div>
+
+<!-- ===== EXECUTIVE SUMMARY ===== -->
+<div class="section" id="es">
+  <div class="section-eyebrow">Executive Summary</div>
+  <div class="section-title">A Structured, Forward-Looking Credit Risk Framework for NCGCL's Guarantee Portfolio</div>
+  <div class="section-rule"></div>
+
+  <p>NCGCL issues partial credit guarantees to participating financial institutions (PFIs) against loans extended to SMEs, agriculture borrowers, exporters and other underserved segments. The institution's financial obligations are the claim payments it must make when underlying borrowers default. Measuring and managing those obligations with precision is not a regulatory formality; it is the operational core of a guarantee company. This policy note presents the architecture of NCGCL's integrated credit risk model, explains each component in detail, and seeks Board approval for the proposed macroeconomic scenarios that govern the forward-looking probability of default (PD) module.</p>
+
+  <p>The framework is built in three interlocking layers. The first layer reconstructs historical default rates for every participating financial institution and every economic sector, using 2011 to 2025 annual FI data and 39 quarters of SBP EasyData from Q3 2016 to Q1 2026. The second layer blends these historical anchors with a current FI risk scorecard to produce a composite PD for each guarantee facility. The third layer applies a macro-logit model to translate scenario-specific GDP, industrial output and interest rate paths into conditional forward-looking PD curves across three forecast years. Together these produce the probability-weighted 12-month and lifetime PDs required by IFRS 9.</p>
+
+  <p>The selected model is a credibility-shrunk anchored macro-logit. It does not override the historical anchor; it adjusts the historical anchor in log-odds space in response to the macroeconomic scenario. Scenario weights of 20 percent Upside, 55 percent Base and 25 percent Downside are proposed by management and are subject to Board approval. Until Board approval is granted, production ECL calculations remain disabled. The model in its current form is a benchmark calibration, not a production financial-reporting estimate.</p>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-num">0.95%</div>
+      <div class="kpi-label">System Year-1 Weighted PD</div>
+      <div class="kpi-sub">Probability-weighted, base macro path</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-num">2.53%</div>
+      <div class="kpi-label">3-Year Cumulative System PD</div>
+      <div class="kpi-sub">Across all three forecast years</div>
+    </div>
+    <div class="kpi-card amber">
+      <div class="kpi-num">1.86%</div>
+      <div class="kpi-label">SME Sector Anchor PD</div>
+      <div class="kpi-sub">Mean positive NPL flow 2016-2026</div>
+    </div>
+    <div class="kpi-card red">
+      <div class="kpi-num">5.15%</div>
+      <div class="kpi-label">Agriculture Anchor PD</div>
+      <div class="kpi-sub">Highest anchor among core segments</div>
+    </div>
+  </div>
+
+  <div class="callout callout-blue">
+    <strong>Key Finding:</strong> Agriculture borrowers carry the highest underlying default risk (anchor PD of 5.15 percent) and the most interest-rate sensitivity (lending rate +300 bps raises Year-1 Agriculture PD by 86 basis points). SME borrowers are the largest guaranteed segment with a base Year-1 PD of 2.19 percent under the base scenario. Export-oriented borrowers are uniquely sensitive to PKR depreciation and carry an FX coefficient of 0.217. Capital must be sized accordingly, not on the basis of notional guarantee volume.
+  </div>
+
+  <div class="h2">Summary of Decisions Required from the Board</div>
+  <div class="exhibit">
+    <div class="exhibit-label">Exhibit ES-1</div>
+    <div class="exhibit-title">Board Decisions Required</div>
+    <table class="data-table">
+      <thead><tr><th>#</th><th>Decision</th><th>Category</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Approve macroeconomic scenario narratives, paths and weights (Upside 20%, Base 55%, Downside 25%)</td><td>Scenario Governance</td><td><span class="badge badge-amber">Pending Board</span></td></tr>
+        <tr><td>2</td><td>Note Management Risk Committee technical approval of model methodology, coefficients, anchors, floors and MOC</td><td>Model Governance</td><td><span class="badge badge-amber">MRC Pending</span></td></tr>
+        <tr><td>3</td><td>Mandate appointment of an independent model validator</td><td>Validation</td><td><span class="badge badge-red">Not Started</span></td></tr>
+        <tr><td>4</td><td>Authorise parallel run of forward-looking ECL against Finance control totals</td><td>Implementation</td><td><span class="badge badge-amber">Pending</span></td></tr>
+        <tr><td>5</td><td>Confirm Board EC cap of 80 percent of capital base as the operating limit for guarantee risk capital</td><td>Capital Policy</td><td><span class="badge badge-amber">Confirmation</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- ===== SECTION 1: NCGCL BUSINESS ===== -->
+<div class="section" id="s1">
+  <div class="section-eyebrow">Section 1</div>
+  <div class="section-title">NCGCL and the Financial Guarantee Business</div>
+  <div class="section-rule"></div>
+
+  <p>NCGCL is Pakistan's only Shariah-compliant credit guarantee institution, rated AAA/A1+ by PACRA. Its mandate is to catalyze lending to productive but underserved segments by bearing a portion of the credit risk that commercial banks are unwilling to hold at scale. It does not lend directly. It guarantees: when a bank lends to an SME or an agriculture borrower under an NCGCL-covered programme and that borrower defaults, NCGCL pays the bank the contractual claim up to the guaranteed amount. The institution then pursues recovery from the defaulting borrower and the PFI's contractual contribution.</p>
+
+  <p>This business model creates a specific risk architecture. NCGCL's loss depends on three quantities measured at the borrower level rather than at the bank level: (a) the probability that the underlying borrower defaults, (b) the loss given that default occurs net of recoveries, and (c) the exposure at the time of default. The bank's own creditworthiness affects NCGCL's risk only to the extent that it influences recovery on PFI contractual obligations after a claim is settled; the primary credit event is the underlying borrower default.</p>
+
+  <p>Historically, NCGCL used fixed PD multipliers and sector-level NPL rates embedded in a management dashboard to estimate expected loss and price guarantees. That approach, while operationally simple, does not satisfy IFRS 9's requirement for probability-weighted forward-looking ECL or the SICR (significant increase in credit risk) assessment needed to determine whether a facility should be staged from 12-month to lifetime ECL. The model presented in this note addresses both requirements without discarding the management risk framework that already governs pricing and capital allocation.</p>
+
+  <div class="exhibit">
+    <div class="exhibit-label">Exhibit 1-1</div>
+    <div class="exhibit-title">NCGCL Financial Guarantee Mechanics</div>
+    <!-- SVG: Guarantee Flow Diagram -->
+    <svg viewBox="0 0 760 160" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:760px;height:auto;display:block;margin:0 auto;">
+      <!-- Borrower -->
+      <rect x="10" y="40" width="130" height="80" rx="6" fill="#E6F2F8" stroke="#0C688D" stroke-width="1.5"/>
+      <text x="75" y="73" text-anchor="middle" font-size="11" fill="#0E2841" font-weight="600">SME / Agriculture</text>
+      <text x="75" y="90" text-anchor="middle" font-size="11" fill="#0E2841" font-weight="600">Borrower</text>
+      <text x="75" y="108" text-anchor="middle" font-size="10" fill="#4A6070">Underlying Credit Risk</text>
+      <!-- Arrow: Borrower to PFI -->
+      <line x1="141" y1="80" x2="195" y2="80" stroke="#0C688D" stroke-width="1.5" marker-end="url(#arr)"/>
+      <text x="168" y="70" text-anchor="middle" font-size="10" fill="#4A6070">Loan</text>
+      <!-- PFI -->
+      <rect x="196" y="40" width="130" height="80" rx="6" fill="#E6F2F8" stroke="#0C688D" stroke-width="1.5"/>
+      <text x="261" y="73" text-anchor="middle" font-size="11" fill="#0E2841" font-weight="600">Participating</text>
+      <text x="261" y="90" text-anchor="middle" font-size="11" fill="#0E2841" font-weight="600">Financial Institution</text>
+      <text x="261" y="108" text-anchor="middle" font-size="10" fill="#4A6070">Bank / DFI / MFB</text>
+      <!-- Arrow: PFI to NCGCL -->
+      <line x1="327" y1="80" x2="381" y2="80" stroke="#0C688D" stroke-width="1.5" marker-end="url(#arr)"/>
+      <text x="354" y="70" text-anchor="middle" font-size="10" fill="#4A6070">Guarantee Fee</text>
+      <!-- NCGCL -->
+      <rect x="382" y="30" width="130" height="100" rx="6" fill="#004C66" stroke="#004C66" stroke-width="1.5"/>
+      <text x="447" y="66" text-anchor="middle" font-size="12" fill="#fff" font-weight="700">NCGCL</text>
+      <text x="447" y="84" text-anchor="middle" font-size="10" fill="#90C8D8">AAA / A1+ Rated</text>
+      <text x="447" y="101" text-anchor="middle" font-size="10" fill="#90C8D8">Shariah Compliant</text>
+      <text x="447" y="117" text-anchor="middle" font-size="10" fill="#90C8D8">Credit Guarantor</text>
+      <!-- Arrow: NCGCL to PFI (claim) -->
+      <path d="M382 65 Q330 20 196 35" stroke="#C00000" stroke-width="1.5" fill="none" stroke-dasharray="5,3" marker-end="url(#arred)"/>
+      <text x="290" y="16" text-anchor="middle" font-size="10" fill="#C00000">Claim Payment (on borrower default)</text>
+      <!-- Arrow: NCGCL to Borrower (recovery) -->
+      <path d="M382 100 Q200 150 140 110" stroke="#2B8129" stroke-width="1.2" fill="none" stroke-dasharray="4,3" marker-end="url(#argreen)"/>
+      <text x="260" y="158" text-anchor="middle" font-size="10" fill="#2B8129">Post-Claim Recovery Pursuit</text>
+      <!-- Capital Arrow -->
+      <rect x="590" y="40" width="155" height="80" rx="6" fill="#F0FBF0" stroke="#39A935" stroke-width="1.5"/>
+      <text x="667" y="68" text-anchor="middle" font-size="11" fill="#1A5010" font-weight="600">Risk Capital</text>
+      <text x="667" y="86" text-anchor="middle" font-size="10" fill="#4A6070">PKR 8,000M</text>
+      <text x="667" y="103" text-anchor="middle" font-size="10" fill="#4A6070">Absorbs Unexpected Losses</text>
+      <line x1="513" y1="80" x2="587" y2="80" stroke="#39A935" stroke-width="1.5" marker-end="url(#argreen2)"/>
+      <!-- Defs -->
+      <defs>
+        <marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#0C688D"/></marker>
+        <marker id="arred" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#C00000"/></marker>
+        <marker id="argreen" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#2B8129"/></marker>
+        <marker id="argreen2" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#39A935"/></marker>
+      </defs>
+    </svg>
+    <div class="exhibit-note">Note: The primary credit event is underlying borrower default, not PFI counterparty default. NCGCL's capital absorbs unexpected losses beyond the expected loss provisioned under IFRS 9.</div>
+  </div>
+
+  <div class="callout callout-blue">
+    <strong>Conceptual Distinction:</strong> NCGCL's risk exposure is not equivalent to the notional value of guarantees issued. It is equivalent to the present value of expected claim payments net of recoveries, discounted to the reporting date. A PKR 1,000M guarantee on an SME portfolio with a 2.19% Year-1 PD, 45% LGD and 20% cover produces an expected Year-1 loss of roughly PKR 1.97M, not PKR 1,000M. Managing risk means managing this loss distribution, not the notional.
+  </div>
+</div>
+
+<!-- ===== SECTION 2: FI SCORING ===== -->
+<div class="section" id="s2">
+  <div class="section-eyebrow">Section 2</div>
+  <div class="section-title">The FI Risk Scoring Framework</div>
+  <div class="section-rule"></div>
+
+  <p>Before a guarantee is issued, NCGCL assesses the creditworthiness of the PFI, not because the PFI is the primary obligor, but because PFI quality affects three things that matter to NCGCL: the PFI's portfolio underwriting standards (which determine what borrowers end up in the guaranteed pool), the PFI's ability to pursue recoveries on NCGCL's behalf after a claim, and the PFI's contractual commitment to retain a skin-in-the-game portion of every loss. A weak PFI poses moral hazard; a strong PFI is a disciplined origination partner.</p>
+
+  <p>The FI scorecard operates on a five-point scale across two dimensions: quantitative and qualitative. Quantitative factors are scored automatically from the embedded FI historical database and the current regulatory filing. Qualitative factors are scored by the relationship team and reviewed by the credit committee. The combined score maps to a current FI rating modifier that adjusts the sector-derived PD upward or downward in log-odds space before the composite PD is finalized.</p>
+
+  <div class="exhibit">
+    <div class="exhibit-label">Exhibit 2-1</div>
+    <div class="exhibit-title">FI Risk Scorecard: Factor Weights and Interpretation</div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Factor</th><th>Category</th><th class="num">Weight</th><th>Score 1 (Weak)</th><th>Score 3 (Neutral)</th><th>Score 5 (Strong)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="label">NPL Ratio (Current)</td><td>Quantitative</td><td class="num">25%</td><td>&gt;15%</td><td>5% to 10%</td><td>&lt;3%</td></tr>
+        <tr><td class="label">NPL Trend (3-Year)</td><td>Quantitative</td><td class="num">15%</td><td>Rising &gt;2 pp/yr</td><td>Stable ±0.5 pp/yr</td><td>Declining &gt;1 pp/yr</td></tr>
+        <tr><td class="label">Capital Adequacy Ratio</td><td>Quantitative</td><td class="num">15%</td><td>&lt;12%</td><td>13% to 16%</td><td>&gt;18%</td></tr>
+        <tr><td class="label">Return on Equity</td><td>Quantitative</td><td class="num">10%</td><td>&lt;5%</td><td>10% to 15%</td><td>&gt;20%</td></tr>
+        <tr><td class="label">Liquidity Coverage Ratio</td><td>Quantitative</td><td class="num">10%</td><td>&lt;100%</td><td>110% to 130%</td><td>&gt;150%</td></tr>
+        <tr><td class="label">Management Quality</td><td>Qualitative</td><td class="num">10%</td><td>Significant concerns</td><td>Adequate</td><td>Strong, experienced team</td></tr>
+        <tr><td class="label">Governance and Compliance</td><td>Qualitative</td><td class="num">10%</td><td>Material deficiencies</td><td>SBP compliant</td><td>Best-practice governance</td></tr>
+        <tr><td class="label">Franchise and Market Position</td><td>Qualitative</td><td class="num">5%</td><td>Niche / declining</td><td>Mid-tier</td><td>Tier-1 franchise</td></tr>
+      </tbody>
+      <tfoot><tr><td colspan="2">Total Weight</td><td class="num">100%</td><td colspan="3"></td></tr></tfoot>
+    </table>
+  </div>
+
+  <div class="h3">Score-to-Modifier Mapping</div>
+  <p>A weighted average score below 2.5 triggers a positive log-odds uplift (higher PD), a score above 3.5 triggers a negative uplift (lower PD), and a score between 2.5 and 3.5 is treated as neutral. The modifier is applied multiplicatively in log-odds space:</p>
+
+  <div class="formula-label">Rating Modifier Formula</div>
+  <div class="formula-box">
+<span class="formula-comment">// Rating modifier applied in log-odds space</span>
+RatingModifier_i = exp( ScoreShift_i * alpha )
+<span class="formula-comment">// where alpha is the governance-approved sensitivity parameter</span>
+<span class="formula-comment">// Score 5 → RatingModifier ≈ 0.75 (PD reduction)</span>
+<span class="formula-comment">// Score 1 → RatingModifier ≈ 1.50 (PD uplift)</span>
+<span class="formula-comment">// Score 3 → RatingModifier = 1.00 (neutral)</span>
+  </div>
+
+  <p>The scorecard result is logged in the credit paper and retained in the audit file. It is not a replacement for the underlying borrower PD; it is a modifier layered on top of the sector prior. An FI with a perfect score of 5 cannot reduce the sector anchor PD below the approved floor for that model group.</p>
+
+  <div class="callout callout-amber">
+    <strong>Important Limitation:</strong> The quantitative scores for NPL ratio and trend are auto-populated from the historical database, which currently extends only to confirmed data through 2023, with 2024 and 2025 extrapolations that are excluded from primary calibration. The scorecard should be refreshed when audited financial statements are available. The data quality grade for all FIs is currently Amber.
+  </div>
+</div>
+
+
+<!-- ===== SECTION 3: INSTITUTIONAL PD ===== -->
+<div class="section" id="s3">
+  <div class="section-eyebrow">Section 3</div>
+  <div class="section-title">Institutional Probability of Default Estimation</div>
+  <div class="section-rule"></div>
+
+  <p>NCGCL maintains a historical PD register for every bank, DFI and microfinance bank active in Pakistan from 2011 to 2025. These are not the counterparty PDs of the FIs themselves (which would require a separate credit analysis of the FI's own bonds or deposits). They are the PDs of the lending books managed by each FI, reconstructed from publicly reported NPL and advances data. An FI that consistently generates higher NPLs than its peers is signaling poor underwriting; its borrower pool in a new guaranteed portfolio is likely to exhibit a higher default frequency.</p>
+
+  <p>The reconstruction uses a four-step process. First, gross advances and NPL stocks are sourced from SBP EasyData and FI financial statements for each year. Second, the annualised positive net-stock flow proxy is calculated: the increase in NPL stock in a given year, divided by the opening performing book, and annualised. Third, the mean of this series across the available history gives the FI's long-run historical PD proxy. Fourth, this is credibility-weighted against the peer median to produce the FI historical performance effect.</p>
+
+  <div class="h3">Why a Flow Proxy, Not a Stock Ratio?</div>
+  <p>NPL stock ratios (infection ratios) are not default rates. They accumulate historical defaults, recoveries, write-offs and reclassifications. A high infection ratio may reflect poor past recoveries, not high current default rates. The positive net-stock flow proxy removes the stock accumulation and focuses on the year-on-year increase: if NPLs rise, new defaults are outpacing cures and recoveries. This is a closer, though imperfect, approximation of the annual default rate than the stock ratio. The limitation is acknowledged: gross new default entries are not available from public sources, and the proxy likely undercounts defaults in years of heavy write-off activity. An explicit margin of conservatism is applied to compensate.</p>
+
+  <div class="formula-label">FI Historical PD Proxy and Credibility Adjustment</div>
+  <div class="formula-box">
+<span class="formula-comment">// Step 1: Annual positive net NPL flow proxy</span>
+FlowPD_t = max(0, (NPL_t - NPL_{t-1})) / PerformingAdvances_{t-1}
+
+<span class="formula-comment">// Step 2: Long-run FI PD proxy (mean over available years)</span>
+HistPD_i = mean(FlowPD_t) for t in {2012...2023}
+
+<span class="formula-comment">// Step 3: Peer PD (median positive TTC within subcategory or category)</span>
+PeerPD_p = median({HistPD_j : j in PeerGroup_p, HistPD_j > 0})
+
+<span class="formula-comment">// Step 4: Raw odds ratio</span>
+RawOddsRatio_i = (HistPD_i / (1 - HistPD_i)) / (PeerPD_p / (1 - PeerPD_p))
+
+<span class="formula-comment">// Step 5: Credibility-weighted FI effect (in log-odds)</span>
+FIEffect_i = Credibility_i * ln(RawOddsRatio_i)
+
+<span class="formula-comment">// Step 6: Adjusted odds multiplier</span>
+AdjustedMultiplier_i = exp(FIEffect_i)
+
+<span class="formula-comment">// Credibility function (Buhlmann-Straub approximation):</span>
+Credibility_i = YearsActual_i / (YearsActual_i + kappa)
+<span class="formula-comment">// where kappa is calibrated to produce approximately 50% credibility at 5 years</span>
+<span class="formula-comment">// Effect is floored at 0.5x and capped at 2.0x odds ratio</span>
+  </div>
+
+  <p>A credibility factor of zero means the FI's own history is ignored and only the peer median applies; a factor of one means the FI's own history is applied in full. In the current calibration, FIs with 13 years of history receive credibility factors ranging from 0.19 to 0.75 depending on the variance and consistency of their historical series. FIs with nil-NPL records receive credibility factors but carry a zero raw odds ratio, so they revert to the peer benchmark without a discount.</p>
+
+  <div class="exhibit">
+    <div class="exhibit-label">Exhibit 3-1</div>
+    <div class="exhibit-title">FI Historical PD Proxy vs Peer PD: Selected Active Institutions</div>
+    <!-- SVG: FI PD Bar Chart -->
+    <svg viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:720px;height:auto;display:block;margin:0 auto;">
+      <defs><marker id="ax" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="#5A7080"/></marker></defs>
+      <!-- axes -->
+      <line x1="200" y1="20" x2="200" y2="285" stroke="#C8D6E0" stroke-width="1"/>
+      <line x1="200" y1="285" x2="680" y2="285" stroke="#C8D6E0" stroke-width="1"/>
+      <!-- gridlines at 2%, 4%, 6%, 8% -- scale: 8% = 480px, 1% = 60px -->
+      <line x1="260" y1="20" x2="260" y2="285" stroke="#EEF3F7" stroke-width="1" stroke-dasharray="4,3"/>
+      <line x1="320" y1="20" x2="320" y2="285" stroke="#EEF3F7" stroke-width="1" stroke-dasharray="4,3"/>
+      <line x1="380" y1="20" x2="380" y2="285" stroke="#EEF3F7" stroke-width="1" stroke-dasharray="4,3"/>
+      <line x1="440" y1="20" x2="440" y2="285" stroke="#EEF3F7" stroke-width="1" stroke-dasharray="4,3"/>
+      <line x1="500" y1="20" x2="500" y2="285" stroke="#EEF3F7" stroke-width="1" stroke-dasharray="4,3"/>
+      <text x="260" y="298" text-anchor="middle" font-size="10" fill="#5A7080">2%</text>
+      <text x="320" y="298" text-anchor="middle" font-size="10" fill="#5A7080">4%</text>
+      <text x="380" y="298" text-anchor="middle" font-size="10" fill="#5A7080">6%</text>
+      <text x="440" y="298" text-anchor="middle" font-size="10" fill="#5A7080">8%</text>
+      <text x="500" y="298" text-anchor="middle" font-size="10" fill="#5A7080">10%</text>
+      <!-- Peer line for private banks at 2.62% = 200+157 = 357 -->
+      <line x1="357" y1="20" x2="357" y2="285" stroke="#C00000" stroke-width="1" stroke-dasharray="6,3"/>
+      <text x="360" y="14" font-size="9" fill="#C00000">Peer PD 2.62%</text>
+      <!-- Bars (y positions: each row 26px, start y=28, bar height=18) -->
+      <!-- MCB Islamic: 0.19% = 11px -->
+      <rect x="200" y="28" width="11" height="18" fill="#39A935" rx="2"/>
+      <text x="196" y="41" text-anchor="end" font-size="10" fill="#1B2B38">MCB Islamic</text>
+      <text x="214" y="41" font-size="10" fill="#2B8129" font-weight="600">0.19%</text>
+      <!-- Meezan: 0.94% = 56px -->
+      <rect x="200" y="54" width="56" height="18" fill="#39A935" rx="2"/>
+      <text x="196" y="67" text-anchor="end" font-size="10" fill="#1B2B38">Meezan Bank</text>
+      <text x="259" y="67" font-size="10" fill="#2B8129" font-weight="600">0.94%</text>
+      <!-- Bank Al-Habib: 0.66% = 40px -->
+      <rect x="200" y="80" width="40" height="18" fill="#39A935" rx="2"/>
+      <text x="196" y="93" text-anchor="end" font-size="10" fill="#1B2B38">Bank Al-Habib</text>
+      <text x="243" y="93" font-size="10" fill="#2B8129" font-weight="600">0.66%</text>
+      <!-- Dubai Islamic: 1.42% = 85px -->
+      <rect x="200" y="106" width="85" height="18" fill="#0C688D" rx="2" opacity="0.8"/>
+      <text x="196" y="119" text-anchor="end" font-size="10" fill="#1B2B38">Dubai Islamic</text>
+      <text x="288" y="119" font-size="10" fill="#004C66" font-weight="600">1.42%</text>
+      <!-- Allied: 1.55% = 93px -->
+      <rect x="200" y="132" width="93" height="18" fill="#0C688D" rx="2" opacity="0.8"/>
+      <text x="196" y="145" text-anchor="end" font-size="10" fill="#1B2B38">Allied Bank</text>
+      <text x="296" y="145" font-size="10" fill="#004C66" font-weight="600">1.55%</text>
+      <!-- Bank Alfalah: 1.79% = 107px -->
+      <rect x="200" y="158" width="107" height="18" fill="#0C688D" rx="2" opacity="0.8"/>
+      <text x="196" y="171" text-anchor="end" font-size="10" fill="#1B2B38">Bank Alfalah</text>
+      <text x="310" y="171" font-size="10" fill="#004C66" font-weight="600">1.79%</text>
+      <!-- JS Bank: 2.11% = 127px -->
+      <rect x="200" y="184" width="127" height="18" fill="#0C688D" rx="2" opacity="0.8"/>
+      <text x="196" y="197" text-anchor="end" font-size="10" fill="#1B2B38">JS Bank</text>
+      <text x="330" y="197" font-size="10" fill="#004C66" font-weight="600">2.11%</text>
+      <!-- HBL: 2.62% = 157px -->
+      <rect x="200" y="210" width="157" height="18" fill="#BF8000" rx="2" opacity="0.9"/>
+      <text x="196" y="223" text-anchor="end" font-size="10" fill="#1B2B38">Habib Bank</text>
+      <text x="360" y="223" font-size="10" fill="#6B4800" font-weight="600">2.62%</text>
+      <!-- MCB: 2.79% = 167px -->
+      <rect x="200" y="236" width="167" height="18" fill="#BF8000" rx="2" opacity="0.9"/>
+      <text x="196" y="249" text-anchor="end" font-size="10" fill="#1B2B38">MCB Bank</text>
+      <text x="370" y="249" font-size="10" fill="#6B4800" font-weight="600">2.79%</text>
+      <!-- NBP: 4.91% = 294px -->
+      <rect x="200" y="262" width="294" height="18" fill="#C00000" rx="2" opacity="0.8"/>
+      <text x="196" y="275" text-anchor="end" font-size="10" fill="#1B2B38">National Bank</text>
+      <text x="497" y="275" font-size="10" fill="#800000" font-weight="600">4.91%</text>
+    </svg>
+    <div class="exhibit-note">Historical PD proxy = mean positive net NPL stock flow, 2011 to 2023. Red dashed line shows Private Sector Bank peer median (2.62%). Bars coloured green (below peer), blue (near peer) or red/amber (above peer). Source: SBP EasyData, FI financial statements. Data quality: Amber for all institutions.</div>
+  </div>
+
+  <p>The peer hierarchy follows a strict priority: first, the sub-type median (private sector banks, public sector banks, foreign banks, or microfinance banks) is used where at least five reliable active FIs are available with positive historical PD data. Where the sub-type group is too thin or the quality of data is poor, the category median (all banks or all MFBs) is used. Foreign banks with nil-NPL records default to the category fallback without a discount. The system-level fallback is the aggregate system anchor PD of 0.73 percent.</p>
+</div>
+
+
+<!-- ===== SECTION 4: SECTORAL PD ===== -->
+<div class="section" id="s4">
+  <div class="section-eyebrow">Section 4</div>
+  <div class="section-title">Sectoral Probability of Default Estimation</div>
+  <div class="section-rule"></div>
+
+  <p>The underlying borrower PD is not derived from the FI's book-level NPL alone; it requires a disaggregation to the sector or segment level that the guaranteed portfolio actually covers. NCGCL does not guarantee entire bank books; it guarantees specific pools of SME loans, agriculture credit or export financing. The relevant default rate is therefore the historical rate in those segments, not the blended bank-level rate. Sectoral PDs are reconstructed from SBP's quarterly NPL and advances data, disaggregated by sector and segment, extending from Q3 2016 to Q1 2026.</p>
+
+  <p>The flow method is applied at the segment level: for each quarter, the positive net change in NPL stock is divided by the opening performing balance to approximate the quarterly new-default rate. This is annualised by multiplying by four (reflecting quarterly frequency). The mean of this series over the available window forms the historical anchor PD for that sector or segment. The word "anchor" is deliberate: the anchor is not a forecast; it is the long-run central tendency around which macroeconomic adjustments are applied.</p>
+
+  <div class="h3">Limitation: Flow Proxy vs True Default Rate</div>
+  <p>The annualised flow proxy systematically undercounts true defaults in periods when write-offs are high (write-offs remove NPLs from the stock, suppressing the net change). It overcounts in periods when NPL reclassifications add back previously performing loans without new underlying defaults. These limitations are disclosed, and an explicit log-odds margin of conservatism (MOC) is added at the final PD computation stage to partially compensate for the likely undercount.</p>
+
+  <div class="exhibit">
+    <div class="exhibit-label">Exhibit 4-1</div>
+    <div class="exhibit-title">Sector and Segment Anchor PDs (Historical, Mean Positive Flow Proxy 2016 to 2026)</div>
+    <!-- SVG Horizontal Bar Chart: Sector PDs -->
+    <svg viewBox="0 0 730 420" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:730px;height:auto;display:block;margin:0 auto;">
+      <!-- Background -->
+      <rect x="0" y="0" width="730" height="420" fill="white"/>
+      <!-- Y-axis labels and bars. Label area: 0-210px. Bar starts at x=215. Scale: 5.5% = 460px, 1% = 83.6px -->
+      <!-- Gridlines at 1%, 2%, 3%, 4%, 5% -->
+      <line x1="215" y1="10" x2="215" y2="390" stroke="#C8D6E0" stroke-width="1"/>
+      <line x1="299" y1="10" x2="299" y2="390" stroke="#EEF3F7" stroke-width="1" stroke-dasharray="4,3"/>
+      <line x1="383" y1="10" x2="383" y2="390" stroke="#EEF3F7" stroke-width="1" stroke-dasharray="4,3"/>
+      <line x1="467" y1="10" x2="467" y2="390" stroke="#EEF3F7" stroke-width="1" stroke-dasharray="4,3"/>
+      <line x1="551" y1="10" x2="551" y2="390" stroke="#EEF3F7" stroke-width="1" stroke-dasharray="4,3"/>
+      <line x1="635" y1="10" x2="635" y2="390" stroke="#EEF3F7" stroke-width="1" stroke-dasharray="4,3"/>
+      <!-- Axis labels -->
+      <text x="215" y="405" text-anchor="middle" font-size="10" fill="#5A7080">0%</text>
+      <text x="299" y="405" text-anchor="middle" font-size="10" fill="#5A7080">1%</text>
+      <text x="383" y="405" text-anchor="middle" font-size="10" fill="#5A7080">2%</text>
+      <text x="467" y="405" text-anchor="middle" font-size="10" fill="#5A7080">3%</text>
+      <text x="551" y="405" text-anchor="middle" font-size="10" fill="#5A7080">4%</text>
+      <text x="635" y="405" text-anchor="middle" font-size="10" fill="#5A7080">5%</text>
+      <!-- Row height: 28px, starting y=14 -->
+      <!-- Agriculture Seg: 5.15% = 430px -> capped display at 5.5%=460, so 5.15*83.6=430 -->
+      <rect x="215" y="14" width="430" height="20" fill="#C00000" rx="2" opacity="0.85"/>
+      <text x="210" y="29" text-anchor="end" font-size="10" fill="#1B2B38" font-weight="600">Agriculture (Seg)</text>
+      <text x="648" y="29" font-size="10" fill="#800000" font-weight="700">5.15%</text>
+      <text x="418" y="29" text-anchor="middle" font-size="9" fill="white" font-weight="600">HIGH RISK</text>
+      <!-- Electronics: 3.14% = 262px -->
+      <rect x="215" y="42" width="262" height="20" fill="#C00000" rx="2" opacity="0.65"/>
+      <text x="210" y="57" text-anchor="end" font-size="10" fill="#1B2B38">Electronics (Sec)</text>
+      <text x="480" y="57" font-size="10" fill="#800000" font-weight="600">3.14%</text>
+      <!-- Agribusiness: 2.46% = 205px -->
+      <rect x="215" y="70" width="205" height="20" fill="#BF8000" rx="2" opacity="0.85"/>
+      <text x="210" y="85" text-anchor="end" font-size="10" fill="#1B2B38">Agribusiness (Sec)</text>
+      <text x="423" y="85" font-size="10" fill="#6B4800" font-weight="600">2.46%</text>
+      <!-- Sugar: 2.14% = 179px -->
+      <rect x="215" y="98" width="179" height="20" fill="#BF8000" rx="2" opacity="0.75"/>
+      <text x="210" y="113" text-anchor="end" font-size="10" fill="#1B2B38">Sugar (Sec)</text>
+      <text x="397" y="113" font-size="10" fill="#6B4800" font-weight="600">2.14%</text>
+      <!-- SMEs Seg: 1.86% = 155px -->
+      <rect x="215" y="126" width="155" height="20" fill="#BF8000" rx="2" opacity="0.65"/>
+      <text x="210" y="141" text-anchor="end" font-size="10" fill="#1B2B38" font-weight="600">SMEs (Seg)</text>
+      <text x="373" y="141" font-size="10" fill="#6B4800" font-weight="600">1.86%</text>
+      <!-- Shoes/Leather: 1.77% = 148px -->
+      <rect x="215" y="154" width="148" height="20" fill="#0C688D" rx="2" opacity="0.75"/>
+      <text x="210" y="169" text-anchor="end" font-size="10" fill="#1B2B38">Shoes &amp; Leather (Sec)</text>
+      <text x="366" y="169" font-size="10" fill="#004C66" font-weight="600">1.77%</text>
+      <!-- Auto/Transport: 1.43% = 120px -->
+      <rect x="215" y="182" width="120" height="20" fill="#0C688D" rx="2" opacity="0.75"/>
+      <text x="210" y="197" text-anchor="end" font-size="10" fill="#1B2B38">Automobile / Transport</text>
+      <text x="338" y="197" font-size="10" fill="#004C66" font-weight="600">1.43%</text>
+      <!-- Microfinance: 1.30% = 109px -->
+      <rect x="215" y="210" width="109" height="20" fill="#0C688D" rx="2" opacity="0.65"/>
+      <text x="210" y="225" text-anchor="end" font-size="10" fill="#1B2B38">Microfinance Borrowers</text>
+      <text x="327" y="225" font-size="10" fill="#004C66" font-weight="600">1.30%</text>
+      <!-- Energy: 0.84% = 70px -->
+      <rect x="215" y="238" width="70" height="20" fill="#39A935" rx="2" opacity="0.8"/>
+      <text x="210" y="253" text-anchor="end" font-size="10" fill="#1B2B38">Energy Production</text>
+      <text x="288" y="253" font-size="10" fill="#1A5010" font-weight="600">0.84%</text>
+      <!-- Corporate: 0.71% = 59px -->
+      <rect x="215" y="266" width="59" height="20" fill="#39A935" rx="2" opacity="0.8"/>
+      <text x="210" y="281" text-anchor="end" font-size="10" fill="#1B2B38">Corporate (Seg)</text>
+      <text x="277" y="281" font-size="10" fill="#1A5010" font-weight="600">0.71%</text>
+      <!-- System All: 0.73% = 61px -->
+      <rect x="215" y="294" width="61" height="20" fill="#39A935" rx="2" opacity="0.6"/>
+      <text x="210" y="309" text-anchor="end" font-size="10" fill="#1B2B38">System (All Sectors)</text>
+      <text x="279" y="309" font-size="10" fill="#1A5010" font-weight="600">0.73%</text>
+      <!-- Consumer: 0.50% = 42px -->
+      <rect x="215" y="322" width="42" height="20" fill="#39A935" rx="2" opacity="0.7"/>
+      <text x="210" y="337" text-anchor="end" font-size="10" fill="#1B2B38">Consumer (Seg)</text>
+      <text x="260" y="337" font-size="10" fill="#1A5010" font-weight="600">0.50%</text>
+      <!-- Textile: 0.30% = 25px -->
+      <rect x="215" y="350" width="25" height="20" fill="#39A935" rx="2" opacity="0.7"/>
+      <text x="210" y="365" text-anchor="end" font-size="10" fill="#1B2B38">Textile (Sec)</text>
+      <text x="243" y="365" font-size="10" fill="#1A5010" font-weight="600">0.30%</text>
+      <!-- Insurance: 0.27% = 23px -->
+      <rect x="215" y="378" width="23" height="20" fill="#39A935" rx="2" opacity="0.7"/>
+      <text x="210" y="393" text-anchor="end" font-size="10" fill="#1B2B38">Insurance (Sec)</text>
+      <text x="241" y="393" font-size="10" fill="#1A5010" font-weight="600">0.27%</text>
+    </svg>
+    <div class="exhibit-note">Anchor PDs are the mean annualised positive net-stock NPL flow proxies over Q3 2016 to Q1 2026. These form the historical starting point for forward-looking calibration. Agriculture and electronics carry the highest historical default frequency; textile and insurance the lowest. Data quality for all sectors: Amber (gross default flows unavailable). Full sector register in Annexure B.</div>
+  </div>
+
+  <p>The sector or segment anchor is the single most important input to the model. It sets the level around which all macroeconomic adjustments are made. An error in the anchor propagates through every downstream calculation. NCGCL must therefore invest in obtaining granular NPL flow data (gross new defaults, cures, write-offs and reclassifications separately) from PFIs to eventually replace the positive net-stock proxy with a true annualised default rate. This is the highest-priority remediation action in the model limitation register.</p>
+</div>
+
+<!-- ===== SECTION 5: COMPOSITE PD ===== -->
+<div class="section" id="s5">
+  <div class="section-eyebrow">Section 5</div>
+  <div class="section-title">Composite (Blended) Probability of Default</div>
+  <div class="section-rule"></div>
+
+  <p>A guarantee facility rarely covers a single sector. An SME portfolio may have borrowers in textile, food processing, auto parts and services, with weights that shift as the PFI originates new loans. NCGCL's facility register therefore captures a sector allocation vector for each guarantee: the percentage of the underlying financing exposed to each sector or segment. The sector prior PD is the weighted average of individual sector PDs using these allocation weights.</p>
+
+  <div class="formula-label">Composite PD Computation: Four-Layer Blend</div>
+  <div class="formula-box">
+<span class="formula-comment">// Layer 1: Sector Prior (weighted average of sector anchor PDs)</span>
+SectorPD_f = Σ_j  weight_fj * AnchorPD_j
+<span class="formula-comment">// where weight_fj is facility f's allocation to sector/segment j</span>
+
+<span class="formula-comment">// Layer 2: FI Historical Modifier</span>
+HistModifier_i = exp(FIEffect_i)
+<span class="formula-comment">// from Section 3 credibility-weighted log-odds ratio</span>
+
+<span class="formula-comment">// Layer 3: Current FI Rating Modifier</span>
+RatingModifier_i = exp(ScoreShift_i * alpha)
+<span class="formula-comment">// from Section 2 FI scorecard</span>
+
+<span class="formula-comment">// Layer 4: Prior PD (combining layers 1-3 in log-odds)</span>
+PriorPD_f = sigmoid(logit(SectorPD_f) + ln(HistModifier_i) + ln(RatingModifier_i))
+
+<span class="formula-comment">// Layer 5 (optional): Direct facility PD blend</span>
+<span class="formula-comment">// If a directly-observed PD for the specific pool is available:</span>
+CompositePD_f = sigmoid((1 - c_f)*logit(PriorPD_f) + c_f*logit(DirectPD_f))
+<span class="formula-comment">// where c_f is the credibility assigned to the direct observation</span>
+<span class="formula-comment">// If no direct PD: CompositePD_f = PriorPD_f</span>
+
+<span class="formula-comment">// Note: sigmoid(x) = exp(x) / (1 + exp(x)) = inverse logit</span>
+<span class="formula-comment">// Note: logit(p) = ln(p / (1 - p))</span>
+  </div>
+
+  <div class="exhibit">
+    <div class="exhibit-label">Exhibit 5-1</div>
+    <div class="exhibit-title">Illustrative Composite PD Computation: SME Portfolio Guarantee via Habib Bank (Base Scenario)</div>
+    <table class="data-table">
+      <thead><tr><th>Step</th><th>Component</th><th>Value</th><th>Method</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Sector Prior PD (SME 80%, Textile 20%)</td><td class="num">1.55%</td><td>0.80 * 1.86% + 0.20 * 0.30%</td></tr>
+        <tr><td>2</td><td>HBL Historical PD Proxy</td><td class="num">2.62%</td><td>Mean positive net NPL flow 2011-2023</td></tr>
+        <tr><td>3</td><td>Private Sector Bank Peer PD</td><td class="num">2.62%</td><td>Median of active private sector banks</td></tr>
+        <tr><td>4</td><td>Raw Odds Ratio (HBL vs Peer)</td><td class="num">1.00x</td><td>HBL is exactly at peer median</td></tr>
+        <tr><td>5</td><td>HBL Credibility Factor</td><td class="num">74.9%</td><td>13 years of data / (13 + kappa)</td></tr>
+        <tr><td>6</td><td>Adjusted FI Log-Odds Effect</td><td class="num">0.000</td><td>0.749 * ln(1.00)</td></tr>
+        <tr><td>7</td><td>Historical Modifier (Odds Multiplier)</td><td class="num">1.00x</td><td>exp(0.000) = 1.00</td></tr>
+        <tr><td>8</td><td>Current FI Rating Modifier (Illustrative)</td><td class="num">1.00x</td><td>Score = 3.0 (neutral)</td></tr>
+        <tr><td>9</td><td>Prior PD (Combined Sector + FI Effects)</td><td class="num">1.55%</td><td>sigmoid(logit(1.55%) + 0 + 0)</td></tr>
+        <tr><td>10</td><td>Direct Facility PD (Not Available)</td><td class="num">N/A</td><td>No obligor-level data provided</td></tr>
+        <tr><td class="label">11</td><td class="label">Composite PD (Management)</td><td class="num label">1.55%</td><td>No direct PD; prior PD applied</td></tr>
+        <tr><td>12</td><td>IFRS 9 Anchor PD (SME Segment)</td><td class="num">1.86%</td><td>Segment-level anchor, see Section 10</td></tr>
+        <tr><td>13</td><td>Forward-Looking Year-1 PD (Base Scenario)</td><td class="num">2.19%</td><td>After macro adjustment + MOC</td></tr>
+      </tbody>
+    </table>
+    <div class="exhibit-note">Illustrative computation based on HBL as PFI and an 80/20 SME/Textile sector split. HBL is coincidentally at the peer median, so the historical modifier is neutral. The IFRS 9 anchor uses the segment-level anchor (1.86%) rather than the composite management PD. The base scenario Year-1 PD of 2.19% includes macro adjustment and a 0.25 log-odds MOC.</div>
+  </div>
+</div>
+
+
+<!-- ===== SECTION 6: GUARANTEE STRUCTURES ===== -->
+<div class="section" id="s6">
+  <div class="section-eyebrow">Section 6</div>
+  <div class="section-title">Guarantee Structures and Risk Profiles</div>
+  <div class="section-rule"></div>
+
+  <p>Not all guarantees carry the same risk even if the underlying borrower pool is identical. The risk that NCGCL actually bears depends on where in the loss distribution NCGCL's obligation sits. A guarantee that covers the very first losses in a pool is the most risky position because every loss, starting from the first rupee, falls on NCGCL. A guarantee that covers only losses above a high threshold is far less risky because losses must exceed a substantial cushion before NCGCL pays anything. NCGCL currently offers three structural variants: pari-passu, first-loss and second-loss (tranche) guarantees.</p>
+
+  <div class="exhibit">
+    <div class="exhibit-label">Exhibit 6-1</div>
+    <div class="exhibit-title">Guarantee Structure Risk Layering: Illustrative Pool Loss of PKR 1,000M</div>
+    <!-- SVG: Loss Layer Diagram -->
+    <svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:700px;height:auto;display:block;margin:0 auto;">
+      <!-- Pari Passu Column -->
+      <text x="120" y="18" text-anchor="middle" font-size="12" fill="#004C66" font-weight="700">PARI PASSU</text>
+      <text x="120" y="32" text-anchor="middle" font-size="10" fill="#5A7080">40% Cover</text>
+      <rect x="30" y="40" width="180" height="220" fill="#EEF3F7" stroke="#C8D6E0" rx="4"/>
+      <rect x="30" y="40" width="180" height="88" fill="#39A935" opacity="0.25" rx="4"/>
+      <text x="120" y="83" text-anchor="middle" font-size="10" fill="#1A5010" font-weight="600">PFI retains 60%</text>
+      <text x="120" y="99" text-anchor="middle" font-size="10" fill="#1A5010">of every loss</text>
+      <rect x="30" y="128" width="180" height="88" fill="#0C688D" opacity="0.25"/>
+      <text x="120" y="170" text-anchor="middle" font-size="10" fill="#004C66" font-weight="600">NCGCL covers 40%</text>
+      <text x="120" y="186" text-anchor="middle" font-size="10" fill="#004C66">of every loss</text>
+      <rect x="30" y="216" width="180" height="44" fill="#EEF3F7" rx="0" rx="4"/>
+      <text x="120" y="242" text-anchor="middle" font-size="9" fill="#5A7080">Proportional across</text>
+      <text x="120" y="255" text-anchor="middle" font-size="9" fill="#5A7080">full loss range</text>
+      <!-- Loss axis -->
+      <line x1="25" y1="40" x2="25" y2="260" stroke="#C8D6E0" stroke-width="1"/>
+      <text x="20" y="44" text-anchor="end" font-size="9" fill="#5A7080">100%</text>
+      <text x="20" y="260" text-anchor="end" font-size="9" fill="#5A7080">0%</text>
+      <!-- First Loss Column -->
+      <text x="370" y="18" text-anchor="middle" font-size="12" fill="#C00000" font-weight="700">FIRST LOSS</text>
+      <text x="370" y="32" text-anchor="middle" font-size="10" fill="#5A7080">NCGCL 0-8% of Pool</text>
+      <rect x="280" y="40" width="180" height="220" fill="#EEF3F7" stroke="#C8D6E0" rx="4"/>
+      <rect x="280" y="40" width="180" height="152" fill="#39A935" opacity="0.2" rx="4"/>
+      <text x="370" y="115" text-anchor="middle" font-size="10" fill="#1A5010" font-weight="600">PFI / Senior Risk</text>
+      <text x="370" y="130" text-anchor="middle" font-size="9" fill="#1A5010">Above 8% of pool</text>
+      <text x="370" y="145" text-anchor="middle" font-size="9" fill="#1A5010">PFI retains this layer</text>
+      <rect x="280" y="192" width="180" height="68" fill="#C00000" opacity="0.35"/>
+      <text x="370" y="221" text-anchor="middle" font-size="10" fill="#800000" font-weight="700">NCGCL</text>
+      <text x="370" y="237" text-anchor="middle" font-size="10" fill="#800000">First 8% of losses</text>
+      <text x="370" y="252" text-anchor="middle" font-size="9" fill="#800000">Highest risk tranche</text>
+      <!-- Second Loss Column -->
+      <text x="620" y="18" text-anchor="middle" font-size="12" fill="#BF8000" font-weight="700">SECOND LOSS</text>
+      <text x="620" y="32" text-anchor="middle" font-size="10" fill="#5A7080">NCGCL 8-25% of Pool</text>
+      <rect x="530" y="40" width="180" height="220" fill="#EEF3F7" stroke="#C8D6E0" rx="4"/>
+      <rect x="530" y="40" width="180" height="60" fill="#39A935" opacity="0.2" rx="4"/>
+      <text x="620" y="65" text-anchor="middle" font-size="10" fill="#1A5010">Above 25%</text>
+      <text x="620" y="79" text-anchor="middle" font-size="9" fill="#1A5010">Senior protection</text>
+      <rect x="530" y="100" width="180" height="100" fill="#BF8000" opacity="0.35"/>
+      <text x="620" y="143" text-anchor="middle" font-size="10" fill="#6B4800" font-weight="700">NCGCL</text>
+      <text x="620" y="159" text-anchor="middle" font-size="10" fill="#6B4800">8% to 25% Layer</text>
+      <text x="620" y="174" text-anchor="middle" font-size="9" fill="#6B4800">Moderate risk tranche</text>
+      <rect x="530" y="200" width="180" height="60" fill="#C00000" opacity="0.2" rx="0"/>
+      <text x="620" y="225" text-anchor="middle" font-size="10" fill="#800000">PFI First-Loss</text>
+      <text x="620" y="241" text-anchor="middle" font-size="9" fill="#800000">0-8%: PFI retains</text>
+      <text x="620" y="256" text-anchor="middle" font-size="9" fill="#800000">as skin-in-the-game</text>
+    </svg>
+    <div class="exhibit-note">Illustrative pool of PKR 1,000M. In the pari-passu structure, NCGCL shares every loss proportionally (40% shown). In the first-loss structure, NCGCL absorbs all losses up to the detachment point (8% shown) before the PFI bears any. In the second-loss structure, the PFI bears the first-loss layer and NCGCL bears the tranche between attachment (8%) and detachment (25%). Actual parameters are facility-specific and contractual.</div>
+  </div>
+
+  <div class="h2">Risk Rankingby Structure</div>
+  <p>The risk ranking across structures, holding the underlying borrower PD and LGD constant, follows from which part of the loss distribution each structure absorbs. The expected loss on a first-loss guarantee is higher than on a pari-passu or second-loss guarantee at the same underlying PD because the first-loss layer is the most likely to be triggered. The economic capital required for a first-loss guarantee is also higher per rupee of limit, because the unexpected loss (the tail above the expected loss) that NCGCL must absorb is more concentrated.</p>
+
+  <div class="exhibit">
+    <div class="exhibit-label">Exhibit 6-2</div>
+    <div class="exhibit-title">Risk Profile Comparison Across Guarantee Structures (Illustrative, Identical Underlying Pool)</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Parameter</th><th class="num">Pari Passu (40% Cover)</th><th class="num">First Loss (0-8%)</th><th class="num">Second Loss (8-25%)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Underlying Pool Size</td><td class="num">PKR 1,000M</td><td class="num">PKR 1,000M</td><td class="num">PKR 1,000M</td></tr>
+        <tr><td>NCGCL Guarantee Limit</td><td class="num">PKR 400M</td><td class="num">PKR 80M</td><td class="num">PKR 170M</td></tr>
+        <tr><td>Year-1 Conditional PD (SME Base)</td><td class="num">2.19%</td><td class="num">2.19%</td><td class="num">2.19%</td></tr>
+        <tr><td>LGD (assumed)</td><td class="num">45%</td><td class="num">45%</td><td class="num">45%</td></tr>
+        <tr><td>Expected Pool Loss Year 1</td><td class="num">PKR 9.86M</td><td class="num">PKR 9.86M</td><td class="num">PKR 9.86M</td></tr>
+        <tr><td>NCGCL Expected Year-1 Loss</td><td class="num">PKR 3.94M</td><td class="num">PKR 9.86M (all pool loss falls in layer)</td><td class="num">PKR 0M (pool loss below attachment)</td></tr>
+        <tr><td>EL Rate (on Guarantee Limit)</td><td class="num">0.99%</td><td class="num">12.33%</td><td class="num">0.00%</td></tr>
+        <tr><td>Approximate EC Rate</td><td class="num">~2.5%</td><td class="num">~18-22%</td><td class="num">~4-8%</td></tr>
+        <tr><td class="label">Risk Ranking</td><td class="num">Medium</td><td class="num label">HIGHEST</td><td class="num">Lowest (at normal PD)</td></tr>
+      </tbody>
+    </table>
+    <div class="exhibit-note">All figures illustrative. First-loss ECL is high in year 1 because the expected pool loss of PKR 9.86M falls entirely within the 0-8% first-loss layer (attachment 0%, detachment 8% = PKR 80M). The second-loss tranche has near-zero expected loss at 2.19% underlying PD because the expected pool loss does not reach the 8% attachment point. However, in the downside scenario (4.45% Year-1 PD), expected pool loss rises to PKR 20M, which begins to enter the second-loss layer. This is why scenario-specific ECL calculation is essential.</div>
+  </div>
+
+  <div class="h3">Guarantee Waterfall Formula</div>
+  <div class="formula-box">
+<span class="formula-comment">// For portfolio loss L, attachment A, detachment D on pool size P:</span>
+
+<span class="formula-comment">// Pari-passu:</span>
+NCGCLLoss_PP = min(L, P) * CoverPercentage
+
+<span class="formula-comment">// First-loss (attachment = 0):</span>
+LayerLoss_FL = min(L, D * P)
+NCGCLLoss_FL = LayerLoss_FL * CoverPercentage_FL
+
+<span class="formula-comment">// Second-loss:</span>
+LayerLoss_SL = min( max(L - A*P, 0), (D - A)*P )
+NCGCLLoss_SL = LayerLoss_SL * CoverPercentage_SL
+
+<span class="formula-comment">// ECL contribution for year y in scenario s:</span>
+ECL_s,y = MarginalPD_s,y * EAD_s,y * LGD_s,y * GuaranteeAllocation_y * DF_y
+
+<span class="formula-comment">// where GuaranteeAllocation is the fraction of pool loss</span>
+<span class="formula-comment">// absorbed by NCGCL's specific layer at expected loss point.</span>
+<span class="formula-comment">// Probability-weighted ECL = Σ_s  weight_s * Σ_y ECL_s,y</span>
+  </div>
+
+  <div class="callout callout-amber">
+    <strong>First-Loss Concentration Risk:</strong> A first-loss guarantee provides the PFI with the maximum credit risk transfer, making it highly attractive to originate new lending. But it concentrates NCGCL's exposure in the highest-probability loss zone. NCGCL must price first-loss guarantees to reflect the full expected loss of the tranche, not the expected loss of the pool. At a 5.15% Agriculture anchor PD and 50% LGD, the expected annual loss rate on a first-loss layer covering the first 10% of an agriculture portfolio is approximately 5.15% * 50% = 2.58% of the pool, or 25.8% of the first-loss layer limit. This requires commensurately higher capital allocation and guarantee fees.
+  </div>
+</div>
+
+
+<!-- ===== SECTION 7: ECL ===== -->
+<div class="section" id="s7">
+  <div class="section-eyebrow">Section 7</div>
+  <div class="section-title">Expected Credit Loss Calculation</div>
+  <div class="section-rule"></div>
+
+  <p>IFRS 9 requires that the loss allowance for a financial guarantee contract reflect the expected cash shortfalls discounted to the reporting date. For NCGCL, the cash shortfall is the claim payment it expects to make, net of recoveries it expects to receive. This is measured differently depending on whether the guarantee has experienced a significant increase in credit risk (SICR) since initial recognition. If it has not, a 12-month expected loss is recognised (Stage 1). If it has, the lifetime expected loss is recognised (Stage 2). If the guaranteed pool is already credit-impaired, a credit-impaired ECL is recognised (Stage 3).</p>
+
+  <div class="exhibit">
+    <div class="exhibit-label">Exhibit 7-1</div>
+    <div class="exhibit-title">IFRS 9 Three-Stage Classification and ECL Measurement</div>
+    <!-- SVG: IFRS 9 Staging Diagram -->
+    <svg viewBox="0 0 720 130" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:720px;height:auto;display:block;margin:0 auto;">
+      <!-- Stage 1 -->
+      <rect x="10" y="10" width="210" height="110" rx="6" fill="#F0FBF0" stroke="#39A935" stroke-width="1.5"/>
+      <text x="115" y="35" text-anchor="middle" font-size="13" fill="#1A5010" font-weight="700">STAGE 1</text>
+      <text x="115" y="52" text-anchor="middle" font-size="11" fill="#2B8129">No Significant Credit Risk</text>
+      <text x="115" y="70" text-anchor="middle" font-size="10" fill="#1B2B38">Increase Since Recognition</text>
+      <text x="115" y="90" text-anchor="middle" font-size="11" fill="#1A5010" font-weight="600">12-Month ECL</text>
+      <text x="115" y="107" text-anchor="middle" font-size="10" fill="#4A6070">Loss from defaults in next 12M</text>
+      <!-- Arrow Stage 1 to 2 -->
+      <line x1="222" y1="65" x2="250" y2="65" stroke="#BF8000" stroke-width="1.5" marker-end="url(#arr2)"/>
+      <text x="236" y="57" text-anchor="middle" font-size="9" fill="#BF8000">SICR</text>
+      <!-- Stage 2 -->
+      <rect x="252" y="10" width="210" height="110" rx="6" fill="#FFF8EC" stroke="#BF8000" stroke-width="1.5"/>
+      <text x="357" y="35" text-anchor="middle" font-size="13" fill="#6B4800" font-weight="700">STAGE 2</text>
+      <text x="357" y="52" text-anchor="middle" font-size="11" fill="#BF8000">Significant Increase in</text>
+      <text x="357" y="70" text-anchor="middle" font-size="10" fill="#1B2B38">Credit Risk (SICR Triggered)</text>
+      <text x="357" y="90" text-anchor="middle" font-size="11" fill="#6B4800" font-weight="600">Lifetime ECL</text>
+      <text x="357" y="107" text-anchor="middle" font-size="10" fill="#4A6070">Loss from defaults over full life</text>
+      <!-- Arrow Stage 2 to 3 -->
+      <line x1="464" y1="65" x2="492" y2="65" stroke="#C00000" stroke-width="1.5" marker-end="url(#arr3)"/>
+      <text x="478" y="57" text-anchor="middle" font-size="9" fill="#C00000">Default</text>
+      <!-- Stage 3 -->
+      <rect x="494" y="10" width="218" height="110" rx="6" fill="#FFF0F0" stroke="#C00000" stroke-width="1.5"/>
+      <text x="603" y="35" text-anchor="middle" font-size="13" fill="#800000" font-weight="700">STAGE 3</text>
+      <text x="603" y="52" text-anchor="middle" font-size="11" fill="#C00000">Credit-Impaired</text>
+      <text x="603" y="70" text-anchor="middle" font-size="10" fill="#1B2B38">(90 DPD / Default Flag)</text>
+      <text x="603" y="90" text-anchor="middle" font-size="11" fill="#800000" font-weight="600">Credit-Impaired ECL</text>
+      <text x="603" y="107" text-anchor="middle" font-size="10" fill="#4A6070">Best estimate claim minus recovery</text>
+      <defs>
+        <marker id="arr2" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#BF8000"/></marker>
+        <marker id="arr3" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#C00000"/></marker>
+      </defs>
+    </svg>
+  </div>
+
+  <div class="h2">Significant Increase in Credit Risk (SICR)</div>
+  <p>SICR is determined by comparing the current lifetime PD to the original lifetime PD at the date of initial recognition. The quantitative SICR test fires if the relative increase in lifetime PD exceeds 3.0 times (i.e. lifetime PD has more than tripled) or the absolute increase exceeds 2.0 percentage points. A qualitative SICR backstop applies for any facility that is 30 days past due, on the watchlist, restructured or has received a credit-quality downgrade. Where original recognition PD is unavailable, Stage 2 is applied conservatively as a fallback.</p>
+
+  <div class="formula-label">SICR Quantitative Test</div>
+  <div class="formula-box">
+<span class="formula-comment">// Relative increase test</span>
+RelativeIncrease = CurrentLifetimePD / OriginalLifetimePD
+
+<span class="formula-comment">// Absolute increase test</span>
+AbsoluteIncrease = CurrentLifetimePD - OriginalLifetimePD
+
+<span class="formula-comment">// SICR fires if EITHER condition is met:</span>
+QuantitativeSICR = (RelativeIncrease > 3.0) OR (AbsoluteIncrease > 0.02)
+
+<span class="formula-comment">// Final Stage assignment:</span>
+Stage = 3  if DefaultFlag = True or DaysPastDue >= 90
+Stage = 2  if QuantitativeSICR OR QualitativeSICR
+Stage = 1  otherwise (or if LowCreditRisk simplification applies)
+  </div>
+
+  <div class="h2">ECL Formula and Discount Rate</div>
+  <p>The IFRS 9 ECL for a non-defaulted guarantee is the sum across forecast years of the marginal unconditional PD multiplied by the LGD, the exposure at default, the guarantee allocation factor and the discount factor. The marginal PD in each year is the probability of defaulting in that specific year given survival to the start of that year. Discounting brings the expected future payments back to the reporting date using a rate appropriate for the time value of money on guarantee liabilities.</p>
+
+  <div class="formula-label">IFRS 9 ECL Calculation (Non-Defaulted Guarantee)</div>
+  <div class="formula-box">
+<span class="formula-comment">// For scenario s, summed across years y = 1 to T:</span>
+ECL_s = Σ_y  [ MarginalPD_s,y  *  EAD_s,y  *  LGD_s,y  *  GuaranteeAlloc_y  *  DF_y ]
+
+<span class="formula-comment">// Survival and marginal PD:</span>
+Survival_y  = Survival_{y-1} * (1 - ConditionalPD_s,y)   ; Survival_0 = 1
+MarginalPD_y = Survival_{y-1} * ConditionalPD_s,y
+CumulativePD_y = 1 - Survival_y
+
+<span class="formula-comment">// Discount factor (annual compounding):</span>
+DF_y = 1 / (1 + r)^y  where r = contractual or risk-free rate
+
+<span class="formula-comment">// Probability-weighted ECL:</span>
+PWECL = Σ_s  weight_s * ECL_s
+
+<span class="formula-comment">// Stage 1 selects 12-month ECL (y = 1 only)</span>
+<span class="formula-comment">// Stage 2 selects lifetime ECL (y = 1 to T)</span>
+<span class="formula-comment">// Stage 3 uses credit-impaired formula (gross claim less PV of recoveries)</span>
+  </div>
+
+  <div class="h2">Subsequent Measurement</div>
+  <p>IFRS 9 paragraph 4.2.1(d) requires that the carrying amount of a financial guarantee be measured at the higher of (a) the loss allowance (ECL) and (b) the initial recognition amount less cumulative income recognised. This ensures that if ECL is lower than the unamortised initial recognition amount, the initial recognition amount governs. As a guarantee approaches maturity and cumulative income recognised increases, the unamortised initial amount falls and ECL typically governs. Any change in the recognised liability from one period to the next flows through the income statement.</p>
+
+  <div class="formula-label">Subsequent Measurement (IFRS 9 para. 4.2.1(d))</div>
+  <div class="formula-box">
+RecognisedLiability = max( SelectedECL,  InitialRecognitionAmount - CumulativeIncomeRecognised )
+P&amp;L Movement = RecognisedLiability(current) - RecognisedLiability(prior)
+  </div>
+
+  <div class="exhibit">
+    <div class="exhibit-label">Exhibit 7-2</div>
+    <div class="exhibit-title">Demonstration ECL: Pari-Passu SME Portfolio Guarantee (DEMO-PP-SME)</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Scenario</th><th class="num">Weight</th><th class="num">Year 1 PD</th><th class="num">Year 1 EAD (PKRm)</th><th class="num">Y1 ECL (PKRm)</th><th class="num">3-Yr Scen ECL (PKRm)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Upside</td><td class="num">20%</td><td class="num">1.61%</td><td class="num">1,000</td><td class="num">1.37</td><td class="num">5.64</td></tr>
+        <tr><td>Base</td><td class="num">55%</td><td class="num">2.19%</td><td class="num">1,000</td><td class="num">1.86</td><td class="num">7.69</td></tr>
+        <tr><td>Downside</td><td class="num">25%</td><td class="num">4.45%</td><td class="num">1,000</td><td class="num">3.78</td><td class="num">13.64</td></tr>
+        <tr class="label"><td>Probability-Weighted</td><td class="num">100%</td><td class="num">2.43%</td><td class="num">1,000</td><td class="num">2.38</td><td class="num">9.16</td></tr>
+      </tbody>
+      <tfoot>
+        <tr><td colspan="5">ECL Rate on Limit (PKR 1,000M x 20% cover)</td><td class="num">4.58% of limit / yr</td></tr>
+      </tfoot>
+    </table>
+    <div class="exhibit-note">DEMONSTRATION ONLY. Cover 20%, LGD 45%, discount rate 12%. 3-year lifetime ECL shown for Stage 2 comparison. Demonstration facilities are excluded from production totals. Source: demonstration_scenario_ecl.csv. All values illustrative; actual portfolio ECL requires facility upload data.</div>
+  </div>
+</div>
+
+
+<!-- ===== SECTION 8: ECONOMIC CAPITAL ===== -->
+<div class="section" id="s8">
+  <div class="section-eyebrow">Section 8</div>
+  <div class="section-title">Economic Capital and Capital Adequacy</div>
+  <div class="section-rule"></div>
+
+  <p>Expected loss is what NCGCL expects to pay on average over the life of a guarantee; it is addressed through IFRS 9 provisioning. Economic capital is what NCGCL needs to hold as an equity buffer to absorb unexpected losses, those that exceed the expected level with low but non-trivial probability. The distinction matters: provisioning replaces the expected loss in the income statement as it arises; capital is a balance sheet buffer that exists precisely because losses can be worse than expected.</p>
+
+  <p>NCGCL's economic capital model applies a one-factor loss distribution approach. For each guarantee tranche, the unexpected loss is the standard deviation of the loss distribution at the selected confidence level. For a portfolio guarantee with PD, LGD and asset correlation, the IRB formula provides a theoretical benchmark. In practice, NCGCL applies a conservative floor and supervisory fallback to avoid understating capital when data are sparse. The economic capital rate is the higher of three quantities: the exact tranche unexpected loss, an attachment-and-detachment sensitive supervisory fallback based on a benchmark pool capital rate, and a 2 percent absolute floor.</p>
+
+  <div class="formula-label">Economic Capital Rate and Capital Allocation</div>
+  <div class="formula-box">
+<span class="formula-comment">// IRB-style pool unexpected loss benchmark (for reference):</span>
+K_pool = LGD * [ N( G(PD)/sqrt(1-R) + sqrt(R/(1-R)) * G(0.999) ) - PD ]
+<span class="formula-comment">// N() = standard normal CDF, G() = standard normal quantile, R = asset correlation</span>
+
+<span class="formula-comment">// Tranche unexpected loss (via simulation or one-factor approximation):</span>
+UL_tranche = f(K_pool, A, D, PD, LGD)  <span class="formula-comment">// attachment A, detachment D</span>
+
+<span class="formula-comment">// Supervisory fallback:</span>
+K_fallback = K_pool * LayerSensitivityFactor(A, D)
+
+<span class="formula-comment">// Final economic capital rate:</span>
+EC_Rate = max(UL_tranche, K_fallback, 0.02)
+
+<span class="formula-comment">// Internal risk weight (calibrated against 20% reference CAR):</span>
+InternalRW = EC_Rate / 0.20
+
+<span class="formula-comment">// Capital allocated:</span>
+AllocatedCapital = InternalRW * SelectedCAR * GuaranteeLimit
+
+<span class="formula-comment">// RAROC (pre-tax):</span>
+RAROC = (FeeIncome - ExpectedLoss - OperatingCost) / AllocatedCapital
+  </div>
+
+  <p>The internal risk weight framework ensures that capital allocation is independent of the selected CAR. Changing the CAR from 20 percent to 15 percent does not change the underlying economic capital rate or internal risk weight; it changes only the rupee amount of capital allocated per unit of guarantee limit. This preserves the integrity of RAROC calculations, which must reflect the true economic risk of each guarantee, not an accounting choice about how much capital to hold against it.</p>
+
+  <div class="exhibit">
+    <div class="exhibit-label">Exhibit 8-1</div>
+    <div class="exhibit-title">Capital Framework: Component Definitions and Thresholds</div>
+    <table class="data-table">
+      <thead><tr><th>Component</th><th>Definition</th><th>Threshold / Parameter</th></tr></thead>
+      <tbody>
+        <tr><td class="label">Capital Base</td><td>Total equity available to absorb guarantee losses</td><td>PKR 8,000M (current)</td></tr>
+        <tr><td class="label">Reference CAR</td><td>Board-approved reference rate for internal risk weight calibration</td><td>20%</td></tr>
+        <tr><td class="label">EC Rate Floor</td><td>Minimum economic capital rate regardless of model output</td><td>2.0% of guarantee limit</td></tr>
+        <tr><td class="label">Monitoring Threshold</td><td>Capital utilisation above which enhanced monitoring is triggered</td><td>70% of capital base</td></tr>
+        <tr><td class="label">Board Operating Cap</td><td>Board-approved maximum utilisation under normal operations</td><td>80% of capital base</td></tr>
+        <tr><td class="label">Absolute Limit</td><td>Hard ceiling; breach requires immediate Board notification and remediation</td><td>100% of capital base</td></tr>
+        <tr><td class="label">RAROC Hurdle</td><td>Minimum pre-tax return on allocated capital for new guarantees</td><td>15% (indicative)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="h2">Capital Adequacy Ratio vs Economic Capital Rate</div>
+  <p>The capital adequacy ratio (CAR) is an accounting or regulatory concept that measures the ratio of regulatory capital to risk-weighted assets. Economic capital is a risk management concept that measures the capital needed to absorb unexpected losses at a given confidence level. For a financial guarantee company with no deposit liabilities and no formal banking licence, regulatory CAR in the traditional sense does not apply. NCGCL uses an internally-defined CAR to express capital allocation in a form comparable to banking-sector metrics and to communicate risk appetite to the Board in a familiar framework. The internal risk weight is the bridge between the two concepts.</p>
+
+  <div class="callout callout-blue">
+    <strong>Practical Illustration:</strong> A first-loss SME guarantee with a 15% economic capital rate and a PKR 100M limit requires allocated capital of (15% / 20%) * 20% * 100M = PKR 15M. At a 100 bps guarantee fee, annual fee income is PKR 1M. Annual expected loss is approximately PKR 0.99M (2.19% * 45% * 100M). RAROC = (1.0 - 0.99) / 15.0 = 0.7%. This is below the 15% hurdle and the guarantee requires re-pricing to be value-accretive. The model makes this visible before commitment.
+  </div>
+</div>
+
+<!-- ===== SECTION 9: LEVERAGE ===== -->
+<div class="section" id="s9">
+  <div class="section-eyebrow">Section 9</div>
+  <div class="section-title">Notional Leverage versus Risk Capital</div>
+  <div class="section-rule"></div>
+
+  <p>A common but misleading metric for guarantee companies is the leverage ratio: total guarantees outstanding divided by equity. This metric treats every rupee of guarantee as equally risky, which it is not. A PKR 500M pari-passu SME guarantee with 20% cover and a 2% underlying PD is fundamentally different from a PKR 500M first-loss agriculture guarantee with 100% cover and a 5% underlying PD. Notional leverage conflates these two, producing a number that looks alarming but carries no information about actual risk.</p>
+
+  <p>The appropriate frame for a guarantee company is risk-adjusted leverage: how much economic capital has been deployed relative to the capital base, and how does the expected loss under the stress scenario compare to equity? NCGCL's leverage headroom of up to 10 times equity is a notional maximum, not an approved operational target. The binding constraint is the economic capital utilisation ratio, measured as total allocated capital divided by total capital base. The Board has set an operating cap of 80 percent utilisation, which means no more than PKR 6,400M of capital (80% of PKR 8,000M) can be committed to guarantee exposure at any time.</p>
+
+  <div class="exhibit">
+    <div class="exhibit-label">Exhibit 9-1</div>
+    <div class="exhibit-title">Risk-Adjusted Leverage Framework: Notional vs Economic Metrics</div>
+    <table class="data-table">
+      <thead><tr><th>Metric</th><th>Formula</th><th>Interpretation</th><th>Binding?</th></tr></thead>
+      <tbody>
+        <tr><td class="label">Notional Leverage</td><td>Guarantees Outstanding / Equity</td><td>Shows guarantee volume relative to equity; no risk differentiation</td><td><span class="badge badge-red">No</span></td></tr>
+        <tr><td class="label">Economic Capital Utilisation</td><td>Total Allocated Capital / Capital Base</td><td>Shows risk-adjusted commitments vs capacity; risk-sensitive</td><td><span class="badge badge-green">Yes — 80% cap</span></td></tr>
+        <tr><td class="label">Expected Loss Coverage Ratio</td><td>Annual Expected Loss / Capital Base</td><td>Shows what fraction of equity would be consumed by average-year losses</td><td><span class="badge badge-amber">Monitoring</span></td></tr>
+        <tr><td class="label">Stress Loss Ratio</td><td>Downside Lifetime ECL / Capital Base</td><td>Shows solvency resilience in a stress scenario</td><td><span class="badge badge-amber">Monitoring</span></td></tr>
+        <tr><td class="label">EL-to-Fee Coverage</td><td>Annual Expected Loss / Annual Fee Income</td><td>Shows whether fees cover expected claims; must be below 1.0x</td><td><span class="badge badge-amber">Pricing discipline</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>To illustrate: if NCGCL has PKR 10,000M in guarantees outstanding, but the average economic capital rate across the portfolio is 5%, total allocated capital is PKR 500M. Against a capital base of PKR 8,000M, the economic capital utilisation is 6.25 percent, well within the 80% Board cap. Notional leverage is 1.25x equity. Both numbers are useful, but the 6.25% utilisation tells the risk story. The leverage ratio of 1.25x is irrelevant to solvency unless it is viewed through the lens of the underlying risk model.</p>
+
+  <div class="callout callout-green">
+    <strong>Policy Recommendation:</strong> Board reporting on leverage should lead with economic capital utilisation and the downside stress loss ratio, not with notional guarantee volume or notional leverage. Notional leverage can grow significantly without any increase in economic risk if the portfolio shifts toward low-PD, low-LGD, small-cover pari-passu guarantees. Conversely, a small increase in first-loss agriculture guarantees can materially increase economic risk with minimal change in notional leverage.
+  </div>
+</div>
+
+
+<!-- ===== SECTION 10: FORWARD-LOOKING PD ===== -->
+<div class="section" id="s10">
+  <div class="section-eyebrow">Section 10</div>
+  <div class="section-title">Forward-Looking Probability of Default Calibration</div>
+  <div class="section-rule"></div>
+
+  <p>A historical anchor PD is a backward-looking quantity. IFRS 9 explicitly requires that ECL incorporate reasonable and supportable forward-looking information about future conditions. Using only the historical anchor would be correct only if the future is expected to be identical to the past. In Pakistan's macroeconomic context, with significant variation in GDP growth (ranging from negative in COVID years to 5-6 percent in boom periods), interest rate cycles of 800 to 1,000 basis points, and periodic exchange rate stress, the historical anchor underestimates ECL when conditions are deteriorating and overestimates it when conditions are improving. The forward-looking calibration corrects this by shifting the anchor PD up or down based on the expected path of key macroeconomic variables.</p>
+
+  <p>The selected methodology is a credibility-shrunk anchored macro-logit model. The term "anchored" reflects the design decision that the model is centered on the historical anchor, not on a regression intercept. This prevents the model from producing absurd PDs in periods of extreme macroeconomic stress when regression extrapolation would typically fail. The term "macro-logit" reflects that the macroeconomic adjustment is made in log-odds space, preserving the property that PD is always between zero and one. Credibility shrinkage keeps the macro coefficients conservative and the overall PD close to the historical anchor when data are sparse.</p>
+
+  <div class="h2">Term Structure Generation</div>
+  <p>The model generates annual conditional PDs for three explicit forecast years, plus mean reversion to the long-run anchor for years four through six, followed by the anchor level thereafter. The three-year forecast horizon aligns with the macroeconomic scenario paths approved by the Board. Mean reversion reflects the empirical observation that macroeconomic cycles are temporary; the long-run default rate tends to converge to the structural anchor as conditions normalise.</p>
+
+  <div class="formula-label">Forward-Looking PD Formula: Step-by-Step</div>
+  <div class="formula-box">
+<span class="formula-comment">// Step 1: Start with anchor in log-odds space</span>
+z0 = logit(AnchorPD)  =  ln(AnchorPD / (1 - AnchorPD))
+
+<span class="formula-comment">// Step 2: Add standardised macroeconomic shifts for scenario s, year y</span>
+MacroShift_s,y = beta_lsm * z_lsm_s,y + beta_lending * z_lending_s,y
+                 [+ beta_fx * z_fx_s,y for export-oriented]
+
+<span class="formula-comment">// where z_lsm = (LSMgrowth_s,y - ReferenceMean_lsm) / RefStdDev_lsm</span>
+<span class="formula-comment">// (standardised deviation from calibration reference mean)</span>
+
+<span class="formula-comment">// Step 3: Add FI-specific adjustments and MOC</span>
+z_s,y = z0 + MacroShift_s,y + FIEffect_i + RatingEffect_i + MOC_g + Overlay
+
+<span class="formula-comment">// Step 4: Invert to probability and apply floor / cap</span>
+RawPD_s,y = sigmoid(z_s,y)  =  exp(z_s,y) / (1 + exp(z_s,y))
+FinalPD_s,y = clip(RawPD_s,y, Floor_g, Cap_g)
+
+<span class="formula-comment">// Step 5: Compute term structure</span>
+Survival_y = Survival_{y-1} * (1 - FinalPD_s,y)    ; Survival_0 = 1
+MarginalPD_y = Survival_{y-1} * FinalPD_s,y
+CumulativePD_y = 1 - Survival_y
+
+<span class="formula-comment">// Step 6: For years 4-6, linear reversion to anchor:</span>
+FinalPD_{y>3} = FinalPD_{y=3} + (y-3)/3 * (AnchorPD - FinalPD_{y=3})
+FinalPD_{y>6} = AnchorPD
+  </div>
+
+  <div class="exhibit">
+    <div class="exhibit-label">Exhibit 10-1</div>
+    <div class="exhibit-title">System-Level Probability-Weighted PD Term Structure</div>
+    <!-- SVG: PD Term Structure Bar Chart -->
+    <svg viewBox="0 0 520 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:520px;height:auto;display:block;margin:0 auto;">
+      <!-- Background -->
+      <rect x="0" y="0" width="520" height="200" fill="white"/>
+      <!-- Axes -->
+      <line x1="70" y1="20" x2="70" y2="155" stroke="#C8D6E0" stroke-width="1"/>
+      <line x1="70" y1="155" x2="490" y2="155" stroke="#C8D6E0" stroke-width="1"/>
+      <!-- Y-axis grid: 0.25%, 0.50%, 0.75%, 1.00%, 1.25% -->
+      <!-- Scale: 0 to 5% = 135px, 1% = 27px, 0.25% = 6.75px -->
+      <line x1="70" y1="128" x2="490" y2="128" stroke="#EEF3F7" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="70" y1="101" x2="490" y2="101" stroke="#EEF3F7" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="70" y1="74" x2="490" y2="74" stroke="#EEF3F7" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="70" y1="47" x2="490" y2="47" stroke="#EEF3F7" stroke-width="1" stroke-dasharray="3,3"/>
+      <text x="65" y="159" text-anchor="end" font-size="10" fill="#5A7080">0%</text>
+      <text x="65" y="132" text-anchor="end" font-size="10" fill="#5A7080">1%</text>
+      <text x="65" y="105" text-anchor="end" font-size="10" fill="#5A7080">2%</text>
+      <text x="65" y="78" text-anchor="end" font-size="10" fill="#5A7080">3%</text>
+      <text x="65" y="51" text-anchor="end" font-size="10" fill="#5A7080">4%</text>
+      <!-- System Level Bars: Y1=0.95%, Y2=0.84%, Y3=0.76% -->
+      <!-- Scale: 1% = 27px above 155. So Y1=0.95%=25.6px, y_top=155-25.6=129.4 -->
+      <!-- Y1 -->
+      <rect x="110" y="129" width="60" height="26" fill="#0C688D" rx="3"/>
+      <text x="140" y="125" text-anchor="middle" font-size="11" fill="#0C688D" font-weight="700">0.95%</text>
+      <text x="140" y="172" text-anchor="middle" font-size="11" fill="#1B2B38">Year 1</text>
+      <!-- Y2 -->
+      <rect x="225" y="132" width="60" height="23" fill="#0C688D" rx="3" opacity="0.75"/>
+      <text x="255" y="128" text-anchor="middle" font-size="11" fill="#0C688D" font-weight="700">0.84%</text>
+      <text x="255" y="172" text-anchor="middle" font-size="11" fill="#1B2B38">Year 2</text>
+      <!-- Y3 -->
+      <rect x="340" y="134" width="60" height="21" fill="#0C688D" rx="3" opacity="0.55"/>
+      <text x="370" y="130" text-anchor="middle" font-size="11" fill="#0C688D" font-weight="700">0.76%</text>
+      <text x="370" y="172" text-anchor="middle" font-size="11" fill="#1B2B38">Year 3</text>
+      <!-- Anchor line -->
+      <line x1="70" y1="135" x2="490" y2="135" stroke="#39A935" stroke-width="1.5" stroke-dasharray="5,3"/>
+      <text x="492" y="138" font-size="10" fill="#2B8129">Anchor 0.73%</text>
+      <!-- Title -->
+      <text x="280" y="195" text-anchor="middle" font-size="10" fill="#5A7080">System (All Sectors) — Probability-Weighted Conditional PD (Upside 20%, Base 55%, Downside 25%)</text>
+    </svg>
+    <div class="exhibit-note">System-level conditional PDs declining from 0.95% in Year 1 to 0.76% in Year 3, reflecting the base scenario's trajectory of macroeconomic stabilisation. Three-year cumulative system PD is 2.53%. The green dashed line shows the historical anchor of 0.73%, around which the model calibrates. PROPOSED scenario weights, pending Board approval.</div>
+  </div>
+
+  <div class="h2">Floors, Caps and Margin of Conservatism</div>
+  <p>Three explicit guardrails are applied after the raw macro-adjusted PD is computed. The floor prevents the model from producing implausibly low PDs in optimistic scenarios: a sector with a 1.86% historical anchor PD should not produce a forward-looking PD of 0.05% just because macroeconomic conditions are favorable; some irreducible default rate always applies. The cap prevents implausible PDs in the extreme tail; while Pakistan's agriculture sector has experienced severe stress, a PD above 45% would be difficult to justify in a going-concern context. The margin of conservatism (MOC) is an additive log-odds uplift applied to every scenario to compensate for the likely undercount in the positive net-stock flow proxy and the imprecision inherent in a sparse-data estimation.</p>
+
+  <div class="exhibit">
+    <div class="exhibit-label">Exhibit 10-2</div>
+    <div class="exhibit-title">PD Floors, Caps and Margins of Conservatism by Model Group</div>
+    <table class="data-table">
+      <thead><tr><th>Model Group</th><th class="num">PD Floor</th><th class="num">PD Cap</th><th class="num">MOC (log-odds)</th><th class="num">Approx MOC Uplift at 1% PD</th><th>Rationale</th></tr></thead>
+      <tbody>
+        <tr><td class="label">SME</td><td class="num">0.25%</td><td class="num">35.0%</td><td class="num">0.25</td><td class="num">+0.28 pp</td><td>Sparse defaults; proxy undercount</td></tr>
+        <tr><td class="label">Agriculture</td><td class="num">0.50%</td><td class="num">45.0%</td><td class="num">0.35</td><td class="num">+0.41 pp</td><td>Higher volatility; climate risk</td></tr>
+        <tr><td class="label">Consumer</td><td class="num">0.10%</td><td class="num">25.0%</td><td class="num">0.20</td><td class="num">+0.22 pp</td><td>Relatively dense data</td></tr>
+        <tr><td class="label">Other Commercial</td><td class="num">0.15%</td><td class="num">35.0%</td><td class="num">0.25</td><td class="num">+0.28 pp</td><td>Pooled model; moderate uncertainty</td></tr>
+        <tr><td class="label">Export-Oriented</td><td class="num">0.20%</td><td class="num">40.0%</td><td class="num">0.30</td><td class="num">+0.35 pp</td><td>FX sensitivity added</td></tr>
+        <tr><td class="label">Microfinance</td><td class="num">0.30%</td><td class="num">50.0%</td><td class="num">0.40</td><td class="num">+0.48 pp</td><td>No direct quarterly series; highest uncertainty</td></tr>
+      </tbody>
+      <tfoot><tr><td colspan="6">All parameters subject to Management Risk Committee technical approval. Agricultural floor raised to reflect Pakistan's endemic climate-driven default baseline.</td></tr></tfoot>
+    </table>
+  </div>
+</div>
+
+
+<!-- ===== SECTION 11: MACRO FACTORS ===== -->
+<div class="section" id="s11">
+  <div class="section-eyebrow">Section 11</div>
+  <div class="section-title">Macroeconomic Factors and the Conditional PD Model</div>
+  <div class="section-rule"></div>
+
+  <p>Pakistan's default cycles are driven by a recognisable pattern: industrial output contraction raises borrower stress and reduces debt service capacity, while high lending rates compound the burden for variable-rate borrowers. Exchange rate depreciation raises input costs for import-dependent sectors and export receipts for export-oriented ones, with asymmetric effects. The model captures these three channels using LSM growth, the outstanding lending rate and PKR depreciation as explanatory variables. All three are standardised (mean-zero, unit-variance) so that the coefficients express the sensitivity of log-odds PD to a one-standard-deviation shift in each variable from the historical mean.</p>
+
+  <div class="h3">Variable 1: LSM Growth (Large-Scale Manufacturing Index)</div>
+  <p>LSM growth is the most consistent predictor of borrower default frequency in NCGCL's calibration dataset. Negative LSM growth signals industrial contraction: factories run below capacity, revenues fall, payrolls are stressed and loan repayments become difficult. The coefficient is negative across all model groups, confirming that higher LSM growth reduces default probability. The Agriculture model has the largest sensitivity (beta = minus 0.707) because agricultural output directly determines the repayment capacity of the agriculture lending book. The SME model has a somewhat lower sensitivity (beta = minus 0.456) because SME cash flows are more diversified across sectors than pure agriculture.</p>
+
+  <div class="h3">Variable 2: Outstanding Lending Rate</div>
+  <p>The outstanding lending rate captures the debt service cost across the banking system's existing loan book. A higher rate raises the cost of servicing existing floating-rate loans and increases the hurdle for refinancing at maturity. The coefficient is positive across all model groups, confirming the economic intuition that higher borrowing costs raise default frequency. The SME and export-oriented models have the highest rate sensitivity (beta = 0.405) because SME and export borrowers tend to have shorter-term, variable-rate facilities. The agriculture model has a lower sensitivity (beta = 0.172) possibly because agriculture credit in Pakistan is partially subsidized and less responsive to market rate changes.</p>
+
+  <div class="h3">Variable 3: PKR Depreciation (Export-Oriented Only)</div>
+  <p>PKR depreciation is included only for export-oriented exposures because its effect is directionally ambiguous for general commercial borrowers: it raises input costs but also raises the PKR value of export revenues. For net exporters, depreciation improves revenue in PKR terms while costs are partially in PKR, improving repayment capacity. The coefficient for the export-oriented group is positive at 0.217, reflecting the observation that in Pakistan's recent depreciation episodes, input cost stress exceeded revenue benefits for the broader manufacturing sector. This coefficient is applied at a shrunk value to reflect uncertainty; it was set to zero for all other model groups where the evidence was unstable.</p>
+
+  <div class="exhibit">
+    <div class="exhibit-label">Exhibit 11-1</div>
+    <div class="exhibit-title">Macroeconomic Model Coefficients by Model Group</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Model Group</th><th class="num">LSM Beta</th><th class="num">Lending Rate Beta</th><th class="num">FX Beta</th><th>Source</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="label">SME</td><td class="num">-0.456</td><td class="num">+0.405</td><td class="num">0.000</td><td>SME sector regression</td></tr>
+        <tr><td class="label">Agriculture</td><td class="num">-0.707</td><td class="num">+0.172</td><td class="num">0.000</td><td>Agriculture sector regression</td></tr>
+        <tr><td class="label">Consumer</td><td class="num">-0.609</td><td class="num">+0.168</td><td class="num">0.000</td><td>Consumer sector regression</td></tr>
+        <tr><td class="label">Other Commercial</td><td class="num">-0.542</td><td class="num">+0.179</td><td class="num">0.000</td><td>Pooled common model</td></tr>
+        <tr><td class="label">Export-Oriented</td><td class="num">-0.456</td><td class="num">+0.405</td><td class="num">+0.217</td><td>SME model + shrunk FX loading</td></tr>
+        <tr><td class="label">Microfinance</td><td class="num">-0.731</td><td class="num">+0.202</td><td class="num">0.000</td><td>Consumer proxy, scaled for MFB volatility</td></tr>
+      </tbody>
+      <tfoot><tr><td colspan="5">Reference mean: LSM growth 1.79%, Lending rate 11.77%, PKR depreciation 13.94%. Reference std dev: LSM 11.62 pp, Lending rate 3.72 pp, PKR depreciation 14.49 pp. Coefficients subject to Management Risk Committee approval.</td></tr></tfoot>
+    </table>
+  </div>
+
+  <div class="h2">Proposed Macroeconomic Scenarios</div>
+  <p>Three scenarios are proposed for Board approval: an Upside scenario with weight of 20 percent, a Base scenario with weight of 55 percent and a Downside scenario with weight of 25 percent. These weights reflect management's assessment of the probability distribution of Pakistan's economic trajectory over the next three fiscal years. The Base scenario anchors on IMF May 2026 projections and the SBP June 2026 monetary policy stance. The Upside scenario assumes faster reform execution and earlier easing. The Downside scenario reflects prolonged energy and external disruption, renewed inflation and delayed industrial recovery.</p>
+
+  <div class="exhibit">
+    <div class="exhibit-label">Exhibit 11-2</div>
+    <div class="exhibit-title">Proposed Macroeconomic Scenario Paths (FY2026/27 to FY2028/29)</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Scenario</th><th class="num">Weight</th><th>Fiscal Year</th><th class="num">GDP Growth</th><th class="num">Inflation</th><th class="num">LSM Growth</th><th class="num">Lending Rate</th><th class="num">PKR Dep.</th><th class="num">Export Growth</th></tr>
+      </thead>
+      <tbody>
+        <tr><td rowspan="3" class="label" style="color:#2B8129;vertical-align:top">Upside</td><td rowspan="3" class="num" style="color:#2B8129">20%</td><td>FY2026/27</td><td class="num">4.5%</td><td class="num">6.5%</td><td class="num">7.0%</td><td class="num">10.0%</td><td class="num">2.0%</td><td class="num">12.0%</td></tr>
+        <tr><td>FY2027/28</td><td class="num">5.0%</td><td class="num">5.8%</td><td class="num">7.0%</td><td class="num">9.0%</td><td class="num">3.0%</td><td class="num">10.0%</td></tr>
+        <tr><td>FY2028/29</td><td class="num">5.0%</td><td class="num">5.5%</td><td class="num">6.0%</td><td class="num">8.5%</td><td class="num">3.0%</td><td class="num">8.0%</td></tr>
+        <tr><td rowspan="3" class="label" style="color:#0C688D;vertical-align:top">Base</td><td rowspan="3" class="num" style="color:#0C688D">55%</td><td>FY2026/27</td><td class="num">3.5%</td><td class="num">8.4%</td><td class="num">4.5%</td><td class="num">12.0%</td><td class="num">5.0%</td><td class="num">8.0%</td></tr>
+        <tr><td>FY2027/28</td><td class="num">4.3%</td><td class="num">6.6%</td><td class="num">5.0%</td><td class="num">10.5%</td><td class="num">5.0%</td><td class="num">7.0%</td></tr>
+        <tr><td>FY2028/29</td><td class="num">4.5%</td><td class="num">6.5%</td><td class="num">5.0%</td><td class="num">9.5%</td><td class="num">4.0%</td><td class="num">6.0%</td></tr>
+        <tr><td rowspan="3" class="label" style="color:#C00000;vertical-align:top">Downside</td><td rowspan="3" class="num" style="color:#C00000">25%</td><td>FY2026/27</td><td class="num">1.5%</td><td class="num">14.0%</td><td class="num">-3.0%</td><td class="num">16.0%</td><td class="num">15.0%</td><td class="num">-5.0%</td></tr>
+        <tr><td>FY2027/28</td><td class="num">2.5%</td><td class="num">11.0%</td><td class="num">0.0%</td><td class="num">15.0%</td><td class="num">12.0%</td><td class="num">2.0%</td></tr>
+        <tr><td>FY2028/29</td><td class="num">3.5%</td><td class="num">8.5%</td><td class="num">3.0%</td><td class="num">13.0%</td><td class="num">8.0%</td><td class="num">4.0%</td></tr>
+      </tbody>
+      <tfoot><tr><td colspan="9">PROPOSED: Scenario weights are management proposals and are NOT approved for production use until the Board of Directors formally approves them. Source: IMF May 2026, SBP 15-Jun-2026, Pakistan Economic Survey May 2026, NCGCL expert construction.</td></tr></tfoot>
+    </table>
+  </div>
+
+  <div class="h2">Sensitivity Analysis: PD Responses to Macro Shocks</div>
+  <p>The model's sensitivity to individual macro variables confirms the economic intuitions embedded in the coefficients. A 300 basis point rise in the lending rate raises the SME Year-1 PD by 82 basis points. A 5 percentage point contraction in LSM growth raises the Agriculture Year-1 PD by 202 basis points. These are material changes that justify the investment in a forward-looking model rather than a static historical anchor.</p>
+
+  <div class="exhibit">
+    <div class="exhibit-label">Exhibit 11-3</div>
+    <div class="exhibit-title">SME Model: Year-1 PD Sensitivity (Tornado Chart)</div>
+    <!-- SVG: Tornado Chart -->
+    <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:600px;height:auto;display:block;margin:0 auto;">
+      <!-- Base PD label -->
+      <text x="300" y="16" text-anchor="middle" font-size="11" fill="#004C66" font-weight="700">Base Year-1 SME PD: 2.19%</text>
+      <!-- Center line -->
+      <line x1="300" y1="24" x2="300" y2="208" stroke="#C8D6E0" stroke-width="1" stroke-dasharray="4,3"/>
+      <!-- Y-axis label -->
+      <text x="298" y="218" text-anchor="middle" font-size="9" fill="#5A7080">Base</text>
+      <!-- Scale markers: 1pp = 100px deviation from center -->
+      <text x="200" y="218" text-anchor="middle" font-size="9" fill="#5A7080">-1.0pp</text>
+      <text x="400" y="218" text-anchor="middle" font-size="9" fill="#5A7080">+1.0pp</text>
+      <text x="100" y="218" text-anchor="middle" font-size="9" fill="#5A7080">-2.0pp</text>
+      <text x="500" y="218" text-anchor="middle" font-size="9" fill="#5A7080">+2.0pp</text>
+      <!-- Row 1: Lending Rate +300bp: +82bp = +82px -->
+      <rect x="300" y="30" width="82" height="22" fill="#C00000" opacity="0.75" rx="2"/>
+      <text x="386" y="45" font-size="10" fill="#C00000" font-weight="600">+82bp</text>
+      <text x="296" y="45" text-anchor="end" font-size="10" fill="#1B2B38">Lending rate +300bp</text>
+      <!-- Row 2: Lending Rate -300bp: -60bp = -60px -->
+      <rect x="240" y="60" width="60" height="22" fill="#39A935" opacity="0.75" rx="2"/>
+      <text x="237" y="75" text-anchor="end" font-size="10" fill="#2B8129">-60bp</text>
+      <text x="304" y="75" font-size="10" fill="#1B2B38">Lending rate -300bp</text>
+      <!-- Row 3: LSM -5pp: +46bp = +46px -->
+      <rect x="300" y="90" width="46" height="22" fill="#C00000" opacity="0.6" rx="2"/>
+      <text x="350" y="105" font-size="10" fill="#C00000" font-weight="600">+46bp</text>
+      <text x="296" y="105" text-anchor="end" font-size="10" fill="#1B2B38">LSM growth -5pp</text>
+      <!-- Row 4: LSM +5pp: -38bp = -38px -->
+      <rect x="262" y="120" width="38" height="22" fill="#39A935" opacity="0.6" rx="2"/>
+      <text x="259" y="135" text-anchor="end" font-size="10" fill="#2B8129">-38bp</text>
+      <text x="304" y="135" font-size="10" fill="#1B2B38">LSM growth +5pp</text>
+      <!-- Row 5: MOC +0.10: +23bp = +23px -->
+      <rect x="300" y="150" width="23" height="22" fill="#BF8000" opacity="0.7" rx="2"/>
+      <text x="327" y="165" font-size="10" fill="#6B4800">+23bp</text>
+      <text x="296" y="165" text-anchor="end" font-size="10" fill="#1B2B38">MOC +0.10 log-odds</text>
+      <!-- Row 6: MOC -0.10: -20bp = -20px -->
+      <rect x="280" y="180" width="20" height="22" fill="#39A935" opacity="0.5" rx="2"/>
+      <text x="277" y="195" text-anchor="end" font-size="10" fill="#2B8129">-20bp</text>
+      <text x="304" y="195" font-size="10" fill="#1B2B38">MOC -0.10 log-odds</text>
+    </svg>
+    <div class="exhibit-note">Impact on Year-1 SME PD from single-variable shocks, holding other variables at base scenario. Red bars indicate PD-increasing shocks; green bars indicate PD-reducing shocks. Agriculture shows larger sensitivities: LSM -5pp raises Agriculture Year-1 PD by 202bp vs 46bp for SME. Source: sensitivity_results.csv.</div>
+  </div>
+</div>
+
+
+<!-- ===== SECTION 12: INTEGRATED ARCHITECTURE ===== -->
+<div class="section" id="s12">
+  <div class="section-eyebrow">Section 12</div>
+  <div class="section-title">The Integrated Risk Architecture</div>
+  <div class="section-rule"></div>
+
+  <p>All components described in the preceding sections are integrated in the NCGCL FI, Guarantee Risk and IFRS 9 Dashboard (current production version: v3.5.1). The dashboard operates in two distinct computational layers that are architecturally separated to ensure that methodological changes to one layer do not inadvertently affect the other. The management risk layer governs pricing, RAROC and capital allocation; it uses the composite PD described in Section 5. The IFRS 9 layer governs ECL, staging and financial-reporting provisions; it uses the forward-looking PD term structures described in Section 10. The two layers share input data (sector allocations, guarantee structure parameters, FI identity) but compute their respective outputs independently.</p>
+
+  <div class="exhibit">
+    <div class="exhibit-label">Exhibit 12-1</div>
+    <div class="exhibit-title">Integrated Risk Model Architecture: Data Flow and Component Connections</div>
+    <!-- SVG: Architecture Flow -->
+    <svg viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:720px;height:auto;display:block;margin:0 auto;">
+      <!-- Row 1: Input data -->
+      <rect x="10" y="10" width="130" height="45" rx="4" fill="#EEF3F7" stroke="#C8D6E0"/>
+      <text x="75" y="30" text-anchor="middle" font-size="10" fill="#1B2B38" font-weight="600">SBP EasyData</text>
+      <text x="75" y="46" text-anchor="middle" font-size="9" fill="#5A7080">NPL / Advances</text>
+      <rect x="155" y="10" width="130" height="45" rx="4" fill="#EEF3F7" stroke="#C8D6E0"/>
+      <text x="220" y="30" text-anchor="middle" font-size="10" fill="#1B2B38" font-weight="600">FI Financial Data</text>
+      <text x="220" y="46" text-anchor="middle" font-size="9" fill="#5A7080">Annual 2011-2023</text>
+      <rect x="300" y="10" width="130" height="45" rx="4" fill="#EEF3F7" stroke="#C8D6E0"/>
+      <text x="365" y="30" text-anchor="middle" font-size="10" fill="#1B2B38" font-weight="600">Macro Variables</text>
+      <text x="365" y="46" text-anchor="middle" font-size="9" fill="#5A7080">IMF / SBP / PBS</text>
+      <rect x="445" y="10" width="130" height="45" rx="4" fill="#EEF3F7" stroke="#C8D6E0"/>
+      <text x="510" y="30" text-anchor="middle" font-size="10" fill="#1B2B38" font-weight="600">Facility Register</text>
+      <text x="510" y="46" text-anchor="middle" font-size="9" fill="#5A7080">Structure / EAD / LGD</text>
+      <rect x="590" y="10" width="125" height="45" rx="4" fill="#EEF3F7" stroke="#C8D6E0"/>
+      <text x="652" y="30" text-anchor="middle" font-size="10" fill="#1B2B38" font-weight="600">Board Scenarios</text>
+      <text x="652" y="46" text-anchor="middle" font-size="9" fill="#5A7080">Upside / Base / Down</text>
+      <!-- Row 2: Core Calibration -->
+      <rect x="10" y="90" width="200" height="45" rx="4" fill="#E6F2F8" stroke="#0C688D" stroke-width="1.5"/>
+      <text x="110" y="110" text-anchor="middle" font-size="10" fill="#004C66" font-weight="700">Sector Anchor PD</text>
+      <text x="110" y="126" text-anchor="middle" font-size="9" fill="#0C688D">NPL Flow Proxy Calibration</text>
+      <rect x="225" y="90" width="200" height="45" rx="4" fill="#E6F2F8" stroke="#0C688D" stroke-width="1.5"/>
+      <text x="325" y="110" text-anchor="middle" font-size="10" fill="#004C66" font-weight="700">FI Relative Performance</text>
+      <text x="325" y="126" text-anchor="middle" font-size="9" fill="#0C688D">Credibility-Weighted Log-Odds</text>
+      <rect x="440" y="90" width="270" height="45" rx="4" fill="#E6F2F8" stroke="#0C688D" stroke-width="1.5"/>
+      <text x="575" y="110" text-anchor="middle" font-size="10" fill="#004C66" font-weight="700">Macro-Logit Coefficients</text>
+      <text x="575" y="126" text-anchor="middle" font-size="9" fill="#0C688D">LSM / Lending Rate / FX Betas</text>
+      <!-- Row 3: PD Outputs -->
+      <rect x="10" y="170" width="320" height="50" rx="4" fill="#004C66" stroke="#004C66"/>
+      <text x="170" y="191" text-anchor="middle" font-size="11" fill="#fff" font-weight="700">MANAGEMENT COMPOSITE PD</text>
+      <text x="170" y="208" text-anchor="middle" font-size="9" fill="#90C8D8">Sector Prior + FI Historic + Rating Modifier</text>
+      <text x="170" y="222" text-anchor="middle" font-size="9" fill="#90C8D8">Uses for Pricing, RAROC, Capital</text>
+      <rect x="345" y="170" width="365" height="50" rx="4" fill="#0C688D" stroke="#0C688D"/>
+      <text x="527" y="191" text-anchor="middle" font-size="11" fill="#fff" font-weight="700">IFRS 9 FORWARD-LOOKING PD</text>
+      <text x="527" y="208" text-anchor="middle" font-size="9" fill="#C8E8F8">Anchor + Macro Adj + MOC + Floor/Cap</text>
+      <text x="527" y="222" text-anchor="middle" font-size="9" fill="#C8E8F8">Probability-Weighted ECL, Staging, SICR</text>
+      <!-- Arrows connecting rows 1 and 2 -->
+      <line x1="75" y1="56" x2="75" y2="88" stroke="#C8D6E0" stroke-width="1" marker-end="url(#arr4)"/>
+      <line x1="220" y1="56" x2="280" y2="88" stroke="#C8D6E0" stroke-width="1" marker-end="url(#arr4)"/>
+      <line x1="365" y1="56" x2="365" y2="88" stroke="#C8D6E0" stroke-width="1" marker-end="url(#arr4)"/>
+      <line x1="510" y1="56" x2="510" y2="88" stroke="#C8D6E0" stroke-width="1" marker-end="url(#arr4)"/>
+      <line x1="652" y1="56" x2="600" y2="88" stroke="#C8D6E0" stroke-width="1" marker-end="url(#arr4)"/>
+      <!-- Arrows row 2 to row 3 -->
+      <line x1="110" y1="136" x2="110" y2="168" stroke="#0C688D" stroke-width="1.5" marker-end="url(#arr4)"/>
+      <line x1="325" y1="136" x2="250" y2="168" stroke="#0C688D" stroke-width="1.5" marker-end="url(#arr4)"/>
+      <line x1="325" y1="136" x2="440" y2="168" stroke="#0C688D" stroke-width="1.5" marker-end="url(#arr4)"/>
+      <line x1="575" y1="136" x2="575" y2="168" stroke="#0C688D" stroke-width="1.5" marker-end="url(#arr4)"/>
+      <!-- Row 4: Final Outputs -->
+      <rect x="10" y="248" width="150" height="28" rx="4" fill="#F0FBF0" stroke="#39A935"/>
+      <text x="85" y="266" text-anchor="middle" font-size="10" fill="#1A5010" font-weight="600">Expected Loss</text>
+      <rect x="170" y="248" width="150" height="28" rx="4" fill="#F0FBF0" stroke="#39A935"/>
+      <text x="245" y="266" text-anchor="middle" font-size="10" fill="#1A5010" font-weight="600">Capital / RAROC</text>
+      <rect x="345" y="248" width="150" height="28" rx="4" fill="#EBF5FB" stroke="#0C688D"/>
+      <text x="420" y="266" text-anchor="middle" font-size="10" fill="#004C66" font-weight="600">IFRS 9 ECL</text>
+      <rect x="505" y="248" width="205" height="28" rx="4" fill="#EBF5FB" stroke="#0C688D"/>
+      <text x="607" y="266" text-anchor="middle" font-size="10" fill="#004C66" font-weight="600">SICR / Stage Assignment</text>
+      <line x1="170" y1="220" x2="85" y2="246" stroke="#39A935" stroke-width="1" marker-end="url(#arr5)"/>
+      <line x1="170" y1="220" x2="245" y2="246" stroke="#39A935" stroke-width="1" marker-end="url(#arr5)"/>
+      <line x1="527" y1="221" x2="420" y2="246" stroke="#0C688D" stroke-width="1" marker-end="url(#arr4)"/>
+      <line x1="527" y1="221" x2="607" y2="246" stroke="#0C688D" stroke-width="1" marker-end="url(#arr4)"/>
+      <defs>
+        <marker id="arr4" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="#0C688D"/></marker>
+        <marker id="arr5" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="#39A935"/></marker>
+      </defs>
+    </svg>
+    <div class="exhibit-note">The management composite PD and the IFRS 9 forward-looking PD are computed in separate modules and do not overwrite each other. Changes to the IFRS 9 calibration do not affect pricing, RAROC or capital allocation. This separation is a deliberate design safeguard.</div>
+  </div>
+
+  <div class="exhibit">
+    <div class="exhibit-label">Exhibit 12-2</div>
+    <div class="exhibit-title">Model Version Control and Change Management Summary</div>
+    <table class="data-table">
+      <thead><tr><th>Change ID</th><th>Component</th><th>Description</th><th>Impact</th></tr></thead>
+      <tbody>
+        <tr><td class="label">CH-001</td><td>Versioning</td><td>v3.2 superseded for IFRS 9 by FLPD provisional release; management functions retained</td><td>No management PD/capital/pricing/RAROC change</td></tr>
+        <tr><td class="label">CH-002</td><td>Reporting Date</td><td>Default date changed from 19 Jul 2026 to 30 Jun 2026</td><td>Consistent engagement cut-off</td></tr>
+        <tr><td class="label">CH-003</td><td>Facilities</td><td>Named HBL examples replaced with generic demonstration facilities</td><td>Prevents representation as actual portfolio</td></tr>
+        <tr><td class="label">CH-004</td><td>IFRS 9 Scenarios</td><td>Fixed PD multipliers replaced with scenario-specific FLPD term structures</td><td>Forward-looking PD by year and scenario</td></tr>
+        <tr><td class="label">CH-005</td><td>Operating Modes</td><td>Added calibration, demonstration and gated production modes</td><td>Production disabled until controls pass</td></tr>
+        <tr><td class="label">CH-006</td><td>QA Controls</td><td>Added monotonicity, survival, cumulative, mapping and production-gate tests</td><td>Expanded audit trail</td></tr>
+        <tr><td class="label">CH-007</td><td>Exports</td><td>Expanded JSON/CSV with model metadata, PD curves, floors and approval status</td><td>Machine-readable audit evidence</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===== SECTION 13: GOVERNANCE ===== -->
+<div class="section" id="s13">
+  <div class="section-eyebrow">Section 13</div>
+  <div class="section-title">Governance, Data Quality and Production Readiness</div>
+  <div class="section-rule"></div>
+
+  <p>Three production blockers prevent the forward-looking ECL module from generating financial-statement numbers as of the reporting date. First, macroeconomic scenarios and weights are management proposals that have not received Board approval. Second, independent model validation has not been completed. Third, no actual facility data with original-recognition information have been uploaded to the production system. All three must be resolved before the model can generate auditable IFRS 9 provisions. The dashboard enforces this through a production gate that cannot be bypassed.</p>
+
+  <div class="exhibit">
+    <div class="exhibit-label">Exhibit 13-1</div>
+    <div class="exhibit-title">Production Readiness Assessment</div>
+    <table class="data-table">
+      <thead><tr><th>Domain</th><th>Status</th><th>Reason / Condition to Clear</th></tr></thead>
+      <tbody>
+        <tr><td class="label">Historical FI Reconstruction</td><td><span class="badge badge-amber">Amber</span></td><td>Actual 2011-2023; proxy PD; 2024-2025 sensitivity only. Requires audited 2024-2025 statements.</td></tr>
+        <tr><td class="label">Sector / Segment Reconstruction</td><td><span class="badge badge-amber">Amber</span></td><td>Quarterly stocks available; gross default flows absent. Requires PFI-level flow data.</td></tr>
+        <tr><td class="label">Forward-Looking Calibration</td><td><span class="badge badge-amber">Amber</span></td><td>Parsimonious proxy calibration with explicit MOC. Requires more data for full recalibration.</td></tr>
+        <tr><td class="label">Scenario Construction</td><td><span class="badge badge-amber">Amber</span></td><td>Authoritative macro sources used; Board approval outstanding.</td></tr>
+        <tr><td class="label">Dashboard Implementation</td><td><span class="badge badge-green">Green</span></td><td>Functional calibration and demonstration modes with production gate enabled.</td></tr>
+        <tr><td class="label">Independent Validation</td><td><span class="badge badge-red">Red</span></td><td>Not started. Must be completed by independent validator before production use.</td></tr>
+        <tr><td class="label">Actual Portfolio ECL</td><td><span class="badge badge-red">Red</span></td><td>Facility and original-recognition data absent. Requires facility upload from Operations/Finance.</td></tr>
+        <tr><td class="label">Production Use</td><td><span class="badge badge-red">Red</span></td><td>All three critical blockers (scenarios, validation, actual data) must be cleared simultaneously.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="exhibit">
+    <div class="exhibit-label">Exhibit 13-2</div>
+    <div class="exhibit-title">Governance Approval Architecture</div>
+    <table class="data-table">
+      <thead><tr><th>Area</th><th>Authority</th><th>Current Status</th></tr></thead>
+      <tbody>
+        <tr><td>Model methodology, coefficients, anchors, floors, caps and MOC</td><td>Management Risk Committee</td><td><span class="badge badge-amber">Technical package prepared; MRC approval pending</span></td></tr>
+        <tr><td>Macroeconomic scenario narratives, paths and weights</td><td>Board of Directors (or delegated committee)</td><td><span class="badge badge-amber">Proposed — Board approval required</span></td></tr>
+        <tr><td>Independent model validation</td><td>Independent Validator (external)</td><td><span class="badge badge-red">Not commenced</span></td></tr>
+        <tr><td>Accounting policy and financial-statement use</td><td>CFO / Finance with Board-approved policy</td><td><span class="badge badge-red">Production ECL disabled</span></td></tr>
+        <tr><td>External audit review (ECL estimate)</td><td>PwC</td><td><span class="badge badge-amber">Evidence index prepared; no approval inferred</span></td></tr>
+        <tr><td>Internal audit review (controls)</td><td>KPMG</td><td><span class="badge badge-amber">Control evidence index prepared; testing not started</span></td></tr>
+        <tr><td>Model operation and monitoring</td><td>Risk Analytics / Model Owner</td><td><span class="badge badge-green">Implementation and monitoring guide prepared</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="h2">Monitoring and Backtesting Plan</div>
+  <div class="exhibit">
+    <div class="exhibit-label">Exhibit 13-3</div>
+    <div class="exhibit-title">Model Monitoring Calendar</div>
+    <table class="data-table">
+      <thead><tr><th>Frequency</th><th>Activity</th></tr></thead>
+      <tbody>
+        <tr><td class="label">Quarterly</td><td>Source data refresh (SBP NPL/advances); mapping exception review; scenario path update; QA dashboard check; macro input drift monitoring</td></tr>
+        <tr><td class="label">Semi-Annual</td><td>Backtesting of predicted vs realised PD (Brier score, calibration ratio); parameter drift check; MOC and floor review; overlay register review</td></tr>
+        <tr><td class="label">Annual</td><td>Full model recalibration; challenger model review; independent validation update; Board scenario approval refresh; KPMG and PwC evidence package update</td></tr>
+        <tr><td class="label">Ad Hoc</td><td>Material macroeconomic shock; significant new PFI; regulatory guidance; rating action on NCGCL; governance review triggers</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- ===== ANNEXURE A: BANK PDs ===== -->
+<div class="section page-break" id="annex-a">
+  <div class="annex-header">
+    <div class="annex-eyebrow">Annexure A</div>
+    <div class="annex-title">Financial Institution PD Register</div>
+  </div>
+
+  <p>This register contains the historical PD proxy, peer benchmark, credibility factor, adjusted log-odds effect and adjusted odds multiplier for every financial institution in the NCGCL calibration database as at 19 July 2026. Primary calibration use is restricted to active institutions with reliable data; inactive, merged and legacy institutions are retained for historical completeness. Data quality for all institutions is classified as Amber reflecting the use of the positive net-stock proxy rather than true gross default flows. The system anchor PD of 0.73% serves as the ultimate fallback for any institution without an adequate individual history.</p>
+
+  <div class="callout callout-amber">
+    <strong>Data Quality Note:</strong> All FI historical PD proxies are derived from the positive net NPL-stock movement method applied to annual SBP EasyData (2011 to 2023). True gross default rates are not available from public sources. All values carry a data quality grade of Amber. Institutions labelled "Nil NPL" recorded zero NPL stock in 2024-2025 period; their calibration reverts to the peer group median.
+  </div>
+
+  <div class="h2">Section A1: Private Sector Banks (Active)</div>
+  <div class="exhibit">
+    <div class="exhibit-label">Exhibit A-1</div>
+    <div class="exhibit-title">Private Sector Banks: Historical PD Proxy and FI Performance Effect</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Financial Institution</th><th class="num">Hist PD Proxy</th><th class="num">Peer PD</th><th class="num">Raw Odds Ratio</th><th class="num">Credibility</th><th class="num">Adj Log-Odds Effect</th><th class="num">Odds Multiplier</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="label">MCB Islamic Bank Ltd.</td><td class="num">0.19%</td><td class="num">2.62%</td><td class="num">0.07x</td><td class="num">57.8%</td><td class="num">-0.693</td><td class="num">0.50x</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td class="label">Meezan Bank Ltd.</td><td class="num">0.94%</td><td class="num">2.62%</td><td class="num">0.35x</td><td class="num">70.6%</td><td class="num">-0.693</td><td class="num">0.50x</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td class="label">Bank Al-Habib Ltd.</td><td class="num">0.66%</td><td class="num">2.62%</td><td class="num">0.25x</td><td class="num">70.3%</td><td class="num">-0.693</td><td class="num">0.50x</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td class="label">Dubai Islamic Bank Pakistan Ltd.</td><td class="num">1.42%</td><td class="num">2.62%</td><td class="num">0.53x</td><td class="num">64.2%</td><td class="num">-0.402</td><td class="num">0.67x</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td class="label">Allied Bank Ltd.</td><td class="num">1.55%</td><td class="num">2.62%</td><td class="num">0.58x</td><td class="num">70.8%</td><td class="num">-0.380</td><td class="num">0.68x</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td class="label">Bank Alfalah Ltd.</td><td class="num">1.79%</td><td class="num">2.62%</td><td class="num">0.68x</td><td class="num">70.9%</td><td class="num">-0.277</td><td class="num">0.76x</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td class="label">JS Bank Ltd.</td><td class="num">2.11%</td><td class="num">2.62%</td><td class="num">0.80x</td><td class="num">64.8%</td><td class="num">-0.143</td><td class="num">0.87x</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td class="label">Habib Bank Ltd.</td><td class="num">2.62%</td><td class="num">2.62%</td><td class="num">1.00x</td><td class="num">74.9%</td><td class="num">-0.002</td><td class="num">1.00x</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td class="label">Samba Bank Ltd.</td><td class="num">2.62%</td><td class="num">2.62%</td><td class="num">1.00x</td><td class="num">58.4%</td><td class="num">0.000</td><td class="num">1.00x</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td class="label">MCB Bank Ltd.</td><td class="num">2.79%</td><td class="num">2.62%</td><td class="num">1.06x</td><td class="num">70.8%</td><td class="num">+0.044</td><td class="num">1.05x</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td class="label">Habib Metropolitan Bank Ltd.</td><td class="num">3.05%</td><td class="num">2.62%</td><td class="num">1.17x</td><td class="num">67.4%</td><td class="num">+0.105</td><td class="num">1.11x</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td class="label">BankIslami Pakistan Ltd.</td><td class="num">3.10%</td><td class="num">2.62%</td><td class="num">1.19x</td><td class="num">63.4%</td><td class="num">+0.110</td><td class="num">1.12x</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td class="label">Askari Bank Ltd.</td><td class="num">3.46%</td><td class="num">2.62%</td><td class="num">1.33x</td><td class="num">69.1%</td><td class="num">+0.197</td><td class="num">1.22x</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td class="label">Faysal Bank Ltd.</td><td class="num">3.48%</td><td class="num">2.62%</td><td class="num">1.34x</td><td class="num">68.5%</td><td class="num">+0.200</td><td class="num">1.22x</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td class="label">AlBaraka Bank (Pakistan) Ltd.</td><td class="num">3.85%</td><td class="num">2.62%</td><td class="num">1.49x</td><td class="num">60.5%</td><td class="num">+0.241</td><td class="num">1.27x</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td class="label">Bank Makramah Ltd.</td><td class="num">13.52%</td><td class="num">2.62%</td><td class="num">5.80x</td><td class="num">60.7%</td><td class="num">+0.693</td><td class="num">2.00x (capped)</td><td><span class="badge badge-green">Active</span></td></tr>
+      </tbody>
+      <tfoot><tr><td>Private Sector Bank Peer PD (Median)</td><td class="num">2.62%</td><td colspan="6"></td></tr></tfoot>
+    </table>
+    <div class="exhibit-note">Effect floor 0.50x, cap 2.00x (log-odds ±0.693). Bank Makramah's high proxy PD reflects a specialized or stressed book and is capped at 2x. All calibration data 2011-2023 actual; 2024-2025 excluded. Data quality: Amber.</div>
+  </div>
+
+  <div class="h2">Section A2: Public Sector and Foreign Banks</div>
+  <div class="exhibit">
+    <div class="exhibit-label">Exhibit A-2</div>
+    <div class="exhibit-title">Public Sector Banks, Foreign Banks and Specialized Banks</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Financial Institution</th><th>Sub-Type</th><th class="num">Hist PD Proxy</th><th class="num">Peer PD</th><th class="num">Credibility</th><th class="num">Odds Multiplier</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="label">First Women Bank Ltd.</td><td>Public Sector Bank</td><td class="num">5.44%</td><td class="num">5.44%</td><td class="num">50.2%</td><td class="num">1.00x</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td class="label">National Bank of Pakistan</td><td>Public Sector Bank</td><td class="num">4.91%</td><td class="num">5.44%</td><td class="num">74.9%</td><td class="num">0.92x</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td class="label">Sindh Bank Ltd.</td><td>Public Sector Bank</td><td class="num">7.11%</td><td class="num">5.44%</td><td class="num">59.3%</td><td class="num">1.18x</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td class="label">Bank of China Ltd.</td><td>Foreign Bank</td><td class="num">0.00% (Nil NPL)</td><td class="num">3.19%</td><td class="num">33.6%</td><td class="num">1.00x (reverts to peer)</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td class="label">Citi Bank N.A.</td><td>Foreign Bank</td><td class="num">3.62%</td><td class="num">3.19%</td><td class="num">56.7%</td><td class="num">1.08x</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td class="label">Deutsche Bank AG</td><td>Foreign Bank</td><td class="num">1.26%</td><td class="num">3.19%</td><td class="num">46.8%</td><td class="num">0.64x</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td class="label">ICBC Ltd.</td><td>Foreign Bank</td><td class="num">0.00% (Nil NPL)</td><td class="num">3.19%</td><td class="num">58.2%</td><td class="num">1.00x (reverts to peer)</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td class="label">MUFG Bank Ltd.</td><td>Foreign Bank</td><td class="num">0.00% (Nil NPL)</td><td class="num">3.19%</td><td class="num">19.4%</td><td class="num">1.00x (reverts to peer)</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td class="label">Industrial Development Bank Ltd.</td><td>Specialized Bank</td><td class="num">33.25%</td><td class="num">3.19%</td><td class="num">23.4%</td><td class="num">1.89x (legacy)</td><td><span class="badge badge-red">Legacy</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="h2">Section A3: Microfinance Banks (MFBs)</div>
+  <div class="exhibit">
+    <div class="exhibit-label">Exhibit A-3</div>
+    <div class="exhibit-title">Microfinance Banks: Historical PD Proxy and Performance Effect</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Financial Institution</th><th class="num">Hist PD Proxy</th><th class="num">MFB Peer PD</th><th class="num">Credibility</th><th class="num">Odds Multiplier</th><th>Primary Calibration Use</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="label">Mobilink Microfinance Bank Ltd.</td><td class="num">0.56%</td><td class="num">0.83%</td><td class="num">53.4%</td><td class="num">0.82x</td><td><span class="badge badge-green">Yes</span></td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td class="label">KHUSHHAALIBANK Limited</td><td class="num">0.63%</td><td class="num">0.83%</td><td class="num">57.5%</td><td class="num">0.85x</td><td><span class="badge badge-green">Yes</span></td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td class="label">HBL Microfinance Bank Ltd.</td><td class="num">0.69%</td><td class="num">0.83%</td><td class="num">55.5%</td><td class="num">0.90x</td><td><span class="badge badge-green">Yes</span></td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td class="label">NRSP Microfinance Bank Ltd.</td><td class="num">0.96%</td><td class="num">0.83%</td><td class="num">53.2%</td><td class="num">1.09x</td><td><span class="badge badge-green">Yes</span></td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td class="label">ASA Microfinance Bank (Pakistan) Ltd.</td><td class="num">0.00% (Nil NPL)</td><td class="num">0.83%</td><td class="num">43.3%</td><td class="num">1.00x (reverts to peer)</td><td><span class="badge badge-green">Yes</span></td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td class="label">LOLC Microfinance Bank</td><td class="num">2.65%</td><td class="num">0.83%</td><td class="num">40.6%</td><td class="num">1.62x</td><td><span class="badge badge-green">Yes</span></td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td class="label">APNA Microfinance Bank</td><td class="num">7.28%</td><td class="num">0.83%</td><td class="num">47.5%</td><td class="num">2.00x (capped)</td><td><span class="badge badge-green">Yes</span></td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td class="label">ADVANS Pakistan Microfinance Bank Ltd.</td><td class="num">1.71%</td><td class="num">0.83%</td><td class="num">18.9%</td><td class="num">1.15x</td><td><span class="badge badge-red">No (legacy)</span></td><td><span class="badge badge-red">Legacy</span></td></tr>
+        <tr><td class="label">FINCA Microfinance Bank Limited</td><td class="num">1.63%</td><td class="num">0.83%</td><td class="num">25.6%</td><td class="num">1.19x</td><td><span class="badge badge-red">No (legacy)</span></td><td><span class="badge badge-red">Legacy</span></td></tr>
+      </tbody>
+      <tfoot><tr><td>Microfinance Bank Peer PD (Median)</td><td class="num">0.83%</td><td colspan="6">Derived from active MFBs with positive history. MFBs generally show lower NPL ratios than commercial banks but serve higher-risk informal segments.</td></tr></tfoot>
+    </table>
+    <div class="exhibit-note">Note: MFB historical PD proxies are computed from MFB financial statements for lending books, not from a borrower-level microfinance default series. A separate Microfinance model group with higher MOC (0.40 log-odds) and higher floor (0.30%) is applied to microfinance borrowers to account for the proxy mismatch and elevated sector volatility.</div>
+  </div>
+</div>
+
+
+<!-- ===== ANNEXURE B: SECTOR PDs ===== -->
+<div class="section page-break" id="annex-b">
+  <div class="annex-header">
+    <div class="annex-eyebrow">Annexure B</div>
+    <div class="annex-title">Sector and Segment PD Register</div>
+  </div>
+
+  <p>This register contains the full set of IFRS 9 anchor PDs for all sectors and segments in the NCGCL calibration database. Each anchor is computed as the mean annualised positive net-stock NPL flow proxy over Q3 2016 to Q1 2026 (39 quarters), with the sole exception of the Microfinance borrowers segment which uses the median actual lending-book PD proxy from 2011 to 2023 MFB data. Floors, caps and MOC parameters for each model group are embedded in the anchor register and applied uniformly in the forward-looking PD formula. All anchors carry data quality grade Amber.</p>
+
+  <div class="exhibit">
+    <div class="exhibit-label">Exhibit B-1</div>
+    <div class="exhibit-title">Segment-Level Anchor PDs (SBP Loan Classification Segments)</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Segment</th><th>Model Group</th><th class="num">Anchor PD</th><th class="num">Floor</th><th class="num">Cap</th><th class="num">MOC (log-odds)</th><th>Data Quality</th><th>Approval</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="label">Agriculture Sector</td><td>Agriculture</td><td class="num">5.150%</td><td class="num">0.50%</td><td class="num">45.0%</td><td class="num">0.35</td><td><span class="badge badge-amber">Amber</span></td><td><span class="badge badge-prov">Provisional</span></td></tr>
+        <tr><td class="label">Consumer Durable</td><td>Consumer</td><td class="num">2.698%</td><td class="num">0.10%</td><td class="num">25.0%</td><td class="num">0.20</td><td><span class="badge badge-amber">Amber</span></td><td><span class="badge badge-prov">Provisional</span></td></tr>
+        <tr><td class="label">Others (Segment)</td><td>Other Commercial</td><td class="num">2.530%</td><td class="num">0.15%</td><td class="num">35.0%</td><td class="num">0.25</td><td><span class="badge badge-amber">Amber</span></td><td><span class="badge badge-prov">Provisional</span></td></tr>
+        <tr><td class="label">SMEs Sector</td><td>SME</td><td class="num">1.858%</td><td class="num">0.25%</td><td class="num">35.0%</td><td class="num">0.25</td><td><span class="badge badge-amber">Amber</span></td><td><span class="badge badge-prov">Provisional</span></td></tr>
+        <tr><td class="label">Mortgage Loans</td><td>Consumer</td><td class="num">0.957%</td><td class="num">0.10%</td><td class="num">25.0%</td><td class="num">0.20</td><td><span class="badge badge-amber">Amber</span></td><td><span class="badge badge-prov">Provisional</span></td></tr>
+        <tr><td class="label">Other Personal Loans</td><td>Consumer</td><td class="num">0.924%</td><td class="num">0.10%</td><td class="num">25.0%</td><td class="num">0.20</td><td><span class="badge badge-amber">Amber</span></td><td><span class="badge badge-prov">Provisional</span></td></tr>
+        <tr><td class="label">Commodity Financing</td><td>Other Commercial</td><td class="num">0.656%</td><td class="num">0.15%</td><td class="num">35.0%</td><td class="num">0.25</td><td><span class="badge badge-amber">Amber</span></td><td><span class="badge badge-prov">Provisional</span></td></tr>
+        <tr><td class="label">Individuals</td><td>Consumer</td><td class="num">0.657%</td><td class="num">0.10%</td><td class="num">25.0%</td><td class="num">0.20</td><td><span class="badge badge-amber">Amber</span></td><td><span class="badge badge-prov">Provisional</span></td></tr>
+        <tr><td class="label">Corporate Sector</td><td>Other Commercial</td><td class="num">0.709%</td><td class="num">0.15%</td><td class="num">35.0%</td><td class="num">0.25</td><td><span class="badge badge-amber">Amber</span></td><td><span class="badge badge-prov">Provisional</span></td></tr>
+        <tr><td class="label">Consumer Sector</td><td>Consumer</td><td class="num">0.498%</td><td class="num">0.10%</td><td class="num">25.0%</td><td class="num">0.20</td><td><span class="badge badge-amber">Amber</span></td><td><span class="badge badge-prov">Provisional</span></td></tr>
+        <tr><td class="label">Credit Cards</td><td>Consumer</td><td class="num">0.440%</td><td class="num">0.10%</td><td class="num">25.0%</td><td class="num">0.20</td><td><span class="badge badge-amber">Amber</span></td><td><span class="badge badge-prov">Provisional</span></td></tr>
+        <tr><td class="label">Auto Loans</td><td>Consumer</td><td class="num">0.278%</td><td class="num">0.10%</td><td class="num">25.0%</td><td class="num">0.20</td><td><span class="badge badge-amber">Amber</span></td><td><span class="badge badge-prov">Provisional</span></td></tr>
+        <tr><td class="label">Staff Loans</td><td>Consumer</td><td class="num">0.249%</td><td class="num">0.10%</td><td class="num">25.0%</td><td class="num">0.20</td><td><span class="badge badge-amber">Amber</span></td><td><span class="badge badge-prov">Provisional</span></td></tr>
+        <tr><td class="label">Microfinance Borrowers</td><td>Microfinance</td><td class="num">1.296%</td><td class="num">0.30%</td><td class="num">50.0%</td><td class="num">0.40</td><td><span class="badge badge-amber">Amber</span></td><td><span class="badge badge-prov">Provisional</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="exhibit">
+    <div class="exhibit-label">Exhibit B-2</div>
+    <div class="exhibit-title">Sector-Level Anchor PDs (SBP Sector Classification)</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Sector</th><th>Model Group</th><th class="num">Anchor PD</th><th class="num">Floor</th><th class="num">Cap</th><th class="num">MOC (log-odds)</th><th>Year-1 Weighted PD</th><th>3-Yr Cumulative PD</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="label">Agribusiness</td><td>Agriculture</td><td class="num">2.456%</td><td class="num">0.50%</td><td class="num">45.0%</td><td class="num">0.35</td><td class="num">3.48%</td><td class="num">8.95%</td></tr>
+        <tr><td class="label">Sugar</td><td>Agriculture</td><td class="num">2.141%</td><td class="num">0.50%</td><td class="num">45.0%</td><td class="num">0.35</td><td class="num">est. 3.0%</td><td class="num">est. 7.5%</td></tr>
+        <tr><td class="label">Electronics</td><td>Other Commercial</td><td class="num">3.144%</td><td class="num">0.15%</td><td class="num">35.0%</td><td class="num">0.25</td><td class="num">4.06%</td><td class="num">10.54%</td></tr>
+        <tr><td class="label">Shoes and Leather Garments</td><td>Export-Oriented</td><td class="num">1.765%</td><td class="num">0.20%</td><td class="num">40.0%</td><td class="num">0.30</td><td class="num">est. 2.5%</td><td class="num">est. 6.0%</td></tr>
+        <tr><td class="label">Automobile / Transportation</td><td>Other Commercial</td><td class="num">1.427%</td><td class="num">0.15%</td><td class="num">35.0%</td><td class="num">0.25</td><td class="num">1.85%</td><td class="num">4.91%</td></tr>
+        <tr><td class="label">Others (Sector)</td><td>Other Commercial</td><td class="num">1.160%</td><td class="num">0.15%</td><td class="num">35.0%</td><td class="num">0.25</td><td class="num">1.51%</td><td class="num">4.00%</td></tr>
+        <tr><td class="label">Production/Transmission of Energy</td><td>Other Commercial</td><td class="num">0.835%</td><td class="num">0.15%</td><td class="num">35.0%</td><td class="num">0.25</td><td class="num">1.09%</td><td class="num">2.93%</td></tr>
+        <tr><td class="label">Individuals (Sector)</td><td>Consumer</td><td class="num">0.657%</td><td class="num">0.10%</td><td class="num">25.0%</td><td class="num">0.20</td><td class="num">0.81%</td><td class="num">2.16%</td></tr>
+        <tr><td class="label">Cement</td><td>Other Commercial</td><td class="num">0.552%</td><td class="num">0.15%</td><td class="num">35.0%</td><td class="num">0.25</td><td class="num">0.72%</td><td class="num">1.92%</td></tr>
+        <tr><td class="label">Financial</td><td>Other Commercial</td><td class="num">0.435%</td><td class="num">0.15%</td><td class="num">35.0%</td><td class="num">0.25</td><td class="num">0.57%</td><td class="num">1.52%</td></tr>
+        <tr><td class="label">Chemical and Pharmaceuticals</td><td>Other Commercial</td><td class="num">0.409%</td><td class="num">0.15%</td><td class="num">35.0%</td><td class="num">0.25</td><td class="num">0.53%</td><td class="num">1.43%</td></tr>
+        <tr><td class="label">Textile</td><td>Export-Oriented</td><td class="num">0.298%</td><td class="num">0.20%</td><td class="num">40.0%</td><td class="num">0.30</td><td class="num">est. 0.60%</td><td class="num">est. 1.65%</td></tr>
+        <tr><td class="label">Insurance</td><td>Other Commercial</td><td class="num">0.274%</td><td class="num">0.15%</td><td class="num">35.0%</td><td class="num">0.25</td><td class="num">0.36%</td><td class="num">0.96%</td></tr>
+        <tr><td class="label">System (All Sectors)</td><td>Other Commercial</td><td class="num">0.728%</td><td class="num">0.15%</td><td class="num">35.0%</td><td class="num">0.25</td><td class="num">0.95%</td><td class="num">2.53%</td></tr>
+      </tbody>
+      <tfoot><tr><td colspan="8">Year-1 weighted PD includes macro adjustment and MOC under proposed base (55%) + upside (20%) + downside (25%) scenario weights. Estimated values shown for sectors with insufficient probability-weighted data. Source: ifrs9_pd_anchors.csv, probability_weighted_pd.csv.</td></tr></tfoot>
+    </table>
+  </div>
+</div>
+
+
+<!-- ===== ANNEXURE C: STATISTICAL MODELS ===== -->
+<div class="section page-break" id="annex-c">
+  <div class="annex-header">
+    <div class="annex-eyebrow">Annexure C</div>
+    <div class="annex-title">Statistical Model Specification, Validation and Sensitivity Evidence</div>
+  </div>
+
+  <div class="h2">C1. Model Selection and Candidate Comparison</div>
+  <p>Four candidate models were evaluated on the out-of-sample dataset (48 quarterly observations across core segments). The evaluation criteria were the Brier score (accuracy of probability predictions), the calibration ratio (ratio of predicted to realised PD, where 1.0 is ideal), economic sign consistency, scenario monotonicity and stability under sparse data. The credibility-shrunk anchored macro-logit was selected as the primary model based on governance considerations: it is the only candidate that produces a forward-looking empirical response to macroeconomic conditions while maintaining explicit calibration and stability controls. The anchor-only and fixed-multiplier challengers have better absolute Brier scores but provide no macroeconomic scenario sensitivity. The unconstrained group model has better in-sample fit but mixed signs and severe underprediction (calibration ratio 0.17x).</p>
+
+  <div class="exhibit">
+    <div class="exhibit-label">Exhibit C-1</div>
+    <div class="exhibit-title">Candidate Model Comparison (Out-of-Sample, 48 Observations)</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Model</th><th class="num">OOS Brier Score</th><th class="num">Calibration Ratio</th><th>Economic Signs</th><th>Scenario Monotonicity</th><th>Stability</th><th>Selection</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="label">Selected: Credibility-Shrunk Anchored Macro-Logit</td><td class="num">0.00725</td><td class="num">2.24x</td><td><span class="badge badge-green">Pass</span></td><td><span class="badge badge-green">Pass</span></td><td>Shrinkage + MOC + caps</td><td><span class="badge badge-green">Selected</span></td></tr>
+        <tr><td class="label">Challenger: Historical Anchor Only</td><td class="num">0.00453</td><td class="num">0.96x</td><td><span class="badge badge-green">Pass</span></td><td><span class="badge badge-green">Pass</span></td><td>Stable; no macro link</td><td><span class="badge badge-red">Rejected</span></td></tr>
+        <tr><td class="label">Challenger: Current Fixed Multiplier Fallback</td><td class="num">0.00454</td><td class="num">1.00x</td><td><span class="badge badge-green">Pass</span></td><td><span class="badge badge-amber">Mechanical Only</span></td><td>Arbitrary multipliers</td><td><span class="badge badge-red">Rejected</span></td></tr>
+        <tr><td class="label">Rejected: Unconstrained Group Model (In-Sample)</td><td class="num">0.00351</td><td class="num">0.17x</td><td><span class="badge badge-amber">Mixed</span></td><td><span class="badge badge-green">Pass</span></td><td>Overfit; wrong-sign risk</td><td><span class="badge badge-red">Rejected</span></td></tr>
+      </tbody>
+    </table>
+    <div class="exhibit-note">Selection of the anchored macro model is a governance judgement under data scarcity, not a claim of statistical dominance. The calibration ratio of 2.24x means the model overpredicts by a factor of 2.24 on average versus the realised flow PD proxy. Given the known undercount in the flow proxy (cures and write-offs are excluded), conservative overprediction is acceptable at the provisional stage and is addressed through the label "provisional" and the requirement for independent validation.</div>
+  </div>
+
+  <div class="h2">C2. Final Model Specification and Coefficients</div>
+  <p>The final model is estimated in log-odds space using pooled quarterly data from Q3 2016 to Q1 2026. The common model (SME + corporate + consumer pooled) provides the base LSM and lending-rate coefficients. Group-specific models scale these coefficients up or down using segment-specific data. The Agriculture model is re-estimated on agriculture segment data. The export-oriented model borrows the SME coefficients and adds a shrunk FX loading of 0.217 (the unstable FX coefficient from the corporate model, reduced by 50% as a shrinkage adjustment).</p>
+
+  <div class="formula-label">Full Model Specification</div>
+  <div class="formula-box">
+<span class="formula-comment">// Model estimated on quarterly log-odds of annualised flow PD proxy</span>
+logit(FlowPD_t) = alpha + beta_lsm * z_lsm_t + beta_lending * z_lending_t + epsilon_t
+
+<span class="formula-comment">// Standardisation:</span>
+z_lsm_t = (LSMgrowth_t - MeanLSM) / StdLSM
+z_lending_t = (Lending_t - MeanLending) / StdLending
+z_fx_t = (PKRdep_t - MeanFX) / StdFX  <span class="formula-comment">// export-oriented only</span>
+
+<span class="formula-comment">// Reference means and standard deviations (calibration window):</span>
+MeanLSM    =  1.792%  ,  StdLSM    = 11.617 pp
+MeanLending= 11.768%  ,  StdLending =  3.716 pp
+MeanFX     = 13.939%  ,  StdFX     = 14.487 pp
+
+<span class="formula-comment">// Estimation method: OLS on log-odds with HAC (Newey-West) robust standard errors</span>
+<span class="formula-comment">// Pooled across segments; clustering applied at segment level</span>
+<span class="formula-comment">// Note: OLS on log-odds used (not logistic) due to sparse binary outcomes;</span>
+<span class="formula-comment">// continuous flow PD proxy is bounded to [0.001, 0.999] before logit transformation</span>
+  </div>
+
+  <div class="exhibit">
+    <div class="exhibit-label">Exhibit C-2</div>
+    <div class="exhibit-title">Final Model Coefficients by Model Group</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Model Group</th><th class="num">LSM Beta</th><th>Expected Sign</th><th class="num">Lending Rate Beta</th><th>Expected Sign</th><th class="num">FX Beta</th><th>Source</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="label">SME</td><td class="num">-0.4560</td><td><span class="badge badge-green">Negative</span></td><td class="num">+0.4050</td><td><span class="badge badge-green">Positive</span></td><td class="num">0.000</td><td>SMEs Sector regression</td><td><span class="badge badge-amber">Approval Req.</span></td></tr>
+        <tr><td class="label">Agriculture</td><td class="num">-0.7067</td><td><span class="badge badge-green">Negative</span></td><td class="num">+0.1716</td><td><span class="badge badge-green">Positive</span></td><td class="num">0.000</td><td>Agriculture sector regression</td><td><span class="badge badge-amber">Approval Req.</span></td></tr>
+        <tr><td class="label">Consumer</td><td class="num">-0.6094</td><td><span class="badge badge-green">Negative</span></td><td class="num">+0.1684</td><td><span class="badge badge-green">Positive</span></td><td class="num">0.000</td><td>Consumer sector regression</td><td><span class="badge badge-amber">Approval Req.</span></td></tr>
+        <tr><td class="label">Other Commercial</td><td class="num">-0.5422</td><td><span class="badge badge-green">Negative</span></td><td class="num">+0.1793</td><td><span class="badge badge-green">Positive</span></td><td class="num">0.000</td><td>Common pooled model</td><td><span class="badge badge-amber">Approval Req.</span></td></tr>
+        <tr><td class="label">Export-Oriented</td><td class="num">-0.4560</td><td><span class="badge badge-green">Negative</span></td><td class="num">+0.4050</td><td><span class="badge badge-green">Positive</span></td><td class="num">+0.217</td><td>SME + shrunk FX loading</td><td><span class="badge badge-amber">Approval Req.</span></td></tr>
+        <tr><td class="label">Microfinance</td><td class="num">-0.7313</td><td><span class="badge badge-green">Negative</span></td><td class="num">+0.2021</td><td><span class="badge badge-green">Positive</span></td><td class="num">0.000</td><td>Consumer proxy, MFB-scaled</td><td><span class="badge badge-amber">Approval Req.</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="h2">C3. Model Diagnostic Statistics</div>
+  <div class="exhibit">
+    <div class="exhibit-label">Exhibit C-3</div>
+    <div class="exhibit-title">Econometric Diagnostic Results (Common Pooled Model)</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Test Category</th><th>Test</th><th>Statistic</th><th>Threshold</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Data</td><td>Source-to-model reconciliation</td><td class="num">Pass with exceptions</td><td>Exact reconstruction</td><td><span class="badge badge-amber">Amber</span></td></tr>
+        <tr><td>Data</td><td>Duplicate key testing</td><td class="num">0 duplicates</td><td>0</td><td><span class="badge badge-green">Green</span></td></tr>
+        <tr><td>Data</td><td>Missing macro match</td><td class="num">Cutoff at 2025-06</td><td>Disclosed</td><td><span class="badge badge-amber">Amber</span></td></tr>
+        <tr><td>Calibration</td><td>OOS Brier Score</td><td class="num">0.00725</td><td>Below anchor-only challenger</td><td><span class="badge badge-amber">Amber</span></td></tr>
+        <tr><td>Calibration</td><td>OOS Calibration Ratio</td><td class="num">2.24x</td><td>0.75x to 1.50x (provisional)</td><td><span class="badge badge-amber">Amber (conservative)</span></td></tr>
+        <tr><td>Econometric</td><td>Common LSM coefficient sign</td><td class="num">-0.542 (p=0.0054)</td><td>Negative; p &lt; 0.10 preferred</td><td><span class="badge badge-green">Green</span></td></tr>
+        <tr><td>Econometric</td><td>Common lending rate coefficient sign</td><td class="num">+0.179 (p=0.231)</td><td>Positive (weaker significance)</td><td><span class="badge badge-green">Green (sign correct)</span></td></tr>
+        <tr><td>Econometric</td><td>Durbin-Watson autocorrelation</td><td class="num">2.265</td><td>Near 2.0; diagnostic only</td><td><span class="badge badge-amber">Amber</span></td></tr>
+        <tr><td>Econometric</td><td>Ljung-Box (lag 4) p-value</td><td class="num">0.0349</td><td>p &gt; 0.05 preferred</td><td><span class="badge badge-amber">Amber (some autocorrelation)</span></td></tr>
+        <tr><td>Econometric</td><td>Breusch-Pagan (heteroskedasticity)</td><td class="num">p = 0.0085</td><td>p &gt; 0.05 preferred</td><td><span class="badge badge-amber">Amber (robust SE applied)</span></td></tr>
+        <tr><td>Econometric</td><td>ADF residual stationarity</td><td class="num">p = 6.8e-6</td><td>p &lt; 0.10 (stationary)</td><td><span class="badge badge-green">Green</span></td></tr>
+        <tr><td>Econometric</td><td>VIF (LSM and lending rate)</td><td class="num">1.214</td><td>&lt; 5.0</td><td><span class="badge badge-green">Green (no multicollinearity)</span></td></tr>
+        <tr><td>Discrimination</td><td>ROC/AUC, Gini, KS statistics</td><td class="num">Not testable</td><td>Required for production</td><td><span class="badge badge-red">Red</span></td></tr>
+        <tr><td>Stability</td><td>PSI and rating migration</td><td class="num">Not testable</td><td>Required for production monitoring</td><td><span class="badge badge-red">Red</span></td></tr>
+        <tr><td>Scenario</td><td>Downside &gt;= Base &gt;= Upside</td><td class="num">100% monotonic</td><td>All bucket/year combinations</td><td><span class="badge badge-green">Green</span></td></tr>
+        <tr><td>Implementation</td><td>Production ECL gate</td><td class="num">Disabled</td><td>Cannot enable</td><td><span class="badge badge-green">Green (gate functioning)</span></td></tr>
+      </tbody>
+    </table>
+    <div class="exhibit-note">Ljung-Box and Breusch-Pagan tests indicate residual autocorrelation and heteroskedasticity, addressed by HAC/Newey-West robust standard errors. The OOS calibration ratio of 2.24x reflects conservative overprediction, which is tolerable at the provisional stage given the known undercount in the flow proxy denominator. ROC/AUC, Gini, KS, PSI and migration statistics require borrower-level outcomes data not currently available.</div>
+  </div>
+
+  <div class="h2">C4. Comprehensive Sensitivity Analysis</div>
+  <div class="exhibit">
+    <div class="exhibit-label">Exhibit C-4</div>
+    <div class="exhibit-title">Year-1 PD Sensitivity by Model Group (Single-Variable Shocks from Base Scenario)</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Model Group</th><th>Sensitivity</th><th class="num">Base Year-1 PD</th><th class="num">Stressed Year-1 PD</th><th class="num">PD Impact (bp)</th><th class="num">Illustrative ECL Impact (PKRm)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td rowspan="6" class="label" style="vertical-align:top">SME</td><td>LSM growth -5pp</td><td class="num">2.19%</td><td class="num">2.66%</td><td class="num">+47bp</td><td class="num">+0.42</td></tr>
+        <tr><td>LSM growth +5pp</td><td class="num">2.19%</td><td class="num">1.81%</td><td class="num">-38bp</td><td class="num">-0.35</td></tr>
+        <tr><td>Lending rate +300bp</td><td class="num">2.19%</td><td class="num">3.02%</td><td class="num">+82bp</td><td class="num">+0.74</td></tr>
+        <tr><td>Lending rate -300bp</td><td class="num">2.19%</td><td class="num">1.59%</td><td class="num">-60bp</td><td class="num">-0.54</td></tr>
+        <tr><td>MOC +0.10 log-odds</td><td class="num">2.19%</td><td class="num">2.42%</td><td class="num">+23bp</td><td class="num">+0.20</td></tr>
+        <tr><td>MOC -0.10 log-odds</td><td class="num">2.19%</td><td class="num">1.99%</td><td class="num">-20bp</td><td class="num">-0.18</td></tr>
+        <tr><td rowspan="4" class="label" style="vertical-align:top">Agriculture</td><td>LSM growth -5pp</td><td class="num">6.20%</td><td class="num">8.22%</td><td class="num">+202bp</td><td class="num">+1.82</td></tr>
+        <tr><td>LSM growth +5pp</td><td class="num">6.20%</td><td class="num">4.65%</td><td class="num">-155bp</td><td class="num">-1.39</td></tr>
+        <tr><td>Lending rate +300bp</td><td class="num">6.20%</td><td class="num">7.05%</td><td class="num">+86bp</td><td class="num">+0.77</td></tr>
+        <tr><td>Lending rate -300bp</td><td class="num">6.20%</td><td class="num">5.44%</td><td class="num">-76bp</td><td class="num">-0.68</td></tr>
+        <tr><td rowspan="4" class="label" style="vertical-align:top">Consumer</td><td>LSM growth -5pp</td><td class="num">0.53%</td><td class="num">0.69%</td><td class="num">+16bp</td><td class="num">+0.14</td></tr>
+        <tr><td>LSM growth +5pp</td><td class="num">0.53%</td><td class="num">0.41%</td><td class="num">-12bp</td><td class="num">-0.11</td></tr>
+        <tr><td>Lending rate +300bp</td><td class="num">0.53%</td><td class="num">0.61%</td><td class="num">+8bp</td><td class="num">+0.07</td></tr>
+        <tr><td>Lending rate -300bp</td><td class="num">0.53%</td><td class="num">0.47%</td><td class="num">-7bp</td><td class="num">-0.06</td></tr>
+        <tr><td rowspan="4" class="label" style="vertical-align:top">Export-Oriented</td><td>LSM growth -5pp</td><td class="num">est. 1.50%</td><td class="num">est. 1.88%</td><td class="num">est. +38bp</td><td class="num">est. +0.34</td></tr>
+        <tr><td>LSM growth +5pp</td><td class="num">est. 1.50%</td><td class="num">est. 1.19%</td><td class="num">est. -31bp</td><td class="num">est. -0.28</td></tr>
+        <tr><td>FX depreciation +10pp</td><td class="num">est. 1.50%</td><td class="num">est. 1.65%</td><td class="num">est. +15bp</td><td class="num">est. +0.14</td></tr>
+        <tr><td>Lending rate +300bp</td><td class="num">est. 1.50%</td><td class="num">est. 2.12%</td><td class="num">est. +62bp</td><td class="num">est. +0.56</td></tr>
+      </tbody>
+      <tfoot><tr><td colspan="6">Illustrative ECL impact assumes PKR 1,000M underlying pool, 20% cover, 45% LGD (50% for Agriculture), 12% discount rate. Estimated values marked "est." for export-oriented group. Source: sensitivity_results.csv.</td></tr></tfoot>
+    </table>
+  </div>
+
+  <div class="h2">C5. Model Limitations and Remediation Register</div>
+  <div class="exhibit">
+    <div class="exhibit-label">Exhibit C-5</div>
+    <div class="exhibit-title">Model Limitation Register</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>ID</th><th>Area</th><th>Description</th><th>Severity</th><th>Current Treatment</th><th>Production Blocker</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="label">L01</td><td>Default Data</td><td>Gross new defaults, cures, write-offs and recoveries unavailable; positive net NPL-stock proxy used</td><td><span class="badge badge-red">High</span></td><td>Explicit MOC + provisional label</td><td><span class="badge badge-red">Yes</span></td></tr>
+        <tr><td class="label">L02</td><td>FI History</td><td>FI actual observations end 2023; 2024-2025 extrapolations excluded from primary calibration</td><td><span class="badge badge-amber">Medium</span></td><td>Actual-only primary; extrapolations sensitivity</td><td><span class="badge badge-green">No</span></td></tr>
+        <tr><td class="label">L03</td><td>Macro History</td><td>Reproducible dataset ends June 2025; 2026 information used only for scenario / reference</td><td><span class="badge badge-amber">Medium</span></td><td>Official 2026 sources for scenarios; vintage disclosed</td><td><span class="badge badge-green">No</span></td></tr>
+        <tr><td class="label">L04</td><td>Sample Size</td><td>Approximately 32 matched quarterly observations per segment; substantial zero-flow quarters</td><td><span class="badge badge-red">High</span></td><td>Parsimonious model; credibility shrinkage; caps</td><td><span class="badge badge-red">Yes</span></td></tr>
+        <tr><td class="label">L05</td><td>Microfinance</td><td>No borrower-level quarterly microfinance series; MFB lending-book proxy used</td><td><span class="badge badge-red">High</span></td><td>Higher MOC and mapping disclosure; separate model group</td><td><span class="badge badge-red">Yes</span></td></tr>
+        <tr><td class="label">L06</td><td>Export FX</td><td>Export-sector FX regression shows unstable signs; FX coefficient shrunk and applied conservatively</td><td><span class="badge badge-amber">Medium</span></td><td>Shrunk 0.217 coefficient; retained for remediation</td><td><span class="badge badge-green">No</span></td></tr>
+        <tr><td class="label">L07</td><td>Scenarios</td><td>Scenario paths and weights are proposed and not Board-approved</td><td><span class="badge badge-red">Critical</span></td><td>Production gate disabled; Board paper submitted</td><td><span class="badge badge-red">Yes</span></td></tr>
+        <tr><td class="label">L08</td><td>Validation</td><td>No independent validation, PwC conclusion or KPMG audit testing completed</td><td><span class="badge badge-red">Critical</span></td><td>Developer validation evidence only</td><td><span class="badge badge-red">Yes</span></td></tr>
+        <tr><td class="label">L09</td><td>Facilities</td><td>No actual facility, original-recognition or contractual EAD/accounting data supplied</td><td><span class="badge badge-red">Critical</span></td><td>Generic demonstrations excluded from production</td><td><span class="badge badge-red">Yes</span></td></tr>
+        <tr><td class="label">L10</td><td>LGD / EAD</td><td>Scenario-dependent LGD and EAD not calibrated from NCGCL claim cohorts</td><td><span class="badge badge-red">High</span></td><td>Provisional multipliers; sensitivities disclosed</td><td><span class="badge badge-red">Yes</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="h2">C6. Mathematical Glossary of Key Functions</div>
+  <div class="formula-box">
+<span class="formula-comment">// KEY MATHEMATICAL FUNCTIONS USED IN THE MODEL</span>
+
+<span class="formula-comment">// Logit function (maps probability to log-odds):</span>
+logit(p) = ln( p / (1 - p) )
+<span class="formula-comment">// Examples: logit(0.01) = -4.595; logit(0.05) = -2.944; logit(0.20) = -1.386</span>
+
+<span class="formula-comment">// Inverse logit / sigmoid (maps log-odds to probability):</span>
+sigmoid(z) = exp(z) / (1 + exp(z))  =  1 / (1 + exp(-z))
+<span class="formula-comment">// Examples: sigmoid(-4.595) = 0.010; sigmoid(0) = 0.500</span>
+
+<span class="formula-comment">// Credibility weighting (Buhlmann-Straub approximation):</span>
+c = n / (n + kappa)
+<span class="formula-comment">// where n = years of observed data, kappa = credibility threshold</span>
+<span class="formula-comment">// kappa ≈ 5 to 8 gives 50% credibility at 5-8 years of history</span>
+
+<span class="formula-comment">// Log-odds addition (composing probability adjustments):</span>
+p_combined = sigmoid( logit(p_base) + delta_1 + delta_2 + ... )
+<span class="formula-comment">// This is the core of the PD blend operation: add in log-odds, invert.</span>
+
+<span class="formula-comment">// Survival and marginal PD term structure:</span>
+S_0 = 1.0
+S_y = S_{y-1} * (1 - PD_y)       <span class="formula-comment">// Survival to end of year y</span>
+m_y = S_{y-1} * PD_y              <span class="formula-comment">// Marginal (unconditional) PD for year y</span>
+C_y = 1 - S_y                     <span class="formula-comment">// Cumulative PD through end of year y</span>
+<span class="formula-comment">// Check: Sum of all m_y = 1 - S_T (probability of default by year T)</span>
+
+<span class="formula-comment">// IRB-style pool unexpected loss (Vasicek one-factor model):</span>
+K = LGD * [Phi( Phi_inv(PD)/sqrt(1-R) + sqrt(R/(1-R))*Phi_inv(0.999) ) - PD]
+<span class="formula-comment">// where Phi = standard normal CDF, Phi_inv = its quantile function</span>
+<span class="formula-comment">// R = asset correlation (typically 0.03 to 0.20 for retail/SME)</span>
+<span class="formula-comment">// 0.999 quantile = 99.9% confidence level</span>
+
+<span class="formula-comment">// Discount factor (annual):</span>
+DF_y = 1 / (1 + r)^y
+<span class="formula-comment">// where r = discount rate appropriate to the guarantee liability</span>
+  </div>
+
+  <!-- Document Footer -->
+  <div style="margin-top:60px; padding-top:20px; border-top:2px solid var(--border); display:flex; justify-content:space-between; align-items:flex-end;">
+    <div>
+      <div style="font-size:12px; font-weight:700; color:var(--petrol); margin-bottom:4px;">NATIONAL CREDIT GUARANTEE COMPANY LIMITED</div>
+      <div style="font-size:11px; color:var(--muted);">Integrated Credit Risk Model and IFRS 9 Framework | Board Policy Note</div>
+      <div style="font-size:11px; color:var(--muted);">19 July 2026 | Model Version: NCGCL-FLPD-2026.06-v0.1-Provisional</div>
+    </div>
+    <div style="text-align:right;">
+      <div style="font-size:11px; color:var(--muted);">AAA / A1+ (PACRA) | Shariah Compliant</div>
+      <div style="margin-top:6px;">
+        <span class="badge badge-amber" style="margin-right:4px;">PROVISIONAL</span>
+        <span class="badge badge-petrol">BOARD CONFIDENTIAL</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end doc-wrapper -->
+</body>
+</html>
