@@ -11,23 +11,23 @@
 <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
 <style>
 :root{
-  --ncgcl-blue:#0C688D; --ncgcl-green:#39A935;
+  --ncgcl-blue:#0C688D; --ncgcl-green:#1E7A4C;
   --petrol-900:#042B3B; --petrol-800:#004C66; --petrol-700:#035076;
   --petrol-600:#0C688D; --petrol-500:#12678A; --petrol-400:#007AA0;
   --petrol-300:#4FA0BC; --petrol-200:#A7C7D6; --petrol-100:#E3EEF3;
-  --green-800:#1F6A1D; --green-700:#2B8129; --green-600:#39A935;
-  --green-500:#4EA72E; --green-300:#8CD872; --green-100:#E6F4E2;
+  --green-800:#14532D; --green-700:#1D6B3E; --green-600:#1E7A4C;
+  --green-500:#2E8B5A; --green-300:#7FC49B; --green-100:#E4F2E9;
   --ink-900:#061626; --ink-800:#0E2841; --ink-700:#1E293B; --ink-600:#33424F;
   --slate-500:#5B6B7A; --slate-400:#7F7F7F; --slate-300:#AEAEAE;
   --slate-200:#C8D6E0; --slate-150:#E2E8F0; --slate-100:#EEF1F4; --slate-50:#F6F8FA;
   --paper:#FFFFFF; --risk-high:#C00000; --risk-med:#BF9000; --risk-low:#2B8129;
   --status-positive:#2B8129; --status-negative:#C00000; --status-neutral:#5B6B7A;
-  --color-primary:#0C688D; --color-accent:#39A935;
+  --color-primary:#0C688D; --color-accent:#1E7A4C;
   --text-strong:#0E2841; --text-body:#1F2E3A; --text-muted:#7F7F7F;
   --text-faint:#AEAEAE; --text-on-dark:#FFFFFF; --text-on-dark-muted:#B9CFDA;
   --surface-page:#FFFFFF; --surface-canvas:#F6F8FA; --surface-card:#FFFFFF;
   --surface-muted:#EEF1F4; --surface-dark:#004C66; --surface-darker:#042B3B;
-  --surface-accent-soft:#E6F4E2; --surface-primary-soft:#E3EEF3;
+  --surface-accent-soft:#E4F2E9; --surface-primary-soft:#E3EEF3;
   --border-subtle:#C8D6E0; --border-strong:#9FB5C4; --border-on-dark:rgba(255,255,255,0.16);
   --font-sans:"Figtree","Google Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
   --font-mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
@@ -297,7 +297,7 @@ svg.icon{flex-shrink:0}
   const destRows = DATA.destinations;
   const meta = DATA.meta;
   const baseTotalPkrTh = meta.pkrThTotal;
-  const colors = ['#0C688D','#39A935','#4FA0BC','#A7C7D6','#2B8129','#004C66','#8CD872','#BF9000','#5B6B7A','#C8D6E0','#007AA0','#1F6A1D'];
+  const colors = ['#0C688D','#1E7A4C','#4FA0BC','#A7C7D6','#1D6B3E','#004C66','#7FC49B','#BF9000','#5B6B7A','#C8D6E0','#007AA0','#14532D'];
   const chartDefault = {
     responsive:true, maintainAspectRatio:false,
     plugins:{legend:{labels:{boxWidth:10,font:{family:'Figtree',size:11},color:'#5B6B7A'}}, tooltip:{backgroundColor:'#042B3B',titleFont:{family:'Figtree',weight:'700'},bodyFont:{family:'IBM Plex Mono'},padding:10,cornerRadius:6}},
@@ -453,7 +453,7 @@ svg.icon{flex-shrink:0}
     const dData = groupBy(fdr, d=>d.destination, d=>d.pkrTh24||0).sort((a,b)=>b.value-a.value).slice(0,12).reverse();
     chart('destChart', {
       type:'bar',
-      data:{labels:dData.map(x=>x.key), datasets:[{label:'US$ mn', data:dData.map(x=>usdMn(x.value)), backgroundColor:'#39A935', borderRadius:5}]},
+      data:{labels:dData.map(x=>x.key), datasets:[{label:'US$ mn', data:dData.map(x=>usdMn(x.value)), backgroundColor:'#1E7A4C', borderRadius:5}]},
       options:barOptions(true)
     });
 
@@ -528,7 +528,7 @@ svg.icon{flex-shrink:0}
     const topBars = rows.slice(0,12).reverse();
     chart('destProductChart', {
       type:'bar',
-      data:{labels:topBars.map(r=>`${r.hs} · ${short(productByHs(r.hs)?.commodity || r.commodity,28)}`), datasets:[{label:'US$ mn', data:topBars.map(r=>usdMn(r.pkrTh24)), backgroundColor:'#39A935', borderRadius:5}]},
+      data:{labels:topBars.map(r=>`${r.hs} · ${short(productByHs(r.hs)?.commodity || r.commodity,28)}`), datasets:[{label:'US$ mn', data:topBars.map(r=>usdMn(r.pkrTh24)), backgroundColor:'#1E7A4C', borderRadius:5}]},
       options:barOptions(true)
     });
     $('destProductTable').innerHTML = rows.map(r=>{ const p=productByHs(r.hs)||r; const pr=usdPrice(r.pkrTh24,r.qty24); return `<tr data-hs="${r.hs}"><td class="mono">${r.hs}</td><td><div class="str">${safe(p.commodity)}</div><div class="muted">${safe(p.unit || r.unit)}</div></td><td class="val">${fmtQty(r.qty24,p.unit || r.unit)}</td><td class="val str">${fmtUSD(usdMn(r.pkrTh24))}</td><td class="val">${pr?('US$ '+fmtNum(pr,2)):'—'}</td></tr>`; }).join('') || `<tr><td colspan="5"><div class="empty">No products available for destination.</div></td></tr>`;
