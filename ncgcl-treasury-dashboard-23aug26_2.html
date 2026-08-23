@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NCGCL Treasury Decision Framework — 23 Aug 2026</title>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap");
+
+:root{
+  /* ---- Brand core ---- */
+  --ncgcl-blue:#0C688D; --ncgcl-green:#39A935;
+  --petrol-900:#042B3B; --petrol-800:#004C66; --petrol-700:#035076; --petrol-600:#0C688D;
+  --petrol-500:#12678A; --petrol-400:#007AA0; --petrol-300:#4FA0BC; --petrol-200:#A7C7D6; --petrol-100:#E3EEF3;
+  --green-800:#1F6A1D; --green-700:#2B8129; --green-600:#39A935; --green-500:#4EA72E; --green-400:#5AB060; --green-300:#8CD872; --green-100:#E6F4E2;
+  --ink-900:#061626; --ink-800:#0E2841; --ink-700:#1E293B; --ink-600:#33424F;
+  --slate-500:#5B6B7A; --slate-400:#7F7F7F; --slate-300:#AEAEAE; --slate-200:#C8D6E0; --slate-150:#E2E8F0; --slate-100:#EEF1F4; --slate-50:#F6F8FA; --paper:#FFFFFF;
+  --risk-high:#C00000; --risk-med:#BF9000; --risk-low:#2B8129;
+  --status-positive:#2B8129; --status-negative:#C00000; --status-neutral:#5B6B7A;
+  --color-primary:var(--ncgcl-blue); --color-primary-hover:#0A5876; --color-primary-press:#084A63;
+  --color-accent:var(--ncgcl-green); --color-accent-hover:#2F9A2B; --color-accent-press:#287F25;
+  --text-strong:var(--ink-800); --text-body:#1F2E3A; --text-muted:var(--slate-400); --text-faint:var(--slate-300);
+  --text-on-dark:#FFFFFF; --text-on-dark-muted:#B9CFDA; --text-link:var(--petrol-400);
+  --surface-page:#FFFFFF; --surface-canvas:var(--slate-50); --surface-card:#FFFFFF; --surface-muted:var(--slate-100);
+  --surface-dark:var(--petrol-800); --surface-darker:var(--petrol-900);
+  --surface-accent-soft:var(--green-100); --surface-primary-soft:var(--petrol-100);
+  --border-subtle:var(--slate-200); --border-strong:#9FB5C4; --border-on-dark:rgba(255,255,255,0.16);
+  --focus-ring:var(--petrol-400);
+
+  --font-sans:"Figtree","Google Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --text-h1:3.052rem; --text-h2:2.441rem; --text-h3:1.953rem; --text-h4:1.563rem; --text-h5:1.25rem;
+  --text-lg:1.125rem; --text-base:1rem; --text-sm:0.875rem; --text-xs:0.75rem; --text-2xs:0.6875rem;
+  --weight-regular:400; --weight-medium:500; --weight-semibold:600; --weight-bold:700; --weight-extrabold:800;
+  --leading-tight:1.08; --leading-snug:1.22; --leading-normal:1.5; --leading-relaxed:1.65;
+  --tracking-tight:-0.015em; --tracking-normal:0; --tracking-wide:0.04em; --tracking-eyebrow:0.14em;
+
+  --space-1:0.25rem; --space-2:0.5rem; --space-3:0.75rem; --space-4:1rem; --space-5:1.5rem; --space-6:2rem; --space-7:2.5rem; --space-8:3rem;
+  --radius-xs:3px; --radius-sm:5px; --radius-md:8px; --radius-lg:12px; --radius-xl:16px; --radius-pill:999px;
+  --border-hair:1px; --border-thick:2px; --border-accent:3px;
+  --container-xl:1280px;
+
+  --shadow-xs:0 1px 2px rgba(6,22,38,0.06);
+  --shadow-sm:0 1px 3px rgba(6,22,38,0.08),0 1px 2px rgba(6,22,38,0.04);
+  --shadow-md:0 4px 12px rgba(6,22,38,0.08),0 2px 4px rgba(6,22,38,0.05);
+  --duration-fast:120ms; --duration-base:200ms; --ease-standard:cubic-bezier(0.2,0,0.2,1);
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--surface-canvas);color:var(--text-body);font-family:var(--font-sans);font-size:var(--text-sm);line-height:var(--leading-normal);}
+.wrap{max-width:var(--container-xl);margin:0 auto;padding:0 32px 48px;}
+
+/* ---------- Header (Shell topbar, adapted for single-page report) ---------- */
+.topbar{background:var(--petrol-900);padding:16px 32px;margin:0 -1000px 0;padding-left:calc(1000px + 32px);padding-right:calc(1000px + 32px);}
+.topbar-inner{max-width:var(--container-xl);margin:0 auto;display:flex;align-items:center;gap:14px;}
+.brand-mark{width:38px;height:38px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;flex:none;}
+.brand-mark img{height:24px;display:block;}
+.brand-name{color:#fff;font-weight:800;font-size:16px;line-height:1;}
+.brand-sub{color:var(--text-on-dark-muted);font-size:11px;margin-top:2px;}
+.topbar .spacer{flex:1;}
+.rating-badge{display:inline-flex;align-items:center;gap:6px;background:var(--petrol-900);border:1px solid rgba(255,255,255,0.25);
+  color:#fff;font-family:var(--font-sans);font-size:var(--text-xs);font-weight:var(--weight-semibold);
+  letter-spacing:var(--tracking-wide);text-transform:uppercase;padding:5px 12px;border-radius:var(--radius-sm);}
+
+.header{background:var(--surface-page);border-bottom:1px solid var(--border-subtle);padding:20px 0 18px;margin-bottom:24px;
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.header h1{margin:0;font-size:var(--text-h4);font-weight:var(--weight-bold);letter-spacing:-0.02em;color:var(--text-strong);}
+.header .sub{margin:3px 0 0;color:var(--text-muted);font-size:var(--text-sm);}
+.header .htitle{flex:1;min-width:240px;}
+.header .runmeta{text-align:right;font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text-muted);line-height:1.7;}
+.header .runmeta b{display:block;font-family:var(--font-sans);font-size:var(--text-base);color:var(--text-strong);font-weight:var(--weight-bold);}
+
+.runbar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;}
+.pill{display:inline-flex;align-items:center;gap:6px;background:var(--surface-muted);border:1px solid var(--border-subtle);
+  color:var(--ink-700);border-radius:var(--radius-pill);padding:5px 12px 5px 10px;font-size:var(--text-xs);font-weight:var(--weight-semibold);}
+.pill .dot{width:6px;height:6px;border-radius:50%;background:var(--slate-400);flex:none;}
+.pill.warn{background:#FBF1DA;border-color:#E8CE8A;color:#8A6800;} .pill.warn .dot{background:var(--risk-med);}
+.pill.crit{background:#FBE8E8;border-color:#EFC0C0;color:var(--risk-high);} .pill.crit .dot{background:var(--risk-high);}
+.pill.ok{background:var(--green-100);border-color:#BEE0B8;color:var(--green-800);} .pill.ok .dot{background:var(--risk-low);}
+
+/* ---------- Jump nav (sticky, scroll-spy) ---------- */
+html{scroll-behavior:smooth;}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--border-subtle);overflow-x:auto;
+  position:sticky;top:0;z-index:20;background:var(--surface-page);
+  margin:0 0 32px;padding:0;box-shadow:0 1px 0 var(--border-subtle);}
+.tab-btn{position:relative;display:inline-flex;align-items:center;gap:7px;padding:12px 14px;border:none;background:transparent;
+  cursor:pointer;text-decoration:none;font-family:var(--font-sans);font-size:var(--text-sm);font-weight:var(--weight-medium);color:var(--text-muted);
+  border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;min-height:40px;transition:color var(--duration-fast) var(--ease-standard);}
+.tab-btn .num{font-family:var(--font-mono);font-size:var(--text-2xs);background:var(--surface-muted);color:var(--text-muted);
+  padding:1px 6px;border-radius:var(--radius-pill);}
+.tab-btn.active{color:var(--color-primary);font-weight:var(--weight-semibold);border-bottom-color:var(--color-primary);}
+.tab-btn.active .num{background:var(--surface-primary-soft);color:var(--petrol-700);}
+
+/* ---------- Sections (always visible — one long scroll) ---------- */
+.tabpanel{display:block;scroll-margin-top:64px;padding-top:8px;border-top:1px solid var(--border-subtle);margin-top:8px;}
+.tabpanel:first-of-type{border-top:none;margin-top:0;padding-top:0;}
+.tabpanel + .tabpanel{padding-bottom:8px;}
+
+.section-eyebrow{font-size:var(--text-2xs);font-weight:var(--weight-bold);text-transform:uppercase;letter-spacing:var(--tracking-eyebrow);
+  color:var(--text-muted);margin:0 0 4px;}
+h2.sec-title{font-size:var(--text-h5);font-weight:var(--weight-bold);margin:0 0 4px;color:var(--text-strong);letter-spacing:-0.01em;}
+p.sec-sub{margin:0 0 18px;color:var(--text-muted);font-size:var(--text-xs);}
+
+/* ---------- Card ---------- */
+.card{position:relative;background:var(--surface-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);
+  padding:var(--space-6);box-shadow:var(--shadow-sm);margin-bottom:18px;}
+.card.accent-primary{border-top:3px solid var(--color-primary);}
+.card.accent-green{border-top:3px solid var(--color-accent);}
+.card.accent-high{border-top:3px solid var(--risk-high);}
+.card-title{font-weight:var(--weight-bold);font-size:var(--text-base);margin-bottom:3px;color:var(--text-strong);letter-spacing:-0.005em;}
+.card-sub{font-size:var(--text-xs);color:var(--text-muted);margin-bottom:14px;}
+
+/* ---------- StatBlock / KPI ---------- */
+.kpi-row{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin-bottom:24px;}
+.kpi-card{background:var(--surface-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);padding:16px 18px;
+  box-shadow:var(--shadow-sm);border-left:3px solid var(--color-primary);}
+.kpi-card.green{border-left-color:var(--color-accent);}
+.kpi-val{font-family:var(--font-mono);font-weight:var(--weight-semibold);font-size:var(--text-h5);color:var(--text-strong);
+  letter-spacing:-0.01em;line-height:1;}
+.kpi-val.pos{color:var(--status-positive);} .kpi-val.neg{color:var(--status-negative);} .kpi-val.warn{color:var(--risk-med);}
+.kpi-label{margin-top:6px;font-family:var(--font-sans);font-size:var(--text-xs);font-weight:var(--weight-semibold);color:var(--text-body);}
+
+/* ---------- DataTable ---------- */
+.tbl-wrap{width:100%;overflow-x:auto;border:1px solid var(--border-subtle);border-radius:var(--radius-lg);background:var(--surface-card);}
+table{width:100%;border-collapse:collapse;font-family:var(--font-sans);min-width:600px;}
+th{text-align:left;padding:10px 14px;font-size:var(--text-2xs);font-weight:var(--weight-bold);letter-spacing:var(--tracking-eyebrow);
+  text-transform:uppercase;color:var(--text-muted);background:var(--surface-muted);border-bottom:1px solid var(--border-subtle);white-space:nowrap;}
+td{padding:8px 14px;font-size:var(--text-sm);color:var(--text-body);border-bottom:1px solid var(--border-subtle);}
+tr:last-child td{border-bottom:none;}
+td.num,th.num{text-align:right;font-family:var(--font-mono);font-weight:var(--weight-medium);}
+
+/* ---------- Badge ---------- */
+.badge{display:inline-flex;align-items:center;gap:6px;min-height:22px;padding:3px 10px;font-family:var(--font-sans);
+  font-size:var(--text-2xs);font-weight:var(--weight-semibold);letter-spacing:var(--tracking-wide);text-transform:uppercase;
+  border-radius:var(--radius-sm);line-height:1;white-space:nowrap;}
+.badge .dot{width:6px;height:6px;border-radius:50%;flex:none;}
+.badge.pass{background:var(--green-100);color:var(--green-800);}
+.badge.fail{background:#FBE8E8;color:var(--risk-high);}
+.badge.gap{background:var(--surface-muted);color:var(--ink-700);border:1px solid var(--border-subtle);}
+.badge.watch{background:#FBF1DA;color:#8A6800;}
+.badge.rating{background:var(--petrol-900);color:#fff;}
+
+/* ---------- Callout ---------- */
+.callout{display:flex;background:var(--surface-primary-soft);border-radius:var(--radius-md);border-left:3px solid var(--color-primary);
+  overflow:hidden;margin:12px 0;}
+.callout-body{padding:14px 18px;flex:1;}
+.callout-eyebrow{font-family:var(--font-sans);font-size:var(--text-2xs);font-weight:var(--weight-bold);letter-spacing:var(--tracking-eyebrow);
+  text-transform:uppercase;color:var(--petrol-700);margin-bottom:6px;}
+.callout p{margin:0;font-size:var(--text-sm);color:var(--text-body);line-height:var(--leading-normal);}
+.callout.green{background:var(--surface-accent-soft);border-left-color:var(--color-accent);}
+.callout.green .callout-eyebrow{color:var(--green-800);}
+.callout.high{background:#FBE8E8;border-left-color:var(--risk-high);}
+.callout.high .callout-eyebrow{color:var(--risk-high);}
+.callout.med{background:#FBF1DA;border-left-color:var(--risk-med);}
+.callout.med .callout-eyebrow{color:#8A6800;}
+.callout-pairs{display:grid;gap:10px;}
+.callout-pair{display:grid;grid-template-columns:70px 1fr;gap:10px;align-items:baseline;}
+.callout-pair .plabel{font-family:var(--font-sans);font-size:var(--text-2xs);font-weight:var(--weight-bold);
+  letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;white-space:nowrap;}
+.callout-pair .ptext{font-size:var(--text-sm);color:var(--text-body);line-height:var(--leading-normal);}
+
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+
+/* ---------- Decision cards ---------- */
+.decision-card{border:1px solid var(--border-subtle);border-radius:var(--radius-lg);margin-bottom:18px;overflow:hidden;box-shadow:var(--shadow-sm);}
+.decision-head{background:var(--petrol-900);color:#fff;padding:12px 18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+.decision-head .dtitle{font-weight:var(--weight-bold);font-size:var(--text-base);}
+.decision-body{padding:18px;}
+.decision-body dl{margin:0;display:grid;grid-template-columns:120px 1fr;gap:6px 14px;font-size:var(--text-sm);}
+.decision-body dt{color:var(--text-muted);font-weight:var(--weight-semibold);font-size:var(--text-xs);text-transform:uppercase;letter-spacing:var(--tracking-wide);padding-top:2px;}
+.decision-body dd{margin:0;line-height:var(--leading-normal);}
+.sign-off{background:var(--surface-muted);border-top:1px dashed var(--border-subtle);padding:10px 18px;
+  font-size:var(--text-xs);font-weight:var(--weight-bold);color:var(--text-strong);}
+
+.qa-item{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-subtle);font-size:var(--text-sm);align-items:flex-start;}
+.qa-item:last-child{border-bottom:none;}
+.qa-item .chk{flex-shrink:0;width:20px;height:20px;border-radius:var(--radius-xs);display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:800;color:#fff;margin-top:1px;font-family:var(--font-mono);}
+.qa-item .chk.y{background:var(--risk-low);}
+.qa-item .chk.n{background:var(--risk-high);}
+.qa-item .chk.f{background:var(--risk-med);color:#3a2e00;}
+
+.footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--border-subtle);display:flex;justify-content:space-between;
+  flex-wrap:wrap;gap:8px;font-size:var(--text-xs);color:var(--text-muted);}
+
+@media (max-width:900px){
+  .kpi-row{grid-template-columns:repeat(3,1fr);}
+  .g2{grid-template-columns:1fr;}
+}
+@media (max-width:768px){
+  .wrap{padding:0 16px 32px;}
+  .topbar{padding-left:16px;padding-right:16px;}
+  .decision-body dl{grid-template-columns:1fr;}
+  .header{flex-direction:column;align-items:flex-start;}
+  .header .runmeta{text-align:left;}
+}
+@media (max-width:480px){
+  .kpi-row{grid-template-columns:repeat(2,1fr);}
+  .callout-pair{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="topbar-inner">
+  <span class="brand-mark"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAB/8AAAf/CAYAAADSlCvHAACAAElEQVR4XuzBAQEAAACAkP6v7ggKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA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AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAP7UHhwQAAAAAgv6/9oYBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgLkA5iAmT5WVkmUAAAAASUVORK5CYII=" alt="NCGCL"></span>
+  <div><div class="brand-name">NCGCL</div><div class="brand-sub">National Credit Guarantee Company Limited</div></div>
+  <div class="spacer"></div>
+  <span class="rating-badge">AAA / A1+</span>
+</div></div>
+
+<div class="wrap">
+
+<div class="header">
+  <div class="htitle">
+    <h1>Treasury Decision Framework</h1>
+    <p class="sub">General Liquidity Reserves · Weekly Cadence · Capture → Validate → Analyze → Output</p>
+  </div>
+  <div class="runmeta"><b>23 Aug 2026</b>Cycle vs. 16 Aug 2026<br>NAV ₨8,273.05mn</div>
+</div>
+
+<div class="runbar">
+  <span class="pill crit"><span class="dot"></span>2 IPS breaches open</span>
+  <span class="pill crit"><span class="dot"></span>COI/Pak Oman 23d overdue</span>
+  <span class="pill warn"><span class="dot"></span>Daewoo STS matures tomorrow</span>
+  <span class="pill warn"><span class="dot"></span>₨800.8mn MTB unreinvested</span>
+  <span class="pill warn"><span class="dot"></span>Ensemble vintage 41 days stale</span>
+  <span class="pill ok"><span class="dot"></span>PVBP re-footed clean</span>
+</div>
+
+<div class="tabs" id="tabs">
+  <a class="tab-btn active" href="#panel-0"><span class="num">1</span>Market Snapshot</a>
+  <a class="tab-btn" href="#panel-1"><span class="num">2</span>Position Validation</a>
+  <a class="tab-btn" href="#panel-2"><span class="num">3</span>Risk Limits</a>
+  <a class="tab-btn" href="#panel-3"><span class="num">4</span>Ensemble Forecast</a>
+  <a class="tab-btn" href="#panel-4"><span class="num">5</span>Oil→PKRV</a>
+  <a class="tab-btn" href="#panel-5"><span class="num">6</span>Short-Horizon</a>
+  <a class="tab-btn" href="#panel-6"><span class="num">7</span>Rate Scenarios</a>
+  <a class="tab-btn" href="#panel-7"><span class="num">8</span>Decisions</a>
+  <a class="tab-btn" href="#panel-8"><span class="num">9</span>QA Audit</a>
+  <a class="tab-btn" href="#panel-9"><span class="num">10</span>Open Items</a>
+</div>
+
+<!-- ============ SECTION 1: MARKET SNAPSHOT ============ -->
+<div class="tabpanel" id="panel-0">
+<div class="section-eyebrow">Capture</div>
+<h2 class="sec-title">1 · Market Snapshot</h2>
+<p class="sec-sub">Policy, inflation, curve/auctions, external markets — as of 23 Aug 2026 (live search + PKRV curve as of 21 Aug close)</p>
+
+<div class="kpi-row">
+  <div class="kpi-card"><div class="kpi-val">11.50%</div><div class="kpi-label">SBP Policy Rate</div></div>
+  <div class="kpi-card green"><div class="kpi-val pos">9.2%</div><div class="kpi-label">CPI YoY (Jul)</div></div>
+  <div class="kpi-card"><div class="kpi-val">11.51%</div><div class="kpi-label">3M PKRV</div></div>
+  <div class="kpi-card"><div class="kpi-val warn">$94.4</div><div class="kpi-label">Brent (bbl)</div></div>
+  <div class="kpi-card"><div class="kpi-val">277.60</div><div class="kpi-label">USD/PKR</div></div>
+  <div class="kpi-card green"><div class="kpi-val">14-Sep</div><div class="kpi-label">Next MPC</div></div>
+</div>
+
+<div class="g2">
+  <div class="card accent-primary">
+    <div class="card-title">Policy &amp; Inflation</div>
+    <div class="card-sub">SBP MPC · PBS CPI</div>
+    <p>SBP held the policy rate at <b>11.50%</b> on 27-Jul-26 — the second consecutive hold, first meeting of FY27. Governor Jameel Ahmad flagged an improved domestic outlook but explicitly warned of risk from renewed Middle East hostilities. Next MPC meeting: <b>14 September 2026</b> — falls inside the current 30-day projection window (Section 6).</p>
+    <p>Headline CPI eased sharply to <b>9.2% YoY in July</b> (from 11.1% in June), returning to single digits for the first time since Feb-26. Analysts caution this is largely a favourable base effect rather than fresh disinflation momentum — food (+10.6% YoY) and transport (+15.1% YoY, oil-driven) remain the largest contributors. Urban 8.7% / Rural 9.9%. MoM +1.2%.</p>
+    <div class="callout">
+      <div class="callout-body">
+        <div class="callout-eyebrow">Cross-check</div>
+        <p>SPI (weekly Sensitive Price Indicator) could not be refreshed this cycle — internal ledger tab stale since 18-Jun-26 and web search returned no current print. Flagged in Section 10.</p>
+      </div>
+    </div>
+  </div>
+  <div class="card accent-primary">
+    <div class="card-title">Curve &amp; Auctions</div>
+    <div class="card-sub">PKRV (21-Aug close) · latest MTB auction (settlement 20-Aug)</div>
+    <div class="tbl-wrap"><table>
+      <tr><th>Tenor</th><th class="num">21-Aug</th><th class="num">WoW Δbp</th></tr>
+      <tr><td>1W</td><td class="num">11.49</td><td class="num" style="color:var(--risk-high)">+7</td></tr>
+      <tr><td>1M</td><td class="num">11.47</td><td class="num" style="color:var(--risk-high)">+3</td></tr>
+      <tr><td>3M</td><td class="num">11.51</td><td class="num" style="color:var(--risk-high)">+5</td></tr>
+      <tr><td>6M</td><td class="num">11.68</td><td class="num" style="color:var(--risk-high)">+6</td></tr>
+      <tr><td>1Y</td><td class="num">11.97</td><td class="num" style="color:var(--risk-high)">+2</td></tr>
+      <tr><td>3Y</td><td class="num">11.91</td><td class="num" style="color:var(--risk-high)">+20</td></tr>
+    </table></div>
+    <p style="margin-top:10px">Latest MTB auction (19-Aug, settled 20-Aug): <b>1M 11.47%, 3M 11.65%, 6M 11.80%, 12M 11.99%</b> — cut-offs rose 4–13bp across all tenors on a Rs498bn accepted vs Rs500bn target (Rs2.1tn bid). Curve read: parallel back-up, long end (3Y +20bp) steepening hardest — consistent with a reawakened oil/geopolitical risk premium rather than a policy-rate repricing (policy rate itself unchanged).</p>
+  </div>
+</div>
+
+<div class="callout high">
+  <div class="callout-body">
+    <div class="callout-eyebrow">Impact — Live Geopolitical Flag</div>
+    <p>Brent crude closed ~$94.39/bbl on 21-Aug (second consecutive weekly gain of ~6%), up ~37% from the $69/bbl trough of 2-Jul, driven by the collapsed US–Iran ceasefire and renewed tanker attacks in the Strait of Hormuz. US Treasury Secretary Bessent has flagged an "economic D-Day" sanctions package against Iran for the coming week. This is the dominant external risk to Pakistan's import bill, inflation trajectory and PKRV curve over the next 1–2 months — see Section 5.</p>
+  </div>
+</div>
+</div>
+
+<!-- ============ SECTION 2: POSITION VALIDATION ============ -->
+<div class="tabpanel" id="panel-1">
+<div class="section-eyebrow">Validate</div>
+<h2 class="sec-title">2 · Position Validation</h2>
+<p class="sec-sub">WoW ledger reconciliation, full instrument detail, and return/PVBP attribution by group</p>
+
+<div class="kpi-row">
+  <div class="kpi-card"><div class="kpi-val">8,273.05</div><div class="kpi-label">NAV ₨mn (Current Wk)</div></div>
+  <div class="kpi-card green"><div class="kpi-val pos">+17.44</div><div class="kpi-label">NAV Δ WoW ₨mn</div></div>
+  <div class="kpi-card"><div class="kpi-val">23</div><div class="kpi-label">Positions</div></div>
+  <div class="kpi-card"><div class="kpi-val">11.40%</div><div class="kpi-label">Adjusted Return</div></div>
+  <div class="kpi-card"><div class="kpi-val">10.69%</div><div class="kpi-label">Benchmark (3MK−1%)</div></div>
+  <div class="kpi-card green"><div class="kpi-val pos">+71.1bp</div><div class="kpi-label">Weekly Alpha (ann.)</div></div>
+</div>
+
+<div class="card">
+  <div class="card-title">2.1 · Full Position Detail</div>
+  <div class="card-sub">WoW Positions ledger, current week (F column) — sorted as booked. Rows 17–18 show negative remaining days: matured 20-Aug, unreinvested.</div>
+  <div class="tbl-wrap"><table>
+    <tr><th>Instrument</th><th class="num">Current NAV ₨</th><th class="num">Rate</th><th class="num">Rem. Days</th><th class="num">Conc %</th><th class="num">PVBP ₨</th><th class="num">Mod. Dur (yrs)</th></tr>
+    <tr><td>MTBs (3M)</td><td class="num">498,438,716</td><td class="num">11.68%</td><td class="num">11</td><td class="num">6.02%</td><td class="num">1,345</td><td class="num">0.027</td></tr>
+    <tr><td>MTBs (1Y label)</td><td class="num">1,264,148,615</td><td class="num">10.55%</td><td class="num">179</td><td class="num">15.28%</td><td class="num">56,079</td><td class="num">0.444</td></tr>
+    <tr><td>MTBs (1Y label)</td><td class="num">403,272,917</td><td class="num">10.70%</td><td class="num">193</td><td class="num">4.88%</td><td class="num">19,263</td><td class="num">0.478</td></tr>
+    <tr><td>MTBs (1Y label)</td><td class="num">474,267,338</td><td class="num">10.72%</td><td class="num">193</td><td class="num">5.73%</td><td class="num">22,650</td><td class="num">0.478</td></tr>
+    <tr><td>MTBs (1Y label)</td><td class="num">474,458,952</td><td class="num">10.75%</td><td class="num">193</td><td class="num">5.74%</td><td class="num">22,653</td><td class="num">0.477</td></tr>
+    <tr><td>MTBs (1Y label)</td><td class="num">370,537,345</td><td class="num">12.10%</td><td class="num">249</td><td class="num">4.48%</td><td class="num">22,549</td><td class="num">0.609</td></tr>
+    <tr><td>MTBs (1Y label)</td><td class="num">370,754,496</td><td class="num">12.00%</td><td class="num">249</td><td class="num">4.48%</td><td class="num">22,583</td><td class="num">0.609</td></tr>
+    <tr><td style="color:var(--risk-high);font-weight:700">MTBs (3M) — matured 20-Aug, unreinvested</td><td class="num">400,337,784</td><td class="num">12.10%</td><td class="num" style="color:var(--risk-high)">−3</td><td class="num">4.84%</td><td class="num">−294</td><td class="num">−0.007</td></tr>
+    <tr><td style="color:var(--risk-high);font-weight:700">MTBs (3M) — matured 20-Aug, unreinvested</td><td class="num">400,436,041</td><td class="num">12.15%</td><td class="num" style="color:var(--risk-high)">−3</td><td class="num">4.84%</td><td class="num">−294</td><td class="num">−0.007</td></tr>
+    <tr><td>MTBs (6M)</td><td class="num">193,888,762</td><td class="num">12.50%</td><td class="num">95</td><td class="num">2.34%</td><td class="num">4,486</td><td class="num">0.231</td></tr>
+    <tr><td>MTBs (6M)</td><td class="num">356,335,175</td><td class="num">11.65%</td><td class="num">165</td><td class="num">4.31%</td><td class="num">14,427</td><td class="num">0.405</td></tr>
+    <tr><td>MTBs (6M)</td><td class="num">356,259,348</td><td class="num">11.70%</td><td class="num">165</td><td class="num">4.31%</td><td class="num">14,418</td><td class="num">0.405</td></tr>
+    <tr><td>MTBs (1Y label)</td><td class="num">506,255,456</td><td class="num">11.75%</td><td class="num">347</td><td class="num">6.12%</td><td class="num">43,068</td><td class="num">0.851</td></tr>
+    <tr><td>MTBs (1Y label)</td><td class="num">506,042,013</td><td class="num">11.80%</td><td class="num">347</td><td class="num">6.12%</td><td class="num">43,031</td><td class="num">0.850</td></tr>
+    <tr><td>Faysal Bank (placement)</td><td class="num">281,193,704</td><td class="num">11.25%</td><td class="num">1</td><td class="num">3.40%</td><td class="num">69</td><td class="num">0.002</td></tr>
+    <tr><td>Samba Bank (placement)</td><td class="num">0</td><td class="num">11.15%</td><td class="num">1</td><td class="num">0.00%</td><td class="num">0</td><td class="num">0.002</td></tr>
+    <tr><td style="color:var(--risk-high);font-weight:700">COI (Pak Oman) — matured 31-Jul, 23d overdue</td><td class="num">0</td><td class="num">11.00%</td><td class="num" style="color:var(--risk-high)">−23</td><td class="num">0.00%</td><td class="num">0</td><td class="num">−0.057</td></tr>
+    <tr><td>Mahmood Textile — STS <span class="badge gap">A1</span></td><td class="num">251,597,808</td><td class="num">12.96%</td><td class="num">165</td><td class="num">3.04%</td><td class="num">10,069</td><td class="num">0.400</td></tr>
+    <tr><td>Select — STS <span class="badge gap">A1</span></td><td class="num">263,612,932</td><td class="num">12.68%</td><td class="num">144</td><td class="num">3.19%</td><td class="num">9,230</td><td class="num">0.350</td></tr>
+    <tr><td>Prema — STS <span class="badge gap">A1</span></td><td class="num">108,772,831</td><td class="num">12.69%</td><td class="num">218</td><td class="num">1.31%</td><td class="num">5,765</td><td class="num">0.530</td></tr>
+    <tr><td style="color:var(--risk-med);font-weight:700">Daewoo (old) — STS <span class="badge gap">A1</span> — matures tomorrow</td><td class="num">292,653,569</td><td class="num">13.09%</td><td class="num">1</td><td class="num">3.54%</td><td class="num">71</td><td class="num">0.002</td></tr>
+    <tr><td>Liberty — STS <span class="badge gap">A1</span></td><td class="num">256,338,904</td><td class="num">13.61%</td><td class="num">115</td><td class="num">3.10%</td><td class="num">7,109</td><td class="num">0.277</td></tr>
+    <tr><td>Daewoo (new) — STS <span class="badge gap">A1</span></td><td class="num">243,446,315</td><td class="num">14.25%</td><td class="num">158</td><td class="num">2.94%</td><td class="num">9,224</td><td class="num">0.379</td></tr>
+    <tr style="font-weight:700;background:var(--surface-muted)"><td>TOTAL</td><td class="num">8,273,049,019</td><td class="num">11.71% (gross wtd)</td><td class="num">161 (wtd avg)</td><td class="num">100%</td><td class="num">327,501</td><td class="num">0.396</td></tr>
+  </table></div>
+  <p style="margin-top:10px;font-size:var(--text-xs);color:var(--text-muted)">Repo Line: ₨0 outstanding (facility dated 28-Jul→18-Aug shown closed in ledger). Cash &amp; Bank (balance-sheet schedule): ₨2,056.02mn · Accrued Interest: ₨26.61mn · Short-Term Investments (B/S schedule): ₨7,298.24mn — supplementary balance-sheet cut, not double-counted against the instrument-level bucket tests above.</p>
+</div>
+
+<div class="card">
+  <div class="card-title">2.2 · Return &amp; PVBP Attribution by Group</div>
+  <div class="card-sub">Grouped pivot — current week NAV, weekly gain, and annualised contribution to portfolio return</div>
+  <div class="tbl-wrap"><table>
+    <tr><th>Group</th><th class="num">NAV ₨mn</th><th class="num">% of NAV</th><th class="num">Weekly Gain ₨</th><th class="num">% of Gain</th><th class="num">Own Ann. Yield</th><th class="num">Contrib. to Portfolio (ann.)</th></tr>
+    <tr><td>MTB &lt;3M (incl. 2 matured, unreinvested)</td><td class="num">1,299.21</td><td class="num">15.70%</td><td class="num">2,898,756</td><td class="num">16.06%</td><td class="num">11.60%</td><td class="num">1.82%</td></tr>
+    <tr><td>MTB 3–12M (remaining maturity)</td><td class="num">5,276.22</td><td class="num">63.78%</td><td class="num">11,036,780</td><td class="num">61.14%</td><td class="num">10.88%</td><td class="num">6.94%</td></tr>
+    <tr><td>Bank Placements (Faysal + Samba)</td><td class="num">281.19</td><td class="num">3.40%</td><td class="num">606,685</td><td class="num">3.36%</td><td class="num">11.22%</td><td class="num">0.38%</td></tr>
+    <tr><td>Sukuk (STS, 6 positions)</td><td class="num">1,416.42</td><td class="num">17.12%</td><td class="num">3,508,258</td><td class="num">19.44%</td><td class="num">12.88%</td><td class="num">2.21%</td></tr>
+    <tr><td>COI (Pak Oman)</td><td class="num">0.00</td><td class="num">0.00%</td><td class="num">0</td><td class="num">0.00%</td><td class="num">—</td><td class="num">0.00%</td></tr>
+    <tr style="font-weight:700;background:var(--surface-muted)"><td>TOTAL</td><td class="num">8,273.05</td><td class="num">100%</td><td class="num">18,050,479</td><td class="num">100%</td><td class="num">—</td><td class="num">~11.35%</td></tr>
+  </table></div>
+  <div class="callout med">
+    <div class="callout-body">
+      <div class="callout-eyebrow">Leverage drag — always state explicitly</div>
+      <p>The Adjusted Return of 11.40% and the attribution above are <u>unlevered</u> instrument economics. No COI is currently placed, so the leverage drag that has run ~11–13bp/week in prior cycles is not being generated as a spread cost right now — instead, the Pak Oman facility (₨1,238mn liability) is accruing pure financing cost against a matured, unreinvested COI, i.e. a <u>full negative-carry position with zero offsetting income</u>. See Section 8, Decision 1.</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ============ SECTION 3: RISK LIMIT CHECKLIST ============ -->
+<div class="tabpanel" id="panel-2">
+<div class="section-eyebrow">Analyze</div>
+<h2 class="sec-title">3 · Risk Limit Checklist</h2>
+<p class="sec-sub">Full IPS band set (Section 3) plus governance-gap rows — mandatory every cycle regardless of change</p>
+
+<div class="card">
+  <div class="card-title">3.1 · IPS Compliance</div>
+  <div class="tbl-wrap"><table>
+    <tr><th>Test</th><th class="num">Current</th><th class="num">IPS Limit</th><th>Status</th></tr>
+    <tr><td>Max instrument tenor</td><td class="num">≤1Y (longest held)</td><td class="num">≤3Y</td><td><span class="badge pass"><span class="dot" style="background:var(--risk-low)"></span>Pass</span></td></tr>
+    <tr><td>Average portfolio duration</td><td class="num">144.5 days</td><td class="num">≤360 days</td><td><span class="badge pass"><span class="dot" style="background:var(--risk-low)"></span>Pass</span></td></tr>
+    <tr><td>Portfolio PVBP</td><td class="num">0.396bp / 1bp move</td><td class="num">≤3bp / 1bp move</td><td><span class="badge pass"><span class="dot" style="background:var(--risk-low)"></span>Pass</span></td></tr>
+    <tr style="background:#FBE8E8"><td><b>Treasury Bills &lt;3-months</b> (remaining maturity)</td><td class="num" style="color:var(--risk-high);font-weight:700">15.70%</td><td class="num">20%–95%</td><td><span class="badge fail"><span class="dot" style="background:var(--risk-high)"></span>Fail — floor breach</span></td></tr>
+    <tr><td>Treasury Bills 3–12 months</td><td class="num">63.78%</td><td class="num">0%–90%</td><td><span class="badge pass"><span class="dot" style="background:var(--risk-low)"></span>Pass</span></td></tr>
+    <tr><td>PIBs / Ijarah Sukuk</td><td class="num">0.00%</td><td class="num">0%–60%</td><td><span class="badge pass"><span class="dot" style="background:var(--risk-low)"></span>Pass (nil held)</span></td></tr>
+    <tr><td>Bank Placements — AAA</td><td class="num">0.00%</td><td class="num">2%–80%</td><td><span class="badge watch"><span class="dot" style="background:var(--risk-med)"></span>Watch — below 2% min</span></td></tr>
+    <tr><td>Bank Placements — AA+</td><td class="num">3.40%</td><td class="num">0%–80%</td><td><span class="badge pass"><span class="dot" style="background:var(--risk-low)"></span>Pass</span></td></tr>
+    <tr><td>DFI Placement — AAA</td><td class="num">0.00%</td><td class="num">≤15%</td><td><span class="badge pass"><span class="dot" style="background:var(--risk-low)"></span>Pass (nil placed)</span></td></tr>
+    <tr><td>DFI Placement — AA+ (COI/Pak Oman)</td><td class="num">0.00%</td><td class="num">≤10%</td><td><span class="badge watch"><span class="dot" style="background:var(--risk-med)"></span>Watch — matured, unresolved</span></td></tr>
+    <tr><td>Commercial Paper</td><td class="num">0.00%</td><td class="num">0%–10%</td><td><span class="badge pass"><span class="dot" style="background:var(--risk-low)"></span>Pass</span></td></tr>
+    <tr style="background:#FBE8E8"><td><b>Single-instrument exposure</b> — Daewoo (old) STS, % of non-sov/bank FI sleeve</td><td class="num" style="color:var(--risk-high);font-weight:700">20.66%</td><td class="num">≤20%</td><td><span class="badge fail"><span class="dot" style="background:var(--risk-high)"></span>Fail — self-cures, matures tomorrow</span></td></tr>
+    <tr><td>Combined ceiling — AA+ Corp/Sukuk/CP/DFI/Income Funds</td><td class="num">20.52%</td><td class="num">≤30%</td><td><span class="badge pass"><span class="dot" style="background:var(--risk-low)"></span>Pass — 9.5pp headroom</span></td></tr>
+    <tr><td>Sector diversification (excl. sovereign/bank)</td><td class="num">not verifiable</td><td class="num">≤20%</td><td><span class="badge gap">Data gap — issuer sector unclassified</span></td></tr>
+    <tr><td>Minimum operational cash</td><td class="num">₨2,056.02mn (24.9% of B/S cash line)</td><td class="num">≥2%</td><td><span class="badge pass"><span class="dot" style="background:var(--risk-low)"></span>Pass</span></td></tr>
+    <tr><td>Core Capital in ≤90-day T-Bills</td><td class="num">not verifiable</td><td class="num">= Core Capital</td><td><span class="badge gap">Data gap — Board Core Capital figure not on file</span></td></tr>
+    <tr><td>Non-remunerative account balance</td><td class="num">no data suggesting breach</td><td class="num">≤₨10mn</td><td><span class="badge pass"><span class="dot" style="background:var(--risk-low)"></span>Pass (assumed)</span></td></tr>
+  </table></div>
+</div>
+
+<div class="card">
+  <div class="card-title">3.1 (cont.) · Governance Gaps — always carried, IPS silent</div>
+  <div class="tbl-wrap"><table>
+    <tr><th>Item</th><th class="num">Current Exposure</th><th>Status</th></tr>
+    <tr><td>Borrowing / leverage ratio vs. NAV (Pak Oman facility ÷ NAV)</td><td class="num">14.96%</td><td><span class="badge gap">Governance gap — no IPS ceiling documented</span></td></tr>
+    <tr><td>Lender / borrowing counterparty concentration</td><td class="num">100% single lender (Pak Oman)</td><td><span class="badge gap">Governance gap — no IPS limit documented</span></td></tr>
+    <tr><td>Floating-rate liability interest-rate risk</td><td class="num">₨1,238mn facility, quarterly KIBOR reset</td><td><span class="badge gap">Governance gap — IPS duration/PVBP rules cover assets only</span></td></tr>
+  </table></div>
+  <div class="callout high">
+    <div class="callout-body">
+      <div class="callout-eyebrow">Impact</div>
+      <p>Bank Placements — AAA sits at 0% against a 2% IPS <i>minimum</i> (Faysal Bank, the only active bank placement, is unrated in the ledger — treated conservatively as AA+ not AAA pending rating confirmation, itself a standing open item). This is a technical minimum-band watch item, not a new finding — carried at the same status as recent cycles.</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ============ SECTION 4: ENSEMBLE FORECAST ============ -->
+<div class="tabpanel" id="panel-3">
+<div class="section-eyebrow">Analyze</div>
+<h2 class="sec-title">4 · Interest Rate Forecast — Five-Layer Ensemble</h2>
+<p class="sec-sub">Taylor Rule · BVAR · Ordered Probit · Nelson-Siegel · IMF overlay — weights 26/32/26/16% ex-IMF</p>
+
+<div class="callout high">
+  <div class="callout-body">
+    <div class="callout-eyebrow">Vintage Alert</div>
+    <p>The ensemble has not been re-run since <b>13-Jul-2026</b> — now <b>41 days stale</b>. Per the runbook this must be fully refreshed before the pre-MPC window (~28-Aug, 5 days from this cycle) ahead of the 14-Sep MPC. This cycle carries forward the July-13 layer readings with qualitative overlay from confirmed live data (policy rate hold, CPI print); the quantitative BVAR path, Taylor Rule gap, and Nelson-Siegel forward curve below are <u>not re-estimated this cycle</u> — treat as directional context only, not a fresh forecast.</p>
+  </div>
+</div>
+
+<div class="kpi-row">
+  <div class="kpi-card"><div class="kpi-val">11.50%</div><div class="kpi-label">Actual Policy Rate</div></div>
+  <div class="kpi-card"><div class="kpi-val warn">17.28%</div><div class="kpi-label">Taylor-Implied</div></div>
+  <div class="kpi-card"><div class="kpi-val warn">+5.78pp</div><div class="kpi-label">Taylor Gap (distorted)</div></div>
+  <div class="kpi-card"><div class="kpi-val">10.91%</div><div class="kpi-label">BVAR 3M Path (stale)</div></div>
+  <div class="kpi-card"><div class="kpi-val">59.8%</div><div class="kpi-label">Probit: Hold (13-Jul vintage)</div></div>
+  <div class="kpi-card"><div class="kpi-val" style="color:var(--text-muted)">NOT SET</div><div class="kpi-label">IMF Overlay</div></div>
+</div>
+
+<div class="g2">
+  <div class="card">
+    <div class="card-title">Layer Readings (13-Jul-26 vintage — carried forward)</div>
+    <div class="tbl-wrap"><table>
+      <tr><th>Layer</th><th class="num">Weight</th><th class="num">Reading</th><th>Flag</th></tr>
+      <tr><td>Taylor Rule</td><td class="num">26%</td><td class="num">17.28% implied</td><td><span class="badge fail">Distorted</span></td></tr>
+      <tr><td>BVAR</td><td class="num">32%</td><td class="num">3M 10.91% · 6M 11.46% · 12M 13.01%</td><td><span class="badge watch">Panel stale</span></td></tr>
+      <tr><td>Ordered Probit</td><td class="num">26%</td><td class="num">Cut 24.9% / Hold 59.8% / Hike 15.3%</td><td><span class="badge gap">Not re-estimated</span></td></tr>
+      <tr><td>Nelson-Siegel fwd</td><td class="num">16%</td><td class="num">3M 11.31% · 6M 11.36% · 12M 11.37%</td><td><span class="badge gap">"Stable" — stale</span></td></tr>
+      <tr><td>IMF overlay</td><td class="num">outside weights</td><td class="num">NOT SET</td><td><span class="badge gap">Manual toggle</span></td></tr>
+    </table></div>
+    <p style="margin-top:10px;font-size:var(--text-xs);color:var(--text-muted)">Taylor Rule: mechanically distorted under elevated-CPI regime, +5.78pp gap vs. actual, excluded from qualitative read. BVAR: panel vintage Apr-26 (LSM lag) — stale even before the 41-day ensemble staleness. Probit: as of the 27-Jul meeting (which held); not re-estimated for 14-Sep. Nelson-Siegel: "stable" signal, 13-Jul vintage — curve has since moved +5–20bp WoW this cycle alone. IMF overlay: manual qualitative toggle — correct disposition until CEO/IC sets explicitly.</p>
+  </div>
+  <div class="card">
+    <div class="card-title">Cross-Layer Tension</div>
+    <div class="card-sub">Surfaced, not blended away</div>
+    <p>The stale ensemble's central case (next-meeting −7bp, 6M 11.96%, 12M 13.63%) already sat oddly against the <b>confirmed actual</b> outcome — SBP held on 27-Jul and again signalled caution on 14-Sep, not the easing the July-13 BVAR/probit blend implied. The Taylor Rule's 17.28% implied rate remains a large, mechanical outlier under Pakistan's still-elevated CPI base and should not be allowed to pull any blended read.</p>
+    <p>Since the vintage date, the live curve has itself moved against the ensemble's stale easing tilt: PKRV is up 3–20bp WoW this cycle, and MTB auction cut-offs rose 4–13bp on 19-Aug. <b>The market is currently pricing closer to "hold-to-slightly-hawkish" than the stale ensemble's "modest easing" central case</b> — a material, decision-relevant divergence that a fresh pipeline run needs to resolve before 28-Aug.</p>
+    <div class="callout high">
+      <div class="callout-body">
+        <div class="callout-eyebrow">Action</div>
+        <p>Re-run all six pipeline scripts (01–06) against current data before the pre-MPC window. Do not treat the KPIs above as this cycle's forecast — they are last-known-vintage context only.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ============ SECTION 5: OIL → PKRV TRANSMISSION ============ -->
+<div class="tabpanel" id="panel-4">
+<div class="section-eyebrow">Analyze</div>
+<h2 class="sec-title">5 · Oil → 3M PKRV Transmission Layer</h2>
+<p class="sec-sub">Frozen rule: Brent decline streak ≥2 months AND 3M change ≤−10% · monthly-frequency model · episode-start logic only</p>
+
+<div class="kpi-row">
+  <div class="kpi-card"><div class="kpi-val" style="color:var(--text-muted)">OFF</div><div class="kpi-label">Level 1 — Early Warning</div></div>
+  <div class="kpi-card"><div class="kpi-val" style="color:var(--text-muted)">OFF</div><div class="kpi-label">Level 2 — Domestic Trigger</div></div>
+  <div class="kpi-card"><div class="kpi-val" style="color:var(--text-muted)">OFF</div><div class="kpi-label">Level 3 — High Conviction</div></div>
+  <div class="kpi-card green"><div class="kpi-val pos">−44bp</div><div class="kpi-label">Jun Episode, 1M Realized</div></div>
+  <div class="kpi-card green"><div class="kpi-val pos">−40bp</div><div class="kpi-label">Jun Episode, 2M Realized</div></div>
+  <div class="kpi-card"><div class="kpi-val warn">+37%</div><div class="kpi-label">Brent since 2-Jul trough</div></div>
+</div>
+
+<div class="card accent-primary">
+  <div class="card-title">Signal Tier Status — This Cycle</div>
+  <p>Brent is now in a <b>rising streak</b>, not a decline streak: the benchmark has climbed from a $69/bbl trough on 2-Jul-26 to ~$94.4/bbl on 21-Aug-26 (+37%), driven by the collapsed US–Iran ceasefire and renewed Strait of Hormuz tanker attacks. All three signal tiers are mechanically OFF this cycle — there is no active decline-streak episode to evaluate against the frozen rule.</p>
+  <p>Per frozen-rule discipline, thresholds are <b>not</b> being re-derived. The live item this cycle is closing out the realized path of the <b>June-2026 episode</b> (Brent 3M change −17.2%, decline streak 2, episode-start flagged) that was live and out-of-sample as of the last model-spec update.</p>
+</div>
+
+<div class="g2">
+  <div class="card">
+    <div class="card-title">June 2026 Episode — Realized-vs-Conditional Path</div>
+    <div class="card-sub">3M PKRV move from episode-start reference (15-Jun-26: 11.91%)</div>
+    <div class="tbl-wrap"><table>
+      <tr><th>Horizon</th><th class="num">Date</th><th class="num">3M PKRV</th><th class="num">Realized Δbp</th><th class="num">Frozen mean/median (ex-2020, 2M)</th></tr>
+      <tr><td>Start</td><td class="num">15-Jun-26</td><td class="num">11.91%</td><td class="num">—</td><td class="num">—</td></tr>
+      <tr><td>1-Month</td><td class="num">15-Jul-26</td><td class="num">11.47%</td><td class="num" style="color:var(--status-positive)">−44</td><td class="num">−42.0 / −5.8</td></tr>
+      <tr><td>2-Month</td><td class="num">21-Aug-26</td><td class="num">11.51%</td><td class="num" style="color:var(--status-positive)">−40</td><td class="num">−79.1 / −31.4</td></tr>
+      <tr><td>3-Month</td><td class="num">~15-Sep-26</td><td class="num">pending</td><td class="num">pending</td><td class="num">−100.9 / −19.7</td></tr>
+    </table></div>
+    <div class="callout green">
+      <div class="callout-body">
+        <div class="callout-eyebrow">Reading</div>
+        <p>The signal materialized directionally and roughly in line with the historical median at both horizons. But the bulk of the easing happened in month 1 (−44bp); month 2 gave back 4bp as the Hormuz escalation re-fed into the curve. This is the realized-vs-conditional gap the runbook requires tracking: <b>most of the conditional easing distribution has already played out</b>, and the live question is no longer "will the signal work" but "is the trend now reversing."</p>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Invalidation Risk &amp; Filter Check</div>
+    <div class="card-sub">Named per runbook requirement — checked every cycle</div>
+    <table>
+      <tr><td>CPI filter (YoY vs. 3 months prior)</td><td class="num">9.2% (Jul) vs 10.9% (Apr) = <b style="color:var(--status-positive)">−1.7pp</b></td></tr>
+      <tr><td>FX filter (3M PKR/USD change)</td><td class="num">~stable, USD/PKR 277.60</td></tr>
+      <tr><td>Geopolitical flag</td><td class="num" style="color:var(--risk-high);font-weight:700">Active — Hormuz/US–Iran</td></tr>
+    </table>
+    <p style="margin-top:10px">Note: the CPI filter has flipped favourable this month (would now pass a high-conviction test) — but this is moot while Brent itself is in an increase streak; Level 1 must re-arm before Levels 2/3 are evaluable again. Flagging this only so it isn't mis-read as an active confirmation.</p>
+    <div class="callout high">
+      <div class="callout-body">
+        <div class="callout-eyebrow">Primary invalidation channel this cycle</div>
+        <p>Renewed Middle East conflict and a pending US "economic D-Day" sanctions package against Iran are the dominant upside risk to Brent and, with a lag, to imported inflation and the PKRV curve over the next 4–8 weeks.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<p style="font-size:var(--text-xs);color:var(--text-muted)">Frozen validation reference (ex-2020, unchanged this cycle): 11 independent episodes · 81.8% 2-month directional hit rate · mean response −61.9bp · HAC p=0.0117 · FDR-adjusted p=0.0182. Domestic (6 events) and high-conviction (3 events) tiers remain statistically immature confirmation layers only.</p>
+</div>
+
+<!-- ============ SECTION 6: SHORT-HORIZON PROJECTION ============ -->
+<div class="tabpanel" id="panel-5">
+<div class="section-eyebrow">Analyze</div>
+<h2 class="sec-title">6 · Short-Horizon 3M PKRV Projection — 7/14/21/30 Days</h2>
+<p class="sec-sub">Monthly-frequency oil model interpolated to sub-monthly horizons — flagged as extrapolation, not a model-native forecast</p>
+
+<div class="card">
+  <div class="card-title">Central Path</div>
+  <div class="tbl-wrap"><table>
+    <tr><th>Horizon</th><th class="num">Date</th><th class="num">3M PKRV Central</th><th>Driver</th></tr>
+    <tr><td>Spot</td><td class="num">21-Aug-26</td><td class="num">11.51%</td><td>—</td></tr>
+    <tr><td>7-day</td><td class="num">30-Aug-26</td><td class="num">11.50%–11.56%</td><td>Continued mild upward drift on oil risk premium; no scheduled catalyst</td></tr>
+    <tr><td>14-day</td><td class="num">6-Sep-26</td><td class="num">11.52%–11.62%</td><td>Pre-MPC positioning begins to firm; watch ensemble re-run (due 28-Aug)</td></tr>
+    <tr><td>21-day</td><td class="num">13-Sep-26</td><td class="num">11.55%–11.68%</td><td>Day before MPC — maximum pre-meeting uncertainty</td></tr>
+    <tr style="background:var(--surface-muted);font-weight:700"><td>30-day (spans MPC)</td><td class="num">22-Sep-26</td><td class="num">11.40%–11.85% (scenario-dependent)</td><td><b>14-Sep MPC outcome dominates</b> — see sensitivity matrix below</td></tr>
+  </table></div>
+  <div class="callout">
+    <div class="callout-body">
+      <div class="callout-eyebrow">Why the central path is a range, not a point</div>
+      <p>With Level-1 oil signal OFF and the ensemble stale, there is no fresh model-native central case to anchor a point estimate this cycle. The range above reflects continuation of the current WoW drift (curve up 3–7bp/week short end) absent a fresh MPC surprise. The decision-relevant information sits in the scenario branches, not this range.</p>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title">Oil-Scenario × MPC-Outcome Sensitivity Matrix</div>
+  <div class="card-sub">Approximate 30-day 3M PKRV move (bp), qualitative — not ensemble-model output this cycle</div>
+  <div class="tbl-wrap"><table>
+    <tr><th></th><th class="num">MPC Cut (−25/50bp)</th><th class="num">MPC Hold (base case)</th><th class="num">MPC Hike (+25/50bp)</th></tr>
+    <tr><td><b>Oil de-escalates</b> (Hormuz resolution)</td><td class="num" style="color:var(--status-positive)">−30 to −45bp</td><td class="num" style="color:var(--status-positive)">−10 to −20bp</td><td class="num">+5 to +15bp</td></tr>
+    <tr><td><b>Oil status quo</b> (~$90–95/bbl range)</td><td class="num" style="color:var(--status-positive)">−15 to −25bp</td><td class="num">flat to +5bp</td><td class="num" style="color:var(--risk-high)">+15 to +25bp</td></tr>
+    <tr><td><b>Oil escalates further</b> (sanctions retaliation, Brent &gt;$100)</td><td class="num">flat (unlikely combo)</td><td class="num" style="color:var(--risk-high)">+15 to +30bp</td><td class="num" style="color:var(--risk-high)">+30 to +50bp</td></tr>
+  </table></div>
+  <p style="margin-top:10px">Base-case weighting: Hold remains the modal MPC outcome (~65–70%) given inflation is still above the 5–7% target band even after July's improvement, and the SBP's own 27-Jul statement flagged Middle East risk explicitly. Oil status-quo-to-escalating is the modal oil scenario while the Hormuz standoff and pending US sanctions remain unresolved.</p>
+</div>
+
+<div class="callout high">
+  <div class="callout-body">
+    <div class="callout-eyebrow">Catalyst Sequencing</div>
+    <p>Three decision points fall inside or just before this 30-day window, in this order: <b>(1) Daewoo STS maturity — tomorrow, 24-Aug</b>; <b>(2) MTB Aug-20 tranche reinvestment — already due</b>; <b>(3) COI/Pak Oman disposition — overdue, decide now regardless</b>; then <b>(4) 14-Sep MPC</b> as the dominant catalyst inside the window. Recommendation: confirm terms on (1)–(3) now rather than waiting on the MPC outcome — none of them are duration bets large enough to justify delay, and the negative carry on (3) accrues daily regardless.</p>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title">Assumption Ledger — v1 (assumption-based) → v2 (data-validated)</div>
+  <div class="tbl-wrap"><table>
+    <tr><th>Assumption</th><th>Status</th><th>Note</th></tr>
+    <tr><td>MPC pass-through coefficient (A1)</td><td><span class="badge gap">v1</span></td><td>Not yet estimated from event-study/local-projection data on hand (standing open item)</td></tr>
+    <tr><td>Within-window oil coefficient (A2)</td><td><span class="badge gap">v1</span></td><td>Same — estimable, not yet done (standing open item)</td></tr>
+    <tr><td>Priced-MPC-expectation cross-check</td><td><span class="badge gap">v1</span></td><td>Qualitative only this cycle — no fresh probit re-estimation</td></tr>
+    <tr><td>Latest FX/oil data provenance</td><td><span class="badge watch">v1</span></td><td>Web-sourced provisional (USD/PKR 277.60, Brent $94.4) — not yet SBP EasyData/EIA official-release confirmed</td></tr>
+    <tr><td>Realized-volatility window for bands</td><td><span class="badge gap">v1</span></td><td>Judgmental range, not a formal vol-window calculation this cycle</td></tr>
+  </table></div>
+</div>
+</div>
+
+<!-- ============ SECTION 7: RATE SCENARIO ANALYSIS ============ -->
+<div class="tabpanel" id="panel-6">
+<div class="section-eyebrow">Analyze</div>
+<h2 class="sec-title">7 · Rate Scenario Analysis — ±50bp / ±100bp Parallel Shocks</h2>
+<p class="sec-sub">PVBP re-footed from scratch this cycle: ₨327,500.75 per 1bp — sign convention verified negative on hikes</p>
+
+<div class="card">
+  <div class="card-title">MTM / PVBP Shock Table</div>
+  <div class="tbl-wrap"><table>
+    <tr><th>Shock</th><th class="num">Linear MTM (₨mn)</th><th class="num">Convexity Adj. (₨mn)</th><th class="num">Net MTM (₨mn)</th><th class="num">% of NAV</th></tr>
+    <tr><td>−100bp (rate cut)</td><td class="num" style="color:var(--status-positive)">+32.75</td><td class="num">+0.02</td><td class="num" style="color:var(--status-positive)">+32.77</td><td class="num">+0.40%</td></tr>
+    <tr><td>−50bp (rate cut)</td><td class="num" style="color:var(--status-positive)">+16.38</td><td class="num">+0.02</td><td class="num" style="color:var(--status-positive)">+16.40</td><td class="num">+0.20%</td></tr>
+    <tr><td>+50bp (rate hike)</td><td class="num" style="color:var(--risk-high)">−16.38</td><td class="num">+0.02</td><td class="num" style="color:var(--risk-high)">−16.36</td><td class="num">−0.20%</td></tr>
+    <tr><td>+100bp (rate hike)</td><td class="num" style="color:var(--risk-high)">−32.75</td><td class="num">+0.02</td><td class="num" style="color:var(--risk-high)">−32.73</td><td class="num">−0.40%</td></tr>
+  </table></div>
+  <p style="margin-top:10px;font-size:var(--text-xs);color:var(--text-muted)">Convexity contribution is immaterial at this duration profile (portfolio modified duration 0.396 years) — shown for completeness, not decision-relevant at these shock sizes.</p>
+</div>
+
+<div class="g2">
+  <div class="card">
+    <div class="card-title">Down-Scenario (−100bp) — Impact &amp; Trade</div>
+    <p>Asset side gains ~₨32.8mn MTM. This is the friendlier scenario for the existing book but is currently the <b>lower-probability</b> branch given the live oil/geopolitical risk premium (Section 5–6). No specific trade recommended purely on this scenario; existing duration positioning (144.5-day average) already captures meaningful upside if it materializes.</p>
+  </div>
+  <div class="card">
+    <div class="card-title">Up-Scenario (+100bp) — Impact &amp; Trade</div>
+    <p>Asset side loses ~₨32.7mn MTM (0.40% of NAV — modest given short average duration). The larger and less-discussed exposure is the <b>liability side</b>: the floating-rate Pak Oman facility would reprice ~+100bp at its next quarterly reset, adding ~₨12.4mn/year in financing cost with no IPS framework currently governing this risk (Section 3, governance gap). This scenario is more consistent with the current oil-driven curve back-up than the down-scenario.</p>
+  </div>
+</div>
+
+<div class="callout high">
+  <div class="callout-body">
+    <div class="callout-eyebrow">Impact — Facility Reset Risk, Made Concrete</div>
+    <p>Facility rate is currently locked at 10.58% ("Currently Placed", ledger-authoritative). A live reset-calc using today's KIBOR (11.34%) shows 11.29% — i.e. the facility would reprice <b>+71bp</b> at the next quarterly reset (~29-Sep-26, 3 months from the last confirmed reset), adding ~₨2.2mn/quarter even before any further +50/100bp shock. This is the floating-rate liability risk the IPS does not yet frame — see Section 3.</p>
+  </div>
+</div>
+</div>
+
+<!-- ============ SECTION 8: TRADING DECISIONS ============ -->
+<div class="tabpanel" id="panel-7">
+<div class="section-eyebrow">Decide</div>
+<h2 class="sec-title">8 · Trading Ideas &amp; Decisions Required</h2>
+<p class="sec-sub">CEO is sole approver. Five items framed for sign-off — three time-bound, one data-gated, one carried-forward.</p>
+
+<div class="decision-card">
+  <div class="decision-head"><span class="dtitle">Decision 1 — COI / Pak Oman Disposition</span><span class="badge fail" style="background:rgba(255,255,255,0.9)">Urgent — 23 days overdue</span></div>
+  <div class="decision-body">
+    <dl>
+      <dt>Situation</dt><dd>COI matured 31-Jul-26; ₨0 currently placed against a live ₨1,238mn Pak Oman facility (14.96% of NAV). Pure negative carry: facility cost accrues at ~₨358,850/day with zero offsetting COI income — ~₨8.25mn accrued since maturity, growing daily.</dd>
+      <dt>Options</dt><dd><b>(a)</b> Redeploy into a fresh COI at prevailing market rate — need a current dealer quote (last known 10.05%, from Dec-25 placement, now stale); <b>(b)</b> partially or fully repay the facility if a near-term COI reinvestment isn't imminent, to stop the drag outright; <b>(c)</b> at minimum, decide today — every day of delay costs ~₨359k with no asset-side benefit.</dd>
+      <dt>Data gate</dt><dd>Current COI market rate not on file — flagged in Section 10; request a live quote before Investment Committee sign-off.</dd>
+    </dl>
+  </div>
+  <div class="sign-off">Decision Required: Reinvest COI today, or authorize partial facility repayment — CEO sign-off</div>
+</div>
+
+<div class="decision-card">
+  <div class="decision-head"><span class="dtitle">Decision 2 — Daewoo STS (Old) Maturity, ~₨292.65mn</span><span class="badge watch">Matures tomorrow, 24-Aug</span></div>
+  <div class="decision-body">
+    <dl>
+      <dt>Situation</dt><dd>Currently 20.66% of the sukuk sleeve (IPS single-instrument breach, self-cures at maturity). Combined AA+ ceiling has 9.5pp of headroom (20.52% vs 30% cap), so redeployment into another sukuk is IPS-permissible.</dd>
+      <dt>Recommendation</dt><dd><b>Redirect into a fresh &lt;3-month T-Bill, not another sukuk.</b> This single trade moves the sub-3M liquidity floor from 15.70% to <b>19.24%</b> — nearly curing the current IPS floor breach (Section 3) in one transaction. If reinvested into sukuk instead, the floor breach persists unchanged into next cycle.</dd>
+      <dt>If sukuk preferred</dt><dd>Avoid re-concentrating into Daewoo specifically — a second full-size Daewoo position would immediately recreate a single-issuer concentration watch item alongside the existing Daewoo (new) position (17.19% of sleeve already).</dd>
+    </dl>
+  </div>
+  <div class="sign-off">Decision Required: Approve redirection to &lt;3M T-Bill — CEO sign-off</div>
+</div>
+
+<div class="decision-card">
+  <div class="decision-head"><span class="dtitle">Decision 3 — MTB Tranche Reinvestment, ~₨800.77mn</span><span class="badge fail" style="background:rgba(255,255,255,0.9)">Matured 20-Aug, already overdue</span></div>
+  <div class="decision-body">
+    <dl>
+      <dt>Situation</dt><dd>Two MTB(3M) positions (rows 17–18) matured three days ago and remain unreinvested in the ledger, still showing daily NAV accrual past their stated maturity date — see Section 9 QA flag on this.</dd>
+      <dt>Recommendation</dt><dd>Reinvest at the current 3M cut-off (~11.65%, 19-Aug auction) or shorter 1M paper (11.47%) given the sub-3M floor is already breached and this capital is already counted in that bucket — the priority is not letting it decay into idle/matured limbo, not extending tenor.</dd>
+      <dt>Note</dt><dd>Because this capital already sits inside the sub-3M bucket (matured = 0 effective remaining days), reinvesting here does not by itself change the 20% floor test — Decision 2 (Daewoo redirection) is the trade that actually moves that number.</dd>
+    </dl>
+  </div>
+  <div class="sign-off">Decision Required: Confirm reinvestment tenor and counterparty — CEO sign-off</div>
+</div>
+
+<div class="decision-card">
+  <div class="decision-head"><span class="dtitle">Decision 4 — Facility Reset Awareness</span><span class="badge gap">No action required now</span></div>
+  <div class="decision-body">
+    <dl>
+      <dt>Situation</dt><dd>Facility resets quarterly (~29-Sep-26 next); live reset-calc shows +71bp vs. the currently locked 10.58%, adding ~₨2.2mn/quarter at today's KIBOR.</dd>
+      <dt>Recommendation</dt><dd>No trade needed this cycle. Factor into Decision 1: any fresh COI placement should target a yield that stays comfortably ahead of the higher post-reset facility cost to preserve the post-tax positive-carry structure (39% finance-cost tax shield vs. 20% COI-profit tax).</dd>
+    </dl>
+  </div>
+  <div class="sign-off">Decision Required: None — awareness item, revisit at next reset</div>
+</div>
+
+<div class="decision-card">
+  <div class="decision-head"><span class="dtitle">Decision 5 — Legacy Low-Coupon MTB Swap (Scenario-Conditional)</span><span class="badge gap">Not actionable today — data gate</span></div>
+  <div class="decision-body">
+    <dl>
+      <dt>Situation</dt><dd>Two MTB(1Y-label) positions (rows 12–13, ₨877.5mn combined, bought 5-Mar-26 at 10.70%/10.72%) now sit ~125–130bp below the current 1Y auction level (11.99%), with 193 days remaining.</dd>
+      <dt>Idea</dt><dd>Selling into the secondary market and rolling into current-coupon paper could be NPV-positive if the crystallized capital loss is small relative to the yield pickup over the remaining tenor — worth a dealer quote, not a decision today.</dd>
+      <dt>Data gate</dt><dd>No live secondary-market bid/dealer quote on file for these CUSIPs this cycle — flagged in Section 10.</dd>
+    </dl>
+  </div>
+  <div class="sign-off">Decision Required: None this cycle — request a dealer quote for next cycle's evaluation</div>
+</div>
+</div>
+
+<!-- ============ SECTION 9: QA AUDIT ============ -->
+<div class="tabpanel" id="panel-8">
+<div class="section-eyebrow">Output</div>
+<h2 class="sec-title">9 · QA &amp; Consistency Audit — This Cadence Build</h2>
+<p class="sec-sub">Standing checklist, run every cycle. Unresolved items carried forward; new items numbered.</p>
+
+<div class="card">
+  <div class="card-title">Standing Checklist</div>
+  <div class="qa-item"><div class="chk y">Y</div><div>KPI strip math reconciles — per-instrument gains sum to ₨18,050,479 total weekly gain; group-level contribution (~11.35% annualized) tracks the reported 11.40% Adjusted Return within normal day-count rounding.</div></div>
+  <div class="qa-item"><div class="chk y">Y</div><div>PVBP re-footed from scratch by summing all 22 instrument rows directly: <b>₨327,500.75</b> — matches the ledger's own total exactly. No silent footing error this cycle.</div></div>
+  <div class="qa-item"><div class="chk y">Y</div><div>Portfolio convexity cross-checked: concentration-weighted sum of per-instrument convexity (Σ Fᵢ/NAV × AAᵢ) = 0.22356, matching the ledger's reported 0.2236 exactly. (Note: a naive straight-sum of the AA column gives 4.24 and is the <i>wrong</i> aggregation method — AA is a per-instrument duration-squared proxy, not a portfolio contribution; flagging the correct method here so it isn't mis-applied in a future cycle.)</div></div>
+  <div class="qa-item"><div class="chk y">Y</div><div>PVBP → implied duration internally consistent: 144.5-day weighted average duration against the IPS 360-day cap, and 0.396bp PVBP against the 3bp cap — both comfortably inside limits and mutually consistent with the short T-Bill-heavy book.</div></div>
+  <div class="qa-item"><div class="chk n">N</div><div>Facility/COI cost figures vs. leverage-ratio principal: <b>known inconsistency persists.</b> The Credit Line tab's actual drawdown is ₨1,238mn (used throughout this dashboard); the separate Leverage tab still carries an unreconciled ₨761.9mn principal figure. Not a new error — carried forward unresolved.</div></div>
+  <div class="qa-item"><div class="chk f">!</div><div>Ensemble layers checked for distortion/staleness: Taylor Rule flagged (+5.78pp gap, mechanical); BVAR panel flagged (Apr-26 vintage); <b>the ensemble as a whole is now 41 days stale</b> and was not re-run this cycle — see Section 4.</div></div>
+  <div class="qa-item"><div class="chk f">!</div><div>Cross-layer disagreement surfaced, not blended: noted in Section 4 that the stale ensemble's easing tilt now conflicts with the live curve's back-up — flagged explicitly rather than averaged away.</div></div>
+  <div class="qa-item"><div class="chk y">Y</div><div>Oil-layer (3M PKRV, a market rate) kept conceptually separate from the four policy-rate ensemble layers — no methodology blending this cycle.</div></div>
+  <div class="qa-item"><div class="chk y">Y</div><div>Oil-signal realized-vs-conditional gap checked: June episode's 1M (−44bp) and 2M (−40bp) realized moves compared against frozen validation stats — most of the conditional distribution has already played out; documented in Section 5 to avoid double-counting an already-realized move as still-pending in the projection.</div></div>
+  <div class="qa-item"><div class="chk y">Y</div><div>Frozen-rule discipline confirmed: no oil-signal threshold or ensemble-weight changes made this cycle despite the signal reversal.</div></div>
+  <div class="qa-item"><div class="chk y">Y</div><div>T-Bill bucketing remains maturity-based, not label-based: rows 17–18 (labelled "MTBs (3M)" but with <i>negative</i> remaining days, i.e. matured) are correctly retained in the sub-3M bucket numerator rather than excluded or mis-bucketed by their 3M/6M/1Y issuance label.</div></div>
+  <div class="qa-item"><div class="chk y">Y</div><div>All three leverage-governance-gap rows present in Section 3.1 this cycle, unchanged.</div></div>
+</div>
+
+<div class="card accent-primary">
+  <div class="card-title">New Items Found This Cycle</div>
+  <div class="qa-item"><div class="chk f">1</div><div><b>Two live "3-month KIBOR" readings disagree within the same workbook, same day.</b> WoW Positions cell D6 ("3MK", used for the IPS benchmark) reads 11.69%; the Credit Line tab's live KIBOR reference (used for the facility reset-calc) reads 11.34% — a 35bp same-day discrepancy. Benchmark calculations in this dashboard use the ledger-designated D6 figure per runbook instruction; the facility-reset figures use the Credit Line tab's own reading. Both are reported transparently rather than reconciled to a single number — flag for back-office clarification on source/timing difference.</div></div>
+  <div class="qa-item"><div class="chk f">2</div><div><b>Matured MTB positions continue to show NAV accrual past their maturity date.</b> Rows 17–18 matured 20-Aug-26 (remaining days −3) but their "Current Week" NAV values are still higher than "Past Week" values, implying daily return is still being booked on paper that should have rolled off. Could be a legitimate interim placement not yet re-labelled, or a data-entry lag — needs back-office confirmation, not assumed either way.</div></div>
+  <div class="qa-item"><div class="chk f">3</div><div><b>Bank Placements — AAA sits at 0% against a 2% IPS minimum band.</b> Faysal Bank, the only active bank placement, carries no credit rating in the ledger (AG column blank) — cannot confirm whether it should count toward the AAA or AA+ band. Treated conservatively as AA+ throughout this dashboard pending rating confirmation (existing standing open item, not new).</div></div>
+</div>
+</div>
+
+<!-- ============ SECTION 10: STANDING OPEN ITEMS ============ -->
+<div class="tabpanel" id="panel-9">
+<div class="section-eyebrow">Output</div>
+<h2 class="sec-title">10 · Standing Open Items — Carried Forward</h2>
+<p class="sec-sub">Prioritized. New items this cycle marked <span class="badge watch">New</span>.</p>
+
+<div class="card accent-high">
+  <div class="card-title">Priority 1 — Time-Critical</div>
+  <div class="tbl-wrap"><table>
+    <tr><th>Item</th><th>Status</th></tr>
+    <tr><td>COI/Pak Oman disposition — current market COI rate needed for reinvestment decision</td><td><span class="badge fail">Overdue 23 days — Decision 1</span></td></tr>
+    <tr><td>Daewoo (old) STS maturity reinvestment — confirm &lt;3M T-Bill redirection</td><td><span class="badge watch">Due tomorrow — Decision 2</span></td></tr>
+    <tr><td>MTB Aug-20 tranche (₨800.77mn) reinvestment tenor/counterparty</td><td><span class="badge fail">Already overdue — Decision 3</span></td></tr>
+    <tr><td>Ensemble pipeline re-run (all 6 scripts) before pre-MPC window</td><td><span class="badge fail">41 days stale — due by 28-Aug</span></td></tr>
+  </table></div>
+</div>
+
+<div class="card">
+  <div class="card-title">Priority 2 — Data Gaps Blocking Full Verification</div>
+  <div class="tbl-wrap"><table>
+    <tr><th>Item</th><th>Status</th></tr>
+    <tr><td>Credit ratings — COI, Faysal Bank, STS issuers (Daewoo, Liberty, Prema, Mahmood Textile, Select)</td><td><span class="badge gap">Unresolved</span></td></tr>
+    <tr><td>Each counterparty's deposit/equity base (2%/4% bank limits, 10% DFI equity-base limit)</td><td><span class="badge gap">Unresolved</span></td></tr>
+    <tr><td>Board's designated Core Capital PKR figure</td><td><span class="badge gap">Unresolved</span></td></tr>
+    <tr><td>Sector classification and issue sizes for the STS names</td><td><span class="badge gap">Unresolved</span></td></tr>
+    <tr><td>SBP EasyData official monthly PKR/USD average (to firm up provisional web figure)</td><td><span class="badge gap">Unresolved</span></td></tr>
+    <tr><td>Live secondary-market dealer quote for legacy low-coupon MTB swap idea</td><td><span class="badge watch">New</span></td></tr>
+    <tr><td>Weekly SPI print — internal sheet stale since 18-Jun-26, web search unsuccessful this cycle</td><td><span class="badge watch">New</span></td></tr>
+  </table></div>
+</div>
+
+<div class="card">
+  <div class="card-title">Priority 3 — Methodology / Governance</div>
+  <div class="tbl-wrap"><table>
+    <tr><th>Item</th><th>Status</th></tr>
+    <tr><td>Derivation note for ensemble's next-MPC expected-move figure (probit step-magnitude assumptions)</td><td><span class="badge gap">Unresolved</span></td></tr>
+    <tr><td>v2 estimates for short-horizon assumption ledger — MPC pass-through (A1) and within-window oil coefficient (A2)</td><td><span class="badge gap">Unresolved</span></td></tr>
+    <tr><td>Board/IC interpretation of IPS Sec. 3.2(d) single-instrument test as applied to DFI placements already governed by Sec. 3.3(b)</td><td><span class="badge gap">Unresolved</span></td></tr>
+    <tr><td>IPS governance-gap documentation — leverage ceiling, lender concentration limit, floating-liability IR risk framework</td><td><span class="badge gap">Unresolved</span></td></tr>
+    <tr><td>Leverage tab principal (₨761.9mn) vs. actual facility drawdown (₨1,238mn) reconciliation</td><td><span class="badge gap">Unresolved, carried forward</span></td></tr>
+    <tr><td>WoW Positions "3MK" (11.69%) vs. Credit Line KIBOR (11.34%) same-day discrepancy</td><td><span class="badge watch">New</span></td></tr>
+    <tr><td>Matured-but-still-accruing MTB positions (rows 17–18) — back-office confirmation needed</td><td><span class="badge watch">New</span></td></tr>
+  </table></div>
+</div>
+</div>
+
+<div class="footer">
+  <div><strong>NCGCL · Treasury Decision Framework</strong> · Cycle 23-Aug-2026 (vs. 16-Aug-2026)</div>
+  <div>Sources: WoW ledger (live) · PKRV Rates tab · SBP · PBS · MTB auction results · EIA/Reuters/CNBC oil coverage</div>
+  <div style="color:var(--color-accent);font-weight:700">Prepared for NCGCL CEO / Investment Committee review</div>
+</div>
+
+</div>
+
+<script>
+// Scroll-spy: highlight the jump-nav item for whichever section is in view.
+// The page is one continuous scroll now — nav links just jump/scroll-highlight, they don't hide content.
+(function(){
+  var panels = Array.from(document.querySelectorAll('.tabpanel'));
+  var links = Array.from(document.querySelectorAll('.tab-btn'));
+  var byId = {};
+  links.forEach(function(l){ byId[l.getAttribute('href').slice(1)] = l; });
+
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      var link = byId[entry.target.id];
+      if(!link) return;
+      if(entry.isIntersecting){
+        links.forEach(function(l){ l.classList.remove('active'); });
+        link.classList.add('active');
+        link.scrollIntoView({block:'nearest', inline:'center', behavior:'smooth'});
+      }
+    });
+  }, { rootMargin: '-72px 0px -70% 0px', threshold: 0 });
+
+  panels.forEach(function(p){ observer.observe(p); });
+})();
+</script>
+</body>
+</html>
